@@ -33,5 +33,15 @@ def user_profile_page():
     return render_template("user_profile.html")
 
 
+@app.route("/register_page")
+def register_page():
+    return render_template("register_account.html")
+
+
+@app.route("/helper_register_page")
+def helper_register_page():
+    return render_template("helper_register_account.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
