@@ -1,6 +1,16 @@
 from flask import Flask, render_template
-
+import os
 app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URL")
+
+app.secret_key = "TODO_BAD_SECRET_KEY" 
+
+from db.database import db
+from db.modals import Users
+
+
+# migrate = Migrate(app.db)
 
 
 @app.route("/")
@@ -45,3 +55,6 @@ def helper_register_page():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
