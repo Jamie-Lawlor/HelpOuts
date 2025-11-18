@@ -6,9 +6,7 @@ class Users(db.Model):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    type = db.Column(
-        db.String(3), nullable=False, default="helpee"
-    )  # can bee 'helpee' or 'helper'
+    type = db.Column( db.String(6), nullable=False, default="helpee")  # can bee 'helpee' or 'helper'
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
@@ -45,7 +43,7 @@ class Messages(db.Model):
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    requester_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
     job_title = db.Column(db.String(100), nullable=False)
