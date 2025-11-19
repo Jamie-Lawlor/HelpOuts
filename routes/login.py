@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, redirect
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
 
 
-@login_blueprint.route("/register_page")
+@login_blueprint.route("/register_page/")
 def register_page():
     return render_template("login/register_account.html")
 
