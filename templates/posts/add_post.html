@@ -17,48 +17,49 @@
 
             <div class="card shadow-sm mx-auto" style="width: 48rem;">
                 <div class="card-body">
-
-                    <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Helpout Title</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <img src="/static/images/tools_icon.svg" width="25" height="25">
-                            </span>
-                            <input type="text" class="form-control" placeholder="e.g Fix a leak"
-                                aria-label="Helpout Title" id="title">
+                    <form action="/create_post" method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-semibold">Helpout Title</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <img src="/static/images/tools_icon.svg" width="25" height="25">
+                                </span>
+                                <input type="text" name="helpout_title" class="form-control"
+                                    placeholder="e.g Fix a leak" aria-label="Helpout Title" id="title">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Description</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <img src="/static/images/description_icon.svg" width="25" height="25">
-                            </span>
-                            <input type="text" class="form-control" placeholder="Describe the Task"
-                                aria-label="Helpout Title" id="title">
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-semibold">Description</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <img src="/static/images/description_icon.svg" width="25" height="25">
+                                </span>
+                                <input type="text" name="helpout_description" class="form-control"
+                                    placeholder="Describe the Task" aria-label="Helpout Title" id="title">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Area</label>
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <img src="/static/images/location_icon.svg" width="25" height="25">
-                            </span>
-                            <input type="text" class="form-control" placeholder="Your town or neighbourhood"
-                                aria-label="Helpout Title" id="title">
+                        <div class="mb-3">
+                            <label for="title" class="form-label fw-semibold">Area</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <img src="/static/images/location_icon.svg" width="25" height="25">
+                                </span>
+                                <input type="text" name="helpout_area" class="form-control"
+                                    placeholder="Your town or neighbourhood" aria-label="Helpout Title" id="title">
+                            </div>
                         </div>
-                    </div>
 
-                    <hr class="my-4">
-                    <h4>Add Photos</h4>
-                    <p class="text-muted mb-3">Show helpers your task</p>
-                    <button class="btn btn-primary me-2 mr-3" href="#" role="button">
-                        <img src="/static/images/upload-solid-full.svg" width="22" height="22">
-                        Upload
-                    </button>
-                    <button type="button" class="btn btn-primary" href="#">Post</button>
+                        <hr class="my-4">
+                        <h4>Add Photos</h4>
+                        <p class="text-muted mb-3">Show helpers your task</p>
+                        <button class="btn btn-primary me-2 mr-3" href="#" role="button">
+                            <img src="/static/images/upload-solid-full.svg" width="22" height="22">
+                            Upload
+                        </button>
+                        <button class="btn btn-primary" type="submit">Post</button>
+                    </form>
                 </div>
             </div>
         </div>

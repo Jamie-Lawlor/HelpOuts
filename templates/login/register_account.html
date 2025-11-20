@@ -14,43 +14,50 @@
         <div class="card bg-light mb-3 mx-auto" style="max-width: 48rem;">
             <div class="card-header">Register</div>
             <div class="card-body">
+                <form action="/register_helpee" method="POST">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            First and Last Name
+                        </span>
+                        <input type="text" name="first_name" aria-label="First Name" class="form-control">
+                        <input type="text" name="last_name" aria-label="Last Name" class="form-control">
+                    </div>
 
-                <div class="input-group mb-3">
-                    <span class="input-group-text">
-                        First and Last Name
-                    </span>
-                    <input type="text" aria-label="First Name" class="form-control">
-                    <input type="text" aria-label="Last Name" class="form-control">
-                </div>
-
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">
-                        <img src="/static/images/user_icon.svg" width="25" height="25" class="d-inline-block align-top">
-                    </span>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">
-                        <img src="/static/images/email_icon.svg" width="25" height="25"
-                            class="d-inline-block align-top">
-                    </span>
-                    <input type="text" class="form-control" placeholder="Email Address" aria-label="Email Address">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">
-                        <img src="/static/images/location_icon.svg" width="25" height="25"
-                            class="d-inline-block align-top">
-                    </span>
-                    <input type="text" class="form-control" placeholder="Location" aria-label="Location">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">
-                        <img src="/static/images/key_icon.svg" width="25" height="25" class="d-inline-block align-top">
-                    </span>
-                    <input type="text" class="form-control" placeholder="Password" aria-label="Password">
-                </div>
-                <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a>
-                <a class="btn btn-primary" href="/home_page" role="button">Register</a>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <img src="/static/images/user_icon.svg" width="25" height="25"
+                                class="d-inline-block align-top">
+                        </span>
+                        <input type="text" name="username" class="form-control" placeholder="Username"
+                            aria-label="Username">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <img src="/static/images/email_icon.svg" width="25" height="25"
+                                class="d-inline-block align-top">
+                        </span>
+                        <input type="text" name="email" class="form-control" placeholder="Email Address"
+                            aria-label="Email Address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <img src="/static/images/location_icon.svg" width="25" height="25"
+                                class="d-inline-block align-top">
+                        </span>
+                        <input type="text" name="location" class="form-control" placeholder="Location"
+                            aria-label="Location">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <img src="/static/images/key_icon.svg" width="25" height="25"
+                                class="d-inline-block align-top">
+                        </span>
+                        <input type="text" name="password" class="form-control" placeholder="Password"
+                            aria-label="Password">
+                    </div>
+                    <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a>
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </form>
             </div>
         </div>
     </body>
