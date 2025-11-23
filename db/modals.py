@@ -42,14 +42,14 @@ class Messages(db.Model):
 
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
     job_title = db.Column(db.String(100), nullable=False)
     job_description = db.Column(db.String(500), nullable=False)
-    short_title = db.Column(db.String(50), nullable=False)
-    short_type = db.Column(db.String(20), nullable=False)
+    short_title = db.Column(db.String(50), nullable=True)
+    short_type = db.Column(db.String(20), nullable=True)
     created_date = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )

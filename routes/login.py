@@ -28,7 +28,7 @@ def register_helpee():
     if if_exists:
         # this error message is passed to the frontend and can be used to display an error to the user
         error = "A user with this email already exists"
-        return render_template("/register_helpee/", error=error) 
+        return render_template("login/register_account.html", error=error)
     
     # validate password & user details
     

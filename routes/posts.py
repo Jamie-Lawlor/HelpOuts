@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect
-
+from flask import Blueprint, render_template, request, redirect, session
+from db.database import db
+from db.modals import Jobs
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
 
@@ -18,4 +19,22 @@ def create_post():
     title = request.form.get("helpout_title")
     description = request.form.get("helpout_description")
     area = request.form.get("helpout_area")
+    
+    
+    # Security & Validation 
+    
+    
+    # We get the id from the session which is set when the user logs in
+    new_job = Jobs(
+        helpee_id=3,
+        status="NA", # Not Accepted as default
+        area=area,
+        job_title=title,
+        job_description=description,
+        short_title="",
+        short_type="",
+    )
+    
+    db.session.add(new_job)
+    db.session.commit()
     return redirect("/view_post/")
