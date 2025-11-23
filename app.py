@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, session
 import os
 from db.database import db
 from db.modals import Users
@@ -25,31 +25,9 @@ app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
 
 
-@app.route("/testDb")
-def test_db():
-    users = Users.query.all()
-    return "<br>".join([user.name for user in users])
-
-
-@app.route("/addTestUser")
-def add_test_user():
-    user = Users(
-        name="Test User3",
-        email="test3@test3.com",
-        password="Test1234567!",
-        type="helpee",
-        work_area="Louth",
-        specialism=None,
-        skills=None,
-        rating=None,
-    )
-    db.session.add(user)
-    db.session.commit()
-    return redirect("/testDb")
-
-
 @app.route("/")
 def index():
+    session["id"] = 3
     return render_template("index.html")
 
 
