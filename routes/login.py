@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect
 from db.database import db
 from db.modals import Users
+import re
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
 
 
@@ -31,7 +32,21 @@ def register_helpee():
         return render_template("login/register_account.html", error=error)
     
     # validate password & user details
+
+    # https://mailtrap.io/blog/flask-contact-form/#Custom-Validation-Functions - custom validation
+    if not first_name or not last_name or not email or not location or not password:
+        error = "All Fields Must Be Filled Out"
+        return render_template("/register_helpee/", error=error)
     
+
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        error = "Invalid Email Entered, Please Enter an Email Like 'example@gmail.com'"
+        return render_template("/register_helpee/", error=error)
+    
+    # https://uibakery.io/regex-library/password - password regular expression
+    if not re.match(r"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/", password):
+        error = "Invalid Password Entered, Please Enter a Password that Includes a Minimum of 8 Characters, at least One Uppercase Letter, One Lowercase Letter, One Number and One Special Character"
+        return render_template("/register_helpee/", error=error)
     
     user = Users(
         name=first_name + " " + last_name,
