@@ -16,6 +16,9 @@ class Users(db.Model):
     # https://dev.to/goke/securing-your-flask-application-hashing-passwords-tutorial-2f0p - hashing password
     def hash_password(self, password):
         self.password = generate_password_hash(password)
+        
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class UserPermissions(db.Model):
@@ -24,6 +27,9 @@ class UserPermissions(db.Model):
     accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
     accepted_gdpr = db.Column(db.Boolean, nullable=False, default=False)
     accepted_health_safety = db.Column(db.Boolean, nullable=False, default=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Reviews(db.Model):
@@ -33,6 +39,9 @@ class Reviews(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Messages(db.Model):
@@ -43,6 +52,8 @@ class Messages(db.Model):
     timestamp = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Jobs(db.Model):
@@ -60,3 +71,6 @@ class Jobs(db.Model):
     )
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
