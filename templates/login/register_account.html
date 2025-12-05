@@ -19,8 +19,10 @@
                         <span class="input-group-text">
                             First and Last Name
                         </span>
-                        <input type="text" name="first_name" aria-label="First Name" class="form-control" required>
-                        <input type="text" name="last_name" aria-label="Last Name" class="form-control" required>
+                        <input type="text" name="first_name" aria-label="First Name" class="form-control"
+                            autocomplete="off" required>
+                        <input type="text" name="last_name" aria-label="Last Name" class="form-control"
+                            autocomplete="off" required>
                     </div>
 
                     <div class="input-group mb-3">
@@ -29,7 +31,7 @@
                                 class="d-inline-block align-top">
                         </span>
                         <input type="text" name="username" class="form-control" placeholder="Username"
-                            aria-label="Username" required>
+                            aria-label="Username" autocomplete="off" required>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
@@ -37,7 +39,7 @@
                                 class="d-inline-block align-top">
                         </span>
                         <input type="text" name="email" class="form-control" placeholder="Email Address"
-                            aria-label="Email Address" required>
+                            aria-label="Email Address" autocomplete="off" required>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
@@ -45,15 +47,15 @@
                                 class="d-inline-block align-top">
                         </span>
                         <input type="text" name="location" class="form-control" placeholder="Location"
-                            aria-label="Location" required>
+                            aria-label="Location" autocomplete="off" required>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
                             <img src="/static/images/key_icon.svg" width="25" height="25"
                                 class="d-inline-block align-top">
                         </span>
-                        <input type="text" name="password" class="form-control" placeholder="Password"
-                            aria-label="Password" required>
+                        <input type="password" name="password" class="form-control" placeholder="Password"
+                            aria-label="Password" autocomplete="off" required>
                     </div>
                     <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a>
                     <button class="btn btn-primary" type="submit">Register</button>
