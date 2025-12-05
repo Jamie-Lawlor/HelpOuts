@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+          {% extends "base.html" %}
+{% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Home Page{% endblock %}</title>
+{% endblock %}
 
-        <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Home</title>
-        </head>
         <body>  
-          {%  extends "base.html" %}
           {%  block body %}
           <div class="d-flex justify-content-center mt-3">
                 <div class="input-group mb-3" style="max-width: 500px;">
