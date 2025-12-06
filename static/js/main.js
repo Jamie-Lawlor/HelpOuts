@@ -1,6 +1,6 @@
 
 
-function sendFormData() {
+function send_form_data() {
     document.getElementById("postForm").addEventListener("submit", function (e) {
         e.preventDefault()
         document.getElementById("helpout_title").value = ""
@@ -23,7 +23,15 @@ function sendFormData() {
         })
 }
 
-function sendupdatedData() {
+function open_edit() {
+    document.getElementById("edit_title").style.display = "block"
+    document.getElementById("edit_description").style.display = "block"
+    document.getElementById("edit_area").style.display = "block"
+    document.getElementById("edit_submit").style.display = "block"
+
+}
+
+function send_updated_data() {
     id = document.getElementById("job_id").value
     updated_title = document.getElementById("edit_title").value
     updated_description = document.getElementById("edit_description").value
@@ -35,10 +43,9 @@ function sendupdatedData() {
         .then(window.location.reload())
 }
 
-function openEdit() {
-    document.getElementById("edit_title").style.display = "block"
-    document.getElementById("edit_description").style.display = "block"
-    document.getElementById("edit_area").style.display = "block"
-    document.getElementById("edit_submit").style.display = "block"
+function delete_post_data() {
+    id = document.getElementById("job_id").value
+    fetch("/delete_post", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ post_id: id }) })
+        .then(window.location.replace(`/home_page/`))
 
 }

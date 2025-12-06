@@ -61,3 +61,11 @@ def edit_post():
     updated_job.created_date = db.func.current_timestamp()
     db.session.commit()
     return ""
+
+@posts_blueprint.route("/delete_post", methods=["POST"])
+def delete_post():
+    updated_data = int(request.json["post_id"])
+    
+    db.session.delete(Jobs.query.filter_by(id=updated_data).first())
+    db.session.commit()
+    return ""
