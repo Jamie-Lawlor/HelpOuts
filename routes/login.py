@@ -22,6 +22,7 @@ def register_helpee():
     email = request.form.get("email")
     location = request.form.get("location")
     password = request.form.get("password")
+    confirm_password = request.form.get("confirm_password")
     
     
     # check if this users already exists
@@ -38,14 +39,26 @@ def register_helpee():
         error = "All Fields Must Be Filled Out"
         return render_template("login/register_account.html", error=error)
     
-
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         error = "Invalid Email Entered, Please Enter an Email Like 'example@gmail.com'"
         return render_template("login/register_account.html", error=error)
     
-    # https://uibakery.io/regex-library/password - password regular expression
-    if not re.match(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", password):
-        error = "Invalid Password Entered, Please Enter a Password that Includes a Minimum of 8 Characters, at least One Uppercase Letter, One Lowercase Letter, One Number and One Special Character"
+    # password regular expression 
+    if len(password) < 8:
+        error = "Invalid Password Entered, Must be More than 8 Characters"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r'[A-Z]', password):
+        error = "Invalid Password Entered, Must have a Uppercase Letter"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r'[a-z]', password):
+        error = "Invalid Password Entered, Must have a Lowercase Letter"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r'[0-9]', password):
+        error = "Invalid Password Entered, Must have a Number"
+        return render_template("login/register_account.html", error=error)
+        
+    if confirm_password != password:
+        error = "Passwords Do Not Match, Please Try Again"
         return render_template("login/register_account.html", error=error)
     
     user = Users(

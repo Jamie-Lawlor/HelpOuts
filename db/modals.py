@@ -13,9 +13,8 @@ class Users(db.Model):
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
 
-    # https://dev.to/goke/securing-your-flask-application-hashing-passwords-tutorial-2f0p - hashing password
-    def hash_password(self, password):
-        self.password = generate_password_hash(password)
+    
+    
         
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
