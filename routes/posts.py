@@ -16,7 +16,7 @@ def view_post_page():
 
 @posts_blueprint.route("/create_post", methods=["POST"])
 def create_post():
-    form_data = request.json["formData"]
+    form_data = request.json["form_data"]
     title = form_data[0]
     description = form_data[1]
     area = form_data[2]
@@ -47,5 +47,17 @@ def view_specific_post_page(post_id):
     return render_template("/posts/view_post.html", job_data = job_data)
 
 
-# @posts_blueprint.route("/retrieve_job_data", methods=["POST"])
-# def retrieve_data()
+@posts_blueprint.route("/edit_post", methods=["POST"])
+def edit_post():
+    updated_data = request.json["edit_data"]
+    updated_title = updated_data[1]
+    updated_description = updated_data[2]
+    updated_area = updated_data[3]
+    
+    updated_job=Jobs.query.filter_by(id=updated_data[0]).first()
+    updated_job.job_title = updated_title
+    updated_job.job_description = updated_description
+    updated_job.area = updated_area
+    updated_job.created_date = db.func.current_timestamp()
+    db.session.commit()
+    return ""
