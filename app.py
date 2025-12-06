@@ -7,6 +7,7 @@ from routes.login import login_blueprint
 from routes.messages import messages_blueprint
 from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
+from routes.maps import maps_blueprint
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,6 +24,8 @@ app.register_blueprint(login_blueprint)
 app.register_blueprint(messages_blueprint)
 app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
+app.register_blueprint(maps_blueprint)
+
 
 
 @app.route("/")
@@ -39,6 +42,8 @@ def home_page():
 @app.route("/settings/")
 def settings_page():
     return render_template("settings.html")
+
+
 
 
 if __name__ == "__main__":
