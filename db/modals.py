@@ -74,3 +74,26 @@ class Jobs(db.Model):
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class MapIcon(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    icon_url = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(100), nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class JobLocation(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    icon = db.Column(db.Integer, db.ForeignKey("map_icon.id"), nullable=False)
+    lat = db.Column(db.Double, nullable=False)
+    lng = db.Column(db.Double, nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
+    
+    
+    
