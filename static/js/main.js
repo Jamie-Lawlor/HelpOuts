@@ -1,4 +1,9 @@
 
+$('.datepicker').datepicker({
+    format: 'dd/mm/yyyy',
+    autoclose: true, 
+    todayHighlight: true
+})
 
 function send_form_data() {
     document.getElementById("postForm").addEventListener("submit", function (e) {
