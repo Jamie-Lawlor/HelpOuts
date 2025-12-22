@@ -7,3 +7,8 @@ Resetting Flask Migrations
 5) Click SQL from the top menu
 6) Paste the following query - DROP DATABASE helpoutsdevdb01
 7) Paste the following query - CREATE DATABASE helpoutsdevdb01
+8) In visual studio terminal, cd to same directoy as app.py
+9) Run the following commands in this order - 
+    flask db init
+    flask db migrate
+    flask db upgrade
