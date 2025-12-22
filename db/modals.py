@@ -12,10 +12,8 @@ class Users(db.Model):
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
+    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
 
-    
-    
-        
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -59,15 +57,14 @@ class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=True)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
     job_title = db.Column(db.String(100), nullable=False)
     job_description = db.Column(db.String(500), nullable=False)
     short_title = db.Column(db.String(50), nullable=True)
     short_type = db.Column(db.String(20), nullable=True)
-    created_date = db.Column(
-        db.DateTime, nullable=False, default=db.func.current_timestamp()
-    )
+    created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
     
@@ -79,15 +76,14 @@ class Communities(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
     area = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class Projects(db.Model):
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     community_id = db.Column(db.Integer,db.ForeignKey("communities.id"), nullable=False)
-
     project_title = db.Column(db.String(100), nullable=False)
     project_description = db.Column(db.String(1000), nullable=False)
     project_type = db.Column(db.String(20), nullable=False)
@@ -95,5 +91,25 @@ class Projects(db.Model):
     minimum_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
 
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
+    
+    
+# Joiner table used to hold which jobs are linked to which project
+class ProjectJobs(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
+# Joiner table user to hold what projects a community has ongoing
+class CommunityProjects(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
+    
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
