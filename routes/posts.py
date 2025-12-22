@@ -17,28 +17,38 @@ def view_post_page():
 
 @posts_blueprint.route("/create_post", methods=["POST"])
 def create_post():
-    form_data = request.json["form_data"]
-    title = form_data[0]
-    description = form_data[1]
-    area = form_data[2]
+    title = request.form.get("title")
+    print("TITLE: ",title)
+    description = request.form.get("title")
+    print("DESCRIPTION: ",description)
+    project_type = request.form.get("type")
+    print("TYPE: ",project_type)
+    helpers = request.form.get("helpers")
+    print("HELPERS: ",helpers)
+    start_date = request.form.get("start_date")
+    print("START DATE: ",start_date)
+    end_date = request.form.get("end_date")
+    print("END DATE: ",end_date)
 
+    file = request.files.get("images")
+    image = file.read()
+    # print("IMAGE_URL: ", image)
     # Security & Validation
 
     # We get the id from the session which is set when the user logs in
-    new_job = Jobs(
-        helpee_id=3,
-        status="NA",  # Not Accepted as default
-        area=area,
-        job_title=title,
-        job_description=description,
-        short_title="",
-        short_type="",
-    )
+    # new_job = Jobs(
+    #     helpee_id=3,
+    #     status="NA",  # Not Accepted as default
+    #     job_title=title,
+    #     job_description=description,
+    #     short_title="",
+    #     short_type="",
+    # )
 
-    db.session.add(new_job)
-    db.session.commit()
-    job_data = Jobs.query.get_or_404(new_job.id)
-    return jsonify(job_data.to_dict())
+    # db.session.add(new_job)
+    # db.session.commit()
+    # job_data = Jobs.query.get_or_404(new_job.id)
+    return "success"
 
 
 @posts_blueprint.route("/view_post/<post_id>")
