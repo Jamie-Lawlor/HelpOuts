@@ -6,20 +6,23 @@ posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
 
 @posts_blueprint.route("/add_project/")
-def post_page():
+def project_page():
     return render_template("/posts/add_project.html")
 
+@posts_blueprint.route("/add_job/")
+def post_page():
+    return render_template("/posts/add_job.html")
 
 @posts_blueprint.route("/view_post/")
 def view_post_page():
     return render_template("/posts/view_post.html")
 
 
-@posts_blueprint.route("/create_post", methods=["POST"])
-def create_post():
+@posts_blueprint.route("/create_project", methods=["POST"])
+def create_project():
     title = request.form.get("title")
     print("TITLE: ",title)
-    description = request.form.get("title")
+    description = request.form.get("description")
     print("DESCRIPTION: ",description)
     project_type = request.form.get("type")
     print("TYPE: ",project_type)
@@ -50,6 +53,33 @@ def create_post():
     # job_data = Jobs.query.get_or_404(new_job.id)
     return "success"
 
+@posts_blueprint.route("/create_job", methods=["POST"])
+def create_job():
+    title = request.form.get("title")
+    print("TITLE: ",title)
+    description = request.form.get("description")
+    print("DESCRIPTION: ",description)
+    area = request.form.get("area")
+    file = request.files.get("images")
+    image = file.read()
+    # Security & Validation 
+    
+    
+    # We get the id from the session which is set when the user logs in
+    new_job = Jobs(
+        helpee_id=3,
+        status="NA", # Not Accepted as default
+        area=area,
+        job_title=title,
+        job_description=description,
+        short_title="",
+        short_type="",
+    )
+    
+    db.session.add(new_job)
+    db.session.commit()
+    job_data = Jobs.query.get_or_404(new_job.id)
+    return jsonify(job_data.to_dict())
 
 @posts_blueprint.route("/view_post/<post_id>")
 def view_specific_post_page(post_id):
