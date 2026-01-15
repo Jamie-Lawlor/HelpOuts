@@ -1,0 +1,12 @@
+Resetting Flask Migrations
+
+1) Open helpouts project in VS Code, look for migrations folder and DELETE it
+2) Start XAMPP
+3) Open localhost
+4) On localhost, click on helpouts database
+5) Click SQL from the top menu
+6) Paste the following query - DROP DATABASE helpoutsdevdb01
+7) Paste the following query - CREATE DATABASE helpoutsdevdb01
+8) In visual studio terminal, cd to same directoy as app.py
+9) Run the following commands in this order - 
+    flask db upgrade
