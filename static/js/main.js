@@ -43,12 +43,7 @@ function send_project_data() {
 
 
     fetch("/create_project", { method: "POST", body: data })
-    // .then(response => response.text())
-    // .then(jsonData => {
-    //     data = JSON.parse(jsonData)
-    //     console.log(data.id)
-    //     window.location.replace(`/view_post/${data.id}`)
-    // })
+        .then(window.location.replace(`/home_page/`))
 }
 
 function send_job_data() {

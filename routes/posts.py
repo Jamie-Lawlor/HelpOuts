@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.modals import Jobs
+from db.modals import Projects, Jobs, ProjectJobs, CommunityProjects
 
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
@@ -24,34 +24,39 @@ def create_project():
     print("TITLE: ",title)
     description = request.form.get("description")
     print("DESCRIPTION: ",description)
-    project_type = request.form.get("type")
-    print("TYPE: ",project_type)
+    project_type_selected = request.form.get("type")
+    print("TYPE: ",project_type_selected)
     helpers = request.form.get("helpers")
     print("HELPERS: ",helpers)
-    start_date = request.form.get("start_date")
-    print("START DATE: ",start_date)
-    end_date = request.form.get("end_date")
-    print("END DATE: ",end_date)
-
+    start_date_selected = request.form.get("start_date")
+    print("START DATE: ",start_date_selected)
+    end_date_selected = request.form.get("end_date")
+    print("END DATE: ",end_date_selected)
     file = request.files.get("images")
-    image = file.read()
     # print("IMAGE_URL: ", image)
     # Security & Validation
 
-    # We get the id from the session which is set when the user logs in
-    # new_job = Jobs(
-    #     helpee_id=3,
-    #     status="NA",  # Not Accepted as default
-    #     job_title=title,
-    #     job_description=description,
-    #     short_title="",
-    #     short_type="",
-    # )
-
-    # db.session.add(new_job)
-    # db.session.commit()
-    # job_data = Jobs.query.get_or_404(new_job.id)
-    return "success"
+    new_project = Projects(
+        # HARDCODED
+        community_id=1,
+        project_title=title,  # Not Accepted as default
+        project_description=description,
+        project_type=project_type_selected,
+        number_of_helpers=helpers,
+        start_date = start_date_selected,
+        end_date = end_date_selected
+    )
+    db.session.add(new_project)
+    db.session.commit()
+    new_project_link = CommunityProjects(
+        # HARDCODED
+        community_id=1,
+        project_id = new_project.id
+    )
+    db.session.add(new_project_link)
+    db.session.commit()
+    new_project_data = Projects.query.get_or_404(new_project.id)
+    return jsonify(new_project_data.to_dict())
 
 @posts_blueprint.route("/create_job", methods=["POST"])
 def create_job():
@@ -61,13 +66,15 @@ def create_job():
     print("DESCRIPTION: ",description)
     area = request.form.get("area")
     file = request.files.get("images")
-    image = file.read()
+
     # Security & Validation 
-    
-    
+
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
-        helpee_id=3,
+        #HARDCODED
+        helper_id = 1,
+        helpee_id=2,
+        project_id = 1,
         status="NA", # Not Accepted as default
         area=area,
         job_title=title,
@@ -75,8 +82,14 @@ def create_job():
         short_title="",
         short_type="",
     )
-    
     db.session.add(new_job)
+    db.session.commit()
+    new_job_for_project = ProjectJobs(
+        #HARDCODED
+        project_id = 1,
+        job_id = new_job.id
+    )
+    db.session.add(new_job_for_project)
     db.session.commit()
     job_data = Jobs.query.get_or_404(new_job.id)
     return jsonify(job_data.to_dict())
