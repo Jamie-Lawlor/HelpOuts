@@ -70,6 +70,7 @@ function send_job_data() {
         })
 }
 
+
 function open_edit() {
     document.getElementById("edit_title").style.display = "block"
     document.getElementById("edit_description").style.display = "block"

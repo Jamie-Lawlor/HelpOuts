@@ -1,7 +1,7 @@
 
 INSERT INTO communities (id, name, area, description)
 VALUES
-(1, 'Dundalk Tidy Towns', 'Dundalk', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town. ');
+(1, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town. ');
 
 INSERT INTO projects(community_id, project_title, project_description, project_type, number_of_helpers, start_date, end_date)
 VALUES
