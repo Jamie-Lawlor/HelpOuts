@@ -78,6 +78,16 @@ function open_edit() {
 
 }
 
+function accept_job() {
+    // let user_id = document.getElementById("job_accepted").value
+    job_id = document.getElementById("job_id").value
+    // HARDCODED
+    let user_id = 1
+    dataArray = [job_id, user_id]
+    fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    .then(window.location.replace(`/home_page`))
+}
+
 function send_updated_data() {
     id = document.getElementById("job_id").value
     updated_title = document.getElementById("edit_title").value

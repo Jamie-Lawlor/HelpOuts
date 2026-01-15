@@ -123,3 +123,13 @@ def delete_post():
     db.session.delete(Jobs.query.filter_by(id=updated_data).first())
     db.session.commit()
     return ""
+
+@posts_blueprint.route("/job_accepted", methods =["POST"])
+def job_accepted():
+    data = request.json["data"]
+    job_id = data[0]
+    helper_id = data[1]
+    updated_post = Jobs.query.filter_by(id=job_id).first()
+    updated_post.helper_id = helper_id
+    db.session.commit()
+    return ""
