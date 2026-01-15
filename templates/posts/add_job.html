@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 <title>{% block title %}Add Post{% endblock %}</title>
 
@@ -9,48 +8,46 @@
 
         <div class="card shadow-sm mx-auto" style="width: 48rem;">
             <div class="card-body">
-                <form id="postForm">
+                <form id="job_form">
                     <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Project Title</label>
+                        <label for="title" class="form-label fw-semibold">Job Title</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <img src="/static/images/tools_icon.svg" width="25" height="25">
                             </span>
-                            <input type="text" id="helpout_title" name="helpout_title" class="form-control"
-                                placeholder="e.g Build a Community Park" aria-label="Helpout Title" id="title">
+                            <input type="text" id="job_title" name="job_title" class="form-control"
+                                placeholder="e.g Fix a leak" aria-label="Job Title" id="title">
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Description</label>
+                        <label for="description" class="form-label fw-semibold">Description</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <img src="/static/images/description_icon.svg" width="25" height="25">
                             </span>
-                            <input type="text" id="helpout_description" name="helpout_description" class="form-control"
-                                placeholder="Describe the Project Goal" aria-label="Helpout Title" id="title">
+                            <input type="text" id="job_description" name="job_description" class="form-control"
+                                placeholder="Describe the Task" aria-label="Job Description" id="description">
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="title" class="form-label fw-semibold">Area</label>
+                        <label for="area" class="form-label fw-semibold">Area</label>
                         <div class="input-group">
                             <span class="input-group-text">
                                 <img src="/static/images/location_icon.svg" width="25" height="25">
                             </span>
-                            <input type="text" id="helpout_area" name="helpout_area" class="form-control"
-                                placeholder="Your town or neighbourhood" aria-label="Helpout Title" id="title">
+                            <input type="text" id="job_area" name="job_area" class="form-control"
+                                placeholder="Your town or neighbourhood" aria-label="Job Area" id="area">
                         </div>
                     </div>
 
                     <hr class="my-4">
                     <h4>Add Photos</h4>
-                    <p class="text-muted mb-3">Show helpers your Project</p>
-                    <button class="btn btn-primary me-2 mr-3" href="#" role="button">
-                        <img src="/static/images/upload-solid-full.svg" width="22" height="22">
-                        Upload
-                    </button>
-                    <button class="btn btn-primary" onclick="send_form_data()">Post</button>
+                    <p class="text-muted mb-3">Show helpers your task</p>
+                    <input class="form-control" type="file" id="job_form_file_multiple">
+                    <div class="mb-4"></div>
+                    <button class="btn btn-primary" onclick="send_job_data()">Post</button>
                 </form>
             </div>
         </div>

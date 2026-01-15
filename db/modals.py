@@ -103,9 +103,9 @@ class Projects(db.Model):
     project_title = db.Column(db.String(100), nullable=False)
     project_description = db.Column(db.String(1000), nullable=False)
     project_type = db.Column(db.String(20), nullable=False)
-    maximum_helpers = db.Column(db.Integer, nullable=False)
-    minimum_helpers = db.Column(db.Integer, nullable=False)
+    number_of_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
+    end_date = db.Column(db.DateTime, nullable=True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

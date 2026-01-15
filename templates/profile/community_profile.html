@@ -3,146 +3,121 @@
 
 {% block body %}
 <div class="profile-page-header pb-5 ">
-<div class="header-bg d-flex align-items-start p-3">
+        <div class="header-bg d-flex align-items-start p-3">
 
-</div>
-<div class="container">
-        <div class="card profile-card shadow-sm border-0 text-center-mb mx-auto" style="max-width: 750px;">
-                <div class="position-absolute top-0 end-0 p-3">
-                        <button class="btn btn-primary rounded-pill px-4" type="button">Join</button>
-                </div>
+        </div>
+        <div class="container">
+                <div class="card profile-card shadow-sm border-0 text-center-mb mx-auto" style="max-width: 750px;">
+                        <div class="position-absolute top-0 end-0 p-3">
+                                <button class="btn btn-primary rounded-pill px-4" type="button">Join</button>
+                        </div>
 
-                <div class="profile-img-container text-center">
-                        <img src="/static/images/user_icon.svg" class="rounded-circle border border-4 border-white shadow" width="150px">
-                </div>
-                <div class="card-body pt-0">
-                        <h4 class="fw-bold mb-0">Dundalk Community</h4>
-                        <p class="text-primary-small">Dundalk, Co.Louth</p>
+                        <div class="profile-img-container text-center">
+                                <img src="/static/images/user_icon.svg"
+                                        class="rounded-circle border border-4 border-white shadow" width="150px">
+                        </div>
+                        <div class="card-body pt-0">
+                                <h4 class="fw-bold mb-0">{{ community.name}}</h4>
+                                <p class="text-primary-small">{{ community.area }}</p>
 
-                        <div class="row mt-4">
-                                <div class="col-4 border-end">
-                                        <small class="text-muted text-uppercase d-block" style="font-size: 12px;">Helpers</small>
-                                        <span class="fw-bold"> 100</span>
-                                 </div>
-                                <div class="col-4 border-end">
-                                        <small class="text-muted text-uppercase d-block" style="font-size: 12px;">Active Projects</small>
-                                        <span class="fw-bold"> 10</span>
-                                </div>
-                                <div class="col-4 border-end">
-                                        <small class="text-muted text-uppercase d-block" style="font-size: 12px;">Jobs</small>
-                                        <span class="fw-bold"> 30</span>
+                                <div class="row mt-4">
+                                        <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block"
+                                                        style="font-size: 12px;">Helpers</small>
+                                                <span class="fw-bold"> 100</span>
+                                        </div>
+                                        <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block"
+                                                        style="font-size: 12px;">Active Projects</small>
+                                                <span class="fw-bold"> 10</span>
+                                        </div>
+                                        <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block"
+                                                        style="font-size: 12px;">Jobs</small>
+                                                <span class="fw-bold"> 30</span>
+                                        </div>
                                 </div>
                         </div>
                 </div>
+
+                <h5 class="fw-bold mb-4 mt-4">
+                        Projects
+                </h5>
+                <div class="d-flex flex-nowrap overflow-auto pb-3 gap-3 no-scrollbar">
+
+                        <a href="/view_post" class="text-decoration-none text-dark">
+                                <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
+                                        <img src="/static/images/park.png" class="rounded"
+                                                style="height: 120px; object-fit:cover;">
+                                        <div class="pt-2 text-center">
+                                                <p class="mb-0 fw-bold small">
+                                                        {{ projects[0].project_title }}
+                                                </p>
+                                                <small class="tex-muted" style="font-size:10px;">15 Jobs
+                                                        Available</small>
+                                        </div>
+                                </div>
+                        </a>
+
+                        <a href="/view_post" class="text-decoration-none text-dark">
+                                <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
+                                        <img src="/static/images/social_club.png" class="rounded"
+                                                style="height: 120px; object-fit:cover;">
+                                        <div class="pt-2 text-center">
+                                                <p class="mb-0 fw-bold small">
+                                                        Social Club
+                                                </p>
+                                                <small class="tex-muted" style="font-size:10px;">10 Jobs
+                                                        Available</small>
+                                        </div>
+                                </div>
+                        </a>
+
+                        <a href="/view_post" class="text-decoration-none text-dark">
+                                <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
+                                        <img src="/static/images/food_drive.png" class="rounded"
+                                                style="height: 120px; object-fit:cover;">
+                                        <div class="pt-2 text-center">
+                                                <p class="mb-0 fw-bold small">
+                                                        Food Drive
+                                                </p>
+                                                <small class="tex-muted" style="font-size:10px;">3 Jobs
+                                                        Available</small>
+                                        </div>
+                                </div>
+                        </a>
+                </div>
+
+                <h5 class="fw-bold mt-4">
+                        Active Projects
+                </h5>
+                <h5 class="fw-bold mt-4">Help Needed (Jobs)</h5>
+
+                <div class="list-group list-group-flush shadow-sm-rounded-3">
+                        {% for i in range(jobs|length) %}
+                        <a href="#"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                                <div>
+                                        <h6 class="mb-0 fw-bold">{{ jobs[i].job_title }}</h6>
+                                        {% for j in range(project_names|length) %}
+                                        {% if project_names[j].id == jobs[i].project_id %}
+                                        <small
+                                                class="text-muted text-primary">{{ project_names[j].project_title }}</small>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                                <span class="badge bg-success rounded-pill">Available</span>
+                        </a>
+                        {% endfor %}
+                </div>
+
+                <h5 class="fw-bold mt-4 mb-3">
+                        Information
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                        <span class="bagde rounded-pill">GoFundMe Link</span>
+                </div>
         </div>
-        
-<h5 class="fw-bold mb-4 mt-4">
-        Projects
-</h5>
-<div class="d-flex flex-nowrap overflow-auto pb-3 gap-3 no-scrollbar">
-
-        <a href="/view_post" class="text-decoration-none text-dark">
-        <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
-                <img src="/static/images/park.png" class="rounded" style="height: 120px; object-fit:cover;">
-                <div class="pt-2 text-center">
-                <p class="mb-0 fw-bold small">
-                      Community Park
-                </p>
-                <small class="tex-muted" style="font-size:10px;">15 Jobs Available</small> 
-                </div>
-        </div>    
-        </a>    
-        
-        <a href="/view_post" class="text-decoration-none text-dark">
-         <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
-                <img src="/static/images/social_club.png" class="rounded" style="height: 120px; object-fit:cover;">
-                <div class="pt-2 text-center">
-                <p class="mb-0 fw-bold small">
-                      Social Club
-                </p>
-                <small class="tex-muted" style="font-size:10px;">10 Jobs Available</small> 
-                </div>
-        </div>   
-        </a>
-
-        <a href="/view_post" class="text-decoration-none text-dark">
-            <div class="card border-0 shadow-sm p-2" style="min-width: 160px">
-                <img src="/static/images/food_drive.png" class="rounded" style="height: 120px; object-fit:cover;">
-                <div class="pt-2 text-center">
-                <p class="mb-0 fw-bold small">
-                     Food Drive
-                </p>
-                <small class="tex-muted" style="font-size:10px;">3 Jobs Available</small> 
-                </div>
-        </div>   
-        </a>
-        </div>
-
-<h5 class="fw-bold mt-4">
-        Active Projects
-</h5>
-<h5 class="fw-bold mt-4">Help Needed (Jobs)</h5>
-
-<div class="list-group list-group-flush shadow-sm-rounded-3">
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Planting Trees</h6>
-                        <small class="text-muted text-primary">Community Park Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-                
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Clean Up</h6>
-                        <small class="text-muted text-primary">Community Park Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Install Swings</h6>
-                        <small class="text-muted text-primary">Community Park Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Clean Up</h6>
-                        <small class="text-muted text-primary">Social Club Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Servers</h6>
-                        <small class="text-muted text-primary">Food Drive Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-         <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Clean Up</h6>
-                        <small class="text-muted text-primary">Food Drive Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-         <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                <div>
-                        <h6 class="mb-0 fw-bold">Sort Items</h6>
-                        <small class="text-muted text-primary">Food Drive Project</small>
-                </div>
-                <span class="badge bg-success rounded-pill">Available</span>
-        </a>
-        </div>   
-
-        <h5 class="fw-bold mt-4 mb-3">
-                Information
-        </h5>
-        <div class="d-flex flex-wrap gap-2">
-                <span class="bagde rounded-pill">GoFundMe Link</span>
-        </div>
-                </div>
 </div>
 </div>
 

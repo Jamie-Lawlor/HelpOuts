@@ -2,83 +2,83 @@
 
 <title>{% block title %}View Post{% endblock %}</title>
 
-    {% block body %}
-    <input class="hide" id="job_id" value="{{ job_data.id }}" disabled>
+{% block body %}
+<input class="hide" id="job_id" value="{{ job_data.id }}" disabled>
 
+<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+    <img src="/static/images/user_image.jpg" width="70" height="70" class="rounded-circle">
+    <h1 class="">Jane's Helpout</h1>
+</div>
+
+<div class="d-flex flex-column justify-content-center align-items-center mt-3">
     <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <img src="/static/images/user_image.jpg" width="70" height="70" class="rounded-circle">
-        <h1 class="">Jane's Helpout</h1>
-    </div>
-
-    <div class="d-flex flex-column justify-content-center align-items-center mt-3">
-        <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-            <h2>{{ job_data.job_title }}</h2>
-            <a class="ml-3">
-                <img src="/static/images/save.svg" width="25" height="25">
-                Save
-            </a>
-        </div>
-        <!-- Temporary -->
-
-        <input type="text" id="edit_title" class="hide mx-2" placeholder="Edit title">
-        <div class="mb-3">
-            <img src="/static/images/job_image.png" width="200" height="200" class="rounded">
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <div class="card bg-light" style="max-width: 450px;">
-            <div class="d-flex align-items-center">
-                <img src="/static/images/description_icon.svg" width="25" height="25" class="mr-3">
-                <p>
-                    {{ job_data.job_description }}
-                </p>
-            </div>
-        </div>
-        <!-- Temporary -->
-
-        <input type="text" id="edit_description" class="hide mx-2" placeholder="Edit Description">
-
-    </div>
-
-    <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <div class="card bg-light rounded" style="max-width: 450px;">
-            <div class="d-flex align-items-center">
-                <img src="/static/images/location_icon.svg" width="25" height="25" class="mr-3">
-                <p>
-                    {{ job_data.area }}
-                </p>
-            </div>
-        </div>
-        <!-- Temporary -->
-        <input type="text" id="edit_area" class="hide mx-2" placeholder="Edit Area">
-    </div>
-
-    <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <div class="card bg-light rounded" style="max-width: 450px;">
-            <div class="flex-group-1">
-                <p class="mb-3">
-                    Posted: {{ job_data.created_date }}
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <button type="button" class="btn btn-primary mx-2">
-            Message
-        </button>
-
-        <a class="btn btn-primary mx-2" href="/view_post/">
-            Help
+        <h2>{{ job_data.job_title }}</h2>
+        <a class="ml-3">
+            <img src="/static/images/save.svg" width="25" height="25">
+            Save
         </a>
-        <button onclick="open_edit()">Edit post</button>
-        <button class="hide mx-2" id="edit_submit" onclick="send_updated_data()">Finish</button>
-        <button class="mx-2" onclick="delete_post_data()">Delete post</button>
-
     </div>
+    <!-- Temporary -->
 
-    <!-- <h4>{{ job_data }}</h4> -->
+    <input type="text" id="edit_title" class="hide mx-2" placeholder="Edit title">
+    <div class="mb-3">
+        <img src="/static/images/job_image.png" width="200" height="200" class="rounded">
+    </div>
+</div>
 
-    {% endblock %}
+<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+    <div class="card bg-light" style="max-width: 450px;">
+        <div class="d-flex align-items-center">
+            <img src="/static/images/description_icon.svg" width="25" height="25" class="mr-3">
+            <p>
+                {{ job_data.job_description }}
+            </p>
+        </div>
+    </div>
+    <!-- Temporary -->
+
+    <input type="text" id="edit_description" class="hide mx-2" placeholder="Edit Description">
+
+</div>
+
+<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+    <div class="card bg-light rounded" style="max-width: 450px;">
+        <div class="d-flex align-items-center">
+            <img src="/static/images/location_icon.svg" width="25" height="25" class="mr-3">
+            <p>
+                {{ job_data.area }}
+            </p>
+        </div>
+    </div>
+    <!-- Temporary -->
+    <input type="text" id="edit_area" class="hide mx-2" placeholder="Edit Area">
+</div>
+
+<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+    <div class="card bg-light rounded" style="max-width: 450px;">
+        <div class="flex-group-1">
+            <p class="mb-3">
+                Posted: {{ job_data.created_date }}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+    <button type="button" class="btn btn-primary mx-2">
+        Message
+    </button>
+
+    <button type="button" id="job_accepted" class="btn btn-primary mx-2" onclick="accept_job()">
+        Accept
+    </button>
+    <button onclick="open_edit()">Edit post</button>
+    <button class="hide mx-2" id="edit_submit" onclick="send_updated_data()">Finish</button>
+    <button class="mx-2" onclick="delete_post_data()">Delete post</button>
+
+</div>
+
+<!-- <h4>{{ job_data }}</h4> -->
+
+{% endblock %}
