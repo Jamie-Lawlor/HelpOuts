@@ -94,9 +94,11 @@ def create_job():
     job_data = Jobs.query.get_or_404(new_job.id)
     return jsonify(job_data.to_dict())
 
-@posts_blueprint.route("/view_post/<post_id>")
-def view_specific_post_page(post_id):
-    job_data = Jobs.query.get_or_404(post_id).to_dict()
+@posts_blueprint.route("/view_post/<post_title>")
+def view_specific_post_page(post_title):
+    revert_format = post_title.replace("_", " ").title()
+
+    job_data = Jobs.query.filter_by(job_title=revert_format).first_or_404().to_dict()
     return render_template("/posts/view_post.html", job_data=job_data)
 
 
