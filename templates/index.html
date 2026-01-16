@@ -10,4 +10,11 @@
                 <a class="btn btn-primary" href="/register_page/" role="button">Register</a>
             </div>
         </div>
+        <script type="text/javascript">
+		registerServiceWorker(
+			"/static/js/service_worker.js",
+			`{{ vapid_key }}`,
+			"/api/push-subscriptions"
+		);
+	</script>
     {% endblock %}
