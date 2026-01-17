@@ -1,8 +1,57 @@
 {% extends "base.html" %}
-<title>{% block title %}Add Post{% endblock %}</title>
+<title>{% block title %}Inbox{% endblock %}</title>
 
         <body>
                {%  block body %}
+               <div class="container mt-4" style="max-width: 750px;">
+                        <h1 class="text-center fw-bold mb-4">Inbox</h1>
+
+                        <ul class="nav nav-fill border-bottom-0" id="inboxOptions">
+                                <li class="nav-item">
+                                        <a class="nav-link text-decoration-none text-dark" href="/inbox">Messages 2</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link text-decoration-none text-dark" href="/message_chat">Notifications 3</a>
+                                </li>
+                        </ul>
+
+                        <div class="tab-content border border-top-0 rounded-bottom shadow-sm">
+                                <div class="tab-pane fade show active" id="messages">
+                                        <div class="list-group list-group-flush">
+                                                <!-- link to user chat -->
+                                                <a href="/message_chat" class="list-group-item list-group-item-action p-3">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                                <div class="d-flex align-items-center">
+                                                                         <img src="/static/images/user_image_2.png" width="60" height="60" class="rounded-circle me-3">
+                                                                        <div>
+                                                                        <h6 class="mb-0 fw-bold">RyanOHare1</h6>
+                                                                        <small class="text-muted mt-1">
+                                                                                Hi, I would love to work with Tidy Towns. What projects are available?
+                                                                        </small>
+                                                                        </div>
+                                                                </div>
+                                                                <small class="text-muted">2 hours ago</small>
+                                                        </div>
+                                                </a>
+
+                                                   <a href="/message_chat" class="list-group-item list-group-item-action p-3">
+                                                        <div class="d-flex w-100 justify-content-between">
+                                                                <div class="d-flex align-items-center">
+                                                                         <img src="/static/images/user_image.jpg" width="60" height="60" class="rounded-circle me-3">
+                                                                        <div>
+                                                                        <h6 class="mb-0 fw-bold">EmiliaRamsey02</h6>
+                                                                        <small class="text-muted mt-1">
+                                                                                Hi, I'm new to the area and I would love to get involved in the community...
+                                                                        </small>
+                                                                        </div>
+                                                                </div>
+                                                                <small class="text-muted">1 day ago</small>
+                                                        </div>
+                                                </a>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
                 {% endblock %}
         </body>
 

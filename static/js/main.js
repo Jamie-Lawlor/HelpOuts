@@ -105,3 +105,4 @@ function delete_post_data() {
         .then(window.location.replace(`/home_page/`))
 
 }
+
