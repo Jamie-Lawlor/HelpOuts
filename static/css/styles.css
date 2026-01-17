@@ -31,3 +31,21 @@
 
 .no-scrollbar::-webkit-scrollbar {display: none;}
 
+.helper-cards{
+    border: 2px solid#D57A44 !important;
+    border-radius: 5px !important;
+}
+
+.helper-cards .list-group-item{
+    background-color: transparent !important;
+    border:none;
+}
+
+.helper-button{
+    background-color: #3D6978;
+    color: white;
+}
+
+div.card.helper-cards{
+    background-color: #FFF8F8;
+}
