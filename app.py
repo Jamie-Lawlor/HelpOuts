@@ -40,5 +40,10 @@ def settings_page():
     return render_template("settings.html")
 
 
+@app.route("/helper_settings/")
+def helper_settings_page():
+    return render_template("helper_settings.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

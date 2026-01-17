@@ -16,7 +16,9 @@
     </head>
 
     <body>
-        {% include 'includes/nav_bar.html' %}
+        {% block navbar %}
+        {% include "includes/nav_bar.html" %}
+        {% endblock %}
 
         {% block body %}
         {% endblock %}
