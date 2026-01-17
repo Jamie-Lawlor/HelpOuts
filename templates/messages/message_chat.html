@@ -20,7 +20,6 @@
                     
                 <div class="border rounded-bottom shadow-sm bg-white">
                     <div class="p-4" style="height:500px;">
-
                         <div class="d-flex mb-4 gap-2">
                              <img src="/static/images/user_image_2.png" width="50" height="50" class="rounded-circle me-3">
                             <div class="d-flex flex-column">
@@ -34,7 +33,9 @@
                             </div>
                         </div>
                 </div>                    
+                <div id="message_container">
 
+                
                 <div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
@@ -47,15 +48,69 @@
                     </div>
                 <img src="/static/images/community_image.png" width="50" height="50" class="rounded-circle me-3">
                 </div>
-
+</div>
+                <form id="message_form">
                 <div class="p-3 bg-white border-top mb-3">
                     <div class="input-group align-items-center bg-light rounded-pill">
-                        <input type="text" class="form-control border-0" placeholder="Enter your message...">
-                        <button class="btn btn-primary">
+                        <input id="message" type="text" class="form-control border-0" placeholder="Enter your message...">
+                        <button class="btn btn-primary" onclick = "get_message()">
                             Send
                         </button>
                     </div>
                 </div>
+            </form>
+            </div>
+            <script>
+                var socket = io.connect("http://127.0.0.1:5000/")
+                function get_message(){
+                document.getElementById("message_form").addEventListener("submit", function (e) {
+                e.preventDefault()
+                document.getElementById("message").value = ""
+                })
+                message = document.getElementById("message").value
+                console.log("MESSAGE: ",message)
+                socket.emit('message_sent', message)    
+                }
+
+            socket.on( 'display_message', function( msg ) {
+        console.log("DISPLAY_MESSAGE FUNCTION: ",msg)
+        message_container = document.getElementById("message_container")
+        new_message_parent_div = document.createElement('div')
+        new_message_parent_div.className = 'd-flex mb-4 gap-2 justify-content-end text-end'
+
+        new_message_child_div = document.createElement('div')
+        new_message_child_div.className = 'd-flex flex-column align-items-end'
+
+        new_message_child_div_2 = document.createElement('div')
+        new_message_child_div_2.className = 'd-flex align-items-baseline gap-2 mb-1'
+
+        new_message_span = document.createElement('span')
+        new_message_span.className = 'fw-bold small'
+        new_message_span.textContent = "You"
+
+        new_message_span_2 = document.createElement('span')
+        new_message_span_2.className = "text-muted"
+        new_message_span_2.textContent = "15:30"
+
+        new_message_child_div_3 = document.createElement("div")
+        new_message_child_div_3.className = "p-3 shadow-sm"
+        new_message_child_div_3.textContent = msg
+
+        new_message_img = document.createElement('img')
+        new_message_img.src = "/static/images/community_image.png"
+        new_message_img.className = "rounded-circle me-3"
+        new_message_img.style.width = "50px"
+        new_message_img.style.height = "50px"
+
+        new_message_parent_div.appendChild(new_message_child_div)
+        new_message_parent_div.appendChild(new_message_child_div_2)
+        new_message_parent_div.appendChild(new_message_span)
+        new_message_parent_div.appendChild(new_message_span_2)
+        new_message_parent_div.appendChild(new_message_child_div_3)
+        new_message_parent_div.appendChild(new_message_img)
+        message_container.appendChild(new_message_parent_div)
+      })
+            </script>
 
                 {% endblock %}
 

@@ -9,13 +9,14 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
+from flask_socketio import SocketIO
 load_dotenv()
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URL")
 app.secret_key = os.getenv("SECRET_KEY")
-
+socketio = SocketIO(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(login_blueprint)
@@ -44,6 +45,17 @@ def settings_page():
 def helper_settings_page():
     return render_template("helper_settings.html")
 
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
+@socketio.on("connect")
+def handle_connect():
+    print("Socket connected!")
+
+@socketio.on("message_sent")
+def message_sent(message):
+    print("Here is your message: ", message)
+    socketio.emit('display_message', message)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True)
