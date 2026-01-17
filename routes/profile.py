@@ -4,9 +4,11 @@ from db.modals import Projects, Communities, Jobs
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
-@profile_blueprint.route("/community_profile/<community_id>")
-def community_profile_page(community_id):
-    community_data = Communities.query.get_or_404(community_id).to_dict()
+@profile_blueprint.route("/community_profile/<community_name>")
+def community_profile_page(community_name):
+    revert_format = community_name.replace("_", " ").title()
+    community_data = Communities.query.filter_by(name=revert_format).first_or_404()
+    community_id = community_data.id
     project_data = Projects.query.where(Projects.community_id == community_id).all()
     all_job_data = (
         Jobs.query.join(Projects, Jobs.project_id == Projects.id)

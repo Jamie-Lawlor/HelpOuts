@@ -129,3 +129,10 @@ class CommunityProjects(db.Model):
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
+class Subscriptions(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    subscription_json = db.Column(db.String(1000), nullable = False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

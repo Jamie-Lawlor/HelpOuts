@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.modals import Projects, Jobs, ProjectJobs, CommunityProjects
+from db.modals import Projects, Jobs, ProjectJobs, CommunityProjects, Users, Subscriptions
+import os
+import json
+from pywebpush import webpush, WebPushException
+
 
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
@@ -94,10 +98,12 @@ def create_job():
     job_data = Jobs.query.get_or_404(new_job.id)
     return jsonify(job_data.to_dict())
 
-@posts_blueprint.route("/view_post/<post_id>")
-def view_specific_post_page(post_id):
-    job_data = Jobs.query.get_or_404(post_id).to_dict()
-    return render_template("/posts/view_post.html", job_data=job_data)
+@posts_blueprint.route("/view_post/<post_title>")
+def view_specific_post_page(post_title):
+    revert_format = post_title.replace("_", " ").title()
+    vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
+    job_data = Jobs.query.filter_by(job_title=revert_format).first_or_404().to_dict()
+    return render_template("/posts/view_post.html", job_data=job_data, vapid_key = vapid_key)
 
 
 @posts_blueprint.route("/edit_post", methods=["POST"])
@@ -133,3 +139,40 @@ def job_accepted():
     updated_post.helper_id = helper_id
     db.session.commit()
     return ""
+
+@posts_blueprint.route("/send_job_accepted_notification", methods = ["POST"])
+def send_notification():
+    data = request.json["data"]
+    job_id = data[0]
+    helper_id = data[1]
+    user_data = Users.query.get_or_404(helper_id)
+    job_accepted = Jobs.query.get_or_404(job_id)
+    subscriptions = Subscriptions.query.all()
+    results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has accepted job: \"{job_accepted.job_title}\"")
+    print("USERID: ",job_accepted.job_title)
+    return ""
+
+def trigger_push_notifications_for_admin(subscriptions, title, body):
+    return [trigger_push_notification(subscription, title, body)
+            for subscription in subscriptions]
+
+def trigger_push_notification(push_subscription, title, body):
+    try:
+        response = webpush(
+            subscription_info=json.loads(push_subscription.subscription_json),
+            data=json.dumps({"title": title, "body": body}),
+            vapid_private_key=os.getenv("VAPID_PRIVATE_KEY"),
+            vapid_claims={
+                "sub": os.getenv("VAPID_CLAIM_EMAIL")
+            }
+        )
+        return response.ok
+    except WebPushException as ex:
+        if ex.response and ex.response.json():
+            extra = ex.response.json()
+            print("Remote service replied with a {}:{}, {}",
+                  extra.code,
+                  extra.errno,
+                  extra.message
+                  )
+        return False

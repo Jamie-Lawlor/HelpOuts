@@ -7,8 +7,8 @@ from routes.login import login_blueprint
 from routes.messages import messages_blueprint
 from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
+from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
-
 load_dotenv()
 
 
@@ -16,14 +16,13 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URL")
 app.secret_key = os.getenv("SECRET_KEY")
 
-
 db.init_app(app)
 migrate = Migrate(app, db)
 app.register_blueprint(login_blueprint)
 app.register_blueprint(messages_blueprint)
 app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
-
+app.register_blueprint(subscriptions_blueprint)
 
 @app.route("/")
 def index():
