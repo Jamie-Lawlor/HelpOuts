@@ -9,7 +9,6 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
-from pywebpush import webpush, WebPushException
 load_dotenv()
 
 
@@ -28,8 +27,7 @@ app.register_blueprint(subscriptions_blueprint)
 @app.route("/")
 def index():
     session["id"] = 3
-    vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
-    return render_template("index.html", vapid_key = vapid_key)
+    return render_template("index.html")
 
 
 @app.route("/home_page/")

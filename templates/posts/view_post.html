@@ -79,6 +79,12 @@
 
 </div>
 
-<!-- <h4>{{ job_data }}</h4> -->
+<script type="text/javascript">
+		registerServiceWorker(
+			"/static/js/service_worker.js",
+			`{{ vapid_key }}`,
+			"/api/push-subscriptions"
+		);
+	</script>
 
 {% endblock %}

@@ -82,10 +82,11 @@ function accept_job() {
     // let user_id = document.getElementById("job_accepted").value
     job_id = document.getElementById("job_id").value
     // HARDCODED
-    let user_id = 1
-    dataArray = [job_id, user_id]
+    let helper_id = 2
+    dataArray = [job_id, helper_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
-    .then(window.location.replace(`/home_page`))
+    fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    // .then(window.location.replace(`/home_page`))
 }
 
 function send_updated_data() {
