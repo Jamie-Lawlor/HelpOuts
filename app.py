@@ -9,7 +9,7 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room
 load_dotenv()
 
 
@@ -51,6 +51,11 @@ def messageReceived(methods=['GET', 'POST']):
 @socketio.on("connect")
 def handle_connect():
     print("Socket connected!")
+
+@socketio.on("join")
+def on_join(data):
+    return ""
+
 
 @socketio.on("message_sent")
 def message_sent(message):
