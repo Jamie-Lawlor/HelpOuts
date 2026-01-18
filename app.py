@@ -25,6 +25,7 @@ app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
 
+
 @app.route("/")
 def index():
     session["id"] = 3
