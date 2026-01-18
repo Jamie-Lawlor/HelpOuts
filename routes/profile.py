@@ -31,3 +31,27 @@ def community_profile_page(community_name):
 @profile_blueprint.route("/helper_profile/")
 def helper_profile_page():
     return render_template("/profile/helper_profile.html")
+
+
+@profile_blueprint.route("/settings/<community_name>")
+def helper_settings_page(community_name):
+    revert_format = community_name.replace("_", " ").title()
+    community_data = Communities.query.filter_by(name=revert_format).first_or_404()
+    community_id = community_data.id
+    project_data = Projects.query.where(Projects.community_id == community_id).all()
+    all_job_data = (
+        Jobs.query.join(Projects, Jobs.project_id == Projects.id)
+        .where(Projects.community_id == community_id)
+        .all()
+    )
+    # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
+    get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
+    print("LENGTH: ", len(all_job_data))
+    print("LENGTH: ", len(get_project_names))
+    return render_template(
+        "/settings.html",
+        community=community_data,
+        projects=project_data,
+        jobs=all_job_data,
+        project_names=get_project_names,
+    )

@@ -9,6 +9,7 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
@@ -24,6 +25,7 @@ app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
 
+
 @app.route("/")
 def index():
     session["id"] = 3
@@ -38,11 +40,6 @@ def home_page():
 @app.route("/settings/")
 def settings_page():
     return render_template("settings.html")
-
-
-@app.route("/helper_settings/")
-def helper_settings_page():
-    return render_template("helper_settings.html")
 
 
 if __name__ == "__main__":
