@@ -9,7 +9,7 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
-from flask_socketio import SocketIO, join_room, leave_room
+from flask_socketio import SocketIO, join_room, leave_room, send
 load_dotenv()
 
 
@@ -48,26 +48,31 @@ def helper_settings_page():
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
-@socketio.on("connect")
-def handle_connect():
-    print("Socket connected!")
+@socketio.on("join_room")
+def handle_connect(data):
+    user = data["user"]
+    room = data["room"]
+    join_room(room)
+    send(user + ' has entered the room.', to=room)
+    print(user + " has joined the room. ")
 
-@socketio.on("join")
-def on_join(data):
-    return ""
+# @socketio.on("join")
+# def on_join(data):
+#     username = 
 
 
-@socketio.on("message_sent")
-def message_sent(message):
-    message = Messages(
-        sender_id=session.get("id"),
-        reciever_id=5,
-        content=message
-    )
-    db.session.add(message)
-    db.session.commit()
-    print("Here is your message: ", message)
-    socketio.emit('display_message', message)
+# @socketio.on("message_sent")
+# def message_sent(message):
+#     # message = Messages(
+#     #     sender_id=session.get("id"),
+#     #     reciever_id=5,
+#     #     content=message
+#     # )
+#     # db.session.add(message)
+#     # db.session.commit()
+#     print("id: ",session.get("id"))
+#     print("Here is your message: ", message)
+#     socketio.emit('display_message', message)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

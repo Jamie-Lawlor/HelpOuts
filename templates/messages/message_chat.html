@@ -61,7 +61,14 @@
             </form>
             </div>
             <script>
-                var socket = io.connect("http://127.0.0.1:5000/")
+                var socket = io()
+                var user = {}
+                socket.on('connect', function() {
+                    socket.emit('join_room', {
+                        'user': localStorage.getItem("user_id"),
+                        'room': "joining_community"
+                    })
+                })
                 function get_message(){
                 document.getElementById("message_form").addEventListener("submit", function (e) {
                 e.preventDefault()
