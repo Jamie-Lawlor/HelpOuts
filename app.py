@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session
 import os
 from db.database import db
-from db.modals import Users, Messages
+from db.modals import Communities, Users, Messages
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -10,6 +10,7 @@ from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
 from flask_socketio import SocketIO, join_room, leave_room, send
+import datetime
 load_dotenv()
 
 
@@ -46,34 +47,43 @@ def settings_page():
 def helper_settings_page():
     return render_template("helper_settings.html")
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
 
 @socketio.on("join_room")
-def handle_connect(data):
-    user = data["user"]
-    room = data["room"]
+def handle_connect():
+    session["room"] = "user_3_user_5_direct_messaging"
+    room = session.get("room")
     join_room(room)
-    send(user + ' has entered the room.', to=room)
-    print(user + " has joined the room. ")
-
-# @socketio.on("join")
-# def on_join(data):
-#     username = 
 
 
-# @socketio.on("message_sent")
-# def message_sent(message):
-#     # message = Messages(
-#     #     sender_id=session.get("id"),
-#     #     reciever_id=5,
-#     #     content=message
-#     # )
-#     # db.session.add(message)
-#     # db.session.commit()
-#     print("id: ",session.get("id"))
-#     print("Here is your message: ", message)
-#     socketio.emit('display_message', message)
+
+@socketio.on("message_sent")
+def message_sent(data):
+    date = datetime.datetime.now()
+    room = session.get("room")
+    sender_id = data["sender_id"]
+    receiver_id = data["receiver_id"]
+    if sender_id == "1":
+        sender_data = Communities.query.get_or_404(sender_id)
+    else:
+        sender_data = Users.query.get_or_404(sender_id)
+    
+    message = data["message"]
+
+    messageContent = {
+        "user": sender_data.name,
+        "message": message,
+        "sent": date.strftime("%H:%M"),
+        "profile_picture":sender_data.profile_picture
+    }
+    message = Messages(
+        sender_id=sender_id,
+        receiver_id=receiver_id,
+        content=message,
+        timestamp = db.func.current_timestamp()
+    )
+    db.session.add(message)
+    db.session.commit()
+    send(messageContent, to = room)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

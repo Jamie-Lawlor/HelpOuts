@@ -35,3 +35,8 @@ VALUES
 INSERT INTO reviews (helper_id, reviewer_id, job_id, star_rating, review)
 VALUES
 (2, 1, 1, 5, 'Ryan was fantastic! He helped me with my home repairs and was very professional.');
+
+INSERT INTO messages (sender_id, receiver_id, content)
+VALUES
+(2, 1, "Hi, I would love to work with Tidy Towns. What projects are available?"),
+(1, 2,"That's great Ryan. We have lots of projects waiting to kick off, is there anything in particular you would be interested in?");

@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, request, jsonify
+from db.database import db
+from db.modals import Communities, Users
 messages_blueprint = Blueprint("messages", __name__, template_folder="templates")
 
 
@@ -14,4 +15,4 @@ def message_chat():
 
 @messages_blueprint.route("/temp_inbox/")
 def temp_inbox_page():
-    return render_template("/messages/temp_inbox.html")
+    return render_template("/messages/temp_inbox.html")   

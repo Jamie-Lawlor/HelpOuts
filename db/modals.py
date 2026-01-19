@@ -13,7 +13,7 @@ class Users(db.Model):
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
-
+    profile_picture = db.Column(db.String(1000), nullable =False)
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -93,7 +93,7 @@ class Communities(db.Model):
     name = db.Column(db.String(100), nullable=False)
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
-
+    profile_picture = db.Column(db.String(1000), nullable =False)
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     

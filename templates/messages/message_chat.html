@@ -36,7 +36,7 @@
                 <div id="message_container">
 
                 
-                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                <!-- <div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">You</span>
@@ -47,76 +47,54 @@
                         </div>
                     </div>
                 <img src="/static/images/community_image.png" width="50" height="50" class="rounded-circle me-3">
+                </div> -->
+                <div class="messages" id="messages"></div>
+
                 </div>
 </div>
-                <form id="message_form">
                 <div class="p-3 bg-white border-top mb-3">
                     <div class="input-group align-items-center bg-light rounded-pill">
-                        <input id="message" type="text" class="form-control border-0" placeholder="Enter your message...">
-                        <button class="btn btn-primary" onclick = "get_message()">
+                        <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
+                        <button class="btn btn-primary" onclick = "send_message()">
                             Send
                         </button>
                     </div>
                 </div>
-            </form>
             </div>
             <script>
+                let time = new Date()
                 var socket = io()
                 var user = {}
                 socket.on('connect', function() {
-                    socket.emit('join_room', {
-                        'user': localStorage.getItem("user_id"),
-                        'room': "joining_community"
-                    })
+                    socket.emit('join_room')
                 })
-                function get_message(){
-                document.getElementById("message_form").addEventListener("submit", function (e) {
-                e.preventDefault()
-                document.getElementById("message").value = ""
-                })
-                message = document.getElementById("message").value
-                console.log("MESSAGE: ",message)
-                socket.emit('message_sent', message)    
-                }
+                function create_message(user, message_received, sent, profile_picture){
+                message = document.getElementById("messages")
+                messageContent = `
+                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                    <div class="d-flex flex-column align-items-end">
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fw-bold small">${user}</span>
+                            <span class="text-muted">${sent}</span>
+                        </div>
+                        <div class="p-3 shadow-sm">
+                        ${message_received}
+                        </div>
+                    </div>
+                '<img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">'
+                </div>`
+            message.innerHTML += messageContent     
+            }
 
-            socket.on( 'display_message', function( msg ) {
-        console.log("DISPLAY_MESSAGE FUNCTION: ",msg)
-        message_container = document.getElementById("message_container")
-        new_message_parent_div = document.createElement('div')
-        new_message_parent_div.className = 'd-flex mb-4 gap-2 justify-content-end text-end'
+        socket.on("message", (data) =>{
+            create_message(data.user, data.message, data.sent, data.profile_picture)
+        })
 
-        new_message_child_div = document.createElement('div')
-        new_message_child_div.className = 'd-flex flex-column align-items-end'
-
-        new_message_child_div_2 = document.createElement('div')
-        new_message_child_div_2.className = 'd-flex align-items-baseline gap-2 mb-1'
-
-        new_message_span = document.createElement('span')
-        new_message_span.className = 'fw-bold small'
-        new_message_span.textContent = "You"
-
-        new_message_span_2 = document.createElement('span')
-        new_message_span_2.className = "text-muted"
-        new_message_span_2.textContent = "15:30"
-
-        new_message_child_div_3 = document.createElement("div")
-        new_message_child_div_3.className = "p-3 shadow-sm"
-        new_message_child_div_3.textContent = msg
-
-        new_message_img = document.createElement('img')
-        new_message_img.src = "/static/images/community_image.png"
-        new_message_img.className = "rounded-circle me-3"
-        new_message_img.style.width = "50px"
-        new_message_img.style.height = "50px"
-
-        new_message_parent_div.appendChild(new_message_child_div)
-        new_message_parent_div.appendChild(new_message_child_div_2)
-        new_message_parent_div.appendChild(new_message_span)
-        new_message_parent_div.appendChild(new_message_span_2)
-        new_message_parent_div.appendChild(new_message_child_div_3)
-        new_message_parent_div.appendChild(new_message_img)
-        message_container.appendChild(new_message_parent_div)
-      })
+        function send_message(){
+        user_message = document.getElementById("user_message").value
+        socket.emit("message_sent", {"sender_id": localStorage.getItem("sender_id"), "receiver_id": localStorage.getItem("receiver_id") ,"message": user_message})
+        document.getElementById("user_message").value = ""
+    }
             </script>
 
                 {% endblock %}
