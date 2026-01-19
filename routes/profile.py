@@ -34,7 +34,12 @@ def helper_profile_page(user_name):
     user_data = Users.query.filter_by(name = revert_format).first_or_404()
     community_id = user_data.community_id
     joined_community_data = Communities.query.get_or_404(community_id)
-    return render_template("/profile/helper_profile.html", user_data = user_data, community_data = joined_community_data)
+    all_job_data = (
+        Jobs.query.join(Users, Jobs.helper_id == Users.id)
+        .where(Jobs.helper_id == user_data.id)
+        .all()
+    )
+    return render_template("/profile/helper_profile.html", user_data = user_data, community_data = joined_community_data, user_jobs = all_job_data)
 
 
 @profile_blueprint.route("/settings/<community_name>")
