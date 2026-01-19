@@ -34,7 +34,7 @@ def helper_profile_page():
 
 
 @profile_blueprint.route("/settings/<community_name>")
-def helper_settings_page(community_name):
+def settings_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
@@ -55,3 +55,8 @@ def helper_settings_page(community_name):
         jobs=all_job_data,
         project_names=get_project_names,
     )
+
+
+@profile_blueprint.route("/helper_settings/")
+def helper_settings_page():
+    return render_template("/helper_settings.html")
