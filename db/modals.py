@@ -12,6 +12,8 @@ class Users(db.Model):
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
+    private_key = db.Column(db.String(1000), nullable =False)
+    public_key = db.Column(db.String(1000), nullable =False)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
     profile_picture = db.Column(db.String(1000), nullable =False)
     def to_dict(self):
@@ -46,6 +48,8 @@ class Messages(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     content = db.Column(db.String(1000), nullable=False)
+    aes_key = db.Column(db.String(1000), nullable =False)
+    iv = db.Column(db.String(1000), nullable =False)
     timestamp = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
