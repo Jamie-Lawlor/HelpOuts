@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from db.modals import Projects, Communities, Jobs
+from db.modals import Projects, Communities, Jobs, Users
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
@@ -28,9 +28,13 @@ def community_profile_page(community_name):
     )
 
 
-@profile_blueprint.route("/helper_profile/")
-def helper_profile_page():
-    return render_template("/profile/helper_profile.html")
+@profile_blueprint.route("/helper_profile/<user_name>")
+def helper_profile_page(user_name):
+    revert_format = user_name.replace("_", " ").title()
+    user_data = Users.query.filter_by(name = revert_format).first_or_404()
+    community_id = user_data.community_id
+    joined_community_data = Communities.query.get_or_404(community_id)
+    return render_template("/profile/helper_profile.html", user_data = user_data, community_data = joined_community_data)
 
 
 @profile_blueprint.route("/settings/<community_name>")

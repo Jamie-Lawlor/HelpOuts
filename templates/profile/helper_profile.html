@@ -24,7 +24,7 @@
                                         </div>
 
                                         <div class="card-body pt-0">
-                                                <h4 class="profile-name mb-1">Ryan O'Hare</h4>
+                                                <h4 class="profile-name mb-1">{{ user_data.name }}</h4>
                                                 <p class="mb-3 profile-link">Helper</p>
                                         </div>
                                         <div class="row mt-4">
@@ -34,9 +34,10 @@
                                                 <span class="fw-bold"> Dundalk</span>
                                         </div>
                                         <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block"
-                                                        style="font-size: 12px;">Community Group</small>
-                                                <span class="fw-bold"> Dundalk Tidy Towns</span>
+                                                <small class="text-muted text-uppercase d-block" style="font-size: 12px;">Community Group</small>
+                                                <a href="/community_profile/{{ community_data.name }}" style="color:black !important">
+                                                <span class="fw-bold"> {{ community_data.name }}</span></a>
+                                                
                                         </div>
                                         <div class="col-4 border-end">
                                                 <small class="text-muted text-uppercase d-block"
