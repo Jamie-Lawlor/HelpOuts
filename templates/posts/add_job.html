@@ -16,7 +16,7 @@
                                 <img src="/static/images/tools_icon.svg" width="25" height="25">
                             </span>
                             <input type="text" id="job_title" name="job_title" class="form-control"
-                                placeholder="e.g Fix a leak" aria-label="Job Title" id="title">
+                                placeholder="e.g Assemble Furniture" aria-label="Job Title" id="title">
                         </div>
                     </div>
 
@@ -38,9 +38,39 @@
                                 <img src="/static/images/location_icon.svg" width="25" height="25">
                             </span>
                             <input type="text" id="job_area" name="job_area" class="form-control"
-                                placeholder="Your town or neighbourhood" aria-label="Job Area" id="area">
+                                placeholder="Enter the Area" aria-label="Job Area" id="area">
                         </div>
                     </div>
+
+                <div class="mb-3">
+                        <label for="type" class="form-label fw-semibold">Job Type</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <img src="/static/images/tools_icon.svg" width="25" height="25">
+                            </span>
+                            <input type="text" id="short_type" name="job_type" class="form-control"
+                                placeholder="Enter Job Type" aria-label="Job Type" id="type">
+                        </div>
+                    </div>
+
+                 <div class="mb-3">
+                    <label for="title" class="form-label fw-semibold">Start Date</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                        <input type="date" class="form-control" id="start_date" name="start_date">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                    <label for="title" class="form-label fw-semibold">Expected End Date</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                        </span>
+                        <input type="date" class="form-control" id="end_date" name="end_date">
+                    </div>
+                </div>
 
                     <hr class="my-4">
                     <h4>Add Photos</h4>
