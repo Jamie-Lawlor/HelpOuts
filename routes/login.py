@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect
 from db.database import db
 from db.modals import Users
 import re
+from Crypto.PublicKey import RSA
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
 
 
@@ -61,13 +62,21 @@ def register_helpee():
         error = "Passwords Do Not Match, Please Try Again"
         return render_template("login/register_account.html", error=error)
     
+
+    key = RSA.generate(2048)
+    private_key = key
+    public_key = key.public_key
+
+
     user = Users(
         name=first_name + " " + last_name,
         email=email,
         password=password,
         type="helpee",
         work_area=location,
-        rating=0
+        rating=0,
+        private_key = private_key,
+        public_key = public_key
         )
     db.session.add(user)
     db.session.commit()
