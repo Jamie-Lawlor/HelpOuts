@@ -64,6 +64,22 @@ class Reviews(db.Model):
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
     
+    @validates('star_rating')
+    def validate_star_rating(self, key, star_rating):
+        if not star_rating:
+            raise ValueError("Star rating cannot be empty")
+        if not (1 <= star_rating <= 5):
+            raise ValueError("Star rating must be between 1 and 5")
+        return star_rating
+    
+    @validates('review')
+    def validate_review(self, key, review):
+        if not review:
+            raise ValueError("Review cannot be empty")
+        if len(review) > 500:
+            raise ValueError("Review cannot exceed 500 characters")
+        return review
+    
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
