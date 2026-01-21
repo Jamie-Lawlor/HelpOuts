@@ -2,131 +2,128 @@
 <title>{% block title %}Add Post{% endblock %}</title>
 
 {% block body %}
-<div class="container my-5">
-    <h1 class="text-center mb-4">Create a Project</h1>
-    <div class="card shadow-sm mx-auto position-relative" style="width: 48rem;">
-        <button onclick="add_a_sub_job()" class="btn helper-button-orange rounded-pill px-4 position-absolute top-0 end-0 m-3 mb-3">Add Job</button>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="d-flex align-items-center fw-bold">
+        <span class="rounded-3 p-2 me-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5"/>
+                <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85z"/>
+            </svg>
+        </span>
+        Add New Project 
+    </h2>
+    <div class="d-flex gap-2">
+        <button class="btn helper-button rounded-pill px-4" onclick="send_project_data()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+            Add Project</button>
+    </div>
+    </div>
 
-        <div class="card-body">
-            <form id="project_form">
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold mt-3">Project Title</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img src="/static/images/tools_icon.svg" width="25" height="25">
-                        </span>
-                        <input type="text" id="helpout_title" name="helpout_title" class="form-control"
+<form id="project-form">
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="add-project-card shadow-sm h-100">
+            <h5 class="mb-1 fw-bold ">Project Details</h5>
+            <p class="text-muted small mb-4">Preview your community project details.</p>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <span class="label-muted">PROJECT NAME</span>
+                     <input type="text" id="helpout_title" name="helpout_title" class="form-control soft-input"
                             placeholder="e.g Community Park" aria-label="Helpout Title" id="title">
-                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Description</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img src="/static/images/description_icon.svg" width="25" height="25">
-                        </span>
-                        <input type="text" id="helpout_description" name="helpout_description" class="form-control"
-                            placeholder="Describe the Project Goal" aria-label="Helpout Title" id="title">
-                    </div>
-                </div>
-
-                <!-- dropdown menu in here -->
-                <div class="mb-3">
-                    <label for="form-label fw-semibold" class="form-label fw-semibold">Project Type</label>
-                    <br>
-
-                    <input type="hidden" name="project_type" id="project_type_input">
-
-                    <div class="btn-group dropend">
-                        <button type="button" class="btn btn-secondary" id="selected_project_type">
-                            Select Type
-                        </button>
-                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="visually-hidden">Toggle Dropright</span>
+                <div class="col-md-6 mb-4">
+                    <span class="label-muted">PROJECT TYPE</span>
+                    <div class="dropdown">
+                        <button class="btn soft-input w-100 text-start d-flex justify-content-between align-items-center dropdown-toggle" type="button" id="projectTypeButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Choose Type
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><button type="button" class="dropdown-item"
-                                    onclick="storeValue('Environment')">Environment</button>
+                                    onclick="storeValue('Environment', 'Environment')">Environment</button>
                             </li>
                             <li><button type="button" class="dropdown-item"
-                                    onclick="storeValue('social_and_events')">Social &
+                                    onclick="storeValue('social_and_events', 'Social & Events')">Social &
                                     Events</button></li>
                             <li><button type="button" class="dropdown-item"
-                                    onclick="storeValue('construction')">Construction</button>
+                                    onclick="storeValue('construction', 'Construction')">Construction</button>
                             </li>
                             <li><button type="button" class="dropdown-item"
-                                    onclick="storeValue('general_maintenance')">General Maintenance</button></li>
+                                    onclick="storeValue('general_maintenance', 'General Maintenance')">General Maintenance</button></li>
                             <li><button type="button" class="dropdown-item"
-                                    onclick="storeValue('safety')">Safety</button></li>
+                                    onclick="storeValue('safety', 'Safety')">Safety</button></li>
                         </ul>
                     </div>
-                </div>
+                    </div>
+                    </div>
 
+                    <div class="mb-4">
+                        <span class="label-muted">DESCRIPTION</span>
+                        <textarea id="helpout_description" class="form-control soft-input" rows="4" placeholder="Briefly describe the project goals"></textarea>
+                    </div>
 
-                <!-- a bar - select a number, hard coded value currently displaying -->
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Helpers Amount</label>
-                    <span class="badge bg-primary rounded-pill px-3 py-2">
-                        <span id="helpers_amount">1</span> Helper(s)
-                    </span>
-                    <div class="px-2">
-                        <input type="range" class="form-range custom-range" min="1" max="10" id="helpers_range"
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <span class="label-muted">HELPERS NEEDED: <span id="helpers_amount" class="text-dark fw-bold">1</span></span>
+                             <input type="range" class="form-range custom-range" min="1" max="10" id="helpers_range"
                             value="1" onchange="update_helpers_amount(document.getElementById('helpers_range').value)">
+                        </div>
+                        <div class="col-md-3">
+                            <span class="label-muted">START DATE:</span>
+                            <input type="date" class="form-control soft-input" id="start_date" name="start_date">
+                        </div>
+                        <div class="col-md-3">
+                            <span class="label-muted">END DATE:</span>
+                            <input type="date" class="form-control soft-input" id="end_date" name="end_date">
+                        </div>
                     </div>
-                    <!-- <div class="input-group">
-                            <input type="range" class="form-range"
-                        <span class="input-group-text">
-                                <img src="/static/images/user_icon.svg" width="25" height="25">
-                            </span>
-                            <input type="text" id="helpout_area" name="helpout_area" class="form-control"
-                                placeholder="Your town or neighbourhood" aria-label="Helpout Title" id="title"> -->
-                    <!-- </div>  -->
-                </div>
 
-                <!-- use a calender thing for start and end date - template? -->
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Start Date</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-calendar"></i>
-                        </span>
-                        <input type="date" class="form-control" id="start_date" name="start_date">
+                    <div class="upload-section">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+                        </svg>                        
+                    <p class="mb-2 fw-bold">Upload project images</p>
+                        <label for="project-upload-images" class="btn btn-link p-0 text-decoration-none fw-bold">Browse</label>
+                        <input type="file" id="project-upload-images" class="d-none">
+                        <div id="project-image-name" class="small text-muted mt-2"></div>
                     </div>
-                    <!-- <div class="input-group">
-                            <span class="input-group-text">
-                                <img src="/static/images/location_icon.svg" width="25" height="25">
-                            </span>
-                            <input type="text" id="helpout_area" name="helpout_area" class="form-control"
-                                placeholder="Your town or neighbourhood" aria-label="Helpout Title" id="title">
-                        </div> -->
-                </div>
+</div>
+</div>
 
-                <div class="mb-3">
-                    <label for="title" class="form-label fw-semibold">Expected End Date</label>
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-calendar"></i>
-                        </span>
-                        <input type="date" class="form-control" id="end_date" name="end_date">
-                    </div>
-                </div>
+<div class="col-lg-4">
+    <div class="add-project-card shadow-sm h-100 d-flex flex-column">
+        <h5 class="fw-bold mb-4">Project Preview</h5>
 
-                <hr class="my-4">
-                <h4>Add Photos</h4>
-                <p class="text-muted mb-3">Show helpers your Project</p>
-                <input class="form-control" type="file" id="project_form_file_multiple">
-                <div class="mb-4"></div>
-                <!--    
-                    <button class="btn btn-primary me-2 mr-3" href="#" role="button">
-                        <img src="/static/images/upload-solid-full.svg" width="22" height="22">
-                        Upload
-                    </button> -->
-                <button class="btn helper-button rounded-pill px-4" onclick="send_project_data()">Post</button>
-            </form>
+        <div class="rounded-4 mb-5 overflow-hidden" style="background-color: #f9f9f9; height: 350px;">
+            <img id="project-image" src="/static/images/park.png" class="w-100 h-100" style="object-fit: cover;">
         </div>
-    </div>
+
+        <div class="p-3 rounded-4" style="background: #f8f9fa; border-left:4px solid #3D6978;">
+            <div class="d-flex align-items-start mb-3">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+            </svg>
+            <p class="small text-muted mb-0">
+            Add a sub job to break down this project into smaller tasks
+            </p>
+        </div>
+        </div>
+
+            <div class="mt-auto">
+            <button onclick="add_a_sub_job()" class="btn helper-button-orange rounded-pill px-4 top-0 end-0 m-3 mb-3">Add Sub-Job</button>
+            </div>
+            </div>
+            </div>
+   </div>
+   </div>
+   </div>
+   </div>
+</form>
 </div>
 {% endblock %}
