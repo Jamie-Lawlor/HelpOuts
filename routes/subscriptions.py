@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.modals import Subscriptions
+from db.models import Subscriptions
 
 subscriptions_blueprint = Blueprint("subscriptions", __name__, template_folder="templates")
 

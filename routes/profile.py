@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from db.modals import Projects, Communities, Jobs, Users
+from db.models import Projects, Communities, Jobs, Users
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 

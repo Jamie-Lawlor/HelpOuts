@@ -1,6 +1,7 @@
 from db.database import db
 from werkzeug.security import generate_password_hash
-
+from sqlalchemy.orm import validates
+import re
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -14,6 +15,32 @@ class Users(db.Model):
     rating = db.Column(db.Integer, nullable=True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
 
+    @validates('email')
+    def validate_email(self, key, email):
+        if not email:
+            raise ValueError("Email cannot be empty")
+        if '@' not in email:
+            raise ValueError("Invalid email address, must contain '@'")
+        return email
+    
+   
+    @validates('password')
+    def validate_password(self, key, password): # 8 characters, 1 capitial, 1 lower, 1 number, 1 special
+        valid_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$'
+        if not password:
+            raise ValueError("Password cannot be empty")
+        if not re.match(valid_pattern, password):
+            raise ValueError("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character")
+        return password
+    
+    @validates('type')
+    def validate_type(self, key, type):
+        if not type:
+            raise ValueError("Type cannot be empty")
+        if type not in ['helpee', 'helper']:
+            raise ValueError("Type must be either 'helpee' or 'helper'")
+        return type
+    
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -71,6 +98,7 @@ class Jobs(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
 class MapIcon(db.Model):
     __tablename__ = 'map_icons'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -80,6 +108,7 @@ class MapIcon(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
 class JobLocation(db.Model):
     __tablename__ = 'job_location'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -87,6 +116,7 @@ class JobLocation(db.Model):
     icon_id = db.Column(db.Integer, db.ForeignKey("map_icons.id"), nullable=False)
     lat = db.Column(db.Float, nullable=False)
     lng = db.Column(db.Float, nullable=False)
+    
     
 class Communities(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -96,6 +126,7 @@ class Communities(db.Model):
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
     
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -110,25 +141,6 @@ class Projects(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
-    
-    
-# Joiner table used to hold which jobs are linked to which project
-class ProjectJobs(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
-    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
-    
-    def to_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    
-# Joiner table user to hold what projects a community has ongoing
-class CommunityProjects(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
-    
-    def to_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class Subscriptions(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
