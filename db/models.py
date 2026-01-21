@@ -92,6 +92,22 @@ class Messages(db.Model):
     timestamp = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
+    
+    @validates('content')
+    def validate_content(self, key, content):
+        if not content:
+            raise ValueError("Message content cannot be empty")
+        if len(content) > 1000:
+            raise ValueError("Message content cannot exceed 1000 characters")
+        return content
+    
+    @validates('timestamp')
+    def validate_timestamp(self, key, timestamp):
+        if not timestamp:
+            raise ValueError("Timestamp cannot be empty")
+        return timestamp
+    
+    
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -110,6 +126,24 @@ class Jobs(db.Model):
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
+    
+    @validates('start_date')
+    def validate_start_date(self, key, start_date):
+        if not start_date:
+            return ValueError("Start date cannot be empty")
+        if start_date and self.end_date and start_date > self.end_date:
+            raise ValueError("Start date cannot be after end date")
+        if start_date and start_date < db.func.current_timestamp():
+            raise ValueError("Start date cannot be in the past")
+        return start_date
+    
+    @validates('end_date')
+    def validate_end_date(self, key, end_date):
+        if not end_date:
+            return ValueError("End date cannot be empty")
+        if end_date and self.start_date and end_date < self.start_date:
+            raise ValueError("End date cannot be before start date")
+        return end_date
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -153,6 +187,24 @@ class Projects(db.Model):
     number_of_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
+    
+    @validates('start_date')
+    def validate_start_date(self, key, start_date):
+        if not start_date:
+            return ValueError("Start date cannot be empty")
+        if start_date and self.end_date and start_date > self.end_date:
+            raise ValueError("Start date cannot be after end date")
+        if start_date and start_date < db.func.current_timestamp():
+            raise ValueError("Start date cannot be in the past")
+        return start_date
+    
+    @validates('end_date')
+    def validate_end_date(self, key, end_date):
+        if not end_date:
+            return ValueError("End date cannot be empty")
+        if end_date and self.start_date and end_date < self.start_date:
+            raise ValueError("End date cannot be before start date")
+        return end_date
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
