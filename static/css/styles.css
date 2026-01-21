@@ -137,7 +137,7 @@ div.card.helper-cards{
 }
 
 .navbar{
-    background-color: white !important;
+    background-color: #85D6D6 !important;
 }
 
 .profile-name{
@@ -204,4 +204,10 @@ a:hover{
     background: linear-gradient(180deg,);
     padding-bottom: 6rem;
     height: 300px;
+}
+
+/* view post page */
+.job-image{
+    max-height: 400px;
+    object-fit: cover;
 }

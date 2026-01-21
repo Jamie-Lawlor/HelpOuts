@@ -5,28 +5,85 @@
 {% block body %}
 <input class="hide" id="job_id" value="{{ job_data.id }}" disabled>
 
-<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-    <img src="/static/images/user_image.jpg" width="70" height="70" class="rounded-circle">
-    <h1 class="">Jane's Helpout</h1>
+<div class="container py-5">
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0" style="border-radius: 20px; overflow:hidden;">
+            
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <div class="d-flex align-items-center">
+                        <img src="/static/images/community_image.png" width="60" height="60" class="rounded-circle me-3">
+                </div>
+                <h2 class="mb-0">Dundalk Tidy Towns</h2>
+                <small class="h6">Posted {{ job_data.created_date }}</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 mt-3">
+        <img src="/static/images/park.png" class="img-fluid rounded-4 w-100" style="max-height: 350px; object-fit:cover;">
+    </div>
+
+    <div class="card-body px-4">
+        <div class="mb-2">
+            <h3 class="mb-0">{{ job_data.job_title }}</h2>
+            <input type="text" id="edit_title" class="form-controll ms-2" value="{{ job_data.job_title }}" style="display: none;">
+        </div>
+
+        <div class="d-flex align-items-center mb-3 text-muted">
+                <img src="/static/images/location_icon.svg" width="18" height="18" class="me-2">
+                <span id="job_area_display">
+                    {{ job_data.area }}
+                </span>
+                <input type="text" id="edit_area" class="form-control ms-2" value="{{ job_data.area }}" style="display: none;" style="display: none;">
+        </div>
+
+        <div class="p-3 bg-light rounded-3">
+            <p class="text-secondary mb-0" id="job_desc_display">{{ job_data.job_description }}</p>
+            <textarea id="edit_description" class="form-control mt-2" rows="3" style="display: none;">{{ job_data.job_description }}</textarea>
+        </div>
+        </div>
+
+        <!-- manage the post -->
+<div class="card-footer pb-4 px-4 border-0" id="public-actions">
+    <div class="row g-2">
+        <div class="col-6"><a href="/message_chat" class=""><button type="button" class="btn helper-button-orange px-4">Message</button></a></div>
+        <div class="col-6"><button type="button" id="job_accepted" class="btn helper-button-orange px-4" onclick="accept_job()">Accept</button></div>
+    </div>
+</div>
+</div>
 </div>
 
-<div class="d-flex flex-column justify-content-center align-items-center mt-3">
-    <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-        <h2>{{ job_data.job_title }}</h2>
-        <a class="ml-3">
-            <img src="/static/images/save.svg" width="25" height="25">
-            Save
-        </a>
+<div class="card border-0 shadow-sm" style="border-radius:20px; border-left: 5px solid #3D6978 !important">
+    <div class="card-body p-4">
+        <h5 class="mb-3" style="color: #3D6978;">Manage Job</h5>
+        
+        <div id="manage-job" class="d-flex gap-2">
+                <button onclick="open_edit()" class="helper-button rounded-pill px-3">Edit post</button>
+                <button class="helper-button rounded-pill px-3" onclick="delete_post_data()">Delete post</button>
+        </div>
+
+        <div id="edit-job-details" class="display:none;">
+            <button class="helper-button px-4 rounded-pill" id="edit_submit" onclick="send_updated_data()">Finish</button>
+            <button class="helper-button rounded-pill px-4">
+                <img src="/static/images/save.svg" width="20" class="me-1"> Save
+            </button>
+        </div>
     </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
     <!-- Temporary -->
 
-    <input type="text" id="edit_title" class="hide mx-2" placeholder="Edit title">
-    <div class="mb-3">
-        <img src="/static/images/job_image.png" width="200" height="200" class="rounded">
-    </div>
-</div>
+   
+<!-- </div> -->
 
-<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+<!-- <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
     <div class="card bg-light" style="max-width: 450px;">
         <div class="d-flex align-items-center">
             <img src="/static/images/description_icon.svg" width="25" height="25" class="mr-3">
@@ -37,11 +94,11 @@
     </div>
     <!-- Temporary -->
 
-    <input type="text" id="edit_description" class="hide mx-2" placeholder="Edit Description">
+    <!-- <input type="text" id="edit_description" class="hide mx-2" placeholder="Edit Description">
 
-</div>
+</div> -->
 
-<div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
+<!-- <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
     <div class="card bg-light rounded" style="max-width: 450px;">
         <div class="d-flex align-items-center">
             <img src="/static/images/location_icon.svg" width="25" height="25" class="mr-3">
@@ -49,9 +106,9 @@
                 {{ job_data.area }}
             </p>
         </div>
-    </div>
+    </div> -->
     <!-- Temporary -->
-    <input type="text" id="edit_area" class="hide mx-2" placeholder="Edit Area">
+    <!-- <input type="text" id="edit_area" class="hide mx-2" placeholder="Edit Area">
 </div>
 
 <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
@@ -62,22 +119,26 @@
             </p>
         </div>
     </div>
-</div>
+</div> -->
 
 
+
+<!-- 
 <div class="d-flex justify-content-center align-content-center flex-wrap mt-3">
-    <button type="button" class="btn btn-primary mx-2">
+    <a href="/message_chat">
+    <button type="button" class="btn helper-button-orange mx-2">
         Message
     </button>
+    </a>
 
-    <button type="button" id="job_accepted" class="btn btn-primary mx-2" onclick="accept_job()">
+    <button type="button" id="job_accepted" class="btn helper-button-orange mx-2" onclick="accept_job()">
         Accept
     </button>
     <button onclick="open_edit()">Edit post</button>
     <button class="hide mx-2" id="edit_submit" onclick="send_updated_data()">Finish</button>
-    <button class="mx-2" onclick="delete_post_data()">Delete post</button>
+    <button class="mx-2" onclick="delete_post_data()">Delete post</button> -->
 
-</div>
+</div> 
 
 <script type="text/javascript">
 		registerServiceWorker(

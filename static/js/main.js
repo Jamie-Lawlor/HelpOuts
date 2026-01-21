@@ -52,11 +52,17 @@ function send_job_data() {
         document.getElementById("job_title").value = ""
         document.getElementById("job_description").value = ""
         document.getElementById("job_area").value = ""
+        document.getElementById("short_type").value = ""
+        document.getElementById("start_date").value = ""
+        document.getElementById("end_date").value = ""
     })
     let data = new FormData()
     data.append("title", document.getElementById("job_title").value)
     data.append("description", document.getElementById("job_description").value)
     data.append("area", document.getElementById("job_area").value)
+    data.append("type", document.getElementById("short_type").value)
+    data.append("start_date", document.getElementById("start_date").value)
+    data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("job_form_file_multiple")
     for (let i = 0; i < fileInput.files.length; i++) {
         data.append("images", fileInput.files[i])
@@ -75,7 +81,15 @@ function open_edit() {
     document.getElementById("edit_title").style.display = "block"
     document.getElementById("edit_description").style.display = "block"
     document.getElementById("edit_submit").style.display = "block"
+    document.getElementById("edit_area").style.display = "block"
+    document.getElementById("edit-job-details").style.display = "block"
 
+    document.getElementById("job_title_display").style.display = "none"
+    document.getElementById("job_desc_display").style.display = "none"
+    document.getElementById("job_area_display").style.display = "none"
+    document.getElementById("manage-job").style.display = "none"
+
+    document.getElementById("public-actions").style.display = "none"
 }
 
 function accept_job() {
