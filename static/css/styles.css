@@ -56,8 +56,9 @@
 }
 
 .helper-button{
-    background-color: #3D6978 !important;
-    color: white !important;
+    background-color: white !important;
+    border: solid 2px #D57A44 !important;
+    color:#D57A44 !important;
 }
 
 .helper-button-orange{
@@ -130,14 +131,15 @@ div.card.helper-cards{
     color: black;
 }
 
-.nav-title{
+/* .nav-title{
     font-size: 15px;
     font-weight: 600;
     color: #3D6978 !important;
-}
+} */
 
 .navbar{
-    background-color: #85D6D6 !important;
+    background-color: white !important;
+    border-bottom: 3px solid #3D6978;
 }
 
 .profile-name{
@@ -161,7 +163,7 @@ div.card.helper-cards{
     font-weight: 500px !important;
     line-height: 1.5 !important;
     color: #3D6978 !important; */
-    color: #D97745 !important;
+    /* color: #D97745 !important; */
 } 
 
 body{
@@ -193,13 +195,6 @@ h3, h4, h5{
     font-weight: 600;
 }
 
-a{
-    color: #D97745 !important;
-}
-
-a:hover{
-    color: #C76535 !important;
-}
 
 .profile-card{
     background: linear-gradient(180deg,);
@@ -222,16 +217,21 @@ a:hover{
 }
 
 .soft-input{
-    background-color: #fcfcfc !important;
-    border:1px solid #3D6978 !important;
-    border-radius: 12px !important;
+    background-color: #ffffff !important;
+    border:1px solid #dee2e6 !important;
+    border-radius: 10px !important;
     padding: 12px 5px !important;
 }
 
+.soft-input:focus{
+    border-color: #85D6D6 !important;
+    outline:none;
+}
+
 .label-muted{
-    color: #888;
-    font-weight: 500;
-    margin-bottom: 8px;
+    color: #3D6978;
+    font-weight: 600;
+    margin-bottom: 6px;
     display: block;
     font-size: 15px;
 }
@@ -242,4 +242,28 @@ a:hover{
     padding: 40px;
     text-align:center;
     background:#fff;
+}
+
+/* navbar  */
+.nav-link{
+    color: #6c757d !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.nav-link:hover{
+    color: #85D6D6 !important;
+}
+
+.nav-link.active{
+    color: #3D6978 !important;
+}
+
+h6{
+    text-decoration: none;
 }
