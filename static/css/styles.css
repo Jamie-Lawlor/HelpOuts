@@ -237,11 +237,16 @@ h3, h4, h5{
 }
 
 .upload-section{
-    border: 2px dashed #eee;
+    border: 2px dashed #85D6D6;
     border-radius: 15px;
     padding: 40px;
     text-align:center;
     background:#fff;
+}
+
+.upload-section:hover{
+    border-color: #85D6D6;
+    background-color: #f0fafa;
 }
 
 /* navbar  */
@@ -266,4 +271,16 @@ h3, h4, h5{
 
 h6{
     text-decoration: none;
+}
+
+/* add job page */
+
+.icon-box{
+    background-color: rgba(133, 214, 214, 0.2);
+    border-radius: 12px;
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
