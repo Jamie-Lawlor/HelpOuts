@@ -7,8 +7,9 @@ $('.datepicker').datepicker({
 
 var project_type = ""
 
-function storeValue(selectedButton) {
+function storeValue(selectedButton, label) {
     project_type = selectedButton
+    document.getElementById("projectTypeButton").innerText = label
 }
 
 function update_helpers_amount(helpers_amount) {

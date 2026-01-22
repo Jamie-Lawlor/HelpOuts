@@ -170,6 +170,7 @@ body{
     line-height: 1.5;
     color: #1f2d33; */
     color: #1f2d33 !important;
+    background-color: #f4f7f6 !important;
 }
 
 .list-item{
@@ -210,4 +211,35 @@ a:hover{
 .job-image{
     max-height: 400px;
     object-fit: cover;
+}
+
+/* Add project page */
+.add-project-card{
+    border-radius: 20px;
+    border:none;
+    background: #ffffff;
+    padding: 30px;
+}
+
+.soft-input{
+    background-color: #fcfcfc !important;
+    border:1px solid #3D6978 !important;
+    border-radius: 12px !important;
+    padding: 12px 5px !important;
+}
+
+.label-muted{
+    color: #888;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 15px;
+}
+
+.upload-section{
+    border: 2px dashed #eee;
+    border-radius: 15px;
+    padding: 40px;
+    text-align:center;
+    background:#fff;
 }
