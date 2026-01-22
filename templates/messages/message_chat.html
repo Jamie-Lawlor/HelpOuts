@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <script>
+           <script>
                 let time = new Date()
                 var socket = io()
                 var user = {}
@@ -81,7 +81,7 @@
                         ${message_received}
                         </div>
                     </div>
-                '<img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">'
+                <img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">
                 </div>`
             message.innerHTML += messageContent     
             }
@@ -96,6 +96,7 @@
         document.getElementById("user_message").value = ""
     }
             </script>
+
 
                 {% endblock %}
 
