@@ -69,6 +69,9 @@ def create_job():
     description = request.form.get("description")
     print("DESCRIPTION: ",description)
     area = request.form.get("area")
+    type = request.form.get("type")
+    start_date = request.form.get("start_date")
+    end_date = request.form.get("end_date")
     file = request.files.get("images")
 
     # Security & Validation 
@@ -76,7 +79,7 @@ def create_job():
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
         #HARDCODED
-        helper_id = 1,
+        helper_id = 2,
         helpee_id=2,
         project_id = 1,
         status="NA", # Not Accepted as default
@@ -84,16 +87,12 @@ def create_job():
         job_title=title,
         job_description=description,
         short_title="",
-        short_type="",
+        short_type=type,
+        created_date = db.func.current_timestamp(),
+        start_date = start_date,
+        end_date = end_date
     )
     db.session.add(new_job)
-    db.session.commit()
-    new_job_for_project = ProjectJobs(
-        #HARDCODED
-        project_id = 1,
-        job_id = new_job.id
-    )
-    db.session.add(new_job_for_project)
     db.session.commit()
     job_data = Jobs.query.get_or_404(new_job.id)
     return jsonify(job_data.to_dict())

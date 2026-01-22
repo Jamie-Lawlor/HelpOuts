@@ -55,8 +55,8 @@ function send_job_data() {
         .then(response => response.text())
         .then(jsonData => {
             data = JSON.parse(jsonData)
-            console.log(data.id)
-            window.location.replace(`/view_post/${data.id}`)
+            console.log(data)
+            window.location.replace(`/view_post/${data.job_title}`)
         })
 }
 
