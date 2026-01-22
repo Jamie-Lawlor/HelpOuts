@@ -284,3 +284,49 @@ h6{
     align-items: center;
     justify-content: center;
 }
+
+/* index page */
+.index-wrapper{
+    position: relative;
+    overflow: hidden;
+    background-color: #f8fbfb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.index-container{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    z-index:0;
+}
+
+.btn-main{
+    padding:  14px 40px;
+    font-weight: 700;
+    border-radius: 15px;
+}
+
+.btn-register{
+    background-color: #D57A44 !important;
+    border:none;
+    color: white !important;
+}
+
+.btn-login{
+    background-color: white !important;
+    color: #3D6978 !important;
+    border: 2px solid #3D6978 !important;
+}
+
+.index-card{
+    background: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 30px !important;
+    padding: 3rem !important;
+    max-width: 600px !important;
+    width: 90% !important;
+}
