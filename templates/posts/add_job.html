@@ -26,6 +26,20 @@
 <div class="row g-4 justify-content-center">
     <div class="col-lg-10">
         <div class="add-project-card shadow-sm p-4 p-md-5">
+
+            <div class="row mb-4">
+                <div class="col-12">
+                    <span class="label-muted">SELECT PROJECT</span>
+                    <select class="form-select soft-input" id="project_id" name="project_id">
+                        <option selected disabled>Choose the project...</option>
+                        {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.project_title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-md-7 mb-4">
                     <span class="label-muted">JOB TITLE</span>
