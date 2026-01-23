@@ -63,6 +63,7 @@ class Reviews(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     
     @validates('star_rating')
     def validate_star_rating(self, key, star_rating):
@@ -114,9 +115,8 @@ class Messages(db.Model):
 
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=True)
+    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
     job_title = db.Column(db.String(100), nullable=False)
@@ -148,6 +148,13 @@ class Jobs(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class UserJobs(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class MapIcon(db.Model):
     __tablename__ = 'map_icons'
@@ -180,13 +187,16 @@ class Communities(db.Model):
     
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    community_id = db.Column(db.Integer,db.ForeignKey("communities.id"), nullable=False)
     project_title = db.Column(db.String(100), nullable=False)
     project_description = db.Column(db.String(1000), nullable=False)
     project_type = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(3), nullable=False, default="D")
+
     number_of_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
+    community_id = db.Column(db.Integer,db.ForeignKey("communities.id"), nullable=False)
+    
     
     @validates('start_date')
     def validate_start_date(self, key, start_date):
