@@ -3,8 +3,10 @@ from db.database import db
 from db.modals import Projects, Jobs, ProjectJobs, CommunityProjects, Users, Subscriptions
 import os
 import json
+import magic
 from pywebpush import webpush, WebPushException
 
+Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}
 
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
@@ -38,7 +40,13 @@ def create_project():
     print("END DATE: ",end_date_selected)
     file = request.files.get("images")
     # print("IMAGE_URL: ", image)
+
     # Security & Validation
+    if not image_validation(file):
+        print("Invalid File")
+    elif image_validation(file):
+        print("Valid File")
+    
 
     new_project = Projects(
         # HARDCODED
@@ -75,6 +83,10 @@ def create_job():
     file = request.files.get("images")
 
     # Security & Validation 
+    if not image_validation(file):
+        print("Invalid File")
+    elif image_validation(file):
+        print("Valid File")
 
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
@@ -175,3 +187,24 @@ def trigger_push_notification(push_subscription, title, body):
                   extra.message
                   )
         return False
+
+def image_validation(file):
+    mime = magic.Magic(mime=True)
+    mime_type = mime.from_file(file)
+    file_path, file_extension = os.path.splitext(file)
+
+    if mime_type in Allowed_File_Types and (file_extension.lower() == ".png" or file_extension.lower() == ".jpeg" or file_extension.lower() == ".jpg"):
+        return True
+    elif mime_type not in Allowed_File_Types:
+        print("File type is not an image")
+        return False
+    elif file_extension.lower() != ".png":
+        print("File extension is not a .png, must be .jpg, .jpeg or .png")
+        return False
+    elif file_extension.lower() != ".jpeg":
+        print("File extension is not a .jpeg, must be .jpg, .jpeg or .png")
+        return False
+    elif file_extension.lower() != ".jpg":
+        print("File extension is not a .jpg, must be .jpg, .jpeg or .png")
+        return False
+    return False
