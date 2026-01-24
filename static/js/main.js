@@ -145,3 +145,11 @@ function delete_post_data() {
 
 }
 
+function switch_view(){
+    view = document.getElementById("switch_view").value
+    if(view == "community_view"){
+        window.location.replace(`/temp_inbox/`)
+    }else{
+        window.location.replace(`/inbox/`)
+    }
+}

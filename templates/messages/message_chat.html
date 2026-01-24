@@ -20,7 +20,6 @@
                     
                 <div class="border rounded-bottom shadow-sm bg-white">
                     <div class="p-4" style="height:500px;">
-
                         <div class="d-flex mb-4 gap-2">
                              <img src="/static/images/user_image_2.png" width="50" height="50" class="rounded-circle me-3">
                             <div class="d-flex flex-column">
@@ -34,8 +33,10 @@
                             </div>
                         </div>
                 </div>                    
+                <div id="message_container">
 
-                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                
+                <!-- <div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">You</span>
@@ -46,16 +47,56 @@
                         </div>
                     </div>
                 <img src="/static/images/community_image.png" width="50" height="50" class="rounded-circle me-3">
-                </div>
+                </div> -->
+                <div class="messages" id="messages"></div>
 
+                </div>
+</div>
                 <div class="p-3 bg-white border-top mb-3">
                     <div class="input-group align-items-center bg-light rounded-pill">
-                        <input type="text" class="form-control border-0" placeholder="Enter your message...">
-                        <button class="btn btn-primary">
+                        <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
+                        <button class="btn btn-primary" onclick = "send_message()">
                             Send
                         </button>
                     </div>
                 </div>
+            </div>
+           <script>
+                let time = new Date()
+                var socket = io()
+                var user = {}
+                socket.on('connect', function() {
+                    socket.emit('join_room')
+                })
+                function create_message(user, message_received, sent, profile_picture){
+                message = document.getElementById("messages")
+                messageContent = `
+                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                    <div class="d-flex flex-column align-items-end">
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fw-bold small">${user}</span>
+                            <span class="text-muted">${sent}</span>
+                        </div>
+                        <div class="p-3 shadow-sm">
+                        ${message_received}
+                        </div>
+                    </div>
+                <img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">
+                </div>`
+            message.innerHTML += messageContent     
+            }
+
+        socket.on("message", (data) =>{
+            create_message(data.user, data.message, data.sent, data.profile_picture)
+        })
+
+        function send_message(){
+        user_message = document.getElementById("user_message").value
+        socket.emit("message_sent", {"sender_id": localStorage.getItem("sender_id"), "receiver_id": localStorage.getItem("receiver_id") ,"message": user_message})
+        document.getElementById("user_message").value = ""
+    }
+            </script>
+
 
                 {% endblock %}
 
