@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect
 from db.database import db
-from db.modals import Users
+from db.models import Users
 import re
 from Crypto.PublicKey import RSA
 login_blueprint = Blueprint("login", __name__, template_folder="templates")

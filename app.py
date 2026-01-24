@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session
 import os
 from db.database import db
-from db.modals import Communities, Users, Messages
+from db.models import Users, Messages, Communities
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
