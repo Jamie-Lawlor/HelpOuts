@@ -33,7 +33,7 @@
                     <select class="form-select soft-input" id="project_id" name="project_id">
                         <option selected disabled>Choose the project...</option>
                         {% for project in projects %}
-                        <option value="{{ project.id }}">{{ project.project_title }}</option>
+                        <option id="project_id" value="{{ project.id }}">{{ project.project_title }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -33,6 +33,7 @@ function send_project_data() {
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("project-upload-images")
+    
     for (let i = 0; i < fileInput.files.length; i++) {
         let validFile = true
         const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
@@ -51,9 +52,8 @@ function send_project_data() {
         if(validFile){
             data.append("images", fileInput.files[i])
         }
-        
     }
-
+    
     fetch("/create_project", { method: "POST", body: data })
         .then(window.location.replace(`/home_page/`))
 }
@@ -62,7 +62,6 @@ function send_job_data() {
     let data = new FormData()
     const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
     const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
-
 
     data.append("title", document.getElementById("job_title").value)
     data.append("description", document.getElementById("job_description").value)
@@ -91,6 +90,7 @@ function send_job_data() {
         }
         
     }
+    data.append("project_id", document.getElementById("project_id").value)
     fetch("/create_job", { method: "POST", body: data })
         .then(response => response.text())
         .then(jsonData => {
@@ -104,16 +104,16 @@ function send_job_data() {
 function open_edit() {
     document.getElementById("edit_title").style.display = "block"
     document.getElementById("edit_description").style.display = "block"
-    document.getElementById("edit_submit").style.display = "block"
+    // document.getElementById("edit_submit").style.display = "block"
     document.getElementById("edit_area").style.display = "block"
     document.getElementById("edit-job-details").style.display = "block"
 
-    document.getElementById("job_title_display").style.display = "none"
-    document.getElementById("job_desc_display").style.display = "none"
-    document.getElementById("job_area_display").style.display = "none"
-    document.getElementById("manage-job").style.display = "none"
+    // document.getElementById("job_title_display").style.display = "none"
+    // document.getElementById("job_desc_display").style.display = "none"
+    // document.getElementById("job_area_display").style.display = "none"
+    // document.getElementById("manage-job").style.display = "none"
 
-    document.getElementById("public-actions").style.display = "none"
+    // document.getElementById("public-actions").style.display = "none"
 }
 
 function accept_job() {
@@ -131,11 +131,13 @@ function send_updated_data() {
     id = document.getElementById("job_id").value
     updated_title = document.getElementById("edit_title").value
     updated_description = document.getElementById("edit_description").value
-
-    dataArray = [id, updated_title, updated_description]
-    console.log(dataArray)
+    updated_area = document.getElementById("edit_area").value
+    dataArray = [id, updated_title, updated_description, updated_area]
     fetch("/edit_post", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ edit_data: dataArray }) })
-        .then(window.location.reload())
+        .then(response => response.text())
+        .then(responseText => {
+            window.location.replace(`/view_post/${responseText}`)
+        })
 }
 
 function delete_post_data() {
