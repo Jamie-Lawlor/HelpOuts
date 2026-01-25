@@ -1,6 +1,7 @@
 from db.database import db
 from werkzeug.security import generate_password_hash
 from sqlalchemy.orm import validates
+from datetime import datetime
 import re
 
 class Users(db.Model):
@@ -136,7 +137,7 @@ class Jobs(db.Model):
             return ValueError("Start date cannot be empty")
         if start_date and self.end_date and start_date > self.end_date:
             raise ValueError("Start date cannot be after end date")
-        if start_date and start_date < db.func.current_timestamp():
+        if start_date and datetime.strptime(start_date, "%Y-%m-%d") < datetime.now():
             raise ValueError("Start date cannot be in the past")
         return start_date
     
@@ -198,7 +199,7 @@ class Projects(db.Model):
             return ValueError("Start date cannot be empty")
         if start_date and self.end_date and start_date > self.end_date:
             raise ValueError("Start date cannot be after end date")
-        if start_date and start_date < db.func.current_timestamp():
+        if start_date and datetime.strptime(start_date, "%Y-%m-%d") < datetime.now():
             raise ValueError("Start date cannot be in the past")
         return start_date
     

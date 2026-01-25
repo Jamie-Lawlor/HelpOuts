@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 from db.database import db
-from db.modals import Communities, Users
+from db.models import Communities, Users
 messages_blueprint = Blueprint("messages", __name__, template_folder="templates")
 
 
