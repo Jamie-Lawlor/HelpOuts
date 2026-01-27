@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, ProjectJobs, CommunityProjects, Users, Subscriptions
+from db.models import Projects, Jobs, Users, Subscriptions
 import os
 import json
 from pywebpush import webpush, WebPushException

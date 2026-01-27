@@ -69,9 +69,7 @@ CREATE TABLE jobs (
     start_date DATETIME,
     end_date DATETIME,
     project_id INT NOT NULL,
-    helper_id INT NOT NULL,
-    FOREIGN KEY (project_id) REFERENCES projects(id),
-    FOREIGN KEY (helper_id) REFERENCES users(id)
+    FOREIGN KEY (project_id) REFERENCES projects(id)
 );
 
 CREATE TABLE user_jobs (

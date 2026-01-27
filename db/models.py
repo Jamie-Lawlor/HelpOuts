@@ -115,7 +115,6 @@ class Messages(db.Model):
 
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
