@@ -66,6 +66,12 @@ def settings_page(community_name):
     )
 
 
-@profile_blueprint.route("/helper_settings/")
-def helper_settings_page():
-    return render_template("/helper_settings.html")
+@profile_blueprint.route("/helper_settings/<user_name>")
+def helper_settings_page(user_name):
+    revert_format = user_name.replace("_", " ").title()
+    helper_data = Users.query.filter_by(name=revert_format).first_or_404()
+   
+    return render_template(
+        "/helper_settings.html",
+        helper=helper_data,
+    )

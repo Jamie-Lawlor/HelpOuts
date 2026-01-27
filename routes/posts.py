@@ -3,8 +3,10 @@ from db.database import db
 from db.models import Projects, Jobs, Users, Subscriptions
 import os
 import json
+import magic
 from pywebpush import webpush, WebPushException
 
+Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}
 
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
@@ -15,7 +17,10 @@ def project_page():
 
 @posts_blueprint.route("/add_job/")
 def post_page():
-    return render_template("/posts/add_job.html")
+    # ASSUMING WE ARE DUNDALK TIDY TOWNS COMMUNITY ADMIN
+    project_data = Projects.query.where(Projects.community_id == 1).all()
+
+    return render_template("/posts/add_job.html", projects = project_data)
 
 @posts_blueprint.route("/view_post/")
 def view_post_page():
@@ -36,9 +41,16 @@ def create_project():
     print("START DATE: ",start_date_selected)
     end_date_selected = request.form.get("end_date")
     print("END DATE: ",end_date_selected)
-    file = request.files.get("images")
-    # print("IMAGE_URL: ", image)
-    # Security & Validation
+    if(request.files.get("images") is not None):
+        file = request.files.get("images")
+        # print("IMAGE_URL: ", image)
+
+        # Security & Validation
+        if not image_validation(file):
+            print("Invalid File")
+        elif image_validation(file):
+            print("Valid File")
+    
 
     new_project = Projects(
         # HARDCODED
@@ -52,18 +64,12 @@ def create_project():
     )
     db.session.add(new_project)
     db.session.commit()
-    new_project_link = CommunityProjects(
-        # HARDCODED
-        community_id=1,
-        project_id = new_project.id
-    )
-    db.session.add(new_project_link)
-    db.session.commit()
     new_project_data = Projects.query.get_or_404(new_project.id)
     return jsonify(new_project_data.to_dict())
 
 @posts_blueprint.route("/create_job", methods=["POST"])
 def create_job():
+    project_id = request.form.get("project_id")
     title = request.form.get("title")
     print("TITLE: ",title)
     description = request.form.get("description")
@@ -72,16 +78,22 @@ def create_job():
     type = request.form.get("type")
     start_date = request.form.get("start_date")
     end_date = request.form.get("end_date")
-    file = request.files.get("images")
+    if(request.files.get("images") is not None):
+        file = request.files.get("images")
+        # print("IMAGE_URL: ", image)
 
-    # Security & Validation 
+        # Security & Validation
+        if not image_validation(file):
+            print("Invalid File")
+        elif image_validation(file):
+            print("Valid File")
 
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
         #HARDCODED
         helper_id = 2,
         helpee_id=2,
-        project_id = 1,
+        project_id = project_id,
         status="NA", # Not Accepted as default
         area=area,
         job_title=title,
@@ -118,13 +130,12 @@ def edit_post():
     updated_job.area = updated_area
     updated_job.created_date = db.func.current_timestamp()
     db.session.commit()
-    return ""
+    return updated_job.job_title
 
 
 @posts_blueprint.route("/delete_post", methods=["POST"])
 def delete_post():
     updated_data = int(request.json["post_id"])
-
     db.session.delete(Jobs.query.filter_by(id=updated_data).first())
     db.session.commit()
     return ""
@@ -175,3 +186,24 @@ def trigger_push_notification(push_subscription, title, body):
                   extra.message
                   )
         return False
+
+def image_validation(file):
+    mime = magic.Magic(mime=True)
+    mime_type = mime.from_file(file)
+    file_path, file_extension = os.path.splitext(file)
+
+    if mime_type in Allowed_File_Types and (file_extension.lower() == ".png" or file_extension.lower() == ".jpeg" or file_extension.lower() == ".jpg"):
+        return True
+    elif mime_type not in Allowed_File_Types:
+        print("File type is not an image")
+        return False
+    elif file_extension.lower() != ".png":
+        print("File extension is not a .png, must be .jpg, .jpeg or .png")
+        return False
+    elif file_extension.lower() != ".jpeg":
+        print("File extension is not a .jpeg, must be .jpg, .jpeg or .png")
+        return False
+    elif file_extension.lower() != ".jpg":
+        print("File extension is not a .jpg, must be .jpg, .jpeg or .png")
+        return False
+    return False
