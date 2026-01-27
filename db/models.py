@@ -131,7 +131,7 @@ class Jobs(db.Model):
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
 
-    @validates("start_date")
+    @validates('start_date')
     def validate_start_date(self, key, start_date):
         if not start_date:
             return None
@@ -143,7 +143,7 @@ class Jobs(db.Model):
             raise ValueError("Start date cannot be in the past")
         return start_date
 
-    @validates("end_date")
+    @validates('end_date')
     def validate_end_date(self, key, end_date):
         if not end_date:
             return None
@@ -197,7 +197,7 @@ class Projects(db.Model):
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
     
-    @validates("start_date")
+    @validates('start_date')
     def validate_start_date(self, key, start_date):
         if not start_date:
             return None
@@ -210,7 +210,7 @@ class Projects(db.Model):
         return start_date
 
     
-    @validates("end_date")
+    @validates('end_date')
     def validate_end_date(self, key, end_date):
         if not end_date:
             return None
