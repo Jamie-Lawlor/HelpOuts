@@ -14,10 +14,10 @@ class Users(db.Model):
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
-    private_key = db.Column(db.LargeBinary, nullable =False)
-    public_key = db.Column(db.LargeBinary, nullable =False)
+    private_key = db.Column(db.LargeBinary, nullable = True)
+    public_key = db.Column(db.LargeBinary, nullable = True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
-    profile_picture = db.Column(db.String(1000), nullable =False)
+    profile_picture = db.Column(db.String(1000), nullable = True)
 
     @validates('email')
     def validate_email(self, key, email):
@@ -67,8 +67,7 @@ class Reviews(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    profile_pic = db.Column(db.String(1000), nullable=True)
+    created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     
     @validates('star_rating')
     def validate_star_rating(self, key, star_rating):
@@ -182,7 +181,7 @@ class Communities(db.Model):
     name = db.Column(db.String(100), nullable=False)
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
-    profile_picture = db.Column(db.String(1000), nullable =False)
+    profile_picture = db.Column(db.String(1000), nullable =True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -194,7 +193,6 @@ class Projects(db.Model):
     project_description = db.Column(db.String(1000), nullable=False)
     project_type = db.Column(db.String(20), nullable=False)
     status = db.Column(db.String(3), nullable=False, default="D")
-
     number_of_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
