@@ -3,7 +3,6 @@ from db.database import db
 from db.models import Projects, Jobs, Users, Subscriptions
 import os
 import json
-import magic
 from pywebpush import webpush, WebPushException
 
 Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}

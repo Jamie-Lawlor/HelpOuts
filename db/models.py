@@ -68,6 +68,7 @@ class Reviews(db.Model):
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    profile_pic = db.Column(db.String(1000), nullable=True)
     
     @validates('star_rating')
     def validate_star_rating(self, key, star_rating):
@@ -94,8 +95,6 @@ class Messages(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     content = db.Column(db.String(1000), nullable=False)
-    aes_key = db.Column(db.LargeBinary, nullable=False)
-    iv = db.Column(db.LargeBinary, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
     @validates('content')

@@ -106,7 +106,7 @@ def message_sent(data):
         content=b64encode(encrypted_message).decode('utf-8'),
         aes_key = b64encode(encrypted_key).decode('utf-8'),
         iv = b64encode(iv).decode('utf-8'),
-        timestamp = db.func.current_timestamp()
+        timestamp = date
     )
     db.session.add(message)
     db.session.commit()
