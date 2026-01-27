@@ -1,0 +1,3 @@
+# Use this when a change to the database has been commited and your local database tables are our of sync with main branch
+
+### flask db upgrade

@@ -1,0 +1,17 @@
+## Access RDS Remotely
+
+To do this your going to need to - 
+- Ask Luke for access
+- Provide IP for remote access rules
+- Request .pem file
+
+
+1) Create a new folder on your desktop and place the .pem file here
+
+2) cd to your new folder, run the following command: 
+    - ssh -i HelpOuts.pem ubuntu@ec2-108-128-82-28.eu-west-1.compute.amazonaws.com
+
+3) You are now connected to the EC2 instance. Run the following command to connect to RDS:
+    - mysql -h helpoutsdb01.c38uigakw2bi.eu-west-1.rds.amazonaws.com -P 3306 -u admin -p
+
+4) Password required from here, ask Luke for this.
