@@ -6,8 +6,8 @@ VALUES
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, profile_picture, community_id)
 VALUES 
-(1, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, '/static/images/user_image_2.png', 1),
-(2, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, 1),
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, 1),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, '/static/images/user_image_2.png', 1),
 (3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, 2);

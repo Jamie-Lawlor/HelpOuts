@@ -50,6 +50,7 @@ class Users(db.Model):
 
 
 class UserPermissions(db.Model):
+    __tablename__ = 'user_permissions'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
@@ -154,6 +155,7 @@ class Jobs(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class UserJobs(db.Model):
+    __tablename__ = 'user_jobs'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)

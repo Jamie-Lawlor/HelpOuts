@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs
 import os
 import json
+import magic
 from pywebpush import webpush, WebPushException
 
 Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}
@@ -90,8 +91,6 @@ def create_job():
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
         #HARDCODED
-        helper_id = 2,
-        helpee_id=2,
         project_id = project_id,
         status="NA", # Not Accepted as default
         area=area,
@@ -154,7 +153,8 @@ def send_notification():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-    user_data = Users.query.get_or_404(helper_id)
+    user_data = Users.query.join(UserJobs, Users.id == UserJobs.user_id).where(UserJobs.user_id == helper_id).first()    
+    print("USER DATA: ", user_data.name)          
     job_accepted = Jobs.query.get_or_404(job_id)
     subscriptions = Subscriptions.query.all()
     results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has accepted job: \"{job_accepted.job_title}\"")
