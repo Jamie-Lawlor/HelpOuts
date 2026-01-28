@@ -1,29 +1,38 @@
+import sys
 import os
-import tempfile
 import pytest
+from flask import Flask
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from db.database import db
-from db.models import Users, Communities
-
 
 @pytest.fixture
 def app():
-    # Your Flask app lives in app.py
-    from app import app as flask_app
-
-    # Create a temporary sqlite DB file
-    db_fd, db_path = tempfile.mkstemp()
-    test_db_uri = "sqlite:///" + db_path
+    flask_app = Flask(__name__)
 
     flask_app.config.update(
         TESTING=True,
-        SQLALCHEMY_DATABASE_URI=test_db_uri,
+        SQLALCHEMY_DATABASE_URI="sqlite:///:memory:",
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         WTF_CSRF_ENABLED=False,
         SECRET_KEY="test-secret",
     )
 
-    assert flask_app.config["SQLALCHEMY_DATABASE_URI"].startswith("sqlite:///")
+    db.init_app(flask_app)
+
+    # Register blueprints (same as app.py)
+    from routes.login import login_blueprint
+    from routes.messages import messages_blueprint
+    from routes.profile import profile_blueprint
+    from routes.posts import posts_blueprint
+    from routes.subscriptions import subscriptions_blueprint
+
+    flask_app.register_blueprint(login_blueprint)
+    flask_app.register_blueprint(messages_blueprint)
+    flask_app.register_blueprint(profile_blueprint)
+    flask_app.register_blueprint(posts_blueprint)
+    flask_app.register_blueprint(subscriptions_blueprint)
 
     with flask_app.app_context():
         db.create_all()
@@ -31,48 +40,20 @@ def app():
         db.session.remove()
         db.drop_all()
 
-    os.close(db_fd)
-    os.unlink(db_path)
-
-
 @pytest.fixture
 def client(app):
     return app.test_client()
 
-
 @pytest.fixture
 def community(app):
+    from db.models import Communities
     c = Communities(
-        name="Test Community",
-        area="Test Area",
-        description="A test community",
-        profile_picture="https://example.com/community.png",
+        id=1,  # create_project hardcodes community_id=1
+        name="Dundalk Tidy Towns",
+        area="Dundalk, Co.Louth",
+        description="Test community",
+        profile_picture="/static/images/community_image.png",
     )
     db.session.add(c)
     db.session.commit()
     return c
-
-
-@pytest.fixture
-def user(app, community):
-    u = Users(
-        name="Test User",
-        email="test@example.com",
-        password="Valid1!x",  # must pass your model password validator
-        type="helpee",
-        private_key=b"\x01" * 32,
-        public_key=b"\x02" * 32,
-        community_id=community.id,
-        profile_picture="https://example.com/user.png",
-    )
-    db.session.add(u)
-    db.session.commit()
-    return u
-
-
-@pytest.fixture
-def logged_in_client(client, user):
-    # your app appears to use session["id"] for logged-in user
-    with client.session_transaction() as sess:
-        sess["id"] = user.id
-    return client

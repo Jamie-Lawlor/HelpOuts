@@ -130,22 +130,26 @@ class Jobs(db.Model):
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
-    
+
     @validates('start_date')
     def validate_start_date(self, key, start_date):
         if not start_date:
-            return ValueError("Start date cannot be empty")
-        if start_date and self.end_date and start_date > self.end_date:
+            return None
+        if isinstance(start_date, str):
+            start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        if self.end_date and start_date > self.end_date:
             raise ValueError("Start date cannot be after end date")
-        if start_date and datetime.strptime(start_date, "%Y-%m-%d") < datetime.now():
+        if start_date.date() < datetime.now().date():
             raise ValueError("Start date cannot be in the past")
         return start_date
-    
+
     @validates('end_date')
     def validate_end_date(self, key, end_date):
         if not end_date:
-            return ValueError("End date cannot be empty")
-        if end_date and self.start_date and end_date < self.start_date:
+            return None
+        if isinstance(end_date, str):
+            end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        if self.start_date and end_date < self.start_date:
             raise ValueError("End date cannot be before start date")
         return end_date
     
@@ -196,18 +200,23 @@ class Projects(db.Model):
     @validates('start_date')
     def validate_start_date(self, key, start_date):
         if not start_date:
-            return ValueError("Start date cannot be empty")
-        if start_date and self.end_date and start_date > self.end_date:
+            return None
+        if isinstance(start_date, str):
+            start_date = datetime.strptime(start_date, "%Y-%m-%d")
+        if self.end_date and start_date > self.end_date:
             raise ValueError("Start date cannot be after end date")
-        if start_date and datetime.strptime(start_date, "%Y-%m-%d") < datetime.now():
+        if start_date.date() < datetime.now().date():
             raise ValueError("Start date cannot be in the past")
         return start_date
+
     
     @validates('end_date')
     def validate_end_date(self, key, end_date):
         if not end_date:
-            return ValueError("End date cannot be empty")
-        if end_date and self.start_date and end_date < self.start_date:
+            return None
+        if isinstance(end_date, str):
+            end_date = datetime.strptime(end_date, "%Y-%m-%d")
+        if self.start_date and end_date < self.start_date:
             raise ValueError("End date cannot be before start date")
         return end_date
 
