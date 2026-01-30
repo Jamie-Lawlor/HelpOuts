@@ -31,12 +31,12 @@
                                     Hi, I would love to work with Tidy Towns. What projects are available?
                                 </div>
                             </div>
-                        </div> -->
-        </div>
-        <div id="message_container">
+                        </div>
+                </div>                    
+                <div id="message_container">
 
-
-            <!-- <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                
+                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">You</span>
@@ -47,19 +47,10 @@
                         </div>
                     </div>
                 <img src="/static/images/community_image.png" width="50" height="50" class="rounded-circle me-3">
-                </div> -->
-            <div class="messages" id="messages"></div>
+                </div>
+                <div class="messages" id="messages"></div>
 
-        </div>
-    </div>
-    <div class="p-3 bg-white border-top mb-3">
-        <div class="input-group align-items-center bg-light rounded-pill">
-            <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
-            <button class="btn btn-primary" onclick="send_message()">
-                Send
-            </button>
-        </div>
-    </div>
+                </div>
 </div>
                 <div class="p-3 bg-white border-top mb-3">
                     <div class="input-group align-items-center bg-light rounded-pill">
@@ -82,19 +73,19 @@
                 })
                 function create_message(user, message_received, sent, profile_picture){
                 message = document.getElementById("messages")
-                messageContent = `
-                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+                    messageContent = `<div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">${user}</span>
-                            <span class="text-muted">${sent}</span>
+                             <span class="text-muted">${sent}</span>
                         </div>
-                        <div class="p-3 shadow-sm">
-                        ${message_received}
+                        <div class="bubble community-bubble community-bubble-right">
+                                  ${message_received}
                         </div>
                     </div>
                 <img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">
                 </div>`
+                
         message.innerHTML += messageContent
     }
 

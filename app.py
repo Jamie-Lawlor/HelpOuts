@@ -64,7 +64,7 @@ def message_sent(data):
     room = session.get("room")
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]
-    sender = Users.query.get_or_404(3)
+    sender = Users.query.get_or_404(2)
     # receiver = Users.query.get_or_404(2)
     if sender_id == "1":
         sender_data = Communities.query.get_or_404(sender_id)
@@ -89,7 +89,7 @@ def message_sent(data):
         sender_id=sender_id,
         receiver_id=receiver_id,
         content=encrypted_message,
-        timestamp = db.func.current_timestamp()
+        timestamp = date
     )
     db.session.add(message)
     db.session.commit()
