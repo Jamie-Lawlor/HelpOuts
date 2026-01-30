@@ -41,15 +41,14 @@ def create_project():
     print("START DATE: ",start_date_selected)
     end_date_selected = request.form.get("end_date")
     print("END DATE: ",end_date_selected)
-    if(request.files.get("images") is not None):
-        file = request.files.get("images")
+    file = request.files.get("images")
         # print("IMAGE_URL: ", image)
 
-        # Security & Validation
-        if not image_validation(file):
-            print("Invalid File")
-        elif image_validation(file):
-            print("Valid File")
+        # # Security & Validation
+        # if not image_validation(file):
+        #     print("Invalid File")
+        # elif image_validation(file):
+        #     print("Valid File")
     
 
     new_project = Projects(
@@ -78,15 +77,14 @@ def create_job():
     type = request.form.get("type")
     start_date = request.form.get("start_date")
     end_date = request.form.get("end_date")
-    if(request.files.get("images") is not None):
-        file = request.files.get("images")
+    file = request.files.get("images")
         # print("IMAGE_URL: ", image)
 
-        # Security & Validation
-        if not image_validation(file):
-            print("Invalid File")
-        elif image_validation(file):
-            print("Valid File")
+        # # Security & Validation
+        # if not image_validation(file):
+        #     print("Invalid File")
+        # elif image_validation(file):
+        #     print("Valid File")
 
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
@@ -187,23 +185,23 @@ def trigger_push_notification(push_subscription, title, body):
                   )
         return False
 
-def image_validation(file):
-    mime = magic.Magic(mime=True)
-    mime_type = mime.from_file(file)
-    file_path, file_extension = os.path.splitext(file)
+# def image_validation(file):
+#     mime = magic.Magic(mime=True)
+#     mime_type = mime.from_file(file)
+#     file_path, file_extension = os.path.splitext(file)
 
-    if mime_type in Allowed_File_Types and (file_extension.lower() == ".png" or file_extension.lower() == ".jpeg" or file_extension.lower() == ".jpg"):
-        return True
-    elif mime_type not in Allowed_File_Types:
-        print("File type is not an image")
-        return False
-    elif file_extension.lower() != ".png":
-        print("File extension is not a .png, must be .jpg, .jpeg or .png")
-        return False
-    elif file_extension.lower() != ".jpeg":
-        print("File extension is not a .jpeg, must be .jpg, .jpeg or .png")
-        return False
-    elif file_extension.lower() != ".jpg":
-        print("File extension is not a .jpg, must be .jpg, .jpeg or .png")
-        return False
-    return False
+#     if mime_type in Allowed_File_Types and (file_extension.lower() == ".png" or file_extension.lower() == ".jpeg" or file_extension.lower() == ".jpg"):
+#         return True
+#     elif mime_type not in Allowed_File_Types:
+#         print("File type is not an image")
+#         return False
+#     if file_extension.lower() != ".png":
+#         print("File extension is not a .png, must be .jpg, .jpeg or .png")
+#         return False
+#     elif file_extension.lower() != ".jpeg":
+#         print("File extension is not a .jpeg, must be .jpg, .jpeg or .png")
+#         return False
+#     elif file_extension.lower() != ".jpg":
+#         print("File extension is not a .jpg, must be .jpg, .jpeg or .png")
+#         return False
+#     return False
