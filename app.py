@@ -11,6 +11,8 @@ from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
 from flask_socketio import SocketIO, join_room, leave_room, send
 from datetime import datetime
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
 load_dotenv()
 
 
@@ -62,13 +64,21 @@ def message_sent(data):
     room = session.get("room")
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]
+    sender = Users.query.get_or_404(3)
+    # receiver = Users.query.get_or_404(2)
     if sender_id == "1":
         sender_data = Communities.query.get_or_404(sender_id)
     else:
         sender_data = Users.query.get_or_404(sender_id)
     
     message = data["message"]
-    
+
+    public_key = sender.public_key
+
+    RSA_public_key = RSA.import_key(public_key)
+    cipher = PKCS1_OAEP.new(RSA_public_key)
+    encrypted_message = cipher.encrypt(message.encode('utf-8'))
+
     messageContent = {
         "user": sender_data.name,
         "message": message,
@@ -78,7 +88,7 @@ def message_sent(data):
     message = Messages(
         sender_id=sender_id,
         receiver_id=receiver_id,
-        content= message,
+        content=encrypted_message,
         timestamp = date
     )
     db.session.add(message)

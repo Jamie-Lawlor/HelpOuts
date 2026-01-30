@@ -60,8 +60,8 @@ function send_project_data() {
 
 function send_job_data() {
     let data = new FormData()
-    const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
-    const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
+    // const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
+    // const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
 
     data.append("title", document.getElementById("job_title").value)
     data.append("description", document.getElementById("job_description").value)
@@ -70,26 +70,26 @@ function send_job_data() {
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("job_form_file_multiple")
-    for (let i = 0; i < fileInput.files.length; i++) {
-        let validFile = true
-        const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
-        const mimeType = fileInput.files[i].type
+    // for (let i = 0; i < fileInput.files.length; i++) {
+    //     let validFile = true
+    //     const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
+    //     const mimeType = fileInput.files[i].type
 
-        if(!allowedFileExtensions.includes(fileExtension)){
-            alert("File Extension is Invalid, Cannot Use:\n" + fileExtension + "\nMust Use .jpg, .jpeg pr .png")
-            validFile = false
-        }
+    //     if(!allowedFileExtensions.includes(fileExtension)){
+    //         alert("File Extension is Invalid, Cannot Use:\n" + fileExtension + "\nMust Use .jpg, .jpeg pr .png")
+    //         validFile = false
+    //     }
 
-        if(!allowedFileTypes.includes(mimeType)){
-            alert("File MIME Type is Invalid, Cannot Use:\n" + mimeType + "\nMust Use image/png, image/jpeg or image/jpg")
-            validFile = false
-        }
+    //     if(!allowedFileTypes.includes(mimeType)){
+    //         alert("File MIME Type is Invalid, Cannot Use:\n" + mimeType + "\nMust Use image/png, image/jpeg or image/jpg")
+    //         validFile = false
+    //     }
 
-        if(validFile){
-            data.append("images", fileInput.files[i])
-        }
+    //     if(validFile){
+    //         data.append("images", fileInput.files[i])
+    //     }
         
-    }
+    // }
     data.append("project_id", document.getElementById("project_id").value)
     fetch("/create_job", { method: "POST", body: data })
         .then(response => response.text())
