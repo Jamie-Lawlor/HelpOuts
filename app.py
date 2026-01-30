@@ -64,7 +64,7 @@ def message_sent(data):
     room = session.get("room")
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]
-    sender = Users.query.get_or_404(3)
+    sender = Users.query.get_or_404(2)
     # receiver = Users.query.get_or_404(2)
     if sender_id == "1":
         sender_data = Communities.query.get_or_404(sender_id)
