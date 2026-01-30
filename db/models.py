@@ -92,9 +92,7 @@ class Messages(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     sender_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    content = db.Column(db.String(1000), nullable=False)
-    aes_key = db.Column(db.LargeBinary, nullable=False)
-    iv = db.Column(db.LargeBinary, nullable=False)
+    content = db.Column(db.LargeBinary, nullable =False)
     timestamp = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
 
     @validates('content')
