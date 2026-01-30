@@ -4,13 +4,47 @@ VALUES
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
 (3, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', NULL);
 
-INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, profile_picture, community_id)
+INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key profile_picture, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, 1),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, '/static/images/user_image_2.png', 1),
-(3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, 1),
-(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, 2);
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, 1),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3,'-----BEGIN RSA PRIVATE KEY-----
+    MIIEoQIBAAKCAQBzJWO7XCVJ07F0WxghUiYhK4YRSWH2q8PcdEpGjTBwUsIt2cRK
+    0fMMLPHlvESqfdttuhmpZ1PSGviOxJMDutG60fWIT/xFsRNi+eSlE5EnLYR1V87b
+    8GuIczk8sMot5+pPFlQ5mY8yElCnkmtq6SJf5GUvqWhqEv+psgY6eGF7foEj6xL/
+    7F16v75tNZjidU3pZ3gwErLLUUZr6lYd9k17hrgcYmVPSEqY6WsEX8brCk2xsSaM
+    PxC51HOddgT/w6Aw7bWkk1wCDLpV3cl/ypZ4H8puRZhYu/anfebotzFMvJB+jqh/
+    v0swxasah1tdCdjttKB5KfUd5+I5QE2zNzivAgMBAAECggEANvPYJfmy/gnevcYf
+    vP9EnT31TNi1vRB6eAKz0/nb7S9B5rnwGTkbgmsMwvRX3PoVt8dCKfvbIAGpMBGW
+    jAgjwcIkKPrrTaNVuj3Cphmxg34QoiPW4FZcK5G59kH1K3Vr+HSSm66yjVX6Ug7p
+    3usGcbdBpz51S3Jnu2fv2wXKmDG+ZkHhSdjZmWFum+knkyas8uZO+3aO54+07pmU
+    SQmy+RnoNclIhSsxGqBWCDwrX4XiWdGphYsNyQZud9oBgJIC7/DjCm4Ui8miZYnq
+    unqmLgioawOaQvk22Pa3po5ytJeZc37ftAtOfmXSm0S0S64GBj6GnFAPo8Vvmvzq
+    Q8aKQQKBgQDX1cqsO5CUQnW/S3z2aE6c+VOdENkMmp3aG0U668y8EIIn0OP8Ep5O
+    NIhDCgQlTkl6KUqOFXKuVN0pJX0cZ141tUwC+aIn7vuGYvskQmxN9R61GzGdumQj
+    CmI0ZRVnRJ3/W1Ij/e5RJLoeGhK65lB8a/mBrIdnpAB1AxZYU/w9YQKBgQCIktpm
+    QwToVDML0MhL8Y8bAGeF85QntSLdc+jcrKZjWtqD32hkIDlG92sL3cIV0w7g+ZLb
+    W5hbtwByH08swTGeGPSgtRlE0mm4rq2BuNnpRC2UwAs4Bnv006Gt+CTFPCo0n2QS
+    4Fw/QMcsgkhI0QBPjD57PcL1CISAH5wznvOgDwKBgEKNOaFB/KK6m3QQ4sdYAmWE
+    u7OCrmqkgmfuYLp6WvbiYD/GuYXQd9/Fcv645+5Y5W81rDeDhYkbwdYeKSXI+dO1
+    w2pnbwjBN+2IN8hGcv7WxlExwWrRPm9PlFhzktX04oMKtZlDg2ih2oHNqFjZC5hR
+    8u15NYdPmpR6DznNK8oBAoGABZl3yN+QkPH60c4ymCKESogetnhBJ8uebVP2RS3y
+    +HneIbAEOK61inpUcj0aWwi3QHQbGFFOEtyS8RrlhSE6po/BX+Fs8sxptz+6L2pj
+    zNOVxtaE3zws0uHmbBqTb17DIDs0wC1gutsuD14cFpgzGg/W8/iZSLCbtiEVp2wp
+    8vMCgYBSfkyvqE/x7SiB6pyNwXgpTZnyd70jxR+p8ZgBpW0Ki0bRY3EJuMJuVlqU
+    Rsyid93hKk17nVD5pT2CHYohgVqHoLvmEwa2IsR6sSwU2/FHJbNniaNjHh1soXmZ
+    hw4eWDdHDO91iasVphg6oHOfAbYgjMwFEYnOqvo9GuDrcxn7Wg==
+    -----END RSA PRIVATE KEY-----', '-----BEGIN PUBLIC KEY-----
+    MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBzJWO7XCVJ07F0WxghUiYh
+    K4YRSWH2q8PcdEpGjTBwUsIt2cRK0fMMLPHlvESqfdttuhmpZ1PSGviOxJMDutG6
+    0fWIT/xFsRNi+eSlE5EnLYR1V87b8GuIczk8sMot5+pPFlQ5mY8yElCnkmtq6SJf
+    5GUvqWhqEv+psgY6eGF7foEj6xL/7F16v75tNZjidU3pZ3gwErLLUUZr6lYd9k17
+    hrgcYmVPSEqY6WsEX8brCk2xsSaMPxC51HOddgT/w6Aw7bWkk1wCDLpV3cl/ypZ4
+    H8puRZhYu/anfebotzFMvJB+jqh/v0swxasah1tdCdjttKB5KfUd5+I5QE2zNziv
+    AgMBAAE=
+    -----END PUBLIC KEY-----','/static/images/user_image_2.png', 1),
+(3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, 1),
+(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, 1),
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, 2);
 
 INSERT INTO subscriptions (id, subscription_json)
 VALUES
