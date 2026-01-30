@@ -4,7 +4,7 @@ VALUES
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
 (3, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', NULL);
 
-INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key profile_picture, community_id)
+INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key, profile_picture, community_id)
 VALUES 
 (1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, 1),
 (2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3,'-----BEGIN RSA PRIVATE KEY-----
