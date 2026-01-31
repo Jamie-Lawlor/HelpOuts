@@ -14,10 +14,10 @@ class Users(db.Model):
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
-    private_key = db.Column(db.LargeBinary, nullable =False)
-    public_key = db.Column(db.LargeBinary, nullable =False)
+    private_key = db.Column(db.LargeBinary, nullable = True)
+    public_key = db.Column(db.LargeBinary, nullable = True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
-    profile_picture = db.Column(db.String(1000), nullable =False)
+    profile_picture = db.Column(db.String(1000), nullable = True)
 
     @validates('email')
     def validate_email(self, key, email):
@@ -50,6 +50,7 @@ class Users(db.Model):
 
 
 class UserPermissions(db.Model):
+    __tablename__ = 'user_permissions'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
@@ -67,6 +68,7 @@ class Reviews(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     star_rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.String(500), nullable=False)
+    created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     
     @validates('star_rating')
     def validate_star_rating(self, key, star_rating):
@@ -116,9 +118,7 @@ class Messages(db.Model):
 
 class Jobs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    helper_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    helpee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=True)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
     status = db.Column(db.String(3), nullable=False, default="D")
     area = db.Column(db.String(100), nullable=False)
     job_title = db.Column(db.String(100), nullable=False)
@@ -154,6 +154,14 @@ class Jobs(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class UserJobs(db.Model):
+    __tablename__ = 'user_jobs'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class MapIcon(db.Model):
     __tablename__ = 'map_icons'
@@ -179,7 +187,7 @@ class Communities(db.Model):
     name = db.Column(db.String(100), nullable=False)
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
-    profile_picture = db.Column(db.String(1000), nullable =False)
+    profile_picture = db.Column(db.String(1000), nullable =True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -187,13 +195,15 @@ class Communities(db.Model):
     
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    community_id = db.Column(db.Integer,db.ForeignKey("communities.id"), nullable=False)
     project_title = db.Column(db.String(100), nullable=False)
     project_description = db.Column(db.String(1000), nullable=False)
     project_type = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(3), nullable=False, default="D")
     number_of_helpers = db.Column(db.Integer, nullable=False)
     start_date = db.Column(db.DateTime, nullable=True)
     end_date = db.Column(db.DateTime, nullable=True)
+    community_id = db.Column(db.Integer,db.ForeignKey("communities.id"), nullable=False)
+    
     
     @validates('start_date')
     def validate_start_date(self, key, start_date):

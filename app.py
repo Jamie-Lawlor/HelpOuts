@@ -10,7 +10,7 @@ from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
 from flask_socketio import SocketIO, join_room, leave_room, send
-import datetime
+from datetime import datetime
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 load_dotenv()
@@ -60,7 +60,7 @@ def handle_connect():
 
 @socketio.on("message_sent")
 def message_sent(data):
-    date = datetime.datetime.now()
+    date = datetime.now()
     room = session.get("room")
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]

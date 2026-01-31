@@ -1,0 +1,9 @@
+### Seed your database
+
+1) Turn on XAMPP
+
+2) Open chrome and type 'localhost' to go to phpmyadmin
+
+3) Click helpoutsdevdb01 form the left side menu
+
+4) Click the SQL tab and paste the entire seed.sql file

@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs
 import os
 import json
-import magic
 from pywebpush import webpush, WebPushException
 
 Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}
@@ -89,8 +88,6 @@ def create_job():
     # We get the id from the session which is set when the user logs in
     new_job = Jobs(
         #HARDCODED
-        helper_id = 2,
-        helpee_id=2,
         project_id = project_id,
         status="NA", # Not Accepted as default
         area=area,
@@ -153,7 +150,8 @@ def send_notification():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-    user_data = Users.query.get_or_404(helper_id)
+    user_data = Users.query.join(UserJobs, Users.id == UserJobs.user_id).where(UserJobs.user_id == helper_id).first()    
+    print("USER DATA: ", user_data.name)          
     job_accepted = Jobs.query.get_or_404(job_id)
     subscriptions = Subscriptions.query.all()
     results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has accepted job: \"{job_accepted.job_title}\"")
@@ -184,24 +182,3 @@ def trigger_push_notification(push_subscription, title, body):
                   extra.message
                   )
         return False
-
-# def image_validation(file):
-#     mime = magic.Magic(mime=True)
-#     mime_type = mime.from_file(file)
-#     file_path, file_extension = os.path.splitext(file)
-
-#     if mime_type in Allowed_File_Types and (file_extension.lower() == ".png" or file_extension.lower() == ".jpeg" or file_extension.lower() == ".jpg"):
-#         return True
-#     elif mime_type not in Allowed_File_Types:
-#         print("File type is not an image")
-#         return False
-#     if file_extension.lower() != ".png":
-#         print("File extension is not a .png, must be .jpg, .jpeg or .png")
-#         return False
-#     elif file_extension.lower() != ".jpeg":
-#         print("File extension is not a .jpeg, must be .jpg, .jpeg or .png")
-#         return False
-#     elif file_extension.lower() != ".jpg":
-#         print("File extension is not a .jpg, must be .jpg, .jpeg or .png")
-#         return False
-#     return False

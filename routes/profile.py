@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from db.models import Projects, Communities, Jobs, Users
+from db.models import Projects, Communities, Jobs, UserJobs, Users
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
@@ -35,8 +35,8 @@ def helper_profile_page(user_name):
     community_id = user_data.community_id
     joined_community_data = Communities.query.get_or_404(community_id)
     all_job_data = (
-        Jobs.query.join(Users, Jobs.helper_id == Users.id)
-        .where(Jobs.helper_id == user_data.id)
+        Jobs.query.join(UserJobs, Jobs.id == UserJobs.job_id)
+        .where(UserJobs.user_id == user_data.id)
         .all()
     )
     return render_template("/profile/helper_profile.html", user_data = user_data, community_data = joined_community_data, user_jobs = all_job_data)
