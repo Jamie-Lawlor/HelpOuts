@@ -140,8 +140,13 @@ def job_accepted():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-    updated_post = Jobs.query.filter_by(id=job_id).first()
-    updated_post.helper_id = helper_id
+
+    accepted_job = UserJobs(
+        # HARDCODED
+        user_id= helper_id,
+        job_id = job_id  
+    )
+    db.session.add(accepted_job)
     db.session.commit()
     return ""
 

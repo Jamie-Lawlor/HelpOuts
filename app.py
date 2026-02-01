@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, session
 import os
 from db.database import db
 from db.models import Users, Messages, Communities
@@ -9,7 +9,7 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from dotenv import load_dotenv
-from flask_socketio import SocketIO, join_room, leave_room, send
+from flask_socketio import SocketIO, join_room, send
 from datetime import datetime
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
