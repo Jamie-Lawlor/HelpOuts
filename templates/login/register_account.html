@@ -1,75 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
+  {% extends "base.html" %}
+ 
+          {% block title %}Register{% endblock %}
+          {%  block body %}
+          <div class="register-page-container">
+        <div class="register-container">
+            <div class="register-side-image">
+                <img src="/static/images/logo.png" alt="Helpouts logo">
+            </div>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-            <title>Register</title>
-    </head>
+        <div class="register-form-card">
+            <div class="register-card-content">
+            <div class="header text-center">
+                <h4 style="color: #3D6978; opacity:0.7;">HelpOuts</h4>
+                    <h2 class="text-center mb-4" style="color:#3D6978; font-weight:bold;">Create Account</h2>
+            </div>
+            
 
-    <body>
-        <h1 class="text-center mb-3">Create Your Helpouts Account</h1>
-        <div class="card bg-light mb-3 mx-auto" style="max-width: 48rem;">
-            <div class="card-header">Register</div>
-            <div class="card-body">
-                <form action="/register_helpee" method="POST">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">
-                            First and Last Name
-                        </span>
-                        <input type="text" name="first_name" aria-label="First Name" class="form-control"
+            <form action="/register_helpee" method="POST">
+                    <div class="row mb-3 mt-3">
+                        <div class="form-group col-md-6">
+                        <span class="label-muted">FIRST NAME</label>
+                <input type="text" name="first_name" aria-label="First Name" class="form-control soft-input"
                             autocomplete="off" required>
-                        <input type="text" name="last_name" aria-label="Last Name" class="form-control"
+                            </div>
+                    <div class="form-group col-md-6">
+                        <span class="label-muted">LAST NAME</label>
+                        <input type="text" name="last_name" aria-label="Last Name" class="form-control soft-input"
                             autocomplete="off" required>
+                    </div> 
+                </div>
+
+                <div class="form-group mb-3">
+                    <span class="label-muted">EMAIL ADDRESS</label>
+ <input type="text" name="email" class="form-control soft-input" placeholder="Email Address"
+                            aria-label="Email Address" autocomplete="off" required>
+                </div>
+
+                <div class="form-group mb-3">
+                   <span class="label-muted">LOCAL AREA</label>
+                    <input type="text" name="location" class="form-control soft-input" placeholder="Location"
+                            aria-label="Location" autocomplete="off" required>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="form-group col-md-6">
+                    <span class="label-muted">PASSWORD</label>
+                     <input type="password" name="password" class="form-control soft-input" placeholder="Password"
+                            aria-label="Password" autocomplete="off" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <span class="label-muted">CONFIRM PASSWORD</label>
+                    <input type="password" name="confirm_password" class="form-control soft-input" placeholder="Confirm Password"
+                            aria-label="Password" autocomplete="off" required>
+                </div>
+                </div>
+
+                <label class="form-group d-block text-center d mb-3">I WANT TO...</label>
+                <div class="role-container">
+                        <input type="radio" name="user_type" value="helper" id="helper" class="custom-radio-input" required>
+                        <label for="helper" class="role_card">
+                           Be a Helper
+                        </label>
+                        <input type="radio" name="user_type" value="community" id="community" class="custom-radio-input">
+                        <label for="community" class="role-card">
+                         Get Help
+                        </label>
+                </div>
+
+                <div class="profile-picture-upload">
+                    <label style="color:#8DA2A6; font-weight:700;" class="d-block label-muted">PROFILE PICTURE</label>
+                    <div class="mt-2">
+                        <input type="file" name="profile_image" id="profile_image" class="d-none">
+                        <label for="profile_image" class="profile-placeholder-image">
+                            Choose Image
+                        </label>
                     </div>
+                    <small class="text-muted">Upload a photo to gain trust.</small>
+                </div>
 
-                    <div class="input-group mb-3">
+               
+
+
+                  
+                    <!-- not sure if using username -->
+                    <!-- <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
                             <img src="/static/images/user_icon.svg" width="25" height="25"
                                 class="d-inline-block align-top">
                         </span>
-                        <input type="text" name="username" class="form-control" placeholder="Username"
-                            aria-label="Username" autocomplete="off" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <img src="/static/images/email_icon.svg" width="25" height="25"
-                                class="d-inline-block align-top">
-                        </span>
-                        <input type="text" name="email" class="form-control" placeholder="Email Address"
-                            aria-label="Email Address" autocomplete="off" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <img src="/static/images/location_icon.svg" width="25" height="25"
-                                class="d-inline-block align-top">
-                        </span>
-                        <input type="text" name="location" class="form-control" placeholder="Location"
-                            aria-label="Location" autocomplete="off" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <img src="/static/images/key_icon.svg" width="25" height="25"
-                                class="d-inline-block align-top">
-                        </span>
-                        <input type="password" name="password" class="form-control" placeholder="Password"
-                            aria-label="Password" autocomplete="off" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <img src="/static/images/key_icon.svg" width="25" height="25"
-                                class="d-inline-block align-top">
-                        </span>
-                        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"
-                            aria-label="Password" autocomplete="off" required>
-                    </div>
-                    <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a>
-                    <button class="btn btn-primary" type="submit">Register</button>
-                </form>
-            </div>
-        </div>
-    </body>
+                         <input type="text" name="username" class="form-control" placeholder="Username"
+                            aria-label="Username" autocomplete="off" required> -->
+                    <!-- </div>  -->
 
-</html>
+
+                  
+                
+                    <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
+                    <button class="btn btn-primary btn-block helper-button" href
+                 type="submit">Sign Up</button>
+                </form>
+                </div>
+        </div>
+        </div>
+        </div>
+    {% endblock %}
