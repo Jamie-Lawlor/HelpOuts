@@ -32,11 +32,13 @@ app.register_blueprint(subscriptions_blueprint)
 @app.route("/")
 def index():
     session["id"] = 3
+    print("USER ID: ",session.get("user_id"))
     return render_template("index.html")
 
 
 @app.route("/home_page/")
 def home_page():
+    print("USER ID: ",session.get("user_id"))
     return render_template("home_page.html")
 
 
