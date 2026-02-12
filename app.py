@@ -8,6 +8,7 @@ from routes.messages import messages_blueprint
 from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
+from routes.api import api_blueprint
 from dotenv import load_dotenv
 from flask_socketio import SocketIO, join_room, send
 from datetime import datetime
@@ -27,6 +28,7 @@ app.register_blueprint(messages_blueprint)
 app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 
 @app.route("/")
