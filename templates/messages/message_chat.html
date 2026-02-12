@@ -66,10 +66,11 @@
             </div>
            <script>
                 let time = new Date()
-                var socket = io()
+                var socket = io("http://127.0.0.1:5000/")
                 var user = {}
                 socket.on('connect', function() {
                     socket.emit('join_room')
+                    console.log("CONNECTED!!!")
                 })
                 function create_message(user, message_received, sent, profile_picture){
                 message = document.getElementById("messages")
@@ -87,12 +88,15 @@
                 </div>`
                 
         message.innerHTML += messageContent
+                console.log("MESSAGE CREATED!!!")
     }
 
     socket.on("message", (data) => {
+        console.log("MESSAGE DISPLAY FUNCTION REACHED!!!")
         create_message(data.user, data.message, data.sent, data.profile_picture)
     })
     function send_message() {
+        console.log("MESSAGE SEND FUNCTION REACHED!!!")
         user_message = document.getElementById("user_message").value
         socket.emit("message_sent", { "sender_id": localStorage.getItem("sender_id"), "receiver_id": localStorage.getItem("receiver_id"), "message": user_message })
         document.getElementById("user_message").value = ""
