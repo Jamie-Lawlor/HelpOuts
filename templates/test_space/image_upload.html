@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <h2 class="text-center mb-3">Testing image upload</h2>
+      <form method="POST" action="{{ url_for('api.image_upload') }}" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="image" class="form-label">Select an image to upload:</label>
+          <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+        </div>
+        <div class="row justify-content-center">
+          <button type="submit" class="btn btn-primary w-50">Upload</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+{% endblock %}
