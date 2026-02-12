@@ -1,0 +1,27 @@
+{
+  "name": "HelpOuts PWA",
+  "short_name": "HelpOuts",
+  "description": "This is our PWA for our application HelpOuts.",
+  "start_url": "./",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "white",
+  "orientation": "any",
+  "icons": [{
+    "src": "/static/images/icons/logo_small.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }, {
+      "src": "/static/images/icons/logo_medium.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }, {
+      "src": "/static/images/icons/logo_large.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }]
+}
