@@ -461,7 +461,7 @@ h6{
 .register-form-card{
     flex: 1.2;
     background: white;
-    padding:50px;
+    padding:30px;
     border-radius: 10px;
 }
 
@@ -548,4 +548,19 @@ h6{
 .upload-section-register:hover{
     border-color: #85D6D6;
     background-color: #f0fafa;
+}
+
+.signup-btn{
+    background-color: #D57A44;
+    color: white;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(213,122,68,0.3);
+}
+
+.signup-btn:hover{
+    background-color: #b56233;
 }

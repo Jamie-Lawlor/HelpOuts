@@ -19,32 +19,32 @@
                 <div id="register-step-1">
                     <div class="row mb-3 mt-3">
                         <div class="form-group col-md-6">
-                        <span class="label-muted">FIRST NAME</label>
-                <input type="text" name="first_name" aria-label="First Name" class="form-control soft-input"
+                        <span class="label-muted">FIRST NAME<span style="color: #D57A44;">*</span></label>
+                <input type="text" name="first_name" aria-label="First Name" class="form-control soft-input" placeholder="e.g., Jane"
                             autocomplete="off" required>
                             </div>
                     <div class="form-group col-md-6">
-                        <span class="label-muted">LAST NAME</label>
+                        <span class="label-muted">LAST NAME<span style="color: #D57A44;">*</span></label>
                         <input type="text" name="last_name" aria-label="Last Name" class="form-control soft-input"
                             autocomplete="off" required>
                     </div> 
                 </div>
 
                 <div class="form-group mb-3">
-                    <span class="label-muted">EMAIL ADDRESS</label>
- <input type="text" name="email" class="form-control soft-input" placeholder="Email Address"
+                    <span class="label-muted">EMAIL ADDRESS<span style="color: #D57A44;">*</span></label>
+ <input type="text" name="email" class="form-control soft-input" placeholder="e.g., janedoe@email.com"
                             aria-label="Email Address" autocomplete="off" required>
                 </div>
 
                 <div class="row mb-3">
                   <div class="form-group col-md-6">
-                    <span class="label-muted">PASSWORD</label>
-                     <input type="password" name="password" class="form-control soft-input" placeholder="Password"
+                    <span class="label-muted">PASSWORD<span style="color: #D57A44;">*</span></label>
+                     <input type="password" name="password" class="form-control soft-input" placeholder="Min. 10 characters"
                             aria-label="Password" autocomplete="off" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <span class="label-muted">CONFIRM PASSWORD</label>
-                    <input type="password" name="confirm_password" class="form-control soft-input" placeholder="Confirm Password"
+                    <span class="label-muted">CONFIRM PASSWORD<span style="color: #D57A44;">*</span></label>
+                    <input type="password" name="confirm_password" class="form-control soft-input" 
                             aria-label="Password" autocomplete="off" required>
                 </div>
                 </div>
@@ -53,7 +53,7 @@
                 <div id="register-step-2" style="display:none;">
                 <div class="form-group mb-3">
                    <span class="label-muted">LOCAL AREA</label>
-                    <input type="text" name="location" class="form-control soft-input" placeholder="Location"
+                    <input type="text" name="location" class="form-control soft-input" placeholder="e.g., Dundalk, Co.Louth"
                             aria-label="Location" autocomplete="off" required>
                 </div>
 
@@ -106,9 +106,13 @@
                 
                     <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
                     <div class="d-flex gap-2 mt-4">
-                        <button type="button" class="btn helper-button ms-auto" onclick="nextRegisterStep()" id="register-next-btn">Next</button>
-                        <button type="button" class="btn helper-button" onclick="prevRegisterStep()" style="display:none;" id="register-back-btn">Back</button>
-                        <button class="btn btn-primary btn-block helper-button ms-auto" type="submit" style="display: none;" id="register-submit-btn">Sign Up</button>
+                        <button type="button" class="btn btn-link ms-auto" onclick="nextRegisterStep()" id="register-next-btn">
+                           <img src="/static/images/arrow-right.svg" width="40" height="40"> 
+                        </button>
+                        <button type="button" class="btn btn-link" onclick="prevRegisterStep()" style="display:none;" id="register-back-btn">
+                            <img src="/static/images/arrow-left.svg" width="40" height="40">
+                        </button>
+                        <button class="btn-block signup-btn ms-auto" type="submit" style="display: none;" id="register-submit-btn">SIGN UP</button>
                     </div>
                 </form>
                 </div>
