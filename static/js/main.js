@@ -155,3 +155,26 @@ function switch_view(){
         window.location.replace(`/inbox/`)
     }
 }
+
+
+function nextRegisterStep(){
+    // show and hide steps
+    document.getElementById("register-step-1").style.display = "none"
+    document.getElementById("register-step-2").style.display = "block"
+    document.getElementById("step-number").innerText = "2"
+
+    // toggle buttons
+    document.getElementById("register-next-btn").style.display = "none"
+    document.getElementById("register-submit-btn").style.display = "inline-block"
+    document.getElementById("register-back-btn").style.display = "inline-block"
+}
+
+function prevRegisterStep(){
+    document.getElementById("register-step-2").style.display = "none"
+    document.getElementById("register-step-1").style.display = "block"
+    document.getElementById("step-number").innerText = "1"
+
+    document.getElementById("register-next-btn").style.display = "inline-block"
+    document.getElementById("register-submit-btn").style.display = "none"
+    document.getElementById("register-back-btn").style.display = "none"
+}
