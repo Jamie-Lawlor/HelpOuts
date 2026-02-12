@@ -1,50 +1,151 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS job_location;
+DROP TABLE IF EXISTS user_jobs;
+DROP TABLE IF EXISTS jobs;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS user_permissions;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS map_icons;
+DROP TABLE IF EXISTS communities;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+CREATE TABLE communities (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    area VARCHAR(100) NOT NULL,
+    description VARCHAR(500) NOT NULL,
+    profile_picture VARCHAR(1000)
+);
+
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(120) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    type VARCHAR(6) NOT NULL,
+    work_area VARCHAR(100), 
+    specialism VARCHAR(100),
+    skills VARCHAR(200),
+    rating INT, 
+    private_key BLOB,
+    public_key BLOB,
+    profile_picture VARCHAR(1000),
+    verified BOOLEAN DEFAULT FALSE,
+    verification_accuracy DECIMAL(5,2),
+    community_id INT,
+    FOREIGN KEY (community_id) REFERENCES communities(id)
+);
+
+CREATE TABLE subscriptions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    subscription_json VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE user_permissions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    accepted_terms BOOLEAN NOT NULL,
+    accepted_gdpr BOOLEAN NOT NULL,
+    accepted_health_safety BOOLEAN NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    content VARCHAR(1000) NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    FOREIGN KEY (sender_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_id) REFERENCES users(id)
+);
+
+CREATE TABLE projects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    project_title VARCHAR(100) NOT NULL,
+    project_description VARCHAR(1000) NOT NULL,
+    project_type VARCHAR(20) NOT NULL,
+    status VARCHAR(3) NOT NULL DEFAULT 'D',
+    number_of_helpers INT NOT NULL,
+    start_date DATETIME,
+    end_date DATETIME,
+    community_id INT NOT NULL,
+    FOREIGN KEY (community_id) REFERENCES communities(id)
+);
+
+CREATE TABLE jobs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    job_title VARCHAR(100) NOT NULL,
+    job_description VARCHAR(500) NOT NULL,
+    short_title VARCHAR(50),
+    short_type VARCHAR(20),
+    status VARCHAR(3) NOT NULL DEFAULT 'D',
+    area VARCHAR(100) NOT NULL,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    start_date DATETIME,
+    end_date DATETIME,
+    project_id INT NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+
+CREATE TABLE user_jobs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    job_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+);
+
+CREATE TABLE map_icons (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    icon_url VARCHAR(200) NOT NULL,
+    description VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE job_location (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    lat DECIMAL(9,6) NOT NULL,
+    lng DECIMAL(9,6) NOT NULL,
+    job_id INT NOT NULL, 
+    icon_id INT NOT NULL, 
+    FOREIGN KEY (job_id) REFERENCES jobs(id),
+    FOREIGN KEY (icon_id) REFERENCES map_icons(id)
+);
+
+CREATE TABLE reviews (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    star_rating INT NOT NULL,
+    review VARCHAR(500) NOT NULL,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    reviewer_id INT NOT NULL, 
+    helper_id INT NOT NULL, 
+    job_id INT NOT NULL,
+    FOREIGN KEY (reviewer_id) REFERENCES users(id),
+    FOREIGN KEY (helper_id) REFERENCES users(id),
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+);
+
+
+
+
 INSERT INTO communities (id, name, area, description, profile_picture)
 VALUES
 (1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', NULL),
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
 (3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', '/static/images/community_image.png');
 
-INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key, profile_picture, community_id)
+INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, 1),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3,'-----BEGIN RSA PRIVATE KEY-----
-    MIIEoQIBAAKCAQBzJWO7XCVJ07F0WxghUiYhK4YRSWH2q8PcdEpGjTBwUsIt2cRK
-    0fMMLPHlvESqfdttuhmpZ1PSGviOxJMDutG60fWIT/xFsRNi+eSlE5EnLYR1V87b
-    8GuIczk8sMot5+pPFlQ5mY8yElCnkmtq6SJf5GUvqWhqEv+psgY6eGF7foEj6xL/
-    7F16v75tNZjidU3pZ3gwErLLUUZr6lYd9k17hrgcYmVPSEqY6WsEX8brCk2xsSaM
-    PxC51HOddgT/w6Aw7bWkk1wCDLpV3cl/ypZ4H8puRZhYu/anfebotzFMvJB+jqh/
-    v0swxasah1tdCdjttKB5KfUd5+I5QE2zNzivAgMBAAECggEANvPYJfmy/gnevcYf
-    vP9EnT31TNi1vRB6eAKz0/nb7S9B5rnwGTkbgmsMwvRX3PoVt8dCKfvbIAGpMBGW
-    jAgjwcIkKPrrTaNVuj3Cphmxg34QoiPW4FZcK5G59kH1K3Vr+HSSm66yjVX6Ug7p
-    3usGcbdBpz51S3Jnu2fv2wXKmDG+ZkHhSdjZmWFum+knkyas8uZO+3aO54+07pmU
-    SQmy+RnoNclIhSsxGqBWCDwrX4XiWdGphYsNyQZud9oBgJIC7/DjCm4Ui8miZYnq
-    unqmLgioawOaQvk22Pa3po5ytJeZc37ftAtOfmXSm0S0S64GBj6GnFAPo8Vvmvzq
-    Q8aKQQKBgQDX1cqsO5CUQnW/S3z2aE6c+VOdENkMmp3aG0U668y8EIIn0OP8Ep5O
-    NIhDCgQlTkl6KUqOFXKuVN0pJX0cZ141tUwC+aIn7vuGYvskQmxN9R61GzGdumQj
-    CmI0ZRVnRJ3/W1Ij/e5RJLoeGhK65lB8a/mBrIdnpAB1AxZYU/w9YQKBgQCIktpm
-    QwToVDML0MhL8Y8bAGeF85QntSLdc+jcrKZjWtqD32hkIDlG92sL3cIV0w7g+ZLb
-    W5hbtwByH08swTGeGPSgtRlE0mm4rq2BuNnpRC2UwAs4Bnv006Gt+CTFPCo0n2QS
-    4Fw/QMcsgkhI0QBPjD57PcL1CISAH5wznvOgDwKBgEKNOaFB/KK6m3QQ4sdYAmWE
-    u7OCrmqkgmfuYLp6WvbiYD/GuYXQd9/Fcv645+5Y5W81rDeDhYkbwdYeKSXI+dO1
-    w2pnbwjBN+2IN8hGcv7WxlExwWrRPm9PlFhzktX04oMKtZlDg2ih2oHNqFjZC5hR
-    8u15NYdPmpR6DznNK8oBAoGABZl3yN+QkPH60c4ymCKESogetnhBJ8uebVP2RS3y
-    +HneIbAEOK61inpUcj0aWwi3QHQbGFFOEtyS8RrlhSE6po/BX+Fs8sxptz+6L2pj
-    zNOVxtaE3zws0uHmbBqTb17DIDs0wC1gutsuD14cFpgzGg/W8/iZSLCbtiEVp2wp
-    8vMCgYBSfkyvqE/x7SiB6pyNwXgpTZnyd70jxR+p8ZgBpW0Ki0bRY3EJuMJuVlqU
-    Rsyid93hKk17nVD5pT2CHYohgVqHoLvmEwa2IsR6sSwU2/FHJbNniaNjHh1soXmZ
-    hw4eWDdHDO91iasVphg6oHOfAbYgjMwFEYnOqvo9GuDrcxn7Wg==
-    -----END RSA PRIVATE KEY-----', '-----BEGIN PUBLIC KEY-----
-    MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBzJWO7XCVJ07F0WxghUiYh
-    K4YRSWH2q8PcdEpGjTBwUsIt2cRK0fMMLPHlvESqfdttuhmpZ1PSGviOxJMDutG6
-    0fWIT/xFsRNi+eSlE5EnLYR1V87b8GuIczk8sMot5+pPFlQ5mY8yElCnkmtq6SJf
-    5GUvqWhqEv+psgY6eGF7foEj6xL/7F16v75tNZjidU3pZ3gwErLLUUZr6lYd9k17
-    hrgcYmVPSEqY6WsEX8brCk2xsSaMPxC51HOddgT/w6Aw7bWkk1wCDLpV3cl/ypZ4
-    H8puRZhYu/anfebotzFMvJB+jqh/v0swxasah1tdCdjttKB5KfUd5+I5QE2zNziv
-    AgMBAAE=
-    -----END PUBLIC KEY-----','/static/images/user_image_2.png', 1),
-(3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, 1),
-(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, 2);
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
+(3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)

@@ -19,6 +19,8 @@ CREATE TABLE users (
     private_key BLOB,
     public_key BLOB,
     profile_picture VARCHAR(1000),
+    verified BOOLEAN DEFAULT FALSE,
+    verification_accuracy DECIMAL(5,2),
     community_id INT,
     FOREIGN KEY (community_id) REFERENCES communities(id)
 );

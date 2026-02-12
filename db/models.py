@@ -18,6 +18,8 @@ class Users(db.Model):
     public_key = db.Column(db.LargeBinary, nullable = True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
     profile_picture = db.Column(db.String(1000), nullable = True)
+    verified = db.Column(db.Boolean, nullable=False, default=False)
+    verification_accuracy = db.Column(db.Numeric(5,2), nullable=True)
 
     @validates('email')
     def validate_email(self, key, email):
