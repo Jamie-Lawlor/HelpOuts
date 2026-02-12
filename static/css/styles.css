@@ -304,6 +304,14 @@ h6{
     z-index:0;
 }
 
+.index-logo{
+    width:auto;
+    max-width: 280px;
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
 .btn-main{
     padding:  14px 40px;
     font-weight: 700;
@@ -328,7 +336,7 @@ h6{
     border-radius: 30px !important;
     padding: 3rem !important;
     max-width: 600px !important;
-    width: 90% !important;
+    width: 60% !important;
     position:relative;
     z-index:10;
 }
@@ -516,6 +524,28 @@ h6{
 }
 
 .custom-radio-input:checked + .role_card{
-    border-color: #91481e;
-    background-color: #ca8157;
+    background-color: #85D6D6;
+    color: white;
+    border-color: #3D6978;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.role_card:hover, .role_card:hover{
+    border-color: #85D6D6;
+    cursor: pointer;
+    background-color: #f8fdfd;
+}
+
+.upload-section-register{
+    border: 2px dashed #85D6D6;
+    border-radius: 15px;
+    padding: 10px;
+    text-align:center;
+    background:#fff;
+}
+
+.upload-section-register:hover{
+    border-color: #85D6D6;
+    background-color: #f0fafa;
 }
