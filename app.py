@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, send_file
 import os
 from db.database import db
 from flask_migrate import Migrate
@@ -25,6 +25,13 @@ app.register_blueprint(profile_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
 
+@app.route('/manifest.json')
+def serve_manifest():
+    return send_file('manifest.json', mimetype = 'application/manifest.json')
+
+@app.route('/manifest.json')
+def serve_PWA_service_worker():
+    return send_file('sw.js', mimetype = 'application/javascript')
 
 @app.route("/")
 def index():
