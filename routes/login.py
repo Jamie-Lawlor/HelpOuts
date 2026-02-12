@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, session
 from db.database import db
 from db.models import Users
 import re
@@ -23,7 +23,6 @@ def register_helpee():
     location = request.form.get("location")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
-    
     
     # check if this users already exists
     if_exists = Users.query.filter_by(email=email).first()
@@ -79,5 +78,10 @@ def register_helpee():
         )
     db.session.add(user)
     db.session.commit()
-    
+    session["user_id"] = user.id
     return redirect("/home_page/")
+
+@login_blueprint.route("/logout")
+def logout():
+    session.pop("user_id", None)
+    return redirect("/")

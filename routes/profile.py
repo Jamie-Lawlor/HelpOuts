@@ -17,8 +17,6 @@ def community_profile_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
-    print("LENGTH: ", len(all_job_data))
-    print("LENGTH: ", len(get_project_names))
     return render_template(
         "/profile/community_profile.html",
         community=community_data,
@@ -32,6 +30,7 @@ def community_profile_page(community_name):
 def helper_profile_page(user_name):
     revert_format = user_name.replace("_", " ").title()
     user_data = Users.query.filter_by(name = revert_format).first_or_404()
+    print(user_data.name)
     community_id = user_data.community_id
     joined_community_data = Communities.query.get_or_404(community_id)
     all_job_data = (
@@ -39,6 +38,7 @@ def helper_profile_page(user_name):
         .where(UserJobs.user_id == user_data.id)
         .all()
     )
+    print(all_job_data)
     return render_template("/profile/helper_profile.html", user_data = user_data, community_data = joined_community_data, user_jobs = all_job_data)
 
 
@@ -55,8 +55,6 @@ def settings_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
-    print("LENGTH: ", len(all_job_data))
-    print("LENGTH: ", len(get_project_names))
     return render_template(
         "/settings.html",
         community=community_data,

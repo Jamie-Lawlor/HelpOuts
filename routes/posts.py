@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions, UserJobs
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews
 import os
 import json
 from pywebpush import webpush, WebPushException
@@ -131,6 +131,11 @@ def edit_post():
 @posts_blueprint.route("/delete_post", methods=["POST"])
 def delete_post():
     updated_data = int(request.json["post_id"])
+    UserJobs.query.filter_by(job_id = updated_data).delete()
+    if updated_data > 0 and updated_data <=4:
+        JobLocation.query.filter_by(job_id = updated_data).delete()
+    if updated_data > 0 and updated_data <=3:
+        Reviews.query.filter_by(job_id = updated_data).delete()
     db.session.delete(Jobs.query.filter_by(id=updated_data).first())
     db.session.commit()
     return ""
@@ -140,9 +145,7 @@ def job_accepted():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-
     accepted_job = UserJobs(
-        # HARDCODED
         user_id= helper_id,
         job_id = job_id  
     )
