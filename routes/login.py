@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session
 from db.database import db
 from db.models import Users
+from werkzeug.security import generate_password_hash
 import re
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
 
@@ -60,6 +61,7 @@ def register_helpee():
         error = "Passwords Do Not Match, Please Try Again"
         return render_template("login/register_account.html", error=error)
     
+    hashed_password = generate_password_hash(password)
 
     # key = RSA.generate(2048)
     # private_key = key
@@ -69,7 +71,7 @@ def register_helpee():
     user = Users(
         name=first_name + " " + last_name,
         email=email,
-        password=password,
+        password=hashed_password,
         type="helpee",
         work_area=location,
         rating=0,
