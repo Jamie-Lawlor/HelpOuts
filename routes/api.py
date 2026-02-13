@@ -1,8 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, session
+import requests
+import os
 from db.database import db
 import uuid
 from PIL import Image
 import io
+from dotenv import load_dotenv
+load_dotenv()
 
 api_blueprint = Blueprint("api", __name__, template_folder="templates")
 
@@ -26,14 +30,36 @@ def image_upload():
       image.load() 
       image = Image.open(profile_picture)
       image.thumbnail((500, 500)) # this size is still to be decided
-      
     except Exception as e:
       return {"error": "Uploaded file is not a valid image"}, 400
-      
     
     # if this stage is reached the uploaded file is 100%
     # a valid image
     profile_picture.filename = "profile_picture.jpg"
+    
+    # send image to AiClipse for verification
+    try: 
+        response = requests.post(
+            os.getenv("AI_CLIPSE_URL"),
+            headers={
+                "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
+            },
+            files={
+                "file": (
+                    profile_picture.filename,
+                    profile_picture.stream,
+                    profile_picture.mimetype
+                )
+            }
+        )
+        data = response.json()
+        verdict = data["verdict"]
+        accuracy = data["confidence"]
+        label = data["label"]
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return {"error": "Error validating image"}
+    
     
     # S3 integrate will go here
     S3_key = f"{session.get('id')}/{profile_picture.filename}"
@@ -42,7 +68,10 @@ def image_upload():
         "message": "Image uploaded successfully",
         "filename": profile_picture.filename,
         "user_id": session.get("id"),
-        "S3_KEY": S3_key
+        "S3_KEY": S3_key,
+        "verdict": verdict,
+        "accuracy": accuracy,
+        "label": label
     }, 200
     
     
