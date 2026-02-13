@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS user_permissions;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS map_icons;
 DROP TABLE IF EXISTS communities;
+DROP TABLE IF EXISTS subscriptions;
 
 SET FOREIGN_KEY_CHECKS = 1;
 

@@ -19,7 +19,8 @@
 8) In visual studio terminal, cd to same directoy as app.py
 
 9) Run the following commands in this order:
-    - flask db upgrade
+    - flask db init
     - flask db migrate
+    - flask db upgrade
 
 10) run seed file to populate tables
