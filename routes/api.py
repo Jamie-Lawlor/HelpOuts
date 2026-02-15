@@ -21,8 +21,12 @@ s3 = boto3.client(
     region_name="eu-west-1"
 )
 
-@api_blueprint.route("/imageUpload", methods=["POST"])
-def image_upload():
+@api_blueprint.route("/updateProfilePicture", methods=["POST"])
+def update_profile_picture():
+    user = Users.query.filter_by(id=session.get("id")).first()
+    if not user:
+        return {"error": "User not found"}, 404
+
     # getlist returns a list of files but we only want one, 
     # the below checks ensure there are only 1 image
     images = request.files.getlist("image")
@@ -97,6 +101,10 @@ def image_upload():
     
     db_profile_picture_url = f"{os.getenv('AWS_S3_BASE_URL')}{object_key}"
     
+    # update users profile picure url in the db
+    user.profile_picture = db_profile_picture_url
+    db.session.commit()
+
     
     return {
         "message": "Image uploaded successfully",
