@@ -564,3 +564,71 @@ h6{
 .signup-btn:hover{
     background-color: #b56233;
 }
+
+
+/* Login Styling */
+
+.login-container{
+    display:flex; 
+    max-width: 1000px;
+    width: 70%;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+}
+
+.login-side-image{
+    flex: 1;
+    background-color: #85D6D6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-side-image img{
+    max-width: 100%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.login-form-card{
+    flex: 1.2;
+    background: white;
+    padding:20px;
+    border-radius: 10px;
+}
+
+
+.login-page-container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-btn{
+    background-color: #D57A44;
+    color: white;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(213,122,68,0.3);
+    width: 100%;
+}
+
+.login-btn:hover{
+    background-color: #b56233;
+}
+
+.login-logo{
+    max-height: 150px;
+    width: auto;
+    background: transparent !important;
+}

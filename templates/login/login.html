@@ -1,0 +1,45 @@
+ {% extends "base.html" %}
+ 
+          {% block title %}Login{% endblock %}
+        {%  block body %}
+       
+          <div class="login-page-container">
+        <div class="login-container">
+            <div class="login-side-image">
+                <img src="/static/images/user_icon.svg" alt="Helpouts logo">
+            </div>
+
+        <div class="login-form-card">
+            <div class="login-card-content">
+            <div class="header mb-4">
+                <div class="text-center">
+                    <img src="/static/images/templogo6.png" alt="Helpouts logo" class="login-logo">
+                </div>
+                    <h2 class="text-center" style="color:#3D6978; font-weight:bold;">Welcome Back</h2>
+                    <p class="text-muted text-center">Enter your details to stay connected.</p>
+            </div>
+            
+            <form action="/register_helpee" method="POST">
+                    <div class="mb-3 mt-3">
+                        <div class="form-group mb-4">
+                        <span class="label-muted">EMAIL<span style="color: #D57A44;">*</span></label>
+                <input type="text" name="first_name" aria-label="First Name" class="form-control soft-input" placeholder="e.g., janedoe@email.com"
+                            autocomplete="off" required>
+                            </div>
+                    <div class="form-group mt-4 mb-4">
+                        <span class="label-muted">PASSWORD<span style="color: #D57A44;">*</span></label>
+                        <input type="text" name="last_name" aria-label="Last Name" class="form-control soft-input"
+                            autocomplete="off" required placeholder="Min. 10 characters">
+                    </div> 
+                </div>
+
+                    <div class="d-flex gap-2 mt-4 mb-4">
+                        <button class="login-btn" type="submit">Sign In</button>
+                    </div>
+                    <p class="text-muted mt-4 text-center">Don't have an account? <a href="/register_page/">Sign Up</a></p>
+                </form>
+                </div>
+        </div>
+        </div>
+        </div> 
+   {% endblock %} 
