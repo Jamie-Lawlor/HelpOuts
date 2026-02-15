@@ -5,33 +5,43 @@ from db.database import db
 import uuid
 from PIL import Image
 import io
+import boto3
 from dotenv import load_dotenv
+import os
 load_dotenv()
+
 
 api_blueprint = Blueprint("api", __name__, template_folder="templates")
 
+s3 = boto3.client(
+    "s3",
+    aws_access_key_id=os.getenv("AWS_S3_ACCESS_KEY"),
+    aws_secret_access_key=os.getenv("AWS_S3_SECRET_KEY"),
+    region_name="eu-west-1"
+)
 
 @api_blueprint.route("/imageUpload", methods=["POST"])
 def image_upload():
-   # getlist returns a list of files but we only want one, 
-   # the below checks ensure there are only 1 image
+    # getlist returns a list of files but we only want one, 
+    # the below checks ensure there are only 1 image
     images = request.files.getlist("image")
     if not images or images[0].filename == "": 
         return {"error": "No image uploaded"}, 400
-      
+    
     if len(images) > 1: 
         return {"error": "Only one image can be uploaded"}, 400
-      
+    
     profile_picture = images[0] 
     
     # use PIL to verify the file is actually an image file
     try:
-      image = Image.open(profile_picture)
-      image.load() 
-      image = Image.open(profile_picture)
-      image.thumbnail((500, 500)) # this size is still to be decided
+        image = Image.open(profile_picture)
+        image.load() 
+        image = Image.open(profile_picture)
+        image.thumbnail((500, 500)) # this size is still to be decided
+
     except Exception as e:
-      return {"error": "Uploaded file is not a valid image"}, 400
+        return {"error": "Uploaded file is not a valid image"}, 400
     
     # if this stage is reached the uploaded file is 100%
     # a valid image
@@ -56,19 +66,40 @@ def image_upload():
         verdict = data["verdict"]
         accuracy = data["confidence"]
         label = data["label"]
+        # if we want to reject an image and do something different
+        # it will go here, for now image is sent to aws and the 
+        # link is written to db
     except Exception as e:
         print(f"ERROR: {e}")
         return {"error": "Error validating image"}
     
+    # send image to AWS S3
+    try:
+        # if we want to store different sized images it would be 
+        # done here with multiple keys
+        object_key = (
+            f"{session.get('id')}/profile-picture/profile-picture.jpg"
+        )
+
+        profile_picture.stream.seek(0) 
+        s3.upload_fileobj(
+            profile_picture.stream,
+            os.getenv("AWS_S3_BUCKET"),
+            object_key,
+            ExtraArgs={
+                "ContentType": "image/jpg",
+            },
+        )
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return {"error": "Error uploading image to S3"}
     
-    # S3 integrate will go here
-    S3_key = f"{session.get('id')}/{profile_picture.filename}"
     
     return {
         "message": "Image uploaded successfully",
         "filename": profile_picture.filename,
         "user_id": session.get("id"),
-        "S3_KEY": S3_key,
+        "S3_KEY": object_key,
         "verdict": verdict,
         "accuracy": accuracy,
         "label": label
