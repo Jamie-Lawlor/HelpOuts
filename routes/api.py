@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session
 import requests
 import os
 from db.database import db
+from db.models import Users
 import uuid
 from PIL import Image
 import io
@@ -48,30 +49,30 @@ def image_upload():
     profile_picture.filename = "profile_picture.jpg"
     
     # send image to AiClipse for verification
-    try: 
-        response = requests.post(
-            os.getenv("AI_CLIPSE_URL"),
-            headers={
-                "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
-            },
-            files={
-                "file": (
-                    profile_picture.filename,
-                    profile_picture.stream,
-                    profile_picture.mimetype
-                )
-            }
-        )
-        data = response.json()
-        verdict = data["verdict"]
-        accuracy = data["confidence"]
-        label = data["label"]
-        # if we want to reject an image and do something different
-        # it will go here, for now image is sent to aws and the 
-        # link is written to db
-    except Exception as e:
-        print(f"ERROR: {e}")
-        return {"error": "Error validating image"}
+    # try: 
+    #     response = requests.post(
+    #         os.getenv("AI_CLIPSE_URL"),
+    #         headers={
+    #             "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
+    #         },
+    #         files={
+    #             "file": (
+    #                 profile_picture.filename,
+    #                 profile_picture.stream,
+    #                 profile_picture.mimetype
+    #             )
+    #         }
+    #     )
+    #     data = response.json()
+    #     verdict = data["verdict"]
+    #     accuracy = data["confidence"]
+    #     label = data["label"]
+    #     # if we want to reject an image and do something different
+    #     # it will go here, for now image is sent to aws and the 
+    #     # link is written to db
+    # except Exception as e:
+    #     print(f"ERROR: {e}")
+    #     return {"error": "Error validating image"}
     
     # send image to AWS S3
     try:
@@ -94,20 +95,24 @@ def image_upload():
         print(f"ERROR: {e}")
         return {"error": "Error uploading image to S3"}
     
+    db_profile_picture_url = f"{os.getenv('AWS_S3_BASE_URL')}{object_key}"
+    
     
     return {
         "message": "Image uploaded successfully",
         "filename": profile_picture.filename,
         "user_id": session.get("id"),
         "S3_KEY": object_key,
-        "verdict": verdict,
-        "accuracy": accuracy,
-        "label": label
+        "profile_url": db_profile_picture_url,
+        # "verdict": verdict,
+        # "accuracy": accuracy,
+        # "label": label
     }, 200
     
     
 @api_blueprint.route("/testUpload")
 def test_upload():
     test_user_id = uuid.uuid4()
-    session["id"] = test_user_id
+    test_valid_user_id = 1
+    session["id"] = test_valid_user_id
     return render_template("test_space/image_upload.html")
