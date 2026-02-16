@@ -90,6 +90,6 @@ def logout():
     return redirect("/")
 
 
-@login_blueprint.route("/login")
+@login_blueprint.route("/login/")
 def login():
     return render_template("login/login.html")
