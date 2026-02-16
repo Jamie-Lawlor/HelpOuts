@@ -156,6 +156,43 @@ function switch_view(){
     }
 }
 
+// var stepNumber = 1;
+
+// function nextRegisterStep(){
+//     if(stepNumber === 1){
+//         // Moving from step 1 to step 2
+//         document.getElementById("register-step-1").style.display = "none";
+//         document.getElementById("register-step-2").style.display = "block";
+//         document.getElementById("register-back-btn").style.display = "inline-block";
+//         stepNumber = 2; // set new step number
+//     }else if(stepNumber === 2){
+//         // Moving from step 2 to step 3
+//         document.getElementById("register-step-2").style.display = "none";
+//         document.getElementById("register-step-3").style.display = "block";
+//         document.getElementById("register-next-btn").style.display = "none";
+//         document.getElementById("register-submit-btn").style.display = "inline-block";
+//         stepNumber = 3;
+//     }
+//     document.getElementById("step-number").innerText = stepNumber;
+// }
+
+// function prevRegisterStep(){
+//  if(stepNumber === 3){
+//         // Moving back from step 3 to step 2
+//         document.getElementById("register-step-3").style.display = "none";
+//         document.getElementById("register-step-2").style.display = "block";
+//         document.getElementById("register-next-btn").style.display = "inline-block";
+//         document.getElementById("register-submit-btn").style.display = "none";
+//         stepNumber = 2; // set new step number
+//     }else if(stepNumber === 2){
+//         // Moving back from step 2 to step 1
+//         document.getElementById("register-step-2").style.display = "none";
+//         document.getElementById("register-step-1").style.display = "block";
+//         document.getElementById("register-back-btn").style.display = "none";
+//         stepNumber = 1;
+//     }
+//     document.getElementById("step-number").innerText = stepNumber;
+// }
 
 function nextRegisterStep(){
     // show and hide steps
@@ -178,3 +215,4 @@ function prevRegisterStep(){
     document.getElementById("register-submit-btn").style.display = "none"
     document.getElementById("register-back-btn").style.display = "none"
 }
+
