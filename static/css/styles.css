@@ -632,3 +632,180 @@ h6{
     width: auto;
     background: transparent !important;
 }
+
+/* MOBILE DESIGN (LOGIN)*/
+@media (max-width: 768px){
+    .login-page-container{
+  align-items: flex-start;
+  background-color: #f8f9fa;
+}
+
+.login-container{
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.login-side-image{
+    flex: 0 0 25vh;
+    width: 100%;
+    border-radius: 0;
+    padding: 20px;
+}
+
+.login-side-image img{
+    display: none;
+}
+
+.login-side-image::after{
+    content: "";
+    display:block;
+    width: 200px;
+    height: 200px;
+    background:url("/static/images/templogo6.png") no-repeat center;
+    background-size: contain;
+}
+
+.login-form-card{
+    margin-top: -40px;
+    border-radius: 40px 4dvh 0 0;
+    padding: 40px 25px;
+    z-index: 2;
+}
+
+.login-form-card .login-logo{
+    display: none;
+}
+}
+
+/* MOBILE DESIGN (REGISTER PAGE)*/
+@media (max-width: 768px){
+.register-container{
+   flex-direction: column;
+   box-shadow: none;
+   background: transparent;
+}
+/* 
+.register-side-image{
+    flex: 1;
+    background-color: #85D6D6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-side-image img{
+    max-width: 70%;
+    height: auto;
+}
+
+.register-form-card{
+    flex: 1.2;
+    background: white;
+    padding:30px;
+    border-radius: 10px;
+}
+
+.form-group label{
+    font-size: 12px;
+    color: #3D6978;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.form-control{
+    border-radius: 10px;
+    border:1px solid #3D6978;
+    padding:10px 15px;
+}
+
+.profile-placeholder-image{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.register-page-container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:20px;
+}
+
+.profile-picture-upload{
+    border: 2px dashed #85D6D6;
+    border-radius: 15px;
+    padding:20px;
+    text-align:center;
+    margin-top:20px;
+}
+
+.role-container{
+    display: flex;
+    gap:15px;
+    margin: 25px 0;
+}
+
+.custom-radio-input{
+    display: none;
+}
+
+
+.role_card{
+    flex: 1;
+    border: 1.5px solid #E0E7E9;
+    border-radius: 15px;
+    padding:15px;
+    text-align: center;
+    cursor:pointer;
+    font-weight: 600;
+    color: black;
+    transition: 0.3s all ease;
+}
+
+.custom-radio-input:checked + .role_card{
+    background-color: #85D6D6;
+    color: white;
+    border-color: #3D6978;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.role_card:hover, .role_card:hover{
+    border-color: #85D6D6;
+    cursor: pointer;
+    background-color: #f8fdfd;
+}
+
+.upload-section-register{
+    border: 2px dashed #85D6D6;
+    border-radius: 15px;
+    padding: 10px;
+    text-align:center;
+    background:#fff;
+}
+
+.upload-section-register:hover{
+    border-color: #85D6D6;
+    background-color: #f0fafa;
+}
+
+.signup-btn{
+    background-color: #D57A44;
+    color: white;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(213,122,68,0.3);
+}
+
+.signup-btn:hover{
+    background-color: #b56233;
+} */
+}
