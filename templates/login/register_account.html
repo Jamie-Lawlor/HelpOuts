@@ -20,7 +20,7 @@ navbar %}{% endblock %} {% block body %}
           >
             Create Account
           </h2>
-          <p class="text-muted">Step <span id="step-number">1</span> of 2</p>
+          <p class="text-muted">Step <span id="step-number">1</span> of 3</p>
         </div>
 
         <form action="/register_helpee" method="POST">
@@ -189,6 +189,30 @@ navbar %}{% endblock %} {% block body %}
               />
               <div id="project-image-name" class="small text-muted mt-2"></div>
             </div>
+          </div>
+
+
+            <div id="register-step-3" style="display: none">
+            <span class="label-muted d-block mb-2">TERMS & CONDITIONS<span style="color: #d57a44">*</span></span>
+            <div class="terms-card mb-3">
+              <h6>1. Conditions of Use</h6>
+              <p>By using HelpOuts, you agree to comply with and be bound by the following terms and conditions of use. Please review these terms and conditions carefully. If you do not want to be bound by these terms and conditions, you are advised to not use HelpOuts.
+              </p>
+              <h6>2. Terms and Conditions</h6>
+              <p>The services you will be providing on HelpOuts will require qualification documentation and Garda vetting. You will be relying on a ‘Helpees’ providing an accurate description of the job that needs to be completed. Jobs that require formal qualifications will not be shown if no documentation is provided and if a job is described as not requiring formal training it will be available. However, if the description is not accurate there is a risk of physical injury to you during the job completion or the ‘Helpee’ after the job is completed. Additionally, there is a risk of property damage during or after the job completion due to unforeseen circumstances or underqualification issues.
+              With awareness of these potential risks occurring, we advise that you use HelpOuts at your own accord.
+              </p>
+              <h6>3. Limitation of Liability</h6>
+              <p>HelpOuts is not liable for any direct, indirect or other damages, losses or injuries that arise from or relating to the use of our site.
+              </p>
+              <h6>4. Changes to Terms and Conditions</h6>
+             <p>HelpOuts reserves the right to edit, modify and change these terms and conditions at anytime, so they should be reviewed frequently. Any changes made will take effect immediately, and we will notify you of any changes made.
+            </p>
+            </div>
+            <div class="form-group mb-3 d-flex align-items-center gap-2">
+              <input class="form-check-input mt-0" type="checkbox" id="terms" required>
+              <label for="terms" class="form-check-label small text-muted">I agree to the HelpOuts Terms and Conditions</label>
+              </div>
           </div>
 
           <!-- not sure if using username -->
