@@ -1,80 +1,110 @@
 {% extends "base.html" %}
 <title>{% block title %}Message Chat{% endblock %}</title>
-               {%  block body %}
-            <h1 class="text-center mt-4">Your Chat</h1>
-                <div class="container mt-4" style="max-width:600px;">
+{% block body %}
+<h1 class="text-center mt-4">Your Chat</h1>
+<div class="container mt-4" style="max-width: 600px">
+  <ul class="nav nav-fill border-bottom-0">
+    <li class="nav-item">
+      <div class="nav-link active d-flex py-3">
+        <!-- link to user chat -->
+        <div class="tab-pane fade show active">
+          <img
+            src="/static/images/user_image_2.png"
+            width="50"
+            height="50"
+            class="rounded-circle me-3"
+          />
+          <a class="text-decoration-none" href="/helper_profile">
+            <h6 class="mb-0 fw-bold text-dark">RyanOHare1</h6>
+          </a>
+        </div>
+      </div>
+    </li>
+  </ul>
 
-                                <ul class="nav nav-fill border-bottom-0">
-                                    <li class="nav-item">
-                                        <div class="nav-link active d-flex py-3">
-                                                 <!-- link to user chat -->
-                                             <div class="tab-pane fade show active">
-<img src="/static/images/user_image_2.png" width="50" height="50" class="rounded-circle me-3">
-                                            <a class="text-decoration-none" href="/helper_profile">
-                                            <h6 class="mb-0 fw-bold text-dark">RyanOHare1</h6>
-                                            </a>
-                                             </div>
-                                                </div>
-                                                </li>
-                                    </ul>
-                    
-                <div class="border rounded rounded-bottom shadow-sm bg-white">
-                    <div class="p-4" style="height:500px;">
-                        <div class="d-flex mb-4 gap-2">
-                             <img src="/static/images/user_image_2.png" width="50" height="50" class="rounded-circle me-3">
-                            <div class="d-flex flex-column">
-                                <div class="d-flex align-items-baseline gap-2 mb-1">
-                                    <span class="fw-bold small">Ryan O'Hare</span>
-                                    <span class="text-muted">14:02</span>
-                                </div>
-                                <div class="bubble helper-bubble-left">
-                                    Hi, I would love to work with Men's Sheds. What projects are available?
-                                </div>
-                            </div>
-                        </div>
-                </div>                    
-                <div id="message_container">
-
-                
-                <div class="d-flex mb-4 gap-2 justify-content-end text-end">
-                    <div class="d-flex flex-column align-items-end">
-                        <div class="d-flex align-items-baseline gap-2 mb-1">
-                            <span class="fw-bold small">You</span>
-                            <span class="text-muted">14:30</span>
-                        </div>
-                        <div class="bubble community-bubble community-bubble-right">
-                        That's great Ryan. We have lots of projects waiting to kick off, is there anything in particular you would be interested in?
-                        </div>
-                    </div>
-                <img src="/static/images/community_image.png" width="50" height="50" class="rounded-circle me-3">
-                </div>
-                <div class="messages" id="messages"></div>
-
-                </div>
+  <div class="border rounded rounded-bottom shadow-sm bg-white">
+    <div class="p-4" style="height: 500px">
+      <div class="d-flex mb-4 gap-2">
+        <img
+          src="/static/images/user_image_2.png"
+          width="50"
+          height="50"
+          class="rounded-circle me-3"
+        />
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-baseline gap-2 mb-1">
+            <span class="fw-bold small">Ryan O'Hare</span>
+            <span class="text-muted">14:02</span>
+          </div>
+          <div class="bubble helper-bubble-left">
+            Hi, I would love to work with Men's Sheds. What projects are
+            available?
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="message_container">
+      <div class="d-flex mb-4 gap-2 justify-content-end text-end">
+        <div class="d-flex flex-column align-items-end">
+          <div class="d-flex align-items-baseline gap-2 mb-1">
+            <span class="fw-bold small">You</span>
+            <span class="text-muted">14:30</span>
+          </div>
+          <div class="bubble community-bubble community-bubble-right">
+            That's great Ryan. We have lots of projects waiting to kick off, is
+            there anything in particular you would be interested in?
+          </div>
+        </div>
+        <img
+          src="/static/images/community_image.png"
+          width="50"
+          height="50"
+          class="rounded-circle me-3"
+        />
+      </div>
+      <div class="messages" id="messages"></div>
+    </div>
+  </div>
+  <div class="p-3 bg-white border-top mb-3">
+    <div class="input-group align-items-center bg-light rounded-pill">
+      <input
+        id="user_message"
+        type="text"
+        class="form-control border-0"
+        placeholder="Enter your message..."
+      />
+      <button
+        class="btn shadow-sm btn-login border-none"
+        onclick="send_message()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-send"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"
+          />
+        </svg>
+        Send
+      </button>
+    </div>
+  </div>
 </div>
-                <div class="p-3 bg-white border-top mb-3">
-                    <div class="input-group align-items-center bg-light rounded-pill">
-                        <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
-                        <button class="btn shadow-sm btn-login border-none" onclick = "send_message()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
-                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
-                            </svg>
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </div>
-           <script>
-                let time = new Date()
-                var socket = io("http://127.0.0.1:5000/")
-                var user = {}
-                socket.on('connect', function() {
-                    socket.emit('join_room')
-                    console.log("CONNECTED!!!")
-                })
-                function create_message(user, message_received, sent, profile_picture){
-                message = document.getElementById("messages")
-                    messageContent = `<div class="d-flex mb-4 gap-2 justify-content-end text-end">
+<script>
+  let time = new Date();
+  var socket = io("http://127.0.0.1:5000/");
+  var user = {};
+  socket.on("connect", function () {
+    socket.emit("join_room");
+    console.log("CONNECTED!!!");
+  });
+  function create_message(user, message_received, sent, profile_picture) {
+    message = document.getElementById("messages");
+    messageContent = `<div class="d-flex mb-4 gap-2 justify-content-end text-end">
                     <div class="d-flex flex-column align-items-end">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">${user}</span>
@@ -85,27 +115,26 @@
                         </div>
                     </div>
                 <img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">
-                </div>`
-                
-        message.innerHTML += messageContent
-                console.log("MESSAGE CREATED!!!")
-    }
+                </div>`;
 
-    socket.on("message", (data) => {
-        console.log("MESSAGE DISPLAY FUNCTION REACHED!!!")
-        create_message(data.user, data.message, data.sent, data.profile_picture)
-    })
-    function send_message() {
-        console.log("MESSAGE SEND FUNCTION REACHED!!!")
-        user_message = document.getElementById("user_message").value
-        socket.emit("message_sent", { "sender_id": localStorage.getItem("sender_id"), "receiver_id": localStorage.getItem("receiver_id"), "message": user_message })
-        document.getElementById("user_message").value = ""
-    }
+    message.innerHTML += messageContent;
+    console.log("MESSAGE CREATED!!!");
+  }
 
-
+  socket.on("message", (data) => {
+    console.log("MESSAGE DISPLAY FUNCTION REACHED!!!");
+    create_message(data.user, data.message, data.sent, data.profile_picture);
+  });
+  function send_message() {
+    console.log("MESSAGE SEND FUNCTION REACHED!!!");
+    user_message = document.getElementById("user_message").value;
+    socket.emit("message_sent", {
+      sender_id: localStorage.getItem("sender_id"),
+      receiver_id: localStorage.getItem("receiver_id"),
+      message: user_message,
+    });
+    document.getElementById("user_message").value = "";
+  }
 </script>
 
-
 {% endblock %}
-
-</html>

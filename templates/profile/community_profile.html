@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-<title>{% block title %}Community Profile{% endblock %}</title>
-
+{% block title %}Community Profile{% endblock %}
+{% block navbar %}
+     {% include "includes/navbar_community.html" %}
+{% endblock %}
 {% block body %}
 <div class="profile-page-header pb-5 ">
         <div class="header-bg d-flex align-items-start p-3">
@@ -138,6 +140,4 @@
         </div>
 </div>
 </div>
-
-
 {% endblock %}
