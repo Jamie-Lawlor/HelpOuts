@@ -8,7 +8,7 @@ class Users(db.Model):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    type = db.Column( db.String(6), nullable=False, default="helpee")  # can bee 'helpee' or 'helper'
+    type = db.Column( db.String(6), nullable=False, default="guest")  # can be 'helpee' or 'helper'
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)

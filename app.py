@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session, send_file, request, redirect
 import os
 from db.database import db
-from db.models import Users, Messages, Communities
+from db.models import Users
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -59,27 +59,17 @@ def helper_settings_page():
 
 @app.route("/login",methods=["POST"])
 def login():
-    print("HERE!!!!!")
     email = request.form.get("email")
-    print("EMAIL: ", email)
     password = request.form.get("password")
-    print("PASSWORD: ", password)
-   
-
     user = Users.query.filter_by(email = email).first()
-    print("THIS IS USER: ",user)
-
     hashed_password = user.password
     password_check = check_password_hash(hashed_password, password)
-
-
-    if user is not None and password_check == True:
+    
+    if user is not None and password_check:
         session["user_id"] = user.id
-        print(session["user_id"])
-        return render_template("/home.html", userData = Users.query.get_or_404(session["user_id"]))
+        return render_template("/home_page.html", userData = Users.query.get_or_404(session["user_id"]))
     else:
-        print("User does not exist!!")
-        return redirect("/")
+        return redirect("/login")
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
