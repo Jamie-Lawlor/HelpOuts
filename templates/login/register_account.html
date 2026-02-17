@@ -226,7 +226,17 @@ navbar %}{% endblock %} {% block body %}
           <!-- </div>  -->
 
           <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
-          <div class="d-flex gap-2 mt-4">
+          <div class="d-flex mt-4" style="min-height: 50px;">
+            <button
+              type="button"
+              class="btn btn-link"
+              onclick="prevRegisterStep()"
+              style="display: none"
+              id="register-back-btn"
+            >
+              <img src="/static/images/arrow-left.svg" width="40" height="40" />
+            </button>
+
             <button
               type="button"
               class="btn btn-link ms-auto"
@@ -239,15 +249,7 @@ navbar %}{% endblock %} {% block body %}
                 height="40"
               />
             </button>
-            <button
-              type="button"
-              class="btn btn-link"
-              onclick="prevRegisterStep()"
-              style="display: none"
-              id="register-back-btn"
-            >
-              <img src="/static/images/arrow-left.svg" width="40" height="40" />
-            </button>
+            
             <button
               class="btn-block signup-btn ms-auto"
               type="submit"
@@ -262,4 +264,44 @@ navbar %}{% endblock %} {% block body %}
     </div>
   </div>
 </div>
+<script>
+  
+var stepNumber = 1;
+
+function nextRegisterStep(){
+    if(stepNumber === 1){
+        // Moving from step 1 to step 2
+        document.getElementById("register-step-1").style.display = "none";
+        document.getElementById("register-step-2").style.display = "block";
+        document.getElementById("register-back-btn").style.display = "inline-block";
+        stepNumber = 2; // set new step number
+    }else if(stepNumber === 2){
+        // Moving from step 2 to step 3
+        document.getElementById("register-step-2").style.display = "none";
+        document.getElementById("register-step-3").style.display = "block";
+        document.getElementById("register-next-btn").style.display = "none";
+        document.getElementById("register-submit-btn").style.display = "inline-block";
+        stepNumber = 3;
+    }
+    document.getElementById("step-number").innerText = stepNumber;
+}
+
+function prevRegisterStep(){
+ if(stepNumber === 3){
+        // Moving back from step 3 to step 2
+        document.getElementById("register-step-3").style.display = "none";
+        document.getElementById("register-step-2").style.display = "block";
+        document.getElementById("register-next-btn").style.display = "inline-block";
+        document.getElementById("register-submit-btn").style.display = "none";
+        stepNumber = 2; // set new step number
+    }else if(stepNumber === 2){
+        // Moving back from step 2 to step 1
+        document.getElementById("register-step-2").style.display = "none";
+        document.getElementById("register-step-1").style.display = "block";
+        document.getElementById("register-back-btn").style.display = "none";
+        stepNumber = 1;
+    }
+    document.getElementById("step-number").innerText = stepNumber;
+}
+</script>
 {% endblock %}
