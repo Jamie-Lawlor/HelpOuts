@@ -1,7 +1,8 @@
 {% extends "base.html" %}
-<title>{% block title %}Community Settings{% endblock %}</title>
-
-        <body>
+{% block title %}Community Settings{% endblock %}
+{% block navbar %}
+     {% include "includes/navbar_community.html" %}
+{% endblock %}
                {%  block body %}
                 <div class="settings-header">
                         <div class="container d-flex align-items-center justify-content-center h-100">
@@ -124,6 +125,4 @@
                 </div>
 
                 {% endblock %}
-        </body>
 
-</html>

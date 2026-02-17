@@ -1,22 +1,36 @@
-
-          {% extends "base.html" %}
- 
-          {% block title %}Home Page{% endblock %}
-          {%  block body %}
+{% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
+navbar %} {% include "includes/nav_bar.html" %} {% endblock %} {% block body %}
 
 <div class="community-group-container">
   <div class="container">
-    <h1 class="display-5 fw-bold" style="color:#3D6978;">Find your Community</h1>
-    <p class="lead text-muted mb-5">Join a local community and help with projects in your area.</p>
+    <h1 class="display-5 fw-bold" style="color: #3d6978">
+      Find your Community
+    </h1>
+    <p class="lead text-muted mb-5">
+      Join a local community and help with projects in your area.
+    </p>
 
-    <div class="search-container mb-4" style="color: #3D6978;">
+    <div class="search-container mb-4" style="color: #3d6978">
       <div class="input-group shadow-sm rounded-pill overflow-hidden">
         <span class="input-group-text bg-white border-0 ps-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+            />
           </svg>
         </span>
-      <input type="text" class="form-control search-input border-start-0 rounded-pill-end" placeholder="Search">
+        <input
+          type="text"
+          class="form-control search-input border-start-0 rounded-pill-end"
+          placeholder="Search"
+        />
       </div>
     </div>
   </div>
@@ -24,66 +38,92 @@
 
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-5">
-    <h3 class="fw-bold mb-3" style="color:#3D6978;">Communities looking for help</h3>
-    <a href="/community_profile" class="text-decoration-none fw-bold" style="color:#D57A44;">Discover more groups</a>
+    <h3 class="fw-bold mb-3" style="color: #3d6978">
+      Communities looking for help
+    </h3>
+    <a
+      href="/community_profile"
+      class="text-decoration-none fw-bold"
+      style="color: #d57a44"
+      >Discover more groups</a
+    >
   </div>
 
   <div class="row g-4">
     <div class="col-lg-6">
       <div class="community-group-card shadow-sm h-100">
         <div class="group-image-container">
-          <img src="/static/images/park.png" class="group-img" alt="Community Project">
+          <img
+            src="/static/images/park.png"
+            class="group-img"
+            alt="Community Project"
+          />
         </div>
 
         <div class="p-4">
           <div class="mb-3">
-              <h4 class="fw-bold mb-1" style="color: #3D6978;">Dundalk Tidy Towns</h4>
-              <p class="text-muted small">
-                <img src="/static/images/location_icon.svg" width="14"> Dundalk, Co.Louth
-              </p>
-              </div>
-            <p class="text-secondary">We are doing a renovation of our beloved park, painting fences and planting new flowers for Spring.</p>
-          <hr class="my-4">
+            <h4 class="fw-bold mb-1" style="color: #3d6978">
+              Dundalk Tidy Towns
+            </h4>
+            <p class="text-muted small">
+              <img src="/static/images/location_icon.svg" width="14" /> Dundalk,
+              Co.Louth
+            </p>
+          </div>
+          <p class="text-secondary">
+            We are doing a renovation of our beloved park, painting fences and
+            planting new flowers for Spring.
+          </p>
+          <hr class="my-4" />
           <div class="d-flex justify-content-between align-items-center">
             <span class="small fw-bold text-muted">Join 50 other Helpers</span>
             <a href="#" class="btn helper-button">View Group</a>
           </div>
-          </div>
         </div>
       </div>
+    </div>
 
-
-      <div class="col-lg-6">
-        <div class="community-group-card shadow-sm h-100">
+    <div class="col-lg-6">
+      <div class="community-group-card shadow-sm h-100">
         <div class="group-image-container">
-          <img src="/static/images/food_drive.png" class="group-img" alt="Community Project">
+          <img
+            src="/static/images/food_drive.png"
+            class="group-img"
+            alt="Community Project"
+          />
         </div>
 
         <div class="p-4">
           <div class="mb-3">
             <div>
-              <h4 class="fw-bold mb-1" style="color: #3D6978;">Dundalk Men's Sheds</h4>
+              <h4 class="fw-bold mb-1" style="color: #3d6978">
+                Dundalk Men's Sheds
+              </h4>
               <p class="text-muted small">
-                <img src="/static/images/location_icon.svg" width="14"> Dundalk, Co.Louth
+                <img src="/static/images/location_icon.svg" width="14" />
+                Dundalk, Co.Louth
               </p>
             </div>
             <p class="text-secondary">We are running a community food drive.</p>
-          <hr class="my-4">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="small fw-bold text-muted">Join 70 other Helpers</span>
-            <a href="/community_profile/mens_shed_dundalk" class="btn helper-button">View Group</a>
-          </div>
+            <hr class="my-4" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="small fw-bold text-muted"
+                >Join 70 other Helpers</span
+              >
+              <a
+                href="/community_profile/mens_shed_dundalk"
+                class="btn helper-button"
+                >View Group</a
+              >
+            </div>
           </div>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 
-
-
-
-        <!-- old layout -->
-          <!-- <div class="d-flex justify-content-center mt-3">
+  <!-- old layout -->
+  <!-- <div class="d-flex justify-content-center mt-3">
                 <div class="input-group mb-3" style="max-width: 500px;">
                         <input type="text" placeholder="Search for a Helpout" class="form-control rounded-pill" width="50">
                         <span class="input-group-prepend">
@@ -227,6 +267,5 @@
   </div>
 </div>
     </div> -->
-    {% endblock %}
-
-  
+  {% endblock %}
+</div>

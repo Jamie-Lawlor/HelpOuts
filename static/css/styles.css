@@ -564,3 +564,180 @@ h6{
 .signup-btn:hover{
     background-color: #b56233;
 }
+
+.terms-card{
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 2;
+}
+
+
+/* Login Styling */
+
+.login-container{
+    display:flex; 
+    max-width: 1000px;
+    width: 70%;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+}
+
+.login-side-image{
+    flex: 1;
+    background-color: #85D6D6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-side-image img{
+    max-width: 100%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+}
+
+.login-form-card{
+    flex: 1.2;
+    background: white;
+    padding:20px;
+    border-radius: 10px;
+}
+
+
+.login-page-container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-btn{
+    background-color: #D57A44;
+    color: white;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 10px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(213,122,68,0.3);
+    width: 100%;
+}
+
+.login-btn:hover{
+    background-color: #b56233;
+}
+
+.login-logo{
+    max-height: 150px;
+    width: auto;
+    background: transparent !important;
+}
+
+/* MOBILE DESIGN (LOGIN)*/
+@media (max-width: 768px){
+    .login-page-container{
+  align-items: flex-start;
+  background-color: #f8f9fa;
+}
+
+.login-container{
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.login-side-image{
+    flex: 0 0 25vh;
+    width: 100%;
+    border-radius: 0;
+    padding: 20px;
+}
+
+.login-side-image img{
+    display: none;
+}
+
+.login-side-image::after{
+    content: "";
+    display:block;
+    width: 200px;
+    height: 200px;
+    background:url("/static/images/templogo6.png") no-repeat center;
+    background-size: contain;
+}
+
+.login-form-card{
+    margin-top: -40px;
+    border-radius: 40px 4dvh 0 0;
+    padding: 40px 25px;
+    z-index: 2;
+}
+
+.login-form-card .login-logo{
+    display: none;
+}}
+
+
+/* MOBILE DESIGN (REGISTER PAGE)*/
+@media (max-width: 768px){
+.register-container{
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.register-form-card{
+    margin-top: -40px;
+    border-radius: 40px 4dvh 0 0;
+    padding: 40px 25px;
+    z-index: 2;
+}
+
+.register-page-container{
+  align-items: flex-start;
+  background-color: #f8f9fa;
+  padding: 0px;
+}
+
+.register-side-image{
+    flex: 0 0 25vh;
+    width: 100%;
+    border-radius: 0;
+    padding: 20px;
+}
+
+.register-side-image img{
+    display: none;
+}
+
+.register-side-image::after{
+    content: "";
+    display:block;
+    width: 200px;
+    height: 200px;
+    background:url("/static/images/templogo6.png") no-repeat center;
+    background-size: contain;
+}
+
+.register-form-card .register-logo{
+    display: none;
+}
+}

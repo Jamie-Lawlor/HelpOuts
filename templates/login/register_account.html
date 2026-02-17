@@ -1,74 +1,153 @@
-  {% extends "base.html" %}
- 
-          {% block title %}Register{% endblock %}
-          {%  block body %}
-          <div class="register-page-container">
-        <div class="register-container">
-            <div class="register-side-image">
-                <img src="/static/images/templogo6.png" alt="Helpouts logo" width="500" height="100">
+{% extends "base.html" %} {% block title %}Register{% endblock %} {% block
+navbar %}{% endblock %} {% block body %}
+<div class="register-page-container">
+  <div class="register-container">
+    <div class="register-side-image">
+      <img
+        src="/static/images/templogo6.png"
+        alt="Helpouts logo"
+        width="500"
+        height="100"
+      />
+    </div>
+
+    <div class="register-form-card">
+      <div class="register-card-content">
+        <div class="header text-center">
+          <h2
+            class="text-center mb-4"
+            style="color: #3d6978; font-weight: bold"
+          >
+            Create Account
+          </h2>
+          <p class="text-muted">Step <span id="step-number">1</span> of 3</p>
+        </div>
+
+        <form action="/register_helpee" method="POST">
+          <div id="register-step-1">
+            <div class="row mb-3 mt-3">
+              <div class="form-group col-md-6">
+                <span class="label-muted"
+                  >FIRST NAME<span style="color: #d57a44">*</span></span
+                >
+                <input
+                  type="text"
+                  name="first_name"
+                  aria-label="First Name"
+                  class="form-control soft-input"
+                  placeholder="e.g., Jane"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <span class="label-muted"
+                  >LAST NAME<span style="color: #d57a44">*</span></span
+                >
+                <input
+                  type="text"
+                  name="last_name"
+                  aria-label="Last Name"
+                  class="form-control soft-input"
+                  autocomplete="off"
+                  required
+                />
+              </div>
             </div>
 
-        <div class="register-form-card">
-            <div class="register-card-content">
-            <div class="header text-center">
-                    <h2 class="text-center mb-4" style="color:#3D6978; font-weight:bold;">Create Account</h2>
-                    <p class="text-muted">Step <span id="step-number">1</span> of 2</p>
+            <div class="form-group mb-3">
+              <span class="label-muted"
+                >EMAIL ADDRESS<span style="color: #d57a44">*</span></span
+              >
+              <input
+                type="text"
+                name="email"
+                class="form-control soft-input"
+                placeholder="e.g., janedoe@email.com"
+                aria-label="Email Address"
+                autocomplete="off"
+                required
+              />
             </div>
-            
-            <form action="/register_helpee" method="POST">
-                <div id="register-step-1">
-                    <div class="row mb-3 mt-3">
-                        <div class="form-group col-md-6">
-                        <span class="label-muted">FIRST NAME<span style="color: #D57A44;">*</span></label>
-                <input type="text" name="first_name" aria-label="First Name" class="form-control soft-input" placeholder="e.g., Jane"
-                            autocomplete="off" required>
-                            </div>
-                    <div class="form-group col-md-6">
-                        <span class="label-muted">LAST NAME<span style="color: #D57A44;">*</span></label>
-                        <input type="text" name="last_name" aria-label="Last Name" class="form-control soft-input"
-                            autocomplete="off" required>
-                    </div> 
-                </div>
 
-                <div class="form-group mb-3">
-                    <span class="label-muted">EMAIL ADDRESS<span style="color: #D57A44;">*</span></label>
- <input type="text" name="email" class="form-control soft-input" placeholder="e.g., janedoe@email.com"
-                            aria-label="Email Address" autocomplete="off" required>
-                </div>
+            <div class="row mb-3">
+              <div class="form-group col-md-6">
+                <span class="label-muted"
+                  >PASSWORD<span style="color: #d57a44">*</span></span
+                >
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control soft-input"
+                  placeholder="Min. 10 characters"
+                  aria-label="Password"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <span class="label-muted"
+                  >CONFIRM PASSWORD<span style="color: #d57a44">*</span></span
+                >
+                <input
+                  type="password"
+                  name="confirm_password"
+                  class="form-control soft-input"
+                  aria-label="Password"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+          </div>
 
-                <div class="row mb-3">
-                  <div class="form-group col-md-6">
-                    <span class="label-muted">PASSWORD<span style="color: #D57A44;">*</span></label>
-                     <input type="password" name="password" class="form-control soft-input" placeholder="Min. 10 characters"
-                            aria-label="Password" autocomplete="off" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <span class="label-muted">CONFIRM PASSWORD<span style="color: #D57A44;">*</span></label>
-                    <input type="password" name="confirm_password" class="form-control soft-input" 
-                            aria-label="Password" autocomplete="off" required>
-                </div>
-                </div>
-                </div>
+          <div id="register-step-2" style="display: none">
+            <div class="form-group mb-3">
+              <span class="label-muted">LOCAL AREA</span>
+              <input
+                type="text"
+                name="location"
+                class="form-control soft-input"
+                placeholder="e.g., Dundalk, Co.Louth"
+                aria-label="Location"
+                autocomplete="off"
+                required
+              />
+            </div>
 
-                <div id="register-step-2" style="display:none;">
-                <div class="form-group mb-3">
-                   <span class="label-muted">LOCAL AREA</label>
-                    <input type="text" name="location" class="form-control soft-input" placeholder="e.g., Dundalk, Co.Louth"
-                            aria-label="Location" autocomplete="off" required>
-                </div>
-
-                <label class="form-group d-block text-center d mb-3">I WANT TO...</label>
-                <div class="role-container d-flex gap-3">
-                        <input type="radio" name="user_type" value="helper" id="helper" class="custom-radio-input" required>
-                        <label for="helper" class="role_card flex-fill text-center p-3 border-rounded">
-                           Be a Helper
-                        </label>
-                        <input type="radio" name="user_type" value="community" id="community" class="custom-radio-input">
-                        <label for="community" class="role_card  flex-fill text-center p-3 border-rounded">
-                         Get Help
-                        </label>
-                </div>
-<!-- 
+            <label class="form-group d-block text-center d mb-3"
+              >I WANT TO...</label
+            >
+            <div class="role-container d-flex gap-3">
+              <input
+                type="radio"
+                name="user_type"
+                value="helper"
+                id="helper"
+                class="custom-radio-input"
+                required
+              />
+              <label
+                for="helper"
+                class="role_card flex-fill text-center p-3 border-rounded"
+              >
+                Be a Helper
+              </label>
+              <input
+                type="radio"
+                name="user_type"
+                value="community"
+                id="community"
+                class="custom-radio-input"
+              />
+              <label
+                for="community"
+                class="role_card flex-fill text-center p-3 border-rounded"
+              >
+                Get Help
+              </label>
+            </div>
+            <!-- 
                 <div class="profile-picture-upload">
                     <label style="color:#8DA2A6; font-weight:700;" class="d-block label-muted">PROFILE PICTURE</label>
                     <div class="mt-2">
@@ -80,43 +159,149 @@
                     <small class="text-muted">Upload a photo to gain trust.</small>
                 </div> -->
 
-                <div class="upload-section-register">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                        <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
-                        </svg>                        
-                    <p class="mb-2 fw-bold">Upload Profile Picture</p>
-                        <label for="project-upload-images" class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Browse</label>
-                        <input type="file" id="project-upload-images" class="d-none" accept="image/png, image/jpg, image/jpeg">
-                        <div id="project-image-name" class="small text-muted mt-2"></div>
-                    </div>
-                </div>
+            <div class="upload-section-register">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="16"
+                fill="currentColor"
+                class="bi bi-upload"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+                />
+                <path
+                  d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+                />
+              </svg>
+              <p class="mb-2 fw-bold">Upload Profile Picture</p>
+              <label
+                for="project-upload-images"
+                class="btn btn-outline-secondary btn-sm px-4 rounded-pill"
+                >Browse</label
+              >
+              <input
+                type="file"
+                id="project-upload-images"
+                class="d-none"
+                accept="image/png, image/jpg, image/jpeg"
+              />
+              <div id="project-image-name" class="small text-muted mt-2"></div>
+            </div>
+          </div>
 
-                  
-                    <!-- not sure if using username -->
-                    <!-- <div class="input-group mb-3">
+
+            <div id="register-step-3" style="display: none">
+            <span class="label-muted d-block mb-2">TERMS & CONDITIONS<span style="color: #d57a44">*</span></span>
+            <div class="terms-card mb-3">
+              <h6>1. Conditions of Use</h6>
+              <p>By using HelpOuts, you agree to comply with and be bound by the following terms and conditions of use. Please review these terms and conditions carefully. If you do not want to be bound by these terms and conditions, you are advised to not use HelpOuts.
+              </p>
+              <h6>2. Terms and Conditions</h6>
+              <p>The services you will be providing on HelpOuts will require qualification documentation and Garda vetting. You will be relying on a ‘Helpees’ providing an accurate description of the job that needs to be completed. Jobs that require formal qualifications will not be shown if no documentation is provided and if a job is described as not requiring formal training it will be available. However, if the description is not accurate there is a risk of physical injury to you during the job completion or the ‘Helpee’ after the job is completed. Additionally, there is a risk of property damage during or after the job completion due to unforeseen circumstances or underqualification issues.
+              With awareness of these potential risks occurring, we advise that you use HelpOuts at your own accord.
+              </p>
+              <h6>3. Limitation of Liability</h6>
+              <p>HelpOuts is not liable for any direct, indirect or other damages, losses or injuries that arise from or relating to the use of our site.
+              </p>
+              <h6>4. Changes to Terms and Conditions</h6>
+             <p>HelpOuts reserves the right to edit, modify and change these terms and conditions at anytime, so they should be reviewed frequently. Any changes made will take effect immediately, and we will notify you of any changes made.
+            </p>
+            </div>
+            <div class="form-group mb-3 d-flex align-items-center gap-2">
+              <input class="form-check-input mt-0" type="checkbox" id="terms" required>
+              <label for="terms" class="form-check-label small text-muted">I agree to the HelpOuts Terms and Conditions</label>
+              </div>
+          </div>
+
+          <!-- not sure if using username -->
+          <!-- <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">
                             <img src="/static/images/user_icon.svg" width="25" height="25"
                                 class="d-inline-block align-top">
                         </span>
                          <input type="text" name="username" class="form-control" placeholder="Username"
                             aria-label="Username" autocomplete="off" required> -->
-                    <!-- </div>  -->
-    
-                
-                    <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
-                    <div class="d-flex gap-2 mt-4">
-                        <button type="button" class="btn btn-link ms-auto" onclick="nextRegisterStep()" id="register-next-btn">
-                           <img src="/static/images/arrow-right.svg" width="40" height="40"> 
-                        </button>
-                        <button type="button" class="btn btn-link" onclick="prevRegisterStep()" style="display:none;" id="register-back-btn">
-                            <img src="/static/images/arrow-left.svg" width="40" height="40">
-                        </button>
-                        <button class="btn-block signup-btn ms-auto" type="submit" style="display: none;" id="register-submit-btn">SIGN UP</button>
-                    </div>
-                </form>
-                </div>
-        </div>
-        </div>
-        </div>
-    {% endblock %}
+          <!-- </div>  -->
+
+          <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
+          <div class="d-flex mt-4" style="min-height: 50px;">
+            <button
+              type="button"
+              class="btn btn-link"
+              onclick="prevRegisterStep()"
+              style="display: none"
+              id="register-back-btn"
+            >
+              <img src="/static/images/arrow-left.svg" width="40" height="40" />
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-link ms-auto"
+              onclick="nextRegisterStep()"
+              id="register-next-btn"
+            >
+              <img
+                src="/static/images/arrow-right.svg"
+                width="40"
+                height="40"
+              />
+            </button>
+            
+            <button
+              class="btn-block signup-btn ms-auto"
+              type="submit"
+              style="display: none"
+              id="register-submit-btn"
+            >
+              SIGN UP
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  
+var stepNumber = 1;
+
+function nextRegisterStep(){
+    if(stepNumber === 1){
+        // Moving from step 1 to step 2
+        document.getElementById("register-step-1").style.display = "none";
+        document.getElementById("register-step-2").style.display = "block";
+        document.getElementById("register-back-btn").style.display = "inline-block";
+        stepNumber = 2; // set new step number
+    }else if(stepNumber === 2){
+        // Moving from step 2 to step 3
+        document.getElementById("register-step-2").style.display = "none";
+        document.getElementById("register-step-3").style.display = "block";
+        document.getElementById("register-next-btn").style.display = "none";
+        document.getElementById("register-submit-btn").style.display = "inline-block";
+        stepNumber = 3;
+    }
+    document.getElementById("step-number").innerText = stepNumber;
+}
+
+function prevRegisterStep(){
+ if(stepNumber === 3){
+        // Moving back from step 3 to step 2
+        document.getElementById("register-step-3").style.display = "none";
+        document.getElementById("register-step-2").style.display = "block";
+        document.getElementById("register-next-btn").style.display = "inline-block";
+        document.getElementById("register-submit-btn").style.display = "none";
+        stepNumber = 2; // set new step number
+    }else if(stepNumber === 2){
+        // Moving back from step 2 to step 1
+        document.getElementById("register-step-2").style.display = "none";
+        document.getElementById("register-step-1").style.display = "block";
+        document.getElementById("register-back-btn").style.display = "none";
+        stepNumber = 1;
+    }
+    document.getElementById("step-number").innerText = stepNumber;
+}
+</script>
+{% endblock %}

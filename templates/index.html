@@ -1,27 +1,32 @@
 {% extends "base.html" %}
 <title>{% block title %}Helpouts{% endblock %}</title>
-          {%  block body %}        
-          <div class="index-wrapper">
-            <div class="index-container"></div>
-            <div class="index-container"></div>
+{% block body %}
+<div class="index-wrapper">
+    <div class="index-container"></div>
+    <div class="index-container"></div>
 
-            <div class="index-card text-center shadow">
-                <div class="mb-1">
-                <img src="/static/images/templogo6.png" width="150" alt="Helpouts Logo" class="index-logo">
-                </div>
-
-                <h1 class="fw-bold mb-2" style="color: #3D6978;">HelpOuts</h1>
-                <p class="text-muted fs-5 mb-5 px-md-4">
-                    Where community works together.
-                    <br>
-                    <span class="fw-bold" style="color: #D57A44;">Help out Today.</span>
-                </p>
-
-                <div class="d-grid gap-3 d-md-flex justify-content-center">
-                <a class="btn btn-main btn-login shadow-sm" href="/login/">Login</a>
-                <a class="btn btn-main btn-register shadow-sm" href="/register_page/">Register</a>
-                </div>
-            </div>
+    <div class="index-card text-center shadow">
+        <div class="mb-1">
+            <img src="/static/images/templogo6.png" width="150" alt="Helpouts Logo" class="index-logo">
         </div>
-        
-    {% endblock %}
+
+        <h1 class="fw-bold mb-2" style="color: #3D6978;">HelpOuts</h1>
+        <p class="text-muted fs-5 mb-5 px-md-4">
+            Where community works together.
+            <br>
+            <span class="fw-bold" style="color: #D57A44;">Help out Today.</span>
+        </p>
+
+        <div class="d-grid gap-3 d-md-flex justify-content-center">
+            <a class="btn btn-main btn-login shadow-sm" href="/login">Login</a>
+            <a class="btn btn-main btn-register shadow-sm" href="/register_page/">Register</a>
+        </div>
+        <br>
+          <div class="d-grid gap-3 d-md-flex justify-content-center">
+            <a class="btn btn-main btn-login shadow-sm" href="/login">Helper</a>
+            <a class="btn btn-main btn-register shadow-sm" href="/register_page/">Community</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
