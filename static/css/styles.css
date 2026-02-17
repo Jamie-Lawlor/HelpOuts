@@ -566,7 +566,7 @@ h6{
 }
 
 .terms-card{
-    height: 150px;
+    max-height: 250px;
     overflow-y: auto;
     background-color: #f8f9fa;
     border: 1px solid #e9ecef;
