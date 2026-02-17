@@ -1,6 +1,7 @@
-from flask import Flask, render_template, session, send_file
+from flask import Flask, render_template, session, send_file, request, redirect
 import os
 from db.database import db
+from db.models import Users
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -8,6 +9,7 @@ from routes.profile import profile_blueprint
 from routes.posts import posts_blueprint
 from routes.subscriptions import subscriptions_blueprint
 from routes.api import api_blueprint
+from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 from events import socketio
 load_dotenv()
@@ -54,6 +56,20 @@ def settings_page():
 @app.route("/helper_settings/")
 def helper_settings_page():
     return render_template("helper_settings.html")
+
+@app.route("/login",methods=["POST"])
+def login():
+    email = request.form.get("email")
+    password = request.form.get("password")
+    user = Users.query.filter_by(email = email).first()
+    hashed_password = user.password
+    password_check = check_password_hash(hashed_password, password)
+    
+    if user is not None and password_check:
+        session["user_id"] = user.id
+        return render_template("/home_page.html", userData = Users.query.get_or_404(session["user_id"]))
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
