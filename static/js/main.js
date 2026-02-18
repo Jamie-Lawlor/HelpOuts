@@ -159,18 +159,20 @@ function switch_view(){
 
 function test_login_helper(){
         fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 2 }) })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data =>{
-                console.log("DATA.ID: ",data)
+                sessionStorage.setItem("id", data[0])
+                sessionStorage.setItem("profile_picture", data[1])
                 window.location.replace(`/home_page/`)
             })
 }
 function test_login_admin(){
     
         fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 6 }) })
-           .then(response => response.text())
+           .then(response => response.json())
             .then(data =>{
-                console.log("DATA.ID: ",data)
+                sessionStorage.setItem("id", data[0])
+                sessionStorage.setItem("profile_picture", data[1])
                 window.location.replace(`/home_page/`)
             })
 }
