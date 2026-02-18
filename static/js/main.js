@@ -155,3 +155,22 @@ function switch_view(){
         window.location.replace(`/inbox/`)
     }
 }
+//Remove when no longer needed as test
+
+function test_login_helper(){
+        fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 2 }) })
+            .then(response => response.text())
+            .then(data =>{
+                console.log("DATA.ID: ",data)
+                window.location.replace(`/home_page/`)
+            })
+}
+function test_login_admin(){
+    
+        fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 6 }) })
+           .then(response => response.text())
+            .then(data =>{
+                console.log("DATA.ID: ",data)
+                window.location.replace(`/home_page/`)
+            })
+}

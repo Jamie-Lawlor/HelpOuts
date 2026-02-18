@@ -6,6 +6,9 @@ import re
 
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
 
+@login_blueprint.route("/login/")
+def login():
+    return render_template("login/login.html")
 
 @login_blueprint.route("/register_page/")
 def register_page():
@@ -17,7 +20,7 @@ def helper_register_page():
     return render_template("login/helper_register_account.html")
 
 
-@login_blueprint.route("/register_helpee", methods=["POST"])
+@login_blueprint.route("/register", methods=["POST"])
 def register_helpee():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
@@ -25,7 +28,7 @@ def register_helpee():
     location = request.form.get("location")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
-
+    user_type = request.form.get("user_type")
     # check if this users already exists
     if_exists = Users.query.filter_by(email=email).first()
     if if_exists:
@@ -72,7 +75,7 @@ def register_helpee():
         name=first_name + " " + last_name,
         email=email,
         password=hashed_password,
-        type="helpee",
+        type=user_type,
         work_area=location,
         rating=0,
         # private_key = private_key,
@@ -89,7 +92,9 @@ def logout():
     session.pop("user_id", None)
     return redirect("/")
 
-
-@login_blueprint.route("/login/")
-def login():
-    return render_template("login/login.html")
+#Remove when no longer needed as test
+@login_blueprint.route("/test_login", methods=["POST"])
+def test_login():
+    user_id = int(request.json["data"])
+    session["user_id"] = user_id
+    return str(session["user_id"])
