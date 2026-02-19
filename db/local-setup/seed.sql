@@ -136,9 +136,9 @@ CREATE TABLE reviews (
 
 INSERT INTO communities (id, name, area, description, profile_picture)
 VALUES
-(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', NULL),
+(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png'),
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
-(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', '/static/images/community_image.png');
+(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL);
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
@@ -147,7 +147,6 @@ VALUES
 (3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2),
-(6, 'Gloria Delacroix', 'gloriadelacroix@gmail.com', 'scrypt:32768:8:1$S8MQexKBO9l65fqi$ef7146c54a8dcb331ca82caed17819f8abe49046cb4532c52fc0a28b281cabad0887eca51805a931cef6b0341ab318c9860a674c9e0d96c82e61dcadb3254139', 'community_admin', 'Dundalk', 'Chairperson','',5, NULL, NULL, '/static/images/user_image_3.png', FALSE, 0.0, 1);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)

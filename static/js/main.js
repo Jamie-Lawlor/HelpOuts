@@ -158,7 +158,7 @@ function switch_view(){
 //Remove when no longer needed as test
 
 function test_login_helper(){
-        fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 2 }) })
+        fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 2 }) })
             .then(response => response.json())
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
@@ -168,7 +168,7 @@ function test_login_helper(){
 }
 function test_login_admin(){
     
-        fetch("/test_login", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 6 }) })
+        fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 1 }) })
            .then(response => response.json())
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
