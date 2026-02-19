@@ -120,7 +120,7 @@ function accept_job() {
     // let user_id = document.getElementById("job_accepted").value
     job_id = document.getElementById("job_id").value
     // HARDCODED
-    let helper_id = 2
+    let helper_id = sessionStorage.getItem("id")
     dataArray = [job_id, helper_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
