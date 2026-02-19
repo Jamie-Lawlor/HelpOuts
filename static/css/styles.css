@@ -761,6 +761,46 @@ h6{
     background: transparent !important;
 }
 
+/* MOBILE DESIGN COMMUNITY NAVBAR */
+/* Hide mobile navbar on desktop */
+.mobile-bottom-nav{
+    display: none;
+}
+
+@media (max-width: 991px){
+    #sideBar{
+    display: none !important;
+}
+.mobile-bottom-nav{
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: #85D6D6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 2000 !important;
+}
+
+.mobile-bottom-nav .nav-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #3D6978;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.mobile-bottom-nav .nav-item img{
+    margin-bottom: 2px;
+}
+
+}
+
 /* MOBILE DESIGN (LOGIN)*/
 @media (max-width: 768px){
     .login-page-container{
