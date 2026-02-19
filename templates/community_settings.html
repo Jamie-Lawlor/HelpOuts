@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Community Settings{% endblock %}
-{% block navbar %}
-     {% include "includes/navbar_community.html" %}
-{% endblock %}
                {%  block body %}
+              <div class="d-flex align-items-stretch">
+         {% include "includes/navbar_community.html" %}
+         <main class="flex-grow-1 overflow-hidden">
+
                 <div class="settings-header">
                         <div class="container d-flex align-items-center justify-content-center h-100">
                         <div class="profile-circle me-3">
@@ -120,8 +121,8 @@
                         </div>
                 </div>
                    
-                <div class="p-3 text-end">
-                        <button class="btn helper-button-orange px-4">Logout</button>
+      
+                </main>
                 </div>
 
                 {% endblock %}

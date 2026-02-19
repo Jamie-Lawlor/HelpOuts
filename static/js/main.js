@@ -174,3 +174,17 @@ function test_login_admin(){
                 window.location.replace(`/home_page/`)
             })
 }
+
+function closeSideBar(){
+    document.getElementById("sideBar").style.width = "0";
+    document.getElementById("sideBar").style.padding = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.getElementById("openSideBarBtn").style.display = "block";
+}
+
+function openSideBar(){
+    document.getElementById("sideBar").style.width = "280px";
+    document.getElementById("sideBar").style.padding = "1rem";
+    document.getElementById("openSideBarBtn").style.display = "none";
+}
+

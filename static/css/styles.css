@@ -138,15 +138,18 @@ div.card.helper-cards{
 } */
 
 .navbar{
-    background-color: white !important;
-    border-bottom: 3px solid #3D6978;
+    /* background-color: white !important;
+    border-bottom: 3px solid #3D6978; */
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    padding: 1rem 2rem !important;
 }
 
 .profile-name{
     font-size: 1.75rem;
     font-weight: 700;
 }
-
 
 
 .profile-link{
@@ -250,27 +253,101 @@ h3, h4, h5{
 }
 
 /* navbar  */
+
 .nav-link{
-    color: #6c757d !important;
+    color: #3D6978 !important;
     font-weight: 500 !important;
+    text-decoration: none !important;
     display: flex !important;
     align-items: center !important;
     gap: 10px !important;
-    text-decoration: none !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding:8px 15px !important;
+    border-radius: 12px !important;
+    transition: all 0.3s ease-in-out !important;
 }
 
 .nav-link:hover{
-    color: #85D6D6 !important;
+    color: #d57a44 !important;
+    background-color: rgba(61, 105, 120, 0.05);
 }
 
 .nav-link.active{
     color: #3D6978 !important;
 }
 
+.nav-link i{
+    font-size: 1.2rem;
+}
+
+.add-nav-btn{
+    background-color: #d57a44;
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    gap:8px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(213, 122, 68, 0.2);
+}
+
+.add-nav-btn:hover{
+    transform: translateY(-2px);
+    color: white !important;
+}
+
 h6{
     text-decoration: none;
+}
+
+.profile-dropdown:hover .dropdown-menu{
+    display: block;
+    margin-top: 0;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.dropdown-menu{
+    border-radius: 15px;
+    min-width: 120px;
+    padding: 10px;
+}
+
+.admin-sidebar{
+    width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    transition: width 0.3s ease, padding 0.3s ease;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.admin-sidebar .nav-link{
+    color: #3D6978;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.admin-sidebar .nav-link:hover{
+    background-color: rgba(61, 105, 120, 0.1);
+    color: #d57a44;
+}
+
+
+#sideBar{
+    overflow-x: hidden;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.no-scrollbar::-webkit-scrollbar{
+    display: none;
 }
 
 /* add job page */
