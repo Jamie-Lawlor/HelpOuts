@@ -47,7 +47,6 @@ def index():
 
 @app.route("/home_page/")
 def home_page():
-    print(session["user_id"])
     return render_template("home_page.html")
 
 

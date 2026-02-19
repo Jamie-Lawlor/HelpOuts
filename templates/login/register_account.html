@@ -99,6 +99,7 @@ navbar %}{% endblock %} {% block body %}
                 />
               </div>
             </div>
+           
           </div>
 
           <div id="register-step-2" style="display: none">
@@ -125,6 +126,7 @@ navbar %}{% endblock %} {% block body %}
                 value="helper"
                 id="helper"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput()"
                 required
               />
               <label
@@ -139,6 +141,7 @@ navbar %}{% endblock %} {% block body %}
                 value="community_admin"
                 id="community"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput()"
               />
               <label
                 for="community"
@@ -146,6 +149,19 @@ navbar %}{% endblock %} {% block body %}
               >
                 Get Help
               </label>
+            </div>
+            <div id="register-step-community" style="display: none">
+            <div class="form-group mb-3">
+              <span class="label-muted">COMMUNITY NAME</span>
+              <input
+                type="text"
+                name="community_name"
+                class="form-control soft-input"
+                placeholder="e.g. Tidy towns"
+                aria-label="community_name"
+                autocomplete="off"
+              />
+            </div>
             </div>
             <!-- 
                 <div class="profile-picture-upload">
@@ -303,5 +319,9 @@ function prevRegisterStep(){
     }
     document.getElementById("step-number").innerText = stepNumber;
 }
+function showCommunityNameInput(){
+   document.getElementById("register-step-community").style.display = "block"
+}
+
 </script>
 {% endblock %}
