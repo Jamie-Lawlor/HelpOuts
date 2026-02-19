@@ -818,3 +818,15 @@ h6{
     display: none;
 }
 }
+
+.profile_picture
+{
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background: #f7f7f7;
+    width:50px;
+    height:50px;
+}

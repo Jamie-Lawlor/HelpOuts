@@ -77,9 +77,15 @@
             Community Profile</a>
         </li> -->
       </ul>
+      <div id="profile_picture"></div>
       <form action="/logout">
       <button type="submit">Logout</button>
       </form>
+      <script>
+        profile_picture = document.getElementById("profile_picture")
+        let image = `<img style="border: 2px solid #000000; border-radius:30px; width:45px; height:45px; margin-right:20px;" src=${sessionStorage.getItem("profile_picture")} alt=""/>`
+        profile_picture.innerHTML+=image
+      </script>
     </div>
   </nav>
 </body>

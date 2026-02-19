@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session
+from flask import Blueprint, render_template, request, redirect, session,jsonify
 from db.database import db
 from db.models import Users
 from werkzeug.security import generate_password_hash
@@ -96,5 +96,9 @@ def logout():
 @login_blueprint.route("/test_login", methods=["POST"])
 def test_login():
     user_id = int(request.json["data"])
+    user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
-    return str(session["user_id"])
+    session["profile_picture"] = user_data.profile_picture
+    dataArray = [str(session["user_id"]), session["profile_picture"]]
+    print(user_data.profile_picture)
+    return jsonify(dataArray)

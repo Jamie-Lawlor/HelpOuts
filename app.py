@@ -70,6 +70,7 @@ def login():
     
     if user is not None and password_check:
         session["user_id"] = user.id
+        session["profile_picture"] = user.profile_picture
         return redirect("/home_page/")
     else:
         return redirect("/login")
