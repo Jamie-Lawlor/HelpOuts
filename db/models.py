@@ -42,8 +42,8 @@ class Users(db.Model):
     def validate_type(self, key, type):
         if not type:
             raise ValueError("Type cannot be empty")
-        if type not in ['helpee', 'helper']:
-            raise ValueError("Type must be either 'helpee' or 'helper'")
+        if type not in ['community_admin', 'helper']:
+            raise ValueError("Type must be either 'community_admin' or 'helper'")
         return type
     
     def to_dict(self):

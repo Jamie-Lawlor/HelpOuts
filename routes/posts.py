@@ -52,7 +52,7 @@ def create_project():
 
     new_project = Projects(
         # HARDCODED
-        community_id=1,
+        community_id=session["community_id"],
         project_title=title,  # Not Accepted as default
         project_description=description,
         project_type=project_type_selected,

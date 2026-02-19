@@ -39,7 +39,9 @@ def serve_PWA_service_worker():
 
 @app.route("/")
 def index():
+    #DELETE THIS WHEN DONE
     session["id"] = 3
+    
     return render_template("index.html")
 
 
@@ -67,7 +69,8 @@ def login():
     
     if user is not None and password_check:
         session["user_id"] = user.id
-        return render_template("/home_page.html", userData = Users.query.get_or_404(session["user_id"]))
+        session["profile_picture"] = user.profile_picture
+        return redirect("/home_page/")
     else:
         return redirect("/login")
 

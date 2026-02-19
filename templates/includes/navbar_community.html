@@ -7,61 +7,127 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
   />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="icon" href="/static/favicon.ico" type="image/png" />
 </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link nav-title" href="/add_project">
-            <img
-              src="/static/images/plus_icon.svg"
-              width="30"
-              height="30"
-              class="d-inline-block align-top"
-            />
-            Add Project</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/inbox">
-            <img
-              src="/static/images/message_icon.svg"
-              width="30"
-              height="30"
-              class="d-inline-block align-top"
-            />
-            Inbox</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nav-title" href="/settings/mens_shed_dundalk">
-            <img
-              src="/static/images/settings_icon.svg"
-              width="30"
-              height="30"
-              class="d-inline-block align-top"
-            />
-            Community Settings</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link nav-title"
-            href="/community_profile/mens_shed_dundalk"
-          >
-            <img
-              src="/static/images/user_icon.svg"
-              width="30"
-              height="30"
-              class="d-inline-block align-top"
-            />
-            Community Profile</a
-          >
-        </li>
-      </ul>
-    </div>
+  <nav class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 border-end " style="width:280px; min-height:100vh; transition: 0.3s; overflow-x:hidden;" id="sideBar">
+    <div class="d-flex align-items-center justify-content-between mb-1 no-scrollbar">
+      <a class="d-flex align-items-center link-dark text-decoration-none" href="/">
+        <img src="/static/images/templogo6.png" width="80" height="80" />
+        <span class="fs-4 fw-bold" style="color: #3D6978;">Community</span>
+      </a>
+
+      <button class="btn btn-sm btn-outline-secondary border-0" onclick="closeSideBar()">
+         <i class="bi bi-x-lg"></i>
+      </button>
+      </div>
+
+      <hr>
+      <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">MANAGE</small>
+        <ul class="nav nav-pills flex-column mb-2 gap-2">
+          <li class="nav-item">
+            <a class="nav-link" href="/add_project">
+              <img src="/static/images/plus_icon.svg" width="24" height="24" class="me-2"/>
+              Add Project</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add_job">
+              <img src="/static/images/tools_icon.svg" width="24" height="24" class="me-2" />
+              Add Job</a
+            >
+          </li>
+          
+          </ul>
+        
+      <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">VIEW</small>
+        <ul class="nav nav-pills flex-column mb-2 gap-1">
+          <li class="nav">
+            <a class="nav-link" href="/community_profile/mens_shed_dundalk">
+              <img src="/static/images/user_icon.svg" width="24" height="24" class="me-2">
+              Public Profile</a>
+          </li>
+          <li class="nav">
+            <a class="nav-link" href="/inbox">
+              <img
+                src="/static/images/message_icon.svg"
+                width="30"
+                height="30"
+                class="me-2"
+              />
+              Inbox
+                <span class="badge rounded-pill bg-danger ms-auto">3</span>
+              </a
+            >
+          </li>
+          </ul>
+          
+        <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">SETTINGS</small>
+          <ul class="nav nav-pills flex-column mb-2 gap-1">
+          <li class="nav">
+            <a class="nav-link" href="/community_settings/mens_shed_dundalk">
+              <img
+                src="/static/images/handshake.svg"
+                width="24"
+                height="24"
+                class="me-2"
+              />
+              My Helpers</a
+            >
+          </li>
+          <li class="nav">
+            <a class="nav-link" href="/community_settings/mens_shed_dundalk">
+              <img
+                src="/static/images/settings_icon.svg"
+                width="24"
+                height="24"
+                class="me-2"
+              />
+              Settings</a
+            >
+          </li>
+          </ul>
+          <hr>
+
+          <div class="dropdown">
+            <div class="d-flex align-items-center">
+            <a
+              href="#"
+              class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+              id="profileMenu"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="/static/images/user_image_2.png"
+                width="32"
+                height="32"
+                class="rounded-circle border"
+                />
+              <strong>My Profile</strong>
+            </a>
+            
+            <ul
+              class="dropdown-menu shadow border-0 p-2"
+              aria-labelledby="profileMenu"
+            >
+              <li>
+                  <a class="dropdown-item rounded mb-1" href="/community_profile/mens_shed_dundalk">View Profile</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form action="/logout">
+                  <button
+                    type="submit"
+                    class="btn btn-sm btn-outline-danger w-100 rounded-pill"
+                  >
+                    Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+            </div>
+      </div>
   </nav>
-</body>
+

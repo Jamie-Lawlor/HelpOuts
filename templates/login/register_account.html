@@ -23,7 +23,7 @@ navbar %}{% endblock %} {% block body %}
           <p class="text-muted">Step <span id="step-number">1</span> of 3</p>
         </div>
 
-        <form action="/register_helpee" method="POST">
+        <form action="/register" method="POST">
           <div id="register-step-1">
             <div class="row mb-3 mt-3">
               <div class="form-group col-md-6">
@@ -99,6 +99,7 @@ navbar %}{% endblock %} {% block body %}
                 />
               </div>
             </div>
+           
           </div>
 
           <div id="register-step-2" style="display: none">
@@ -125,6 +126,7 @@ navbar %}{% endblock %} {% block body %}
                 value="helper"
                 id="helper"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput(false)"
                 required
               />
               <label
@@ -136,9 +138,10 @@ navbar %}{% endblock %} {% block body %}
               <input
                 type="radio"
                 name="user_type"
-                value="community"
+                value="community_admin"
                 id="community"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput(true)"
               />
               <label
                 for="community"
@@ -146,6 +149,19 @@ navbar %}{% endblock %} {% block body %}
               >
                 Get Help
               </label>
+            </div>
+            <div id="register-step-community" style="display: none">
+            <div class="form-group mb-3">
+              <span class="label-muted">COMMUNITY NAME</span>
+              <input
+                type="text"
+                name="community_name"
+                class="form-control soft-input"
+                placeholder="e.g. Tidy towns"
+                aria-label="community_name"
+                autocomplete="off"
+              />
+            </div>
             </div>
             <!-- 
                 <div class="profile-picture-upload">
@@ -303,5 +319,15 @@ function prevRegisterStep(){
     }
     document.getElementById("step-number").innerText = stepNumber;
 }
+function showCommunityNameInput(isCommunitySelected){
+  if (isCommunitySelected){
+       document.getElementById("register-step-community").style.display = "block"
+  }
+  else{
+       document.getElementById("register-step-community").style.display = "none"
+
+  }
+}
+
 </script>
 {% endblock %}
