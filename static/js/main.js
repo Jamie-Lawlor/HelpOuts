@@ -178,15 +178,12 @@ function test_login_admin(){
 }
 
 function closeSideBar(){
-    document.getElementById("sideBar").style.width = "0";
-    document.getElementById("sideBar").style.padding = "0";
-    document.getElementById("main").style.marginLeft = "0";
-    document.getElementById("openSideBarBtn").style.display = "block";
+    document.getElementById("sideBar").classList.add("closed");
+    document.getElementById("openSideBarBtn").style.display = "flex";
 }
 
 function openSideBar(){
-    document.getElementById("sideBar").style.width = "280px";
-    document.getElementById("sideBar").style.padding = "1rem";
+    document.getElementById("sideBar").classList.remove("closed");
     document.getElementById("openSideBarBtn").style.display = "none";
 }
 

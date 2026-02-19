@@ -131,19 +131,10 @@ div.card.helper-cards{
     color: black;
 }
 
-/* .nav-title{
-    font-size: 15px;
-    font-weight: 600;
-    color: #3D6978 !important;
-} */
-
 .navbar{
-    /* background-color: white !important;
-    border-bottom: 3px solid #3D6978; */
-    background: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(10px) !important;
-    border-bottom: 1px solid #e0e0e0 !important;
-    padding: 1rem 2rem !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    /* border-bottom: 2px solid #f0f2f5 !important; */
 }
 
 .profile-name{
@@ -176,6 +167,7 @@ body{
     color: #1f2d33; */
     color: #1f2d33 !important;
     background-color: #f4f7f6 !important;
+    /* background-color: #f8fbfb !important; */
 }
 
 .list-item{
@@ -255,24 +247,23 @@ h3, h4, h5{
 /* navbar  */
 
 .nav-link{
-    color: #3D6978 !important;
-    font-weight: 500 !important;
-    text-decoration: none !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding:8px 15px !important;
-    border-radius: 12px !important;
-    transition: all 0.3s ease-in-out !important;
+    color: #4a5568 !important;
+    font-weight: 600 !important;
+    padding: 10px 18px !important;
+    transition: all 0.25s ease !important;
+    border-radius: 10px !important;
+    gap: 8px !important;
 }
 
 .nav-link:hover{
-    color: #d57a44 !important;
-    background-color: rgba(61, 105, 120, 0.05);
+    color: #85D6D6 !important;
+    background-color: #f0f7f9;
+    transform: translateY(-1px);
 }
 
 .nav-link.active{
-    color: #3D6978 !important;
+    color: #D57A44 !important;
+    background-color: #f0f7f9 !important;
 }
 
 .nav-link i{
@@ -318,13 +309,17 @@ h6{
 }
 
 .admin-sidebar{
-    width: 280px;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    transition: width 0.3s ease, padding 0.3s ease;
-    overflow-x: hidden;
-    white-space: nowrap;
+   width: 280px;
+   height: 100vh;
+   position: sticky;
+   top:20px;
+   margin: 20px;
+   background: #ffffff !important;
+   border-radius: 20px !important;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+   border: none !important;
+   transition: all 0.3s ease;
+   z-index: 100;
 }
 
 .admin-sidebar .nav-link{
@@ -335,20 +330,64 @@ h6{
 }
 
 .admin-sidebar .nav-link:hover{
-    background-color: rgba(61, 105, 120, 0.1);
-    color: #d57a44;
+    background-color: #f0fafa !important;
+    color: #3D6978 !important;
 }
 
 
 #sideBar{
+    width: 280px;
+    min-width: 280px;
     overflow-x: hidden;
-    white-space: nowrap;
-    transition: 0.3s;
+    transition: all 0.3s ease-in-out;
+}
+
+#sideBar.closed{
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0;
 }
 
 .no-scrollbar::-webkit-scrollbar{
     display: none;
 }
+
+#profileMenu{
+    padding: 5px 12px;
+    border-radius: 50px;
+    border: 1px solid #eee;
+    transition: 0.2s;
+}
+
+#profileMenu:hover{
+    background-color: #f8f9fa;
+    border-color: #ddd;
+}
+
+/* Community Sidebar*/
+#openSideBarBtn{
+    width: 45px;
+    height: 45px;
+    border-radius: 50% !important;
+    background-color: #3D6978;
+    color: white !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: fixed;
+    z-index: 999;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#openSideBarBtn:hover{
+    background-color: #d57a44 !important;
+    transform:scale(1.1);
+}
+
 
 /* add job page */
 

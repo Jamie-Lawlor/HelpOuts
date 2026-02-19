@@ -11,11 +11,11 @@
   <link rel="icon" href="/static/favicon.ico" type="image/png" />
 </head>
 
-  <nav class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 bg-light border-end " style="width:280px; min-height:100vh; transition: 0.3s; overflow-x:hidden;" id="sideBar">
-    <div class="d-flex align-items-center justify-content-between mb-3 no-scrollbar">
+  <nav class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 border-end " style="width:280px; min-height:100vh; transition: 0.3s; overflow-x:hidden;" id="sideBar">
+    <div class="d-flex align-items-center justify-content-between mb-1 no-scrollbar">
       <a class="d-flex align-items-center link-dark text-decoration-none" href="/">
         <img src="/static/images/templogo6.png" width="80" height="80" />
-        <span class="fs-4 fw-bold ms-2" style="color: #3D6978;">Community</span>
+        <span class="fs-4 fw-bold" style="color: #3D6978;">Community</span>
       </a>
 
       <button class="btn btn-sm btn-outline-secondary border-0" onclick="closeSideBar()">
@@ -25,16 +25,16 @@
 
       <hr>
       <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">MANAGE</small>
-        <ul class="nav nav-pills flex-column mb-4 gap-2">
+        <ul class="nav nav-pills flex-column mb-2 gap-2">
           <li class="nav-item">
             <a class="nav-link" href="/add_project">
-              <img src="/static/images/plus_icon.svg" width="24" height="24" />
+              <img src="/static/images/plus_icon.svg" width="24" height="24" class="me-2"/>
               Add Project</a
             >
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/add_job">
-              <img src="/static/images/tools_icon.svg" width="24" height="24" />
+              <img src="/static/images/tools_icon.svg" width="24" height="24" class="me-2" />
               Add Job</a
             >
           </li>
@@ -42,10 +42,10 @@
           </ul>
         
       <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">VIEW</small>
-        <ul class="nav nav-pills flex-column mb-4 gap-1">
+        <ul class="nav nav-pills flex-column mb-2 gap-1">
           <li class="nav">
             <a class="nav-link" href="/community_profile/mens_shed_dundalk">
-              <img src="/static/images/user_icon.svg" width="20" height="20" class="me-2">
+              <img src="/static/images/user_icon.svg" width="24" height="24" class="me-2">
               Public Profile</a>
           </li>
           <li class="nav">
@@ -54,7 +54,7 @@
                 src="/static/images/message_icon.svg"
                 width="30"
                 height="30"
-                class="d-inline-block align-top"
+                class="me-2"
               />
               Inbox
                 <span class="badge rounded-pill bg-danger ms-auto">3</span>
@@ -64,13 +64,13 @@
           </ul>
           
         <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">SETTINGS</small>
-          <ul class="nav nav-pills flex-column mb-4 gap-1">
+          <ul class="nav nav-pills flex-column mb-2 gap-1">
           <li class="nav">
             <a class="nav-link" href="/community_settings/mens_shed_dundalk">
               <img
                 src="/static/images/handshake.svg"
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 class="me-2"
               />
               My Helpers</a
@@ -82,6 +82,7 @@
                 src="/static/images/settings_icon.svg"
                 width="24"
                 height="24"
+                class="me-2"
               />
               Settings</a
             >
