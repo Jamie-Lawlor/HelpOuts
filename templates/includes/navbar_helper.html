@@ -67,13 +67,9 @@
         </li>
       </ul>
 </div>
-
-<!-- <div class="d-flex align-items-center ms-auto"> -->
-   <!-- <div id="profile_picture"></div> -->
    
    <div class="dropdown ms-auto">
     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
-    <!-- <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2"> -->
     <div id="profile_picture"></div>
     <strong class="ms-2">My Profile</strong>
     </a>
@@ -89,7 +85,6 @@
       </li>
     </ul>
    </div>
-
       <script>
         profile_picture = document.getElementById("profile_picture")
         let image = `<img style="border: 2px solid white; width:45px; height:45px; margin-right:20px;" class="profile-img" src=${sessionStorage.getItem("profile_picture")} alt=""/>`
@@ -97,4 +92,47 @@
       </script>
     </div>
   </nav>
+
+   <div class="mobile-bottom-nav d-lg-none">
+         <a class="nav-item" href="/home_page">
+            <img
+              src="/static/images/house_icon.svg"
+              width="24"
+              height="24"
+              class="d-inline-block align-top"
+            />
+            Home</a
+          >
+        <a class="nav-item" href="/inbox">
+                <div class="position-relative">
+              <img
+                src="/static/images/message_icon.svg"
+                width="30"
+                height="30"
+                class="me-2"
+              />
+              </div>
+                <span class="badge rounded-pill bg-danger position-absolute top-0 start-100" style="font-size: 0.6rem;">3</span>
+                   <span>Inbox</span>
+              </a>
+         <a class="nav-item" href="/helper_settings/Ryan_O'Hare">
+            <img
+              src="/static/images/settings_icon.svg"
+              width="24"
+              height="24"
+              class="d-inline-block align-top"
+            />
+            Settings</a
+          >
+       <a class="nav-item" href="/helper_profile/Ryan_O'Hare">
+            <img
+              src="/static/images/user_icon.svg"
+              width="24"
+              height="24"
+              class="d-inline-block align-top"
+            />
+          Profile</a
+          >
+      </div>
 </body>
+
