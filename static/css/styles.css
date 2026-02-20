@@ -1,10 +1,37 @@
+/* COMMUNITY PROFILE */
 .hide{
     display: none;
 }
 
+.btn-teal{
+    background-color: #85D6D6 !important;
+    color: white !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-teal:hover{
+    background-color: #5a92a5 !important;
+}
+
+.info-badge{
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: #3D6978 !important;
+    border: 1px solid #3D6978 !important;
+    background-color: white;
+}
+
+.info-badge:hover{
+    background-color: #3D6978 !important;
+    color: white !important;
+}
+
 .header-bg{
-    height: 200px;
-    background-color: #85D6D6;
+    height: 180px;
+    background: #3D6978;
+    background: linear-gradient(90deg, rgba(61, 105, 120, 1) 0%, rgba(133, 214, 214, 1) 50%, rgba(61, 105, 120, 1) 100%);
 }
 
 .profile-card{
@@ -909,3 +936,4 @@ h6{
     width:50px;
     height:50px;
 }
+
