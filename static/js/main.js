@@ -187,3 +187,19 @@ function openSideBar(){
     document.getElementById("openSideBarBtn").style.display = "none";
 }
 
+
+// function showSection(mobileSection){
+//     let projects = document.getElementById("projects-section")
+//     let jobs =  document.getElementById("jobs-section")
+//     let placeholder = document.getElementById("mobile-placeholder-profile")
+
+//     if (placeholder) placeholder.style.display = "none" // hide once jobs or projects button clicked
+
+//     if(mobileSection === "projects"){
+//         document.getElementById("projects-section").classList.style.display = "flex"
+//         document.getElementById("jobs-section").className.style.display = "none"
+//     }else{
+//         document.getElementById("projects-section").classList.style.display = "none"
+//         document.getElementById("jobs-section").className.style.display = "flex"
+//     }
+// }

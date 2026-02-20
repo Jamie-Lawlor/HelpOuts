@@ -18,18 +18,22 @@
                 <div class="row">
                         <div class="col-lg-8">
                 <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius:15px;">
-                        <div class="d-flex align-items-end mb-3">
+                        <div class="text-center">
                                 <img src="/static/images/community_image.png"
                                         class="rounded-3 border border-4 border-white shadow-sm" style="width: 120px; height:120px; object-fit:cover; margin-top:-60px;">
-                        <div class="ms-3 w-100">
                                 <h2 class="fw-bold mb-0 text-dark">{{ community.name}}</h2>
                                 <p class="text-muted mb-0"><img src="/static/images/location_icon.svg" width="20" height="20"> {{ community.area }}</p>
-                        </div>
+                                <div class="d-flex gap-2">
+                                <button class="signup-btn btn  btn-sm w-25 mt-2 d-lg-none flex-grow-1 rounded-pill" style="background-color: #D57A44; color: white;">
+                                        Join
+                                </button>
+                                <a href="/message_chat" class="btn btn-teal btn-sm w-25 mt-2 d-lg-none flex-grow-1 rounded-pill">Message</a>
+                                </div>
                         </div>
                         
                         <div class="py-3 border-top">
-                                <h6 class="fw-bold text-uppercase small text-muted">What we're about</h6>
-                                <p class="mb-0 text-secondary">We are a group dedicated to improving {{ community.area }}. Join us to help out with local projects, community events and skill-sharing.</p>
+                                <h6 class="fw-bold text-uppercase small text-muted d-sm-none d-md-block d-none d-sm-block">What we're about</h6>
+                                <p class="mb-0 text-secondary d-sm-none d-md-block d-none d-sm-block">We are a group dedicated to improving {{ community.area }}. <br> Join us to help out with local projects, community events and skill-sharing.</p>
                         </div>
 
                                 <div class="row g-2 mt-2">
@@ -56,7 +60,20 @@
                                         </div>
                                 </div>
                         </div>
+<!-- <div class="d-flex d-lg-none bg-light p-1 rounded-pill mb-4" style="border: 1px solid #ddd;">
+        <button id="mobileToggleProjects" class="btn btn-sm flex-grow-1 rounded-pill fw-bold bg-white shadow-sm" onclick="showSection('projects')">
+                Projects
+        </button>
+        <button id="mobileToggleJobs" class="btn btn-sm flex-grow-1 rounded-pill fw-bold bg-white shadow-sm" onclick="showSection('jobs')">
+                Jobs
+        </button>
+</div> -->
 
+<!-- <div id="mobile-placeholder-profile" class="text-center py-5 d-lg-none">
+        <p class="text-muted">Select <strong> Projects</strong> or <strong>Jobs</strong></p>
+</div> -->
+
+                <div id="projects-section">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="fw-bold mb-0">Active Projects</h5>
                         <a href="#" class="small text-decoration-none text-dark">View All</a>
@@ -123,9 +140,10 @@
                         {% endfor %}
                         {% endif %}
                 </div>
+                </div>
 
                 <h5 class="fw-bold mt-4">Help Needed (Jobs)</h5>
-
+                <div id="jobs-section">
                 <div class="row g-3">
                         {% for i in range(jobs|length) %}
                         <div class="col-12">
@@ -149,14 +167,14 @@
                         </div>
                         {% endfor %}
                 </div>
-                
+                </div>
                 </div>
 
                 <div class="col-lg-4">
                         <div class="sticky-top" style="top:20px;">
                                 <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 15px;">
-                                        <button class="btn-block signup-btn ms-auto py-2 fw-bold mb-3 w-100" type="button">Join Community</button>
-                                        <p class="text-muted small text-center mb-0">Become a Helper of {{ community.name }}</p>
+                                        <button class="btn-block signup-btn ms-auto py-2 fw-bold mb-3 w-100 d-sm-none d-md-block d-none d-sm-block" type="button">Join Community</button>
+                                        <p class="text-muted small text-center mb-0 d-sm-none d-md-block d-none d-sm-block">Become a Helper of {{ community.name }}</p>
                                 </div>
 
                                 <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 15px;">
@@ -179,7 +197,7 @@
                                                 <img src="/static/images/email_icon.svg" width="20" height="20" class="mr-2">
                                                 <span class="small ml-4">  janedoe@email.com</span>
                                         </div>
-                                                <a href="/message_chat" class="btn btn-teal btn-sm w-100 mt-2">Message</a>
+                                                <a href="/message_chat" class="btn btn-teal btn-sm w-100 mt-2 d-sm-none d-md-block d-none d-sm-block">Message</a>
                                 </div>
                                 
                         </div>
