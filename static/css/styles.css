@@ -572,6 +572,21 @@ h6{
 
 
 /* Register Page */
+
+.errors{
+    color: maroon;
+    visibility: hidden;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.error{
+    color: maroon;
+    /* visibility: hidden; */
+    font-size: 15px;
+    margin-top: 2px;
+}
+
 .register-container{
     display:flex; 
     max-width: 1000px;

@@ -28,6 +28,9 @@
         <form action="/login" method="POST">
           <div class="mb-3 mt-3">
             <div class="form-group mb-4">
+              {% if error%}
+              <p class="error">{{ error }}</p>
+              {% endif %}
               <span class="label-muted">EMAIL<span style="color: #d57a44">*</span></span>
               <input id="email" type="email" name="email" aria-label="Email" class="form-control soft-input" placeholder="e.g., janedoe@email.com" autocomplete="off" required/>
             </div>

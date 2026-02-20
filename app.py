@@ -64,15 +64,20 @@ def login():
     email = request.form.get("email")
     password = request.form.get("password")
     user = Users.query.filter_by(email = email).first()
-    hashed_password = user.password
-    password_check = check_password_hash(hashed_password, password)
+    # hashed_password = user.password
+    # password_check = check_password_hash(hashed_password, password)
     
+    if user is not None:
+        hashed_password = user.password
+        password_check = check_password_hash(hashed_password, password)    
+
     if user is not None and password_check:
         session["user_id"] = user.id
         session["profile_picture"] = user.profile_picture
         return redirect("/home_page/")
     else:
-        return redirect("/login")
+        error = "Email or Password Is Incorrect"
+        return render_template("login/login.html", error = error)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
