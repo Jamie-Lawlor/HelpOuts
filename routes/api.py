@@ -9,6 +9,7 @@ import io
 import boto3
 from dotenv import load_dotenv
 import os
+import PIL
 load_dotenv()
 
 
@@ -18,7 +19,7 @@ s3 = boto3.client(
     "s3",
     aws_access_key_id=os.getenv("AWS_S3_ACCESS_KEY"),
     aws_secret_access_key=os.getenv("AWS_S3_SECRET_KEY"),
-    region_name="eu-west-1"
+    region_name=os.getenv("AWS_REGION")
 )
 
 @api_blueprint.route("/updateProfilePicture", methods=["POST"])
@@ -43,8 +44,6 @@ def update_profile_picture():
         image = Image.open(profile_picture)
         image.load() 
         image = Image.open(profile_picture)
-        image.thumbnail((500, 500)) # this size is still to be decided
-
     except Exception as e:
         return {"error": "Uploaded file is not a valid image"}, 400
     
@@ -53,48 +52,71 @@ def update_profile_picture():
     profile_picture.filename = "profile_picture.jpg"
     
     # send image to AiClipse for verification
-    # try: 
-    #     response = requests.post(
-    #         os.getenv("AI_CLIPSE_URL"),
-    #         headers={
-    #             "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
-    #         },
-    #         files={
-    #             "file": (
-    #                 profile_picture.filename,
-    #                 profile_picture.stream,
-    #                 profile_picture.mimetype
-    #             )
-    #         }
-    #     )
-    #     data = response.json()
-    #     verdict = data["verdict"]
-    #     accuracy = data["confidence"]
-    #     label = data["label"]
-    #     # if we want to reject an image and do something different
-    #     # it will go here, for now image is sent to aws and the 
-    #     # link is written to db
-    # except Exception as e:
-    #     print(f"ERROR: {e}")
-    #     return {"error": "Error validating image"}
+    # TODO handle what happens if an image comes back as fake, traffic light setup
+    # green 70%-100% | orange 50%-70% | red 0%-50% 
+    try: 
+        profile_picture.stream.seek(0)
+        response = requests.post(
+            os.getenv("AI_CLIPSE_URL_TEMP"),
+            headers={
+                "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
+            },
+            files={
+                "file": (
+                    profile_picture.filename,
+                    profile_picture.stream,
+                    profile_picture.mimetype
+                )
+            }
+        )
+        data = response.json()
+        verdict = data["verdict"]
+        accuracy = data["confidence"]
+        label = data["label"]
+        # if we want to reject an image and do something different
+        # it will go here, for now image is sent to aws and the 
+        # link is written to db
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return {"error": "Error validating image"}
+    
     
     # send image to AWS S3
     try:
-        # if we want to store different sized images it would be 
-        # done here with multiple keys
-        object_key = (
-            f"{session.get('id')}/profile-picture/profile-picture.jpg"
-        )
 
-        profile_picture.stream.seek(0) 
-        s3.upload_fileobj(
-            profile_picture.stream,
-            os.getenv("AWS_S3_BUCKET"),
-            object_key,
-            ExtraArgs={
-                "ContentType": "image/jpg",
-            },
-        )
+        # define image sizes to be created
+        img_sizes = {
+            "s": (60, 60),
+            "m": (150, 150),
+            "l": (500, 500)
+        }
+        resized_images = {}
+        base_img = Image.open(profile_picture)
+
+        # created resized images based on dict above
+        for label, size in img_sizes.items():
+            resized = base_img.copy()
+            resized = resized.resize((size[0], size[1]), Image.LANCZOS)
+            resized_images[label] = resized
+
+        # loop resized images and upload to s3 with matching label in the key
+        for label, resized_image in resized_images.items():
+            object_key = (
+                f"{session.get('id')}/profile-picture/profile-picture-{label}.jpg"
+            )
+            # change PIL image to file object for upload
+            resized_image_file = io.BytesIO()
+            resized_image.save(resized_image_file, format="JPEG", quality=90)
+            resized_image_file.seek(0)
+
+            s3.upload_fileobj(
+                resized_image_file,
+                os.getenv("AWS_S3_BUCKET"),
+                object_key,
+                ExtraArgs={
+                    "ContentType": "image/jpg",
+                },
+            )
     except Exception as e:
         print(f"ERROR: {e}")
         return {"error": "Error uploading image to S3"}
@@ -112,9 +134,9 @@ def update_profile_picture():
         "user_id": session.get("id"),
         "S3_KEY": object_key,
         "profile_url": db_profile_picture_url,
-        # "verdict": verdict,
-        # "accuracy": accuracy,
-        # "label": label
+        "verdict": verdict,
+        "accuracy": accuracy,
+        "label": label
     }, 200
     
     
