@@ -1,15 +1,7 @@
 {% extends "base.html" %} {% block title %}Inbox{% endblock %} {% block body %}
 <div class="container mt-4" style="max-width: 750px">
   <h1 class="text-center fw-bold mb-4">Inbox</h1>
-  <!-- HARDCODED -->
-  <button
-    id="switch_view"
-    value="community_view"
-    onclick="switch_view()"
-    class="helper-button-orange btn btn-main shadow-sm rounded-pill"
-  >
-    Volunteer view
-  </button>
+
   <ul class="nav nav-fill border-bottom-0" id="inboxOptions">
     <li class="nav-item">
       <a class="nav-link text-decoration-none text-dark" href="/inbox"
@@ -26,21 +18,20 @@
   <div class="tab-content border border-top-0 rounded-bottom shadow-sm">
     <div class="tab-pane fade show active" id="messages">
       <div class="list-group list-group-flush">
+        {% if session["community_id"] %}
+        {% for i in range(all_users|length) %}
         <!-- link to user chat -->
-        <a
-          href="/message_chat/"
+         <form action="/message_chat/", method="POST">
+           <button
+          type="submit"
           class="list-group-item list-group-item-action p-3"
         >
-          <div class="d-flex w-100 justify-content-between">
+        <div class="d-flex w-100 justify-content-between">
             <div class="d-flex align-items-center">
-              <img
-                src="/static/images/user_image_2.png"
-                width="60"
-                height="60"
-                class="rounded-circle me-3"
-              />
+              <img src="{{ all_users[i].profile_picture }}" width="60" height="60" class="rounded-circle me-3">
               <div>
-                <h6 class="mb-0 fw-bold">RyanOHare1</h6>
+                <input type="number" name="id" style="display:none" value="{{ all_users[i].id }}">
+                <h6 name="helper_name" class="mb-0 fw-bold">{{ all_users[i].name }}</h6>
                 <small class="text-muted mt-1">
                   Hi, I would love to work with Men's Sheds. What projects are
                   available?
@@ -49,39 +40,44 @@
             </div>
             <small class="text-muted">2 hours ago</small>
           </div>
-        </a>
-
-        <a
-          href="/message_chat/"
+        </button>
+         </form>
+       
+        {% endfor %}
+        {% else %}
+        {% for i in range(users_community|length) %}
+        <!-- link to user chat -->
+         <form action="/message_chat/", method="POST">
+           <button
+          type="submit"
           class="list-group-item list-group-item-action p-3"
         >
-          <div class="d-flex w-100 justify-content-between">
+        <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-100 justify-content-between">
             <div class="d-flex align-items-center">
-              <img
-                src="/static/images/user_image.jpg"
-                width="60"
-                height="60"
-                class="rounded-circle me-3"
-              />
+              <img src="{{ users_community[i].profile_picture }}" width="60" height="60" class="rounded-circle me-3">
               <div>
-                <h6 class="mb-0 fw-bold">EmiliaRamsey02</h6>
+              <input type="number" name="id" style="display:none" value="{{ users_community[i].id }}">
+                <h6 class="mb-0 fw-bold">{{ users_community[i].name }}</h6>
                 <small class="text-muted mt-1">
-                  Hi, I'm new to the area and I would love to get involved in
-                  the community...
+                That's great Ryan. We have lots of projects waiting to kick off, is there anything in particular you would be interested in?
                 </small>
               </div>
             </div>
-            <small class="text-muted">1 day ago</small>
+            <small class="text-muted">3 hours ago</small>
           </div>
-        </a>
-      </div>
+        </button>
+         </form>
+        {% endfor %}
+        {% endif %}
+      </div>  
     </div>
   </div>
 </div>
 <script>
-  localStorage.setItem("sender_id", 1);
-  localStorage.setItem("receiver_id", 2);
-
+  function storeId(id){
+  
+  }
   function stringToArrayBuffer(str) {
     const buf = new ArrayBuffer(str.length * 2);
     const bufView = new Uint16Array(buf);
