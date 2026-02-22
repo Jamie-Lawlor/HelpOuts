@@ -29,6 +29,7 @@ def register_helpee():
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
     user_type = request.form.get("user_type")
+    #Breaks on database
     if request.form.get("community_name") is not None:
         community_name = request.form.get("community_name")
         if_exists = Communities.query.filter_by(name = community_name).first()
@@ -117,6 +118,8 @@ def test_login_user():
     user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
     session["profile_picture"] = user_data.profile_picture
+    if session.get("community_id") is not None:
+        session.pop("community_id", None)
     dataArray = [str(session["user_id"]), session["profile_picture"]]
     print(user_data.profile_picture)
     return jsonify(dataArray)
@@ -127,6 +130,7 @@ def test_login_admin():
     community_id = int(request.json["data"])
     community_data = Communities.query.get_or_404(community_id)
     session["community_id"] = community_id
+    print("SESSION: ",session["community_id"])
     session["profile_picture"] = community_data.profile_picture
     dataArray = [str(session["community_id"]), session["profile_picture"]]
     print(community_data.profile_picture)
