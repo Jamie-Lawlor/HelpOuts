@@ -1,10 +1,37 @@
+/* COMMUNITY PROFILE */
 .hide{
     display: none;
 }
 
+.btn-teal{
+    background-color: #85D6D6 !important;
+    color: white !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-teal:hover{
+    background-color: #5a92a5 !important;
+}
+
+.info-badge{
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: #3D6978 !important;
+    border: 1px solid #3D6978 !important;
+    background-color: white;
+}
+
+.info-badge:hover{
+    background-color: #3D6978 !important;
+    color: white !important;
+}
+
 .header-bg{
-    height: 200px;
-    background-color: #85D6D6;
+    height: 180px;
+    background: #3D6978;
+    background: linear-gradient(90deg, rgba(61, 105, 120, 1) 0%, rgba(133, 214, 214, 1) 50%, rgba(61, 105, 120, 1) 100%);
 }
 
 .profile-card{
@@ -15,16 +42,12 @@
 .profile-img-container img{
     margin-top: -75px;
     background-color: white;
-    /* padding: 6px;
-    border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0,0.8); */
 }
 
 
 .profile-card{
     min-width: 160px;
     height: 100%;
-    /* overflow: hidden; */
 }
 
 .project-card img{
@@ -45,7 +68,6 @@
 .no-scrollbar::-webkit-scrollbar {display: none;}
 
 .helper-cards{
-    /* border: 2px solid#D57A44 !important; */
     border: 2px solid  #3D6978 !important;
     border-radius: 5px !important;
 }
@@ -76,7 +98,6 @@ div.card.helper-cards{
     width: 100%;
     aspect-ratio: 3/2;
     padding-top: 40px;
-    /* clip-path: ellipse(100% 100% at 50% 0); */
     background: #85D6D6;
     display: flex;
     flex-direction: column;
@@ -131,22 +152,16 @@ div.card.helper-cards{
     color: black;
 }
 
-/* .nav-title{
-    font-size: 15px;
-    font-weight: 600;
-    color: #3D6978 !important;
-} */
-
 .navbar{
-    background-color: white !important;
-    border-bottom: 3px solid #3D6978;
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    /* border-bottom: 2px solid #f0f2f5 !important; */
 }
 
 .profile-name{
     font-size: 1.75rem;
     font-weight: 700;
 }
-
 
 
 .profile-link{
@@ -173,6 +188,7 @@ body{
     color: #1f2d33; */
     color: #1f2d33 !important;
     background-color: #f4f7f6 !important;
+    /* background-color: #f8fbfb !important; */
 }
 
 .list-item{
@@ -250,28 +266,149 @@ h3, h4, h5{
 }
 
 /* navbar  */
+
 .nav-link{
-    color: #6c757d !important;
-    font-weight: 500 !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    text-decoration: none !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    color: #4a5568 !important;
+    font-weight: 600 !important;
+    padding: 10px 18px !important;
+    transition: all 0.25s ease !important;
+    border-radius: 10px !important;
+    gap: 8px !important;
 }
 
 .nav-link:hover{
     color: #85D6D6 !important;
+    background-color: #f0f7f9;
+    transform: translateY(-1px);
 }
 
 .nav-link.active{
-    color: #3D6978 !important;
+    color: #D57A44 !important;
+    background-color: #f0f7f9 !important;
+}
+
+.nav-link i{
+    font-size: 1.2rem;
+}
+
+.add-nav-btn{
+    background-color: #d57a44;
+    color: white !important;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    gap:8px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(213, 122, 68, 0.2);
+}
+
+.add-nav-btn:hover{
+    transform: translateY(-2px);
+    color: white !important;
 }
 
 h6{
     text-decoration: none;
 }
+
+.profile-dropdown:hover .dropdown-menu{
+    display: block;
+    margin-top: 0;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.dropdown-menu{
+    border-radius: 15px;
+    min-width: 120px;
+    padding: 10px;
+}
+
+.admin-sidebar{
+   width: 280px;
+   height: 100vh;
+   position: sticky;
+   top:20px;
+   margin: 20px;
+   background: #ffffff !important;
+   border-radius: 20px !important;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+   border: none !important;
+   transition: all 0.3s ease;
+   z-index: 100;
+}
+
+.admin-sidebar .nav-link{
+    color: #3D6978;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.admin-sidebar .nav-link:hover{
+    background-color: #f0fafa !important;
+    color: #3D6978 !important;
+}
+
+
+#sideBar{
+    width: 280px;
+    min-width: 280px;
+    overflow-x: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+#sideBar.closed{
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar{
+    display: none;
+}
+
+#profileMenu{
+    padding: 5px 12px;
+    border-radius: 50px;
+    border: 1px solid #eee;
+    transition: 0.2s;
+}
+
+#profileMenu:hover{
+    background-color: #f8f9fa;
+    border-color: #ddd;
+}
+
+/* Community Sidebar*/
+#openSideBarBtn{
+    width: 45px;
+    height: 45px;
+    border-radius: 50% !important;
+    background-color: #3D6978;
+    color: white !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: fixed;
+    z-index: 999;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#openSideBarBtn:hover{
+    background-color: #d57a44 !important;
+    transform:scale(1.1);
+}
+
 
 /* add job page */
 
@@ -435,6 +572,21 @@ h6{
 
 
 /* Register Page */
+
+.errors{
+    color: maroon;
+    visibility: hidden;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.error{
+    color: maroon;
+    /* visibility: hidden; */
+    font-size: 15px;
+    margin-top: 2px;
+}
+
 .register-container{
     display:flex; 
     max-width: 1000px;
@@ -645,6 +797,46 @@ h6{
     background: transparent !important;
 }
 
+/* MOBILE DESIGN COMMUNITY NAVBAR */
+/* Hide mobile navbar on desktop */
+.mobile-bottom-nav{
+    display: none;
+}
+
+@media (max-width: 991px){
+    #sideBar{
+    display: none !important;
+}
+.mobile-bottom-nav{
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: #85D6D6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 2000 !important;
+}
+
+.mobile-bottom-nav .nav-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #3D6978;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.mobile-bottom-nav .nav-item img{
+    margin-bottom: 2px;
+}
+
+}
+
 /* MOBILE DESIGN (LOGIN)*/
 @media (max-width: 768px){
     .login-page-container{
@@ -741,3 +933,33 @@ h6{
     display: none;
 }
 }
+
+.profile_picture
+{
+    border:thin solid #aaaaaa;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background: #f7f7f7;
+    width:50px;
+    height:50px;
+}
+
+
+@media(max-width:991px){
+    #projects-section, #jobs-section{
+        display: none;
+    }
+
+    #projects-section.active, #jobs-section.active{
+        display: block;
+    }
+}
+
+@media(max-width:992px){
+    #projects-section, #jobs-section{
+        display: block !important;
+    }
+}
+

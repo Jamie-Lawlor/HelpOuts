@@ -23,7 +23,7 @@ navbar %}{% endblock %} {% block body %}
           <p class="text-muted">Step <span id="step-number">1</span> of 3</p>
         </div>
 
-        <form action="/register_helpee" method="POST">
+        <form action="/register" method="POST">
           <div id="register-step-1">
             <div class="row mb-3 mt-3">
               <div class="form-group col-md-6">
@@ -39,6 +39,7 @@ navbar %}{% endblock %} {% block body %}
                   autocomplete="off"
                   required
                 />
+                <p id="firstname_error" class="errors">Please Enter Your First Name</p>
               </div>
               <div class="form-group col-md-6">
                 <span class="label-muted"
@@ -52,6 +53,7 @@ navbar %}{% endblock %} {% block body %}
                   autocomplete="off"
                   required
                 />
+                <p id="lastname_error" class="errors">Please Enter Your Last Name</p>
               </div>
             </div>
 
@@ -68,6 +70,7 @@ navbar %}{% endblock %} {% block body %}
                 autocomplete="off"
                 required
               />
+              <p id="email_error" class="errors">Please Enter A Valid Email Including '@' and '.'</p>
             </div>
 
             <div class="row mb-3">
@@ -84,6 +87,7 @@ navbar %}{% endblock %} {% block body %}
                   autocomplete="off"
                   required
                 />
+                <p id="password_error" class="errors">Password Must Include 8+ Characters, Minimum 1 Capital Letter and Special Character</p>
               </div>
               <div class="form-group col-md-6">
                 <span class="label-muted"
@@ -97,8 +101,10 @@ navbar %}{% endblock %} {% block body %}
                   autocomplete="off"
                   required
                 />
+                <p id="confirmation_error" class="errors">Passwords Do Not Match</p>
               </div>
             </div>
+           
           </div>
 
           <div id="register-step-2" style="display: none">
@@ -112,7 +118,7 @@ navbar %}{% endblock %} {% block body %}
                 aria-label="Location"
                 autocomplete="off"
                 required
-              />
+              /><p id="location_error" class="errors">Please Enter A Location</p>
             </div>
 
             <label class="form-group d-block text-center d mb-3"
@@ -125,6 +131,7 @@ navbar %}{% endblock %} {% block body %}
                 value="helper"
                 id="helper"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput(false)"
                 required
               />
               <label
@@ -136,9 +143,10 @@ navbar %}{% endblock %} {% block body %}
               <input
                 type="radio"
                 name="user_type"
-                value="community"
+                value="community_admin"
                 id="community"
                 class="custom-radio-input"
+                onclick="showCommunityNameInput(true)"
               />
               <label
                 for="community"
@@ -146,6 +154,19 @@ navbar %}{% endblock %} {% block body %}
               >
                 Get Help
               </label>
+            </div>
+            <div id="register-step-community" style="display: none">
+            <div class="form-group mb-3">
+              <span class="label-muted">COMMUNITY NAME</span>
+              <input
+                type="text"
+                name="community_name"
+                class="form-control soft-input"
+                placeholder="e.g. Tidy towns"
+                aria-label="community_name"
+                autocomplete="off"
+              />
+            </div>
             </div>
             <!-- 
                 <div class="profile-picture-upload">
@@ -267,21 +288,79 @@ navbar %}{% endblock %} {% block body %}
 <script>
   
 var stepNumber = 1;
+// Regex Patterns
+const name_regex = /^[a-zA-Z\s\-\']{2,}$/
+const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+const validateStep1 = () => {
+
+  const firstnameInput = document.getElementsByName("first_name")[0]
+  const lastnameInput = document.getElementsByName("last_name")[0]
+  const emailInput = document.getElementsByName("email")[0]
+  const passwordInput = document.getElementsByName("password")[0]
+  const confirmationInput = document.getElementsByName("confirm_password")[0]
+  const firstnameError = document.getElementById("firstname_error")
+  const lastnameError = document.getElementById("lastname_error")
+  const emailError = document.getElementById("email_error")
+  const passwordError = document.getElementById("password_error")
+  const confirmationError = document.getElementById("confirmation_error")
+  const emailUsedError = document.getElementById("email_taken_error")
+
+  const firstNameValid = name_regex.test(firstnameInput.value)
+  const lastNameValid = name_regex.test(lastnameInput.value)
+
+  const emailValid = email_regex.test(emailInput.value)
+  const passwordValid = password_regex.test(passwordInput.value)
+  const confirmPasswordValid = confirmationInput.value === passwordInput.value && confirmationInput.value != ""
+
+  firstnameError.style.visibility = firstNameValid ? "hidden" : "visible"
+  lastnameError.style.visibility = lastNameValid ? "hidden" : "visible"
+  emailError.style.visibility = emailValid ? "hidden" : "visible"
+  passwordError.style.visibility = passwordValid ? "hidden" : "visible"
+  confirmationError.style.visibility = confirmPasswordValid ? "hidden" : "visible"
+
+  return(
+    firstNameValid &&
+    lastNameValid &&
+    emailValid &&
+    passwordValid &&
+    confirmPasswordValid
+  )
+}
+
+const validateStep2 = () => {
+
+  const locationInput = document.getElementsByName("location")[0]
+  const locationError = document.getElementById("location_error")
+
+  const locationValid = name_regex.test(locationInput.value)
+
+  locationError.style.visibility = locationValid ? "hidden" : "visible"
+
+  return(
+    locationValid
+  )
+}
 
 function nextRegisterStep(){
     if(stepNumber === 1){
+      if(validateStep1()){
         // Moving from step 1 to step 2
         document.getElementById("register-step-1").style.display = "none";
         document.getElementById("register-step-2").style.display = "block";
         document.getElementById("register-back-btn").style.display = "inline-block";
         stepNumber = 2; // set new step number
+      }
     }else if(stepNumber === 2){
+      if(validateStep2()){
         // Moving from step 2 to step 3
         document.getElementById("register-step-2").style.display = "none";
         document.getElementById("register-step-3").style.display = "block";
         document.getElementById("register-next-btn").style.display = "none";
         document.getElementById("register-submit-btn").style.display = "inline-block";
         stepNumber = 3;
+      }
     }
     document.getElementById("step-number").innerText = stepNumber;
 }
@@ -303,5 +382,15 @@ function prevRegisterStep(){
     }
     document.getElementById("step-number").innerText = stepNumber;
 }
+function showCommunityNameInput(isCommunitySelected){
+  if (isCommunitySelected){
+       document.getElementById("register-step-community").style.display = "block"
+  }
+  else{
+       document.getElementById("register-step-community").style.display = "none"
+
+  }
+}
+
 </script>
 {% endblock %}

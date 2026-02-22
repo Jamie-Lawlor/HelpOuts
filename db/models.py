@@ -7,8 +7,8 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    type = db.Column( db.String(6), nullable=False, default="helpee")  # can bee 'helpee' or 'helper'
+    password = db.Column(db.String(255), nullable=False)
+    type = db.Column( db.String(6), nullable=False, default="guest")  # can be 'helpee' or 'helper'
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
     skills = db.Column(db.String(200), nullable=True)
@@ -42,8 +42,8 @@ class Users(db.Model):
     def validate_type(self, key, type):
         if not type:
             raise ValueError("Type cannot be empty")
-        if type not in ['helpee', 'helper']:
-            raise ValueError("Type must be either 'helpee' or 'helper'")
+        if type not in ['community_admin', 'helper']:
+            raise ValueError("Type must be either 'community_admin' or 'helper'")
         return type
     
     def to_dict(self):

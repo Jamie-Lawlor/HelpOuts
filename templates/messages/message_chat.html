@@ -3,25 +3,39 @@
 {% block body %}
 <h1 class="text-center mt-4">Your Chat</h1>
 <div class="container mt-4" style="max-width: 600px">
-  <ul class="nav nav-fill border-bottom-0">
+  
+    <ul class="nav nav-fill border-bottom-0">
     <li class="nav-item">
       <div class="nav-link active d-flex py-3">
         <!-- link to user chat -->
+        {% if session["community_id"] %}
         <div class="tab-pane fade show active">
           <img
-            src="/static/images/user_image_2.png"
+            src="{{ user[0].profile_picture }}"
             width="50"
             height="50"
             class="rounded-circle me-3"
           />
           <a class="text-decoration-none" href="/helper_profile">
-            <h6 class="mb-0 fw-bold text-dark">RyanOHare1</h6>
+            <h6 id="helper_id" class="mb-0 fw-bold text-dark">{{ user[0].name }}</h6>
           </a>
         </div>
+        {% else %}
+        <div class="tab-pane fade show active">
+          <img
+            src="{{ community[0].profile_picture }}"
+            width="50"
+            height="50"
+            class="rounded-circle me-3"
+          />
+          <a class="text-decoration-none" href="/helper_profile">
+            <h6 class="mb-0 fw-bold text-dark">{{ community[0].name }}</h6>
+          </a>
+        </div>
+         {% endif %}
       </div>
     </li>
   </ul>
-
   <div class="border rounded rounded-bottom shadow-sm bg-white">
     <div class="p-4" style="height: 500px">
       <div class="d-flex mb-4 gap-2">
@@ -67,15 +81,11 @@
   </div>
   <div class="p-3 bg-white border-top mb-3">
     <div class="input-group align-items-center bg-light rounded-pill">
-      <input
-        id="user_message"
-        type="text"
-        class="form-control border-0"
-        placeholder="Enter your message..."
-      />
-      <button
+    <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
+    {% if session["community_id"] %}
+    <button
         class="btn shadow-sm btn-login border-none"
-        onclick="send_message()"
+        onclick="send_message('{{ user[0].id }}', '{{ user[1] }}', 'community')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +101,26 @@
         </svg>
         Send
       </button>
+    {% else %}
+    <button
+      class="btn shadow-sm btn-login border-none"
+      onclick="send_message('{{ community[0].id }}', '{{ community[1] }}', 'user')"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-send"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"
+        />
+      </svg>
+      Send
+    </button>
+    {% endif %}
     </div>
   </div>
 </div>
@@ -125,14 +155,18 @@
     console.log("MESSAGE DISPLAY FUNCTION REACHED!!!");
     create_message(data.user, data.message, data.sent, data.profile_picture);
   });
-  function send_message() {
+  function send_message(receiver_id, sender_id, sender) {
+
     console.log("MESSAGE SEND FUNCTION REACHED!!!");
     user_message = document.getElementById("user_message").value;
-    socket.emit("message_sent", {
-      sender_id: localStorage.getItem("sender_id"),
-      receiver_id: localStorage.getItem("receiver_id"),
+      socket.emit("message_sent", {
+      sender_id: parseInt(sender_id),
+      receiver_id: parseInt(receiver_id),
       message: user_message,
-    });
+      sender: sender
+    })
+    
+    
     document.getElementById("user_message").value = "";
   }
 </script>
