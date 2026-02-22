@@ -21,7 +21,7 @@ def helper_register_page():
 
 
 @login_blueprint.route("/register", methods=["POST"])
-def register_helpee():
+def register():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email = request.form.get("email")
@@ -29,8 +29,9 @@ def register_helpee():
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
     user_type = request.form.get("user_type")
+    print(first_name, last_name, email, location, password, confirm_password, user_type)
     #Breaks on database
-    if request.form.get("community_name") is not None:
+    if user_type =="community_admin":
         community_name = request.form.get("community_name")
         if_exists = Communities.query.filter_by(name = community_name).first()
         if if_exists:
@@ -43,6 +44,7 @@ def register_helpee():
             description="",
             profile_picture="",
         )
+            print(community.name, community.area, community.description, community.profile_picture)
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
@@ -100,6 +102,7 @@ def register_helpee():
             # private_key = private_key,
             # public_key = public_key
         )
+        print(user.name, user.email, user.password, user.type, user.work_area, user.rating)
         db.session.add(user)
         db.session.commit()
         session["user_id"] = user.id
