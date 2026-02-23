@@ -166,7 +166,7 @@ function test_login_admin(){
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
                 sessionStorage.setItem("profile_picture", data[1])
-                window.location.replace(`/home_page/`)
+                window.location.replace(`/community_profile/Mens_Shed_Dundalk`)
             })
 }
 
