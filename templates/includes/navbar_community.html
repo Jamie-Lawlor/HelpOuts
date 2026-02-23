@@ -99,12 +99,9 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img
-                src="/static/images/user_image_2.png"
-                width="32"
-                height="32"
-                class="rounded-circle border"
-                />
+                <div id="profile_picture"></div>
+
+              <div id="profile_picture"></div>
               <strong>My Profile</strong>
             </a>
             
@@ -129,6 +126,11 @@
             </ul>
             </div>
       </div>
+      <script>
+        profile_picture = document.getElementById("profile_picture")
+        let image = `<img style="width:32px; height:32px;" class="rounded-circle border" src=${sessionStorage.getItem("profile_picture")} alt=""/>`
+        profile_picture.innerHTML+=image
+      </script>
   </nav>
   
       <div class="mobile-bottom-nav d-lg-none">
