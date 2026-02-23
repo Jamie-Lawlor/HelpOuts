@@ -134,7 +134,13 @@ function send_updated_data() {
     updated_area = document.getElementById("edit_area").value
     dataArray = [id, updated_title, updated_description, updated_area]
     fetch("/edit_post", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ edit_data: dataArray }) })
-        .then(response => response.text())
+        .then(response => {
+            if (response.status === 403){
+                alert("Inadequate Permissions")
+                window.location.replace(`/view_post`)
+            }
+            return response.text()
+        })
         .then(responseText => {
             window.location.replace(`/view_post/${responseText}`)
         })
