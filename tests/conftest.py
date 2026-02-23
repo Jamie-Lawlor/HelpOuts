@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from db.database import db
 
+
 @pytest.fixture
 def app():
     flask_app = Flask(__name__)
@@ -21,7 +22,6 @@ def app():
 
     db.init_app(flask_app)
 
-    # Register blueprints (same as app.py)
     from routes.login import login_blueprint
     from routes.messages import messages_blueprint
     from routes.profile import profile_blueprint
@@ -40,20 +40,24 @@ def app():
         db.session.remove()
         db.drop_all()
 
+
 @pytest.fixture
 def client(app):
     return app.test_client()
 
+
 @pytest.fixture
 def community(app):
+
     from db.models import Communities
-    c = Communities(
-        id=1,  # create_project hardcodes community_id=1
-        name="Dundalk Tidy Towns",
-        area="Dundalk, Co.Louth",
-        description="Test community",
-        profile_picture="/static/images/community_image.png",
-    )
-    db.session.add(c)
-    db.session.commit()
-    return c
+
+    with app.app_context():
+        c = Communities(
+            name="Dundalk Tidy Towns",
+            area="Dundalk, Co.Louth",
+            description="Test community",
+            profile_picture="/static/images/community_image.png",
+        )
+        db.session.add(c)
+        db.session.commit()
+        return c
