@@ -146,7 +146,7 @@ VALUES
 (2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
 (3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2),
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)
@@ -155,8 +155,7 @@ VALUES
 (2, FALSE, FALSE, FALSE, 4),
 (3, FALSE, FALSE, FALSE, 3),
 (4, FALSE, FALSE, FALSE, 2),
-(5, FALSE, FALSE, FALSE, 1),
-(6, FALSE, FALSE, FALSE, 6);
+(5, FALSE, FALSE, FALSE, 1);
 
 INSERT INTO messages (id, content, timestamp, sender_id, receiver_id)
 VALUES
