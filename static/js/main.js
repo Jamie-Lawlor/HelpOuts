@@ -102,18 +102,41 @@ function send_job_data() {
 
 
 function open_edit() {
-    document.getElementById("edit_title").style.display = "block"
-    document.getElementById("edit_description").style.display = "block"
-    // document.getElementById("edit_submit").style.display = "block"
-    document.getElementById("edit_area").style.display = "block"
-    document.getElementById("edit-job-details").style.display = "block"
+    fetch("/open_edit", { method: "POST" })
+        .then(response => {
+            if (response.status === 403){
+                alert("Inadequate Permissions")
+                window.location.replace(`/view_post/${responseText}`)
+            }else{
+                document.getElementById("edit_title").style.display = "block"
+                document.getElementById("edit_description").style.display = "block"
+                // document.getElementById("edit_submit").style.display = "block"
+                document.getElementById("edit_area").style.display = "block"
+                document.getElementById("edit-job-details").style.display = "block"
 
-    // document.getElementById("job_title_display").style.display = "none"
-    // document.getElementById("job_desc_display").style.display = "none"
-    // document.getElementById("job_area_display").style.display = "none"
-    // document.getElementById("manage-job").style.display = "none"
+                // document.getElementById("job_title_display").style.display = "none"
+                // document.getElementById("job_desc_display").style.display = "none"
+                // document.getElementById("job_area_display").style.display = "none"
+                // document.getElementById("manage-job").style.display = "none"
 
-    // document.getElementById("public-actions").style.display = "none"
+                // document.getElementById("public-actions").style.display = "none"
+            }
+            return response.text()
+        })
+    //     .then(responseText => {
+    //         document.getElementById("edit_title").style.display = "block"
+    // document.getElementById("edit_description").style.display = "block"
+    // // document.getElementById("edit_submit").style.display = "block"
+    // document.getElementById("edit_area").style.display = "block"
+    // document.getElementById("edit-job-details").style.display = "block"
+
+    // // document.getElementById("job_title_display").style.display = "none"
+    // // document.getElementById("job_desc_display").style.display = "none"
+    // // document.getElementById("job_area_display").style.display = "none"
+    // // document.getElementById("manage-job").style.display = "none"
+
+    // // document.getElementById("public-actions").style.display = "none"
+    //     })
 }
 
 function accept_job() {
@@ -137,7 +160,7 @@ function send_updated_data() {
         .then(response => {
             if (response.status === 403){
                 alert("Inadequate Permissions")
-                window.location.replace(`/view_post`)
+                window.location.replace(`login/register_account.html`)
             }
             return response.text()
         })

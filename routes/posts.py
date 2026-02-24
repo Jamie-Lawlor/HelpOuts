@@ -114,21 +114,18 @@ def view_specific_post_page(post_title):
 
 @posts_blueprint.route("/edit_post", methods=["POST"])
 def edit_post():
-    if not permissions_user("community_admin"):
-        return "Do Not Have Permission", 403
-    else:
-        updated_data = request.json["edit_data"]
-        updated_title = updated_data[1]
-        updated_description = updated_data[2]
-        updated_area = updated_data[3]
+    updated_data = request.json["edit_data"]
+    updated_title = updated_data[1]
+    updated_description = updated_data[2]
+    updated_area = updated_data[3]
 
-        updated_job = Jobs.query.filter_by(id=updated_data[0]).first()
-        updated_job.job_title = updated_title
-        updated_job.job_description = updated_description
-        updated_job.area = updated_area
-        updated_job.created_date = db.func.current_timestamp()
-        db.session.commit()
-        return updated_job.job_title
+    updated_job = Jobs.query.filter_by(id=updated_data[0]).first()
+    updated_job.job_title = updated_title
+    updated_job.job_description = updated_description
+    updated_job.area = updated_area
+    updated_job.created_date = db.func.current_timestamp()
+    db.session.commit()
+    return updated_job.job_title
 
 
 @posts_blueprint.route("/delete_post", methods=["POST"])
@@ -194,6 +191,13 @@ def trigger_push_notification(push_subscription, title, body):
                   )
         return False
     
+@posts_blueprint.route("/open_edit", methods=["POST"])
+def open_edit():
+    if not permissions_user("community_admin"):
+        return redirect("/view_post/${responseText}", 403)
+    else:
+        return True
+
 
 def permissions_user(role):
 
