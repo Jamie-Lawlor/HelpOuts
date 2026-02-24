@@ -106,6 +106,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         session["user_id"] = user.id
+        session["type"] = user.type
         return redirect("/home_page/")
 
 
@@ -121,10 +122,11 @@ def test_login_user():
     user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
     session["profile_picture"] = user_data.profile_picture
+    session["type"] = "helper"
     if session.get("community_id") is not None:
         session.pop("community_id", None)
-    dataArray = [str(session["user_id"]), session["profile_picture"]]
-    print(user_data.profile_picture)
+    dataArray = [str(session["user_id"]), session["profile_picture"], session["type"]]
+    print("TYPE OF USER: ", session["type"])
     return jsonify(dataArray)
 
 #Remove when no longer needed as test
@@ -133,8 +135,9 @@ def test_login_admin():
     community_id = int(request.json["data"])
     community_data = Communities.query.get_or_404(community_id)
     session["community_id"] = community_id
+    session["type"] = "chairperson"
     print("SESSION: ",session["community_id"])
     session["profile_picture"] = community_data.profile_picture
-    dataArray = [str(session["community_id"]), session["profile_picture"]]
-    print(community_data.profile_picture)
+    dataArray = [str(session["community_id"]), session["profile_picture"], session["type"]]
+    print("TYPE OF USER: ", session["type"])
     return jsonify(dataArray)

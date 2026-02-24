@@ -41,7 +41,6 @@ def serve_PWA_service_worker():
 def index():
     #DELETE THIS WHEN DONE
     session["id"] = 3
-    
     return render_template("index.html")
 
 
@@ -74,6 +73,7 @@ def login():
     if user is not None and password_check:
         session["user_id"] = user.id
         session["profile_picture"] = user.profile_picture
+        session["type"] = user.type
         return redirect("/home_page/")
     else:
         error = "Email or Password Is Incorrect"

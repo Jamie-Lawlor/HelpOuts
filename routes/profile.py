@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, redirect, session
 from db.models import Projects, Communities, Jobs, UserJobs, Users
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
@@ -49,32 +49,38 @@ def helper_profile_page(user_name):
 
 @profile_blueprint.route("/community_settings/<community_name>")
 def settings_page(community_name):
-    revert_format = community_name.replace("_", " ").title()
-    community_data = Communities.query.filter_by(name=revert_format).first_or_404()
-    community_id = community_data.id
-    project_data = Projects.query.where(Projects.community_id == community_id).all()
-    all_job_data = (
-        Jobs.query.join(Projects, Jobs.project_id == Projects.id)
-        .where(Projects.community_id == community_id)
-        .all()
-    )
-    # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
-    get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
-    return render_template(
-        "/community_settings.html",
-        community=community_data,
-        projects=project_data,
-        jobs=all_job_data,
-        project_names=get_project_names,
-    )
+    if session["type"] != "chairperson":
+        return redirect("/home_page/")
+    else:
+        revert_format = community_name.replace("_", " ").title()
+        community_data = Communities.query.filter_by(name=revert_format).first_or_404()
+        community_id = community_data.id
+        project_data = Projects.query.where(Projects.community_id == community_id).all()
+        all_job_data = (
+            Jobs.query.join(Projects, Jobs.project_id == Projects.id)
+            .where(Projects.community_id == community_id)
+            .all()
+        )
+        # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
+        get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
+        return render_template(
+            "/community_settings.html",
+            community=community_data,
+            projects=project_data,
+            jobs=all_job_data,
+            project_names=get_project_names,
+        )
 
 
 @profile_blueprint.route("/helper_settings/<user_name>")
 def helper_settings_page(user_name):
-    revert_format = user_name.replace("_", " ").title()
-    helper_data = Users.query.filter_by(name=revert_format).first_or_404()
+    if session["type"] != "helper":
+        return redirect("/home_page/")
+    else:
+        revert_format = user_name.replace("_", " ").title()
+        helper_data = Users.query.filter_by(name=revert_format).first_or_404()
 
-    return render_template(
-        "/helper_settings.html",
-        helper=helper_data,
-    )
+        return render_template(
+            "/helper_settings.html",
+            helper=helper_data,
+        )
