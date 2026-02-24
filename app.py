@@ -41,7 +41,6 @@ def serve_PWA_service_worker():
 def index():
     #DELETE THIS WHEN DONE
     session["id"] = 3
-    
     return render_template("index.html")
 
 
