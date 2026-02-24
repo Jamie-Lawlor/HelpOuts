@@ -78,7 +78,7 @@ def update_profile_picture():
         # link is written to db
     except Exception as e:
         print(f"ERROR: {e}")
-        return {"error": "Error validating image"}
+    #     return {"error": "Error validating image"}
     
     
     # send image to AWS S3
@@ -92,6 +92,7 @@ def update_profile_picture():
         }
         resized_images = {}
         base_img = Image.open(profile_picture)
+        base_img = base_img.convert("RGB")
 
         # created resized images based on dict above
         for label, size in img_sizes.items():
