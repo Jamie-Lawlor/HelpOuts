@@ -392,7 +392,7 @@ h6{
     width: 45px;
     height: 45px;
     border-radius: 50% !important;
-    background-color: #3D6978;
+    background-color: #85D6D6;
     color: white !important;
     border: none !important;
     display: flex;
@@ -405,7 +405,7 @@ h6{
 }
 
 #openSideBarBtn:hover{
-    background-color: #d57a44 !important;
+    background-color: #5a92a5 !important;
     transform:scale(1.1);
 }
 
@@ -447,6 +447,10 @@ h6{
     max-height: 200px;
     object-fit: contain;
     margin-bottom: 0.5rem;
+}
+
+#main{
+    transition:0.3s;
 }
 
 .btn-main{
