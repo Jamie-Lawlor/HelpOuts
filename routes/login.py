@@ -30,8 +30,7 @@ def register():
     confirm_password = request.form.get("confirm_password")
     user_type = request.form.get("user_type")
     print(first_name, last_name, email, location, password, confirm_password, user_type)
-    #Breaks on database
-    if user_type =="community_admin":
+    if user_type =="chairperson":
         community_name = request.form.get("community_name")
         if_exists = Communities.query.filter_by(name = community_name).first()
         if if_exists:
@@ -48,66 +47,65 @@ def register():
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
-            return redirect("/home_page/")
     # check if this users already exists
-    else:
-        if_exists = Users.query.filter_by(email=email).first()
-        if if_exists:
-            # this error message is passed to the frontend and can be used to display an error to the user
-            error = "A user with this email already exists"
-            return render_template("login/register_account.html", error=error)
 
-        # validate password & user details
+    if_exists = Users.query.filter_by(email=email).first()
+    if if_exists:
+        # this error message is passed to the frontend and can be used to display an error to the user
+        error = "A user with this email already exists"
+        return render_template("login/register_account.html", error=error)
 
-        # https://mailtrap.io/blog/flask-contact-form/#Custom-Validation-Functions - custom validation
-        if not first_name or not last_name or not email or not location or not password:
-            error = "All Fields Must Be Filled Out"
-            return render_template("login/register_account.html", error=error)
+    # validate password & user details
 
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            error = "Invalid Email Entered, Please Enter an Email Like 'example@gmail.com'"
-            return render_template("login/register_account.html", error=error)
+    # https://mailtrap.io/blog/flask-contact-form/#Custom-Validation-Functions - custom validation
+    if not first_name or not last_name or not email or not location or not password:
+        error = "All Fields Must Be Filled Out"
+        return render_template("login/register_account.html", error=error)
 
-        # password regular expression
-        if len(password) < 8:
-            error = "Invalid Password Entered, Must be More than 8 Characters"
-            return render_template("login/register_account.html", error=error)
-        if not re.search(r"[A-Z]", password):
-            error = "Invalid Password Entered, Must have a Uppercase Letter"
-            return render_template("login/register_account.html", error=error)
-        if not re.search(r"[a-z]", password):
-            error = "Invalid Password Entered, Must have a Lowercase Letter"
-            return render_template("login/register_account.html", error=error)
-        if not re.search(r"[0-9]", password):
-            error = "Invalid Password Entered, Must have a Number"
-            return render_template("login/register_account.html", error=error)
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        error = "Invalid Email Entered, Please Enter an Email Like 'example@gmail.com'"
+        return render_template("login/register_account.html", error=error)
 
-        if confirm_password != password:
-            error = "Passwords Do Not Match, Please Try Again"
-            return render_template("login/register_account.html", error=error)
+    # password regular expression
+    if len(password) < 8:
+        error = "Invalid Password Entered, Must be More than 8 Characters"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r"[A-Z]", password):
+        error = "Invalid Password Entered, Must have a Uppercase Letter"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r"[a-z]", password):
+        error = "Invalid Password Entered, Must have a Lowercase Letter"
+        return render_template("login/register_account.html", error=error)
+    if not re.search(r"[0-9]", password):
+        error = "Invalid Password Entered, Must have a Number"
+        return render_template("login/register_account.html", error=error)
 
-        hashed_password = generate_password_hash(password)
+    if confirm_password != password:
+        error = "Passwords Do Not Match, Please Try Again"
+        return render_template("login/register_account.html", error=error)
 
-        # key = RSA.generate(2048)
-        # private_key = key
-        # public_key = key.public_key
+    hashed_password = generate_password_hash(password)
 
-        user = Users(
-            name=first_name + " " + last_name,
-            email=email,
-            password=hashed_password,
-            type=user_type,
-            work_area=location,
-            rating=0,
-            # private_key = private_key,
-            # public_key = public_key
-        )
-        print(user.name, user.email, user.password, user.type, user.work_area, user.rating)
-        db.session.add(user)
-        db.session.commit()
-        session["user_id"] = user.id
-        session["type"] = user.type
-        return redirect("/home_page/")
+    # key = RSA.generate(2048)
+    # private_key = key
+    # public_key = key.public_key
+
+    user = Users(
+        name=first_name + " " + last_name,
+        email=email,
+        password=hashed_password,
+        type=user_type,
+        work_area=location,
+        rating=0,
+        # private_key = private_key,
+        # public_key = public_key
+    )
+    print(user.name, user.email, user.password, user.type, user.work_area, user.rating)
+    db.session.add(user)
+    db.session.commit()
+    session["user_id"] = user.id
+    session["type"] = user.type
+    return redirect("/home_page/")
 
 
 @login_blueprint.route("/logout")
