@@ -23,7 +23,7 @@ navbar %}{% endblock %} {% block body %}
           <p class="text-muted">Step <span id="step-number">1</span> of 3</p>
         </div>
 
-        <form action="/register" method="POST">
+        <form action="/register" method="POST" enctype="multipart/form-data">
           <div id="register-step-1">
             <div class="row mb-3 mt-3">
               <div class="form-group col-md-6">
@@ -202,12 +202,7 @@ navbar %}{% endblock %} {% block body %}
                 class="btn btn-outline-secondary btn-sm px-4 rounded-pill"
                 >Browse</label
               >
-              <input
-                type="file"
-                id="project-upload-images"
-                class="d-none"
-                accept="image/png, image/jpg, image/jpeg"
-              />
+              <input type="file" id="project-upload-images" name ="image" class="d-none" accept="image/*" required/>
               <div id="project-image-name" class="small text-muted mt-2"></div>
             </div>
           </div>
