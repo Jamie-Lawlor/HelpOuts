@@ -209,6 +209,8 @@ def register():
     db.session.commit()
     session["user_id"] = user.id
     session["type"] = user.type
+    session["accuracy"] = accuracy
+    print("ACCURACY IN SESSION: ",session["accuracy"])
     return redirect("/home_page/")
 
 
