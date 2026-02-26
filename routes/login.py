@@ -45,7 +45,6 @@ def register():
     confirm_password = request.form.get("confirm_password")
     user_type = request.form.get("user_type")
     images = request.files.getlist("image")
-    print(images)
     if not images or images[0].filename == "": 
         return {"error": "No image uploaded"}, 400
     
@@ -59,12 +58,10 @@ def register():
         image = Image.open(profile_picture)
         image.load() 
         image = Image.open(profile_picture)
-        print("IMAGE LOADED!")
     except Exception as e:
         return {"error": "Uploaded file is not a valid image"}, 400
     
     profile_picture.filename = "profile_picture.jpg"
-    print("Profile picutre name: ",profile_picture.filename)
 
     print(first_name, last_name, email, location, password, confirm_password, user_type, images)
     if user_type =="chairperson":
@@ -80,7 +77,6 @@ def register():
             description="",
             profile_picture="",
         )
-            print(community.name, community.area, community.description, community.profile_picture)
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
@@ -143,13 +139,10 @@ def register():
             }
         )
         data = response.json()
-        print("DATA: ",data)
         verdict = data["verdict"]
-        print("VERDICT: ", verdict)
         accuracy = data["confidence"]
         print("ACCURACY: ",accuracy)
         label = data["label"]
-        print("LABEL: ",label)
         # if we want to reject an image and do something different
         # it will go here, for now image is sent to aws and the 
         # link is written to db
@@ -175,7 +168,6 @@ def register():
             resized = base_img.copy()
             resized = resized.resize((size[0], size[1]), Image.LANCZOS)
             resized_images[label] = resized
-        print("R: ",resized_images)
         
         user = Users(
         name=first_name + " " + last_name,
@@ -197,7 +189,6 @@ def register():
             resized_image_file = io.BytesIO()
             resized_image.save(resized_image_file, format="JPEG", quality=90)
             resized_image_file.seek(0)
-            print("RIF: ",resized_image_file)
             # s3.upload_fileobj(
             #     resized_image_file,
             #     os.getenv("AWS_S3_BUCKET"),
@@ -206,7 +197,6 @@ def register():
             #         "ContentType": "image/jpg"
             #     },
             # )
-            print("COMPLETE?")
     except Exception as e:
         print(f"ERROR: {e}")
         return {"error": "Error uploading image to S3"}

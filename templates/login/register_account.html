@@ -205,6 +205,7 @@ navbar %}{% endblock %} {% block body %}
               <input type="file" id="project-upload-images" name ="image" class="d-none" accept="image/*" required/>
               <div id="project-image-name" class="small text-muted mt-2"></div>
             </div>
+            <p id="image_error" style="padding-top:10px" class="errors">Please upload a profile picture</p>
           </div>
 
 
@@ -286,6 +287,8 @@ var stepNumber = 1;
 const name_regex = /^[a-zA-Z\s\-\']{2,}$/
 const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
+const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
 
 const validateStep1 = () => {
 
@@ -327,13 +330,31 @@ const validateStep2 = () => {
 
   const locationInput = document.getElementsByName("location")[0]
   const locationError = document.getElementById("location_error")
+  const uploadedImage = document.getElementById("project-upload-images")
+  const imageError = document.getElementById("image_error")
 
   const locationValid = name_regex.test(locationInput.value)
-
   locationError.style.visibility = locationValid ? "hidden" : "visible"
+  let imageValid = false
+
+  for (let i = 0; i < uploadedImage.files.length; i++) {
+      const fileExtension = uploadedImage.files[i].name.slice(uploadedImage.files[i].name.lastIndexOf('.')).toLowerCase()
+      const mimeType = uploadedImage.files[i].type
+      
+        if(!allowedFileExtensions.includes(fileExtension)){
+        imageValid = false  
+        }
+        else if(!allowedFileTypes.includes(mimeType)){
+            imageValid = false  
+        }else{
+           imageValid = true  
+        }
+    }
+  imageError.style.visibility = imageValid ? "hidden" : "visible"
 
   return(
-    locationValid
+    locationValid &&
+    imageValid
   )
 }
 
