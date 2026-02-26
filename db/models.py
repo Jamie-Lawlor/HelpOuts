@@ -30,7 +30,7 @@ class Users(db.Model):
     
    
     @validates('password')
-    def validate_password(self, key, password): # 8 characters, 1 capitial, 1 lower, 1 number, 1 special
+    def validate_password(self, key, password): # 8 characters, 1 capital, 1 lower, 1 number, 1 special
         valid_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$'
         if not password:
             raise ValueError("Password cannot be empty")
@@ -42,8 +42,8 @@ class Users(db.Model):
     def validate_type(self, key, type):
         if not type:
             raise ValueError("Type cannot be empty")
-        if type not in ['community_admin', 'helper']:
-            raise ValueError("Type must be either 'community_admin' or 'helper'")
+        if type not in ['chairperson', 'helper']:
+            raise ValueError("Type must be either 'chairperson' or 'helper'")
         return type
     
     def to_dict(self):
@@ -239,3 +239,4 @@ class Subscriptions(db.Model):
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+

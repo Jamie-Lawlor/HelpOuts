@@ -144,7 +144,7 @@ INSERT INTO users (id, name, email, password, type, work_area, specialism, skill
 VALUES 
 (1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
 (2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
-(3, 'Bridget Muckian', 'bridgetm1@gmail.com', 'Test1234567!', 'helper', 'Crossmaglen', 'Local Helper', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$rNmzUqAVnqDabPGO$0583e0b097a262d144e6326f9180e3abce595f1df663473fc2b75b93f6aa6679f95232959889ad8aec92dd45cbbd0a6382dbc110627266b5fc2759c14f3d2aaf', 'chairperson', 'Dundalk', 'Chairperson', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
