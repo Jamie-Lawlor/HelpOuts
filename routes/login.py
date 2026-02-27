@@ -40,7 +40,6 @@ def register():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email = request.form.get("email")
-    phone_number = request.form.get("phone")
     location = request.form.get("location")
     password = request.form.get("password")
     confirm_password = request.form.get("confirm_password")
@@ -173,7 +172,6 @@ def register():
         user = Users(
         name=first_name + " " + last_name,
         email=email,
-        phone_number=phone_number,
         password=hashed_password,
         type=user_type,
         work_area=location,

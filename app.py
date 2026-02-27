@@ -12,17 +12,12 @@ from routes.api import api_blueprint
 from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 from events import socketio
-from twilio.rest import Client
 load_dotenv()
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_URL")
 app.secret_key = os.getenv("SECRET_KEY")
-account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-verify_sid = os.getenv("VERIFY_SID")
-client = Client(account_sid, auth_token)
 db.init_app(app)
 socketio.init_app(app)
 
@@ -67,21 +62,15 @@ def helper_settings_page():
 def login():
     email = request.form.get("email")
     password = request.form.get("password")
-    otp_code = request.form.get("mfa")
     user = Users.query.filter_by(email = email).first()
     # hashed_password = user.password
     # password_check = check_password_hash(hashed_password, password)
     
     if user is not None:
         hashed_password = user.password
-        password_check = check_password_hash(hashed_password, password)
-        phone_number = user.phone_number
-    
-    otp_check = client.verify.v2.services(verify_sid).verification_checks.create(
-        to=phone_number, code=otp_code
-    )
+        password_check = check_password_hash(hashed_password, password)    
 
-    if user is not None and password_check and otp_check.status == "approved":
+    if user is not None and password_check:
         session["user_id"] = user.id
         session["profile_picture"] = user.profile_picture
         session["type"] = user.type
@@ -89,21 +78,6 @@ def login():
     else:
         error = "Email or Password Is Incorrect"
         return render_template("login/login.html", error = error)
-
-@app.route("/MFA",methods=["POST"])
-def MFA():
-    data = request.get_json()
-    email = data.get("email")
-    user = Users.query.filter_by(email = email).first()
-    
-    if user is not None:
-        phone_number = user.phone_number
-
-    otp_validation = client.verify.v2.services(verify_sid).verifications.create(
-        to=phone_number, channel="sms"
-    )
-
-    return {"status": otp_validation.status, "sid": otp_validation.sid}
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
