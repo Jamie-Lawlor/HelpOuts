@@ -27,12 +27,14 @@ def app():
     from routes.profile import profile_blueprint
     from routes.posts import posts_blueprint
     from routes.subscriptions import subscriptions_blueprint
+    from routes.api import api_blueprint   
 
     flask_app.register_blueprint(login_blueprint)
     flask_app.register_blueprint(messages_blueprint)
     flask_app.register_blueprint(profile_blueprint)
     flask_app.register_blueprint(posts_blueprint)
     flask_app.register_blueprint(subscriptions_blueprint)
+    flask_app.register_blueprint(api_blueprint, url_prefix="/api")  
 
     with flask_app.app_context():
         db.create_all()
@@ -48,7 +50,6 @@ def client(app):
 
 @pytest.fixture
 def community(app):
-
     from db.models import Communities
 
     with app.app_context():
