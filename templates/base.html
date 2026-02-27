@@ -32,30 +32,30 @@
     </head>
 
     <body>
-         {% if role == "chairperson" %}
+
+         {% if session.get("type") == "chairperson" %}
             <div class="d-flex align-items-stretch">
                 {% include "includes/navbar_community.html" %}
                 <main class="flex-grow-1" id="main">
-                    {% block body_community %}
                      <button id="openSideBarBtn" class="shadow m-3" style="display: none;" onclick="openSideBar()">
                         <i class="bi bi-list"></i>
                     </button>
-                    {% endblock %}
+                   {% block body_community %}
+                   {% endblock %}
                 </main>
             </div>
 
-            {% elif role == "helper" %}
+            {% elif session.get("type") == "helper" %}
                 {% include "includes/navbar_helper.html" %}
                 <main>
                     {% block body_helper %}
                     {% endblock %}
                 </main>
             {% else %}
-        
-            {% block body %}
-        {% endblock %}
+        <main>
+            {% block body %}{% endblock %}
+        </main>
         {% endif %}
-
     </body>
 
 </html>
