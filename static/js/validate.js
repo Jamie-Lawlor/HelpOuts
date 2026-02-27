@@ -15,6 +15,8 @@ const validateStep1 = () => {
   const passwordError = document.getElementById("password_error")
   const confirmationError = document.getElementById("confirmation_error")
   const emailUsedError = document.getElementById("email_taken_error")
+  const numberInput = document.getElementsByName("phone")[0]
+  const numberError = document.getElementById("phone_error")
 
   const firstNameValid = name_regex.test(firstnameInput.value)
   const lastNameValid = name_regex.test(lastnameInput.value)
