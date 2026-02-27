@@ -72,29 +72,14 @@ def login():
     # hashed_password = user.password
     # password_check = check_password_hash(hashed_password, password)
     
-    if user:
-        # 1. Verify Password
-        if check_password_hash(user.password, password):
-            # 2. Verify OTP via Twilio
-            try:
-                verification_check = client.verify.v2.services(verify_sid) \
-                    .verification_checks \
-                    .create(to=user.phone_number, code=otp_code)
-
-                # Twilio returns "approved" for a correct code
-                if verification_check.status == "approved":
-                    session["user_id"] = user.id
-                    session["profile_picture"] = user.profile_picture
-                    session["type"] = user.type
-                    return redirect("/home_page/")
-                else:
-                    error = "Invalid 2FA Code."
-            except Exception as e:
-                error = "Verification failed. Please try again."
-        else:
-            error = "Invalid Email or Password."
-    else:
-        error = "User not found."
+    if user is not None:
+        hashed_password = user.password
+        password_check = check_password_hash(hashed_password, password)
+        phone_number = user.phone_number
+    
+    otp_check = client.verify.v2.services(verify_sid).verification_checks.create(
+        to=phone_number, code=otp_code
+    )
 
     if user is not None and password_check and otp_check.status == "approved":
         session["user_id"] = user.id
