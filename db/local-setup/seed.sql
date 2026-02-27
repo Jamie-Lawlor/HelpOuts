@@ -27,6 +27,7 @@ CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
+    phone_number VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
     type VARCHAR(15) NOT NULL,
     work_area VARCHAR(100), 
@@ -136,17 +137,11 @@ CREATE TABLE reviews (
 
 INSERT INTO communities (id, name, area, description, profile_picture)
 VALUES
-(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png'),
-(2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
-(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL);
-
-INSERT INTO users (id, name, email, password, type, work_area, specialism, skills, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
-VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
-(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$rNmzUqAVnqDabPGO$0583e0b097a262d144e6326f9180e3abce595f1df663473fc2b75b93f6aa6679f95232959889ad8aec92dd45cbbd0a6382dbc110627266b5fc2759c14f3d2aaf', 'chairperson', 'Dundalk', 'Chairperson', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
-(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
+(1, 'Leo Fitz', 'leofitz@gmail.com', '+447505439188', 'Test1234567!', 'helper', 'Dundalk', 'Electrician', 'Carpentry, Home Maintenance, General Maintenance,', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', '+447457168292', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 'Carpentry, Home Maintenance, General Maintenance,', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
+(3, 'John Johnson', 'johnjohnson@gmail.com', '+447700124095', 'scrypt:32768:8:1$rNmzUqAVnqDabPGO$0583e0b097a262d144e6326f9180e3abce595f1df663473fc2b75b93f6aa6679f95232959889ad8aec92dd45cbbd0a6382dbc110627266b5fc2759c14f3d2aaf', 'chairperson', 'Dundalk', 'Chairperson', '', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', '+447457790419', 'Test1234567!', 'helper', 'Dundalk', 'Local Helper', '', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', '+447432416754', 'Test1234567!', 'helper', 'Ardee', 'Local Helper', '', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)

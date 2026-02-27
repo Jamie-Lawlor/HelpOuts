@@ -73,6 +73,22 @@ navbar %}{% endblock %} {% block body %}
               <p id="email_error" class="errors">Please Enter A Valid Email Including '@' and '.'</p>
             </div>
 
+            <div class="form-group mb-3">
+              <span class="label-muted"
+                >PHONE NUMBER<span style="color: #d57a44">*</span></span
+              >
+              <input
+                type="tel"
+                name="phone"
+                class="form-control soft-input"
+                placeholder="e.g., +353887930181"
+                aria-label="Phone Number"
+                autocomplete="off"
+                required
+              />
+              <p id="phone_error" class="errors">Please Enter A Valid Phone Number Excluding Spaces or '-'</p>
+            </div>
+
             <div class="row mb-3">
               <div class="form-group col-md-6">
                 <span class="label-muted"
@@ -283,80 +299,7 @@ navbar %}{% endblock %} {% block body %}
 <script>
   
 var stepNumber = 1;
-// Regex Patterns
-const name_regex = /^[a-zA-Z\s\-\']{2,}$/
-const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
-const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
 
-const validateStep1 = () => {
-
-  const firstnameInput = document.getElementsByName("first_name")[0]
-  const lastnameInput = document.getElementsByName("last_name")[0]
-  const emailInput = document.getElementsByName("email")[0]
-  const passwordInput = document.getElementsByName("password")[0]
-  const confirmationInput = document.getElementsByName("confirm_password")[0]
-  const firstnameError = document.getElementById("firstname_error")
-  const lastnameError = document.getElementById("lastname_error")
-  const emailError = document.getElementById("email_error")
-  const passwordError = document.getElementById("password_error")
-  const confirmationError = document.getElementById("confirmation_error")
-  const emailUsedError = document.getElementById("email_taken_error")
-
-  const firstNameValid = name_regex.test(firstnameInput.value)
-  const lastNameValid = name_regex.test(lastnameInput.value)
-
-  const emailValid = email_regex.test(emailInput.value)
-  const passwordValid = password_regex.test(passwordInput.value)
-  const confirmPasswordValid = confirmationInput.value === passwordInput.value && confirmationInput.value != ""
-
-  firstnameError.style.visibility = firstNameValid ? "hidden" : "visible"
-  lastnameError.style.visibility = lastNameValid ? "hidden" : "visible"
-  emailError.style.visibility = emailValid ? "hidden" : "visible"
-  passwordError.style.visibility = passwordValid ? "hidden" : "visible"
-  confirmationError.style.visibility = confirmPasswordValid ? "hidden" : "visible"
-
-  return(
-    firstNameValid &&
-    lastNameValid &&
-    emailValid &&
-    passwordValid &&
-    confirmPasswordValid
-  )
-}
-
-const validateStep2 = () => {
-
-  const locationInput = document.getElementsByName("location")[0]
-  const locationError = document.getElementById("location_error")
-  const uploadedImage = document.getElementById("project-upload-images")
-  const imageError = document.getElementById("image_error")
-
-  const locationValid = name_regex.test(locationInput.value)
-  locationError.style.visibility = locationValid ? "hidden" : "visible"
-  let imageValid = false
-
-  for (let i = 0; i < uploadedImage.files.length; i++) {
-      const fileExtension = uploadedImage.files[i].name.slice(uploadedImage.files[i].name.lastIndexOf('.')).toLowerCase()
-      const mimeType = uploadedImage.files[i].type
-      
-        if(!allowedFileExtensions.includes(fileExtension)){
-        imageValid = false  
-        }
-        else if(!allowedFileTypes.includes(mimeType)){
-            imageValid = false  
-        }else{
-           imageValid = true  
-        }
-    }
-  imageError.style.visibility = imageValid ? "hidden" : "visible"
-
-  return(
-    locationValid &&
-    imageValid
-  )
-}
 
 function nextRegisterStep(){
     if(stepNumber === 1){
