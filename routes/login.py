@@ -175,7 +175,20 @@ def register():
             resized = resized.resize((size[0], size[1]), Image.LANCZOS)
             resized_images[label] = resized
 
-        user = Users(
+        if user_type == "chairperson":
+            user = Users(
+            name=first_name + " " + last_name,
+            email=email,
+            password=hashed_password,
+            type=user_type,
+            work_area=location,
+            rating=0,
+            # private_key = private_key,
+            # public_key = public_key
+            community_id = community.id
+        )
+        else:
+            user = Users(
             name=first_name + " " + last_name,
             email=email,
             password=hashed_password,
