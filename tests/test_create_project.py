@@ -15,6 +15,7 @@ def test_add_project_to_dundalk_tidy_towns(client, app):
 
     with client.session_transaction() as sess:
         sess["community_id"] = community_id
+        sess["type"] = "chairperson" 
 
     resp = client.post(
         "/create_project",
@@ -30,7 +31,15 @@ def test_add_project_to_dundalk_tidy_towns(client, app):
 
     assert resp.status_code == 200
 
+    data = resp.get_json()
+    assert data["project_title"] == "New Dundalk Clean-Up"
+    assert data["project_description"] == "Community clean-up event"
+    assert data["project_type"] == "Environment"
+    assert int(data["number_of_helpers"]) == 10
+    assert data["community_id"] == community_id
+
+    # Confirm it really hit the DB
     with app.app_context():
-        p = Projects.query.filter_by(project_title="New Dundalk Clean-Up").first()
-        assert p is not None
-        assert p.community_id == community_id
+        saved = Projects.query.filter_by(project_title="New Dundalk Clean-Up").first()
+        assert saved is not None
+        assert saved.community_id == community_id
