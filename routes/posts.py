@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests
 import os
 import json
 from pywebpush import webpush, WebPushException
@@ -163,11 +163,12 @@ def job_accepted():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-    accepted_job = UserJobs(
+    pending_job = JobRequests(
         user_id= helper_id,
-        job_id = job_id  
+        job_id = job_id,
+        created_date = db.func.current_timestamp(),  
     )
-    db.session.add(accepted_job)
+    db.session.add(pending_job)
     db.session.commit()
     return ""
 
