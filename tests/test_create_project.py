@@ -24,8 +24,8 @@ def test_add_project_to_dundalk_tidy_towns(client, app):
             "description": "Community clean-up event",
             "type": "Environment",
             "helpers": "10",
-            "start_date": "2026-03-01",
-            "end_date": "2026-03-30",
+            "start_date": "2026-06-01",
+            "end_date": "2026-06-30",
         },
     )
 
