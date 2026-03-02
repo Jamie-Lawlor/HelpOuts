@@ -2,7 +2,6 @@ from db.database import db
 from db.models import Communities, Projects
 
 def test_add_project_to_dundalk_tidy_towns(client, app):
-    # create the community row first (because project references it)
     with app.app_context():
         c = Communities(
             name="Dundalk Tidy Towns",

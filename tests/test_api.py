@@ -1,6 +1,5 @@
 import io
 from PIL import Image
-import pytest
 
 from db.database import db
 from db.models import Users
