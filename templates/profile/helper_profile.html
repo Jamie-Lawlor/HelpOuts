@@ -2,159 +2,126 @@
 {% block title %}Helper Profile{% endblock %}
                {%  block body_helper %}
         
-                <div class="helper-profile-header pb-5">
+                <div class="helper-profile-header pb-5 bg-light pb-5">
                         <div class="header-bg d-flex align-items-start p-3">
-
                         </div>
 
-                        <div class="container">
-                                <div class="card profile-card shadow-sm border-0 text-center-mb mx-auto" style="max-width:650px;">
-                                        <div class="position-absolute top-0 end-0 p-3">
-                                                  <a href="/message_chat">
-                                                <button class="btn helper-button-orange rounded-pill px-4" type="button">
+                        <div class="container mt-n5">
+                                <div class="card profile-card shadow border-0 mx-auto" style="max-width:700px; border-radius:20px;">
+                                        <div class="card-body text-center pt-0">
+                                                <div class="profile-img-container mb-3" style="margin-top: -75px;">
+                                                        <img src="/static/images/user_image_2.png" class="profile-img" width="150px" height="150" style="object-fit: cover;">
+                                                </div>
+
+                                                 <h3 class="profile-name mb-1 fw-bold">{{ user_data.name }}</h3>
+                                                 <span class="helper-badge rounded-pill bg-light text-dark border px-3 mb-3">Verified Helper</span>
+
+                                                 <div class="d-grid gap-2 d-md-block">
+                                                <a href="/message_chat" class="btn btn-orange rounded-pill px-5 fw-bold shadow-sm">
                                                         Message
-                                                </button>
                                                 </a>
-                                        </div>
-
-                                        <div class="profile-img-container text-center">
-                                                <img src="/static/images/user_image_2.png" class="profile-img" width="150px">
-                                        </div>
-
-                                        <div class="card-body pt-0">
-                                                <h4 class="profile-name mb-1">{{ user_data.name }}</h4>
-                                                <p class="mb-3 profile-link">Helper</p>
-                                        </div>
-                                        <div class="row mt-4">
-                                                 <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block"
-                                                        style="font-size: 12px;">Location</small>
-                                                <span class="fw-bold"> Dundalk</span>
-                                        </div>
+                                                 </div>
+                                               
+                                       <div class="row mt-4 py-3 bg-light rounded-4 mx-1">
+                                                <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block fw-bold"
+                                                        style="font-size: 10px;">Location</small>
+                                                <span class="fw-bold"> {{ user_data.work_area }}</span>
+                                                </div>
                                         <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block" style="font-size: 12px;">Community Group</small>
+                                                <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 10px;">Community</small>
                                                 <a href="/community_profile/{{ community_data.name }}" style="color:black !important" class="text-decoration-none">
                                                 <span class="fw-bold"> {{ community_data.name }}</span></a>
-                                                
                                         </div>
-                                        <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block"
-                                                        style="font-size: 12px;">Hours Completed</small>
+                                        <div class="col-4">
+                                                <small class="text-muted text-uppercase d-block fw-bold"
+                                                        style="font-size: 10px;">Hours Completed</small>
                                                 <span class="fw-bold"> 10</span>
                                         </div>
-                                
+                                </div>
                                 </div>
                                 </div>
 
-                                <h5 class="fw-bold mb-4 mt-4">
+                                <div class="mx-auto mt-4" style="max-width: 700px;">
+
+                                <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
                                         Availability
-                                </h5>
-                                <div class="card helper-cards">
-                                        <div class="list-group list-group-flush shadow-sm-rounded-3">
-                                                <span class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                                                        <div>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        I work Monday-Thursday 9-5pm, I am available on evenings and Saturdays.
-                                                                </small>
-                                                        </div>
+                                </h6>
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                        <p class="mb-0 text-secondary">
+                                                I work Monday-Friday 9-5pm, I am available on evenings and Saturdays.
+                                        </p>
+                                </div>
+                                </div>
+
+                                <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
+                                       Skills
+                                </h6>
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                        <div class="d-flex flex-wrap gap-2">
+                                                <span class="badge bg-teal-soft">
+                                                        Maintenance
+                                                </span>
+                                                <span class="badge bg-teal-soft">
+                                                        Home Repairs
+                                                </span>
+                                                      <span class="badge bg-teal-soft">
+                                                        Gardening
+                                                </span>
+                                                   <span class="badge bg-teal-soft">
+                                                      Heavy Lifting
                                                 </span>
                                         </div>
                                 </div>
-
-                                <h5 class="fw-bold mb-4 mt-4">
-                                        Skills
-                                </h5>
-                                <div class="card helper-cards">
-                                        <div class="list-group list-group-flush shadow-sm-rounded-3">
-                                                <span class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                                                        <div>
-                                                                <h5 class="mb-0 fw-bold">
-                                                                        Maintenance
-                                                                </h5>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        Home
-                                                                </small>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        Gardening
-                                                                </small>
-
-                                                                <h6 class="mb-0 fw-bold mt-3">
-                                                                        Trade
-                                                                </h6>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        Plumbing
-                                                                </small>
-                                                          
-                                                        </div>
-                                                </span>
-                                        </div>
                                 </div>
 
-                                  
-                                <h5 class="fw-bold mb-4 mt-4">
-                                        Active Jobs {{ user_jobs|length }}
-                                </h5>
-                                <div class="card helper-cards">
-                                        <div class="list-group list-group-flush shadow-sm-rounded-3 text-decoration-none">
-                                                {% for i in range(user_jobs|length) %}
-                                                <span class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 text-decoration-none">
-                                                        <div>
-                                                                <a href="/view_post/{{ user_jobs[i].job_title }}" class="text-decoration-none">
-                                                                <h6 class="mb-0 fw-bold text-decoration-none text-dark">
-                                                                        {{ user_jobs[i].job_title }}
-                                                                </h6>
-                                                                </a>
-                                                                <small class="text-muted text-primary d-block text-decoration-none">
-                                                                        {{ user_jobs[i].short_type }}
-                                                                </small>
-                                                                <small class="text-muted text-primary d-block text-decoration-none">
-                                                                        {{ user_jobs[i].job_description }}         
-                                                                </small>
-                                                                
-                                                        </div>
-                                                </span>
-                                                {% endfor %}
-                                        </div>
+                                <div class="mx-auto mt-4" style="max-width:700px;">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2 ms-1">
+                                       Active Jobs {{ user_jobs|length }}
+                                </h6>
+
+                                <div class="d-flex flex-column" style="gap: 15px;">
+                                {% for i in range(user_jobs|length) %}
+                                        <div>
+                                                <a href="/view_post/{{ user_jobs[i].job_title }}" class="card border-0 shadow-sm p-3 rounded-4 text-decoration-none bg-white mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                <h6 class="fw-bold text-dark">
+                                                        {{ user_jobs[i].job_title }}
+                                                </h6>
+                                                <small class="text-orange fw-bold">
+                                                        {{ user_jobs[i].short_type }}
+                                                </small>
+                                                </div>
+                                                <p class="small text-muted mb-0">
+                                                        {{ user_jobs[i].job_description }}         
+                                                </p>
+                                           </a>
+                                {% endfor %}
                                 </div>
-                                <h5 class="fw-bold mb-4 mt-4">
+
+
+                                <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
                                         Experience
-                                </h5>
-                                <div class="card helper-cards">
-                                        <div class="list-group list-group-flush shadow-sm-rounded-3">
-                                                <span class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                                                        <div>
-                                                                <h6 class="mb-0 fw-bold">
-                                                                        Build new Park 
-                                                                </h6>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        Heavy Lifting
-                                                                </small>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        Building playground Equipment
-                                                                </small>
-                                                        </div>
-                                                </span>
+                                </h6>
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                        <div class="experience-item mb-2 pb-2 border-bottom">
+                                                <small class="text-muted text-primary d-block">
+                                                        Heavy Lifting
+                                                </small>
                                         </div>
+                                        <div class="experience-item mb-2 pb-2 border-bottom">
+                                                <small class="text-muted text-primary d-block">
+                                                        Worked as a Building Supervisor 
+                                                </small>
+                                        </div>
+                                   </div>
+                             
                                 </div>
 
-                                <h5 class="fw-bold mb-4 mt-4">
-                                        Reviews
-                                </h5>
-                                <div class="card helper-cards">
-                                        <div class="list-group list-group-flush shadow-sm-rounded-3">
-                                                <span class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
-                                                        <div>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        "Ryan was so friendly and did a great job!"
-                                                                </small>
-                                                                <small class="text-muted text-primary d-block">
-                                                                        "Very reliable and professional"
-                                                                </small>
-                                                        </div>
-                                                </span>
-                                        </div>
-                                </div>
-
+                        </div>
                         </div>
                 </div>                
                 {% endblock %}
