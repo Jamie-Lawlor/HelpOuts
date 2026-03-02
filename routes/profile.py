@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
-from db.models import Projects, Communities, Jobs, UserJobs, Users
+from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
@@ -93,8 +93,18 @@ def community_requests_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
+    job_requests = (
+        JobRequests.query.join(Jobs, JobRequests.job_id == Jobs.id).join(Users, JobRequests.user_id == Users.id).where(Users.community_id == community_id).all()
+    )
+    job_list = []
+    user_list = []
+    for request in job_requests:
+        job_list.append(Jobs.query.get_or_404(request.job_id))
+        user_list.append(Users.query.get_or_404(request.user_id))
 
     return render_template(
         "/requests.html",
         community=community_data,
+        job_list = job_list,
+        user_list = user_list
     )

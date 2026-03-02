@@ -68,6 +68,7 @@
                 </div>
 
                 <h5 class="fw-bold mb-3">Job Requests</h5>
+                {% for i in range(job_list|length) %}
                 <div class="card shadow-sm border-0 p-3 mb-3" style="border-radius:15px; border-left:5px solid #85D6D6 !important;">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
@@ -75,8 +76,8 @@
                                 <img src="/static/images/tools_icon.svg" width="24">
                             </div>
                             <div>
-                                <h6 class="mb-0 fw-bold">Install park benches</h6>
-                                <p class="small text-muted mb-0">Helper:<strong>Daisy Johnson</strong></p>
+                                <h6 class="mb-0 fw-bold">{{ job_list[i].job_title}}</h6>
+                                <p class="small text-muted mb-0">Helper:<strong>{{ user_list[i].name }}</strong></p>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
@@ -85,6 +86,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                 </div>
 
         <div class="col-lg-4">
