@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
+from db.database import db
 from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
@@ -94,7 +95,7 @@ def community_requests_page(community_name):
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
     job_requests = (
-        JobRequests.query.join(Jobs, JobRequests.job_id == Jobs.id).join(Users, JobRequests.user_id == Users.id).where(Users.community_id == community_id).all()
+        JobRequests.query.join(Jobs, JobRequests.job_id == Jobs.id).join(Users, JobRequests.user_id == Users.id).where(Users.community_id == community_id, JobRequests.status =='P').all()
     )
     job_list = []
     user_list = []
@@ -108,3 +109,19 @@ def community_requests_page(community_name):
         job_list = job_list,
         user_list = user_list
     )
+
+@profile_blueprint.route("/accept_helper_job_request", methods =["POST"])
+def accept_helper_job():
+    data = request.json["data"]
+    job_id = data[0]
+    updated_job_request = JobRequests.query.where(JobRequests.job_id == job_id).first()
+    updated_job_request.status = 'A'
+    updated_job_request.confirmed_date = db.func.current_timestamp()
+    check_helper = Users.query.where(Users.id == updated_job_request.user_id).first()
+    job_accepted = UserJobs(
+        user_id = check_helper.id,
+        job_id = job_id
+    )
+    db.session.add(job_accepted)
+    db.session.commit()
+    return ""
