@@ -32,10 +32,12 @@
     height: 180px;
     background: #3D6978;
     background: linear-gradient(90deg, rgba(61, 105, 120, 1) 0%, rgba(133, 214, 214, 1) 50%, rgba(61, 105, 120, 1) 100%);
+    border-radius: 0 0 20px 20px;
 }
 
 .profile-card{
     margin-top: -60px;
+    transition: 0.3s;
     border-radius: 15px;
 }
 
@@ -44,6 +46,9 @@
     background-color: white;
 }
 
+.rounded-4{
+    border-radius: 1rem !important;
+}
 
 .profile-card{
     min-width: 160px;
@@ -75,6 +80,11 @@
 .helper-cards .list-group-item{
     background-color: transparent !important;
     border:none;
+}
+
+.list-group-item-action:hover{
+    background-color: #f8f9fa;
+    border-left: 4px solid #85D6D6;
 }
 
 .helper-button{
@@ -216,6 +226,36 @@ h3, h4, h5{
     background: linear-gradient(180deg,);
     padding-bottom: 6rem;
     height: 300px;
+}
+
+.text-orange{
+    color: #D57A44;
+}
+
+.btn-orange{
+    background-color: #D57A44;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.btn-orange:hover{
+    transform: translateY(-2px);
+    background-color: #c4693a !important;
+}
+
+.bg-teal-soft{
+    background-color: #85D6D6;
+    color: white;
+    padding: 8px 15px;
+    font-weight: 500;
+}
+
+.mt-n5{
+    margin-top: -3rem;
+}
+
+.mb-n5{
+    margin-bottom: -3rem;
 }
 
 /* view post page */
