@@ -45,7 +45,8 @@
         {% endfor %}
         {% else %}
         {% for i in range(users_community|length) %}
-        <!-- link to user chat -->
+        {% if users_community[0] is not none %}
+         <!-- link to user chat -->
          <form action="/message_chat/", method="POST">
            <button
           type="submit"
@@ -67,6 +68,8 @@
           </div>
         </button>
          </form>
+        {% endif %}
+        
         {% endfor %}
         {% endif %}
       </div>  
