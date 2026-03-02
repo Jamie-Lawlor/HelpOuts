@@ -62,7 +62,9 @@ def settings_page(community_name):
             .all()
         )
         # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
-        get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
+        get_project_names = Projects.query.join(
+            Jobs, Projects.id == Jobs.project_id
+        ).all()
         return render_template(
             "/community_settings.html",
             community=community_data,
@@ -84,3 +86,15 @@ def helper_settings_page(user_name):
             "/helper_settings.html",
             helper=helper_data,
         )
+
+
+@profile_blueprint.route("/requests/<community_name>")
+def community_requests_page(community_name):
+    revert_format = community_name.replace("_", " ").title()
+    community_data = Communities.query.filter_by(name=revert_format).first_or_404()
+    community_id = community_data.id
+
+    return render_template(
+        "/requests.html",
+        community=community_data,
+    )

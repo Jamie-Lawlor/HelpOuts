@@ -1,8 +1,6 @@
 {% extends "base.html" %}
-<title>{% block title %}Helper Profile{% endblock %}</title>
-     {% include "includes/navbar_helper.html" %}
-        <body>
-               {%  block body %}
+{% block title %}Helper Profile{% endblock %}
+               {%  block body_helper %}
         
                 <div class="helper-profile-header pb-5">
                         <div class="header-bg d-flex align-items-start p-3">
@@ -160,6 +158,4 @@
                         </div>
                 </div>                
                 {% endblock %}
-        </body>
-
 </html>
