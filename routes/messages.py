@@ -8,12 +8,12 @@ messages_blueprint = Blueprint("messages", __name__, template_folder="templates"
 def inbox_page():
     if session.get("community_id") is not None:
         community_id = int(session["community_id"])
-        all_users = Users.query.where(community_id == community_id).all()
+        all_users = Users.query.where(Users.community_id == community_id, Users.type !="chairperson").all()
         return render_template("/messages/inbox.html", all_users = all_users)
     else:
         user_id = int(session["user_id"])
         user = Users.query.get_or_404(user_id)
-        community = Communities.query.get_or_404(user.community_id)
+        community = Communities.query.get(user.community_id)
         communityArray = [community]
         return render_template("/messages/inbox.html", users_community = communityArray)
 
@@ -50,7 +50,7 @@ def generate_keys():
     if sender is None:
         return render_template("/messages/inbox.html")
     if receiver is None:
-        render_template("/messages/inbox.html")
+        return render_template("/messages/inbox.html")
 
     sender.public_key = public_key.encode('utf-8')
     receiver.private_key = private_key.encode('utf-8')
