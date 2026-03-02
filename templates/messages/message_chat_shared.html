@@ -1,85 +1,43 @@
-<h1 class="text-center mt-4">Your Chat</h1>
-<div class="container mt-4" style="max-width: 600px">
-  
-    <ul class="nav nav-fill border-bottom-0">
-    <li class="nav-item">
-      <div class="nav-link active d-flex py-3">
-        <!-- link to user chat -->
-        {% if session["community_id"] %}
-        <div class="tab-pane fade show active">
-          <img
+<div class="chat-container">
+  <header class="p-3 bg-white border-bottom">
+   <a href="/inbox/" class="me-3 text-white">
+      <img src="/static/images/arrow-left.svg" width="20" height="20">
+    </a>
+
+    {% if session["community_id"] %}
+    <img
             src="{{ user[0].profile_picture }}"
-            width="50"
-            height="50"
+            width="40"
+            height="40"
             class="rounded-circle me-3"
           />
-          <a class="text-decoration-none" href="/helper_profile/{{ user[0].name }}">
-            <h6 id="helper_id" class="mb-0 fw-bold text-dark">{{ user[0].name }}</h6>
+        <div>
+          <a class="text-decoration-none text-dark" href="/helper_profile/{{ user[0].name }}">
+            <h6 id="helper_id" class="mb-0 fw-bold" style="font-size: 0.9rem;">{{ user[0].name }}</h6>
           </a>
         </div>
         {% else %}
-        <div class="tab-pane fade show active">
           <img
             src="{{ community[0].profile_picture }}"
-            width="50"
-            height="50"
+            width="40"
+            height="40"
             class="rounded-circle me-3"
           />
-          <a class="text-decoration-none" href="/community_profile/{{ community[0].name }}">
-            <h6 class="mb-0 fw-bold text-dark">{{ community[0].name }}</h6>
+        <div>
+          <a class="text-decoration-none text-dark" href="/community_profile/{{ community[0].name }}">
+            <h6 class="mb-0 fw-bold" style="font-size: 0.9rem;">{{ community[0].name }}</h6>
           </a>
         </div>
          {% endif %}
-      </div>
-    </li>
-  </ul>
-  <div class="border rounded rounded-bottom shadow-sm bg-white">
-    <div class="p-4" style="height: 500px">
-      <div class="d-flex mb-4 gap-2">
-        <img
-          src="/static/images/user_image_2.png"
-          width="50"
-          height="50"
-          class="rounded-circle me-3"
-        />
-        <div class="d-flex flex-column">
-          <div class="d-flex align-items-baseline gap-2 mb-1">
-            <span class="fw-bold small">Ryan O'Hare</span>
-            <span class="text-muted">14:02</span>
-          </div>
-          <div class="bubble helper-bubble-left">
-            Hi, I would love to work with Men's Sheds. What projects are
-            available?
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="message_container">
-      <div class="d-flex mb-4 gap-2 justify-content-end text-end">
-        <div class="d-flex flex-column align-items-end">
-          <div class="d-flex align-items-baseline gap-2 mb-1">
-            <span class="fw-bold small">You</span>
-            <span class="text-muted">14:30</span>
-          </div>
-          <div class="bubble community-bubble community-bubble-right">
-            That's great Ryan. We have lots of projects waiting to kick off, is
-            there anything in particular you would be interested in?
-          </div>
-        </div>
-        <img
-          src="/static/images/community_image.png"
-          width="50"
-          height="50"
-          class="rounded-circle me-3"
-        />
-      </div>
-      <div class="messages" id="messages"></div>
-    </div>
+  </header>
+
+  <div id="messages" class="messages-container">
   </div>
-  <div class="p-3 bg-white border-top mb-3">
-    <div class="input-group align-items-center bg-light rounded-pill">
-    <input id="user_message" type="text" class="form-control border-0" placeholder="Enter your message...">
-    {% if session["community_id"] %}
+
+  <footer class="chat-input-area">
+    <div class="input-group bg-light rounded-pill border px-3 py-1">
+      <input id="user_message" type="text" class="form-control border-0 bg-transparent shadow-none" placeholder="Enter your message...">
+       {% if session["community_id"] %}
     <button
         class="btn shadow-sm btn-login border-none"
         onclick="send_message('{{ user[0].id }}', '{{ user[1] }}', 'community')"
@@ -119,8 +77,11 @@
     </button>
     {% endif %}
     </div>
+  </footer>
   </div>
-</div>
+
+
+
 <script>
   let time = new Date();
   var socket = io("http://127.0.0.1:5000/");
@@ -129,19 +90,30 @@
     socket.emit("join_room");
     console.log("CONNECTED!!!");
   });
-  function create_message(user, message_received, sent, profile_picture) {
+  
+  let myId = Number("{{ user[1] if session.get('community_id') else community[1] }}")
+  
+  function create_message(sender_id, user, message_received, sent, profile_picture) {
     message = document.getElementById("messages");
-    messageContent = `<div class="d-flex mb-4 gap-2 justify-content-end text-end">
-                    <div class="d-flex flex-column align-items-end">
+
+    let isSender = (Number(sender_id) === Number(myId))
+
+    console.log("comparing sender id", sender_id, "my id:" , myId, "is sender", isSender)
+
+    messageContent = `
+        <div class="d-flex mb-4 gap-2 ${isSender ? 'justify-content-end text-end': 'justify-content-start text-start'}">
+
+                ${!isSender ? `<img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3>`: ''}  
+
+                <div class="d-flex flex-column ${isSender ? 'align-items-end' : 'align-items-start'}">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
-                            <span class="fw-bold small">${user}</span>
+                            <span class="fw-bold small">${isSender ? 'You': user}</span>
                              <span class="text-muted">${sent}</span>
                         </div>
-                        <div class="bubble community-bubble community-bubble-right">
+                        <div class="bubble ${isSender ? 'bubble-message-sent': 'bubble-message-received' }">
                                   ${message_received}
                         </div>
                     </div>
-                <img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">
                 </div>`;
 
     message.innerHTML += messageContent;
@@ -150,9 +122,10 @@
 
   socket.on("message", (data) => {
     console.log("MESSAGE DISPLAY FUNCTION REACHED!!!");
-    create_message(data.user, data.message, data.sent, data.profile_picture);
+    create_message(data.sender_id,data.user, data.message, data.sent, data.profile_picture);
   });
-  function send_message(receiver_id, sender_id, sender) {
+  
+  function send_message(receiver_id, sender_id, sender, user_type) {
 
     console.log("MESSAGE SEND FUNCTION REACHED!!!");
     user_message = document.getElementById("user_message").value;
