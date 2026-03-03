@@ -46,7 +46,7 @@ def index():
 
 @app.route("/home_page/")
 def home_page():
-    if type in session:
+    if 'type' in session:
         return render_template("home_page.html")     
     else:
         return redirect("/")
