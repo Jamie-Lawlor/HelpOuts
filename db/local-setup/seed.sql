@@ -1,16 +1,17 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS map_icons;
 DROP TABLE IF EXISTS job_location;
+DROP TABLE IF EXISTS job_requets;
 DROP TABLE IF EXISTS user_jobs;
 DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS user_permissions;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS map_icons;
 DROP TABLE IF EXISTS communities;
-DROP TABLE IF EXISTS subscriptions;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -102,6 +103,17 @@ CREATE TABLE user_jobs (
     FOREIGN KEY (job_id) REFERENCES jobs(id)
 );
 
+CREATE TABLE job_requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    status VARCHAR(1) NOT NULL,
+    created_date DATE NOT NULL,
+    confirmed_date DATE NOT NULL,
+    user_id INT NOT NULL,
+    job_id INT NOT NULL
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+)
+
 CREATE TABLE map_icons (
     id INT PRIMARY KEY AUTO_INCREMENT,
     icon_url VARCHAR(200) NOT NULL,
@@ -175,6 +187,10 @@ VALUES
 (2, 'Repair and paint perimeter fencing','Sand, repair and repaint park fencing to improve safety and appearance. PPE recommended.','Fence paint', 'maintenance', 'A','Dundalk', '2026-01-11 14:00:00', '2026-02-05 10:00:00', '2026-02-05 16:00:00',1),
 (3, 'Outdoor lighting check and minor fixes','Check existing lighting points around the park area and complete minor electrical fixes where safe.', 'Lighting', 'electrical', 'D', 'Dundalk', '2026-01-12 09:30:00', '2026-02-10 10:00:00', '2026-02-10 12:30:00',1),
 (4, 'Build a small raised planter bed','Construct a raised wooden planter bed for flowers near the entrance. Carpentry help needed.','Planter bed', 'carpentry', 'A','Dundalk', '2026-01-13 12:00:00', '2026-02-12 09:00:00', '2026-02-12 14:00:00',1);
+
+-- INSERT INTO job_requets (id, status, created_date, confirmed_date, user_id, job_id)
+-- VALUES
+
 
 INSERT INTO user_jobs (id, user_id, job_id)
 VALUES 

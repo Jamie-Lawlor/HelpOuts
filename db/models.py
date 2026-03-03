@@ -157,10 +157,11 @@ class Jobs(db.Model):
 
 
 class JobRequests(db.Model):
+    __tablename__ = 'job_requests'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
-    status = db.Column(db.String(3), nullable=False, default="P")  # P = pending, A = accepted, R = rejected
+    status = db.Column(db.String(1), nullable=False, default="P")  # P = pending, A = accepted, R = rejected
     created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
     confirmed_date = db.Column(db.DateTime, nullable=True)
     
