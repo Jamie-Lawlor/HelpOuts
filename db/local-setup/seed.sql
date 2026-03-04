@@ -109,10 +109,10 @@ CREATE TABLE job_requests (
     created_date DATE NOT NULL,
     confirmed_date DATE NOT NULL,
     user_id INT NOT NULL,
-    job_id INT NOT NULL
+    job_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (job_id) REFERENCES jobs(id)
-)
+);
 
 CREATE TABLE map_icons (
     id INT PRIMARY KEY AUTO_INCREMENT,
