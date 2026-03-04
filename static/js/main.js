@@ -6,11 +6,18 @@ $('.datepicker').datepicker({
 })
 
 var project_type = ""
+var job_type = ""
 
 function storeValue(selectedButton, label) {
     project_type = selectedButton
     document.getElementById("projectTypeButton").innerText = label
 }
+
+function storeJobValue(selectedButton, label) {
+    job_type = selectedButton
+    document.getElementById("jobTypeButton").innerText = label
+}
+
 
 function update_helpers_amount(helpers_amount) {
     document.getElementById("helpers_amount").innerHTML = helpers_amount
