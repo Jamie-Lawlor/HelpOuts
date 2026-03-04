@@ -264,6 +264,35 @@ h3, h4, h5{
     object-fit: cover;
 }
 
+.job-tabs .nav-link{
+    color: #6c757d;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+}
+
+.job-tabs .nav-link.active{
+    color: #3D6978;
+    background: transparent;
+    border-bottom: 3px solid #3D6978;
+}
+
+.card-header-job{
+    background-color: #3D6978;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.job-management-title{
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.btn-save{
+    background-color: #D57A44 !important;
+    color: white;
+    border: none;
+}
+
 /* Add project page */
 .add-project-card{
     border-radius: 20px;
