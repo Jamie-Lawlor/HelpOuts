@@ -3,12 +3,29 @@ DELIMITER //
 		IN userId INT
     )
        BEGIN
-		SELECT j.job_title, s.skill, u.name from jobs as j
-			INNER JOIN job_skills as js on j.id = js.job_id
-			INNER JOIN skills as s on s.id = js.skill_id
-			INNER JOIN user_skills as us on js.skill_id = us.skill_id
-            INNER JOIN users as u on us.user_id = u.id
-            
-		WHERE u.id = userId;
-    
+        SELECT
+            j.id,
+            j.job_title,
+            j.status,
+            j.area,
+            u.id AS user_id,
+            u.name,
+            COUNT(DISTINCT js.skill_id) AS match_score
+        FROM
+            jobs AS j
+            INNER JOIN job_skills AS js ON j.id = js.job_id
+            INNER JOIN user_skills AS us ON js.skill_id = us.skill_id
+            INNER JOIN users AS u ON us.user_id = u.id
+        WHERE
+            u.id = 3
+        GROUP BY
+            j.id,
+            j.job_title,
+            j.status,
+            j.area,
+            u.id,
+            u.name
+        ORDER BY
+            match_score DESC,
+            j.id;
 	END//
