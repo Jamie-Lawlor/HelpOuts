@@ -1,6 +1,8 @@
 -- -------------------------------------------------------------------------------------------------------
 --   Used for the development of job recommendations
---
+
+
+
 -- IMPORTANT    * This seed should not be used outside of the job recommendations development as
 --                  it contains smaller representations of the larger tables used in this file.
 --
@@ -12,18 +14,15 @@
 
 --            * new - skills
 --            * new - user_skills -> Reference table to link skills to users.
---
---
---
---
---
---
+
+
+
 -- -------------------------------------------------------------------------------------------------------
 
 -- CREATE DATABASE helpoutsjobrec01
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS jobs_skills;
+DROP TABLE IF EXISTS job_skills;
 DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS user_skills;
@@ -122,14 +121,34 @@ INSERT INTO users (id, name) VALUES
     (2, 'Ryan'),
     (3, 'John'),
     (4, 'Daisy'),
-    (5, 'Jemma');
+    (5, 'Jemma'),
+    (6, 'Patrick'),
+    (7, 'Sarah'),
+    (8, 'Tom'),
+    (9, 'Niamh'),
+    (10, 'Sean'),
+    (11, 'Aoife'),
+    (12, 'Michael'),
+    (13, 'Laura'),
+    (14, 'Brian'),
+    (15, 'Emma');
 
 INSERT INTO user_skills (id, user_id, skill_id) VALUES
     (1, 1, 1),  -- Leo knows Carpentry
     (2, 2, 9),  -- Ryan knows Gardening
     (3, 3, 20), -- John knows Cooking
     (4, 4, 26), -- Daisy knows IT Support
-    (5, 5, 33); -- Jemma knows Community Outreach
+    (5, 5, 33), -- Jemma knows Community Outreach
+    (6, 6, 1),   -- Patrick - Carpentry
+    (7, 7, 9),   -- Sarah - Gardening
+    (8, 8, 20),  -- Tom - Cooking
+    (9, 9, 26),  -- Niamh - IT Support
+    (10, 10, 33),-- Sean - Community Outreach
+    (11, 11, 1), -- Aoife - Carpentry
+    (12, 12, 9), -- Michael - Gardening
+    (13, 13, 20),-- Laura - Cooking
+    (14, 14, 26),-- Brian - IT Support
+    (15, 15, 33);-- Emma - Community Outreach
 
 INSERT INTO projects (id, project_title, project_type, status, start_date, end_date) VALUES
     (1, 'Community Improvement Initiative', 'Community', 'A', '2026-03-01 00:00:00', '2026-12-31 23:59:59');
