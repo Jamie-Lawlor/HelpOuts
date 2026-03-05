@@ -1,64 +1,33 @@
-import sys
 import os
+import sys
 import pytest
-from flask import Flask
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from db.database import db
-
-
 @pytest.fixture
-def app():
-    flask_app = Flask(__name__)
+def app(monkeypatch):
 
-    flask_app.config.update(
-        TESTING=True,
-        SQLALCHEMY_DATABASE_URI="sqlite:///:memory:",
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        WTF_CSRF_ENABLED=False,
-        SECRET_KEY="test-secret",
-    )
 
-    db.init_app(flask_app)
+    monkeypatch.setenv("DB_URL", "sqlite:///:memory:")
+    monkeypatch.setenv("SECRET_KEY", "test-secret")
 
-    from routes.login import login_blueprint
-    from routes.messages import messages_blueprint
-    from routes.profile import profile_blueprint
-    from routes.posts import posts_blueprint
-    from routes.subscriptions import subscriptions_blueprint
-    from routes.api import api_blueprint   
+    import importlib
+    import app as app_module
+    importlib.reload(app_module) 
 
-    flask_app.register_blueprint(login_blueprint)
-    flask_app.register_blueprint(messages_blueprint)
-    flask_app.register_blueprint(profile_blueprint)
-    flask_app.register_blueprint(posts_blueprint)
-    flask_app.register_blueprint(subscriptions_blueprint)
-    flask_app.register_blueprint(api_blueprint, url_prefix="/api")  
+    flask_app = app_module.app
+
+    from db.database import db
+    with flask_app.app_context():
+        db.drop_all()
+        db.create_all()
+
+    yield flask_app
 
     with flask_app.app_context():
-        db.create_all()
-        yield flask_app
         db.session.remove()
         db.drop_all()
-
 
 @pytest.fixture
 def client(app):
     return app.test_client()
-
-
-@pytest.fixture
-def community(app):
-    from db.models import Communities
-
-    with app.app_context():
-        c = Communities(
-            name="Dundalk Tidy Towns",
-            area="Dundalk, Co.Louth",
-            description="Test community",
-            profile_picture="/static/images/community_image.png",
-        )
-        db.session.add(c)
-        db.session.commit()
-        return c
