@@ -196,3 +196,5 @@ function openSideBar(){
 //         document.getElementById("jobs-section").className.style.display = "flex"
 //     }
 // }
+
+

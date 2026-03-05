@@ -14,6 +14,7 @@ from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 from events import socketio
 import pyotp
+
 load_dotenv()
 
 
@@ -39,24 +40,30 @@ app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
-@app.route('/manifest.json')
-def serve_manifest():
-    return send_file('manifest.json', mimetype = 'application/manifest.json')
 
-@app.route('/manifest.json')
+@app.route("/manifest.json")
+def serve_manifest():
+    return send_file("manifest.json", mimetype="application/manifest.json")
+
+
+@app.route("/manifest.json")
 def serve_PWA_service_worker():
-    return send_file('sw.js', mimetype = 'application/javascript')
+    return send_file("sw.js", mimetype="application/javascript")
+
 
 @app.route("/")
 def index():
-    #DELETE THIS WHEN DONE
+    # DELETE THIS WHEN DONE
     session["id"] = 3
     return render_template("index.html")
 
 
 @app.route("/home_page/")
 def home_page():
-    return render_template("home_page.html")
+    if 'type' in session:
+        return render_template("home_page.html")     
+    else:
+        return redirect("/")
 
 
 @app.route("/settings/")
@@ -68,17 +75,18 @@ def settings_page():
 def helper_settings_page():
     return render_template("helper_settings.html")
 
-@app.route("/login",methods=["POST"])
+
+@app.route("/login", methods=["POST"])
 def login():
     email = request.form.get("email")
     password = request.form.get("password")
-    user = Users.query.filter_by(email = email).first()
+    user = Users.query.filter_by(email=email).first()
     # hashed_password = user.password
     # password_check = check_password_hash(hashed_password, password)
-    
+
     if user is not None:
         hashed_password = user.password
-        password_check = check_password_hash(hashed_password, password)    
+        password_check = check_password_hash(hashed_password, password)
 
     if user is not None and password_check:
         session["email"] = email
@@ -86,7 +94,8 @@ def login():
         return redirect("/mfa")
     else:
         error = "Email or Password Is Incorrect"
-        return render_template("login/login.html", error = error)
+        return render_template("login/login.html", error=error)
+
 
 @app.route("/mfa", methods=["GET", "POST"])
 def mfa():
