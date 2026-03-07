@@ -18,7 +18,18 @@ def community_profile_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
-    return render_template(
+    if session["type"] != "chairperson":
+        user_data = Users.query.get_or_404(session["user_id"])
+        return render_template(
+        "/profile/community_profile.html",
+        community=community_data,
+        projects=project_data,
+        jobs=all_job_data,
+        project_names=get_project_names,
+        user_data = user_data
+    )
+    else:
+        return render_template(
         "/profile/community_profile.html",
         community=community_data,
         projects=project_data,
