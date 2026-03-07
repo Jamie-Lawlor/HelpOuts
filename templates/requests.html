@@ -20,7 +20,7 @@
                     <h5 class="fw-bold mb-0">Helper Requests</h5>
                     <span class="ms-2 badge rounded-pill" style="color: #D57A44;">2 New</span>
                 </div>
-
+            {% for i in range(community_request_list|length) %}
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <div class="card shadow-sm border-0 p-1 mb-4" style="border-radius:15px;">
@@ -28,45 +28,23 @@
                                 <div class="d-flex align-items-center mb-3">
                                     <img src="/static/images/user_icon.svg" class="rounded-circle me-3" width="45">
                                     <div>
-                                        <h6 class="mb-0 fw-bold">Ryan O'Hare</h6>
+                                        <h6 class="mb-0 fw-bold">{{ community_request_list[i].name }}</h6>
                                         <small class="text-muted">Sent 2h ago</small>
                                     </div>
                                 </div>
                                 <p class="small text-secondary mb-3">
-                                    <a href="/helper_profile/Ryan_O'Hare" class="text-decoration-none text-muted">
+                                    <a href="/helper_profile/{{ community_request_list[i].name }}" class="text-decoration-none text-muted">
                                     View Profile
                                 </a></p>
                                 <div class="d-flex gap-2">
-                                    <button class="btn btn-success btn-sm rounded-pill">Accept</button>
-                                    <button class="btn btn-danger btn-sm rounded-pill px-3">Remove</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card shadow-sm border-0 p-1 mb-4" style="border-radius:15px;">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="/static/images/user_icon.svg" class="rounded-circle me-3" width="45">
-                                     <div>
-                                        <h6 class="mb-0 fw-bold">Jemma Simmons</h6>
-                                        <small class="text-muted">Sent 2h ago</small>
-                                    </div>
-                                </div>
-                                <p class="small text-secondary mb-3">
-                                    <a href="/helper_profile/Ryan_O'Hare" class="text-decoration-none text-muted">
-                                    View Profile
-                                </a></p>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-success btn-sm rounded-pill">Accept</button>
-                                    <button class="btn btn-danger btn-sm rounded-pill px-3">Remove</button>
+                                    <button class="btn btn-success btn-sm rounded-pill" onclick="join_community_request('{{ community_request_list[i].id }}', 'A')">Accept</button>
+                                    <button class="btn btn-danger btn-sm rounded-pill px-3" onclick="join_community_request('{{ community_request_list[i].id }}', 'R')">Remove</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                {% endfor %}
                 <h5 class="fw-bold mb-3">Job Requests</h5>
                 {% for i in range(job_list|length) %}
                 <div class="card shadow-sm border-0 p-3 mb-3" style="border-radius:15px; border-left:5px solid #85D6D6 !important;">
@@ -126,4 +104,4 @@
 </div>
 
   
-               {% endblock %}
+{% endblock %}

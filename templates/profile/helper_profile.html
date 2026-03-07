@@ -30,8 +30,10 @@
                                                 </div>
                                         <div class="col-4 border-end">
                                                 <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 10px;">Community</small>
+                                                {% if community_data is not none %}
                                                 <a href="/community_profile/{{ community_data.name }}" style="color:black !important" class="text-decoration-none">
                                                 <span class="fw-bold"> {{ community_data.name }}</span></a>
+                                                {% endif %}
                                         </div>
                                         <div class="col-4">
                                                 <small class="text-muted text-uppercase d-block fw-bold"
@@ -78,6 +80,7 @@
                                 </div>
 
                                 <div class="mx-auto mt-4" style="max-width:700px;">
+                                {% if user_jobs is not none %}
                                 <h6 class="fw-bold text-uppercase text-muted mb-2 ms-1">
                                        Active Jobs {{ user_jobs|length }}
                                 </h6>
@@ -100,9 +103,9 @@
                                            </a>
                                 {% endfor %}
                                 </div>
-
-
-                                <div class="mb-4">
+                        </div>
+                        {% endif %}
+                        <div class="mb-4">
                                 <h6 class="fw-bold text-uppercase text-muted mb-2">
                                         Experience
                                 </h6>
@@ -120,8 +123,6 @@
                                    </div>
                              
                                 </div>
-
-                        </div>
                         </div>
                 </div>                
                 {% endblock %}

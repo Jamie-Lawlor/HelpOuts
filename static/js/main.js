@@ -185,6 +185,7 @@ function delete_post_data() {
 }
 function accept_helper_job_request(job_list_id){
     fetch("/accept_helper_job_request", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_list_id }) })
+        .then(window.location.reload())
 }
 
 function filter_jobs(value){
@@ -247,6 +248,13 @@ function join_community(community_id){
         fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
 
 }
+
+function join_community_request(helper_id, button_selected){
+    dataArray=[helper_id, button_selected]
+    fetch("/accept_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    .then(window.location.reload())
+}
+
 
 //Remove when no longer needed as test
 
