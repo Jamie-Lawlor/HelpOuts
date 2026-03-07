@@ -2,14 +2,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS reviews;
-DROP TABLE IF EXISTS map_icons;
 DROP TABLE IF EXISTS job_location;
-DROP TABLE IF EXISTS job_requets;
+DROP TABLE IF EXISTS job_requests;
 DROP TABLE IF EXISTS user_jobs;
+DROP TABLE IF EXISTS map_icons;
 DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS user_permissions;
+DROP TABLE IF EXISTS community_requests;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS communities;
 
@@ -40,6 +41,17 @@ CREATE TABLE users (
     verified BOOLEAN DEFAULT FALSE,
     verification_accuracy DECIMAL(5,2),
     community_id INT,
+    FOREIGN KEY (community_id) REFERENCES communities(id)
+);
+
+CREATE TABLE community_requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    status VARCHAR(1) NOT NULL,
+    created_date DATE NOT NULL,
+    confirmed_date DATE NOT NULL,
+    user_id INT NOT NULL,
+    community_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (community_id) REFERENCES communities(id)
 );
 
