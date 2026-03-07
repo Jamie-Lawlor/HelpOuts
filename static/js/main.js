@@ -243,6 +243,11 @@ function filter_jobs(value){
     }
 }
 
+function join_community(community_id){
+        fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
+
+}
+
 //Remove when no longer needed as test
 
 function test_login_helper(){

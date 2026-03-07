@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
 from db.database import db
-from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests
+from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests, CommunityRequests
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
@@ -134,5 +134,19 @@ def accept_helper_job():
         job_id = job_id
     )
     db.session.add(job_accepted)
+    db.session.commit()
+    return ""
+
+@profile_blueprint.route("/request_join_community", methods=["POST"])
+def join_community():
+    data = request.json["data"]
+    community_id = data[0]
+    helper_id = session["user_id"]
+    pending_request = CommunityRequests(
+        user_id= helper_id,
+        community_id = community_id,
+        created_date = db.func.current_timestamp(),  
+    )
+    db.session.add(pending_request)
     db.session.commit()
     return ""
