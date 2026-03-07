@@ -61,7 +61,7 @@ body_community %}
           </div>
 
           <div class="row">
-            <div class="col-md-7 mb-4">
+            <div class="col-md-6 mb-4">
               <span class="label-muted">JOB TITLE</span>
               <input
                 type="text"
@@ -73,7 +73,77 @@ body_community %}
                 required
               />
             </div>
-            <div class="col-md-5 mb-4">
+            
+
+             <div class="col-md-6 mb-4">
+              <span class="label-muted">JOB TYPE</span>
+              <div class="dropdown">
+                <button
+                  class="btn soft-input w-100 text-start d-flex justify-content-between align-items-center dropdown-toggle"
+                  type="button"
+                  id="jobTypeButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Choose Type
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button
+                      type="button"
+                      class="dropdown-item"
+                      onclick="storeJobValue('Environment', 'Environment')"
+                    >
+                      Environment
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="dropdown-item"
+                      onclick="
+                        storeJobValue('social_and_events', 'Social & Events')
+                      "
+                    >
+                      Social & Events
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="dropdown-item"
+                      onclick="storeJobValue('construction', 'Construction')"
+                    >
+                      Construction
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="dropdown-item"
+                      onclick="
+                        storeJobValue('general_maintenance', 'General Maintenance')
+                      "
+                    >
+                      General Maintenance
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="dropdown-item"
+                      onclick="storeJobValue('safety', 'Safety')"
+                    >
+                      Safety
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+            <!-- <div class="col-md-5 mb-4">
               <span class="label-muted">CATEGORY / TYPE</span>
               <div class="input-group">
                 <input
@@ -87,7 +157,7 @@ body_community %}
                   required
                 />
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="mb-4">

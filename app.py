@@ -1,8 +1,8 @@
-from flask import Flask, render_template, session, send_file, request, redirect
+from flask import Flask, render_template, session, send_file, request, redirect, jsonify
 from flask_mail import Mail, Message
 import os
 from db.database import db
-from db.models import Users
+from db.models import Users, Jobs, Projects
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -60,10 +60,21 @@ def index():
 
 @app.route("/home_page/")
 def home_page():
-    if 'type' in session:
-        return render_template("home_page.html")     
+    if 'type' in session: 
+        return render_template("home_page.html")         
     else:
         return redirect("/")
+
+@app.route("/get_jobs")
+def get_jobs():
+        if session["type"]=="helper":
+            helper_data = Users.query.get_or_404(session["user_id"])
+            job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == helper_data.community_id).all()
+            dataArray=[]
+            for jobs in job_data:
+                dataArray.append(jobs.to_dict())
+            return jsonify(dataArray)
+           
 
 
 @app.route("/settings/")
