@@ -264,6 +264,35 @@ h3, h4, h5{
     object-fit: cover;
 }
 
+.job-tabs .nav-link{
+    color: #6c757d;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+}
+
+.job-tabs .nav-link.active{
+    color: #3D6978;
+    background: transparent;
+    border-bottom: 3px solid #3D6978;
+}
+
+.card-header-job{
+    background-color: #3D6978;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.job-management-title{
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.btn-save{
+    background-color: #D57A44 !important;
+    color: white;
+    border: none;
+}
+
 /* Add project page */
 .add-project-card{
     border-radius: 20px;
@@ -565,6 +594,64 @@ h6{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.filter-jobs-container{
+    scrollbar-width: none;
+}
+
+.category-card {
+    display: block;
+    width: 200px;
+    height: 200px;
+    background: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f0f0f0 transparent ;
+}
+
+.category-card .bi{
+    color: #3D6978;
+    opacity: 0.8;
+}
+
+.category-card:hover{
+    transform: translateY(-5px);
+}
+
+.filter-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    opacity: 0.3;
+}
+
+.btn-check:checked + .category-card{
+    transform: scale(1.05);
+    border: #dee2e6;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.btn-check:checked + .category-card .filter-bar{
+    height: 10px;
+    opacity: 1;
+}
+
+.bg-teal{
+    background-color: #3D6978;
+}
+
+.bg-blue{
+    background-color: #85D6D6;
+}
+
+.bg-orange{
+    background-color: #D57A44;
 }
 
 /* Message bubble styling */

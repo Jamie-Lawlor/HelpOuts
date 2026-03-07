@@ -1,4 +1,4 @@
-<div class="community-group-container">
+ <!-- <div class="community-group-container">
   <div class="container">
     <h1 class="display-5 fw-bold" style="color: #3d6978">
       Find your Community
@@ -31,9 +31,170 @@
       </div>
     </div>
   </div>
+</div>  -->
+
+ <div class="community-group-container py-5 bg-white">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold mb-3" style="color: #3d6978; letter-spacing: -1px;">
+      Find your Job
+    </h1>
+    <p class="lead text-muted mb-5 mx-auto" style="max-width: 600px;">
+     Helpout your Community by completing small tasks and jobs.
+    </p>
+
+    <div class="search-container mb-4">
+      <div class="input-group shadow-lg rounded-pill border-0 px-3 py-2 bg-light">
+        <span class="input-group-text bg-transparent border-0 ps-3">
+          <!-- <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+            />
+          </svg> -->
+        </span>
+        <input
+          type="text"
+          class="form-control bg-transparent border-0 shadow-none"
+          placeholder="Search for jobs..."
+        />
+        <button class="btn btn-teal rounded-pill px-4 ms-2 fw-bold text-white" style="background-color: #3d6978;">Search</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div class="container mt-5">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h3 class="fw-bold mb-4">
+      Explore Jobs
+    </h3>
+    <a href="#" class="text-decoration-none small fw-bold" style="color: #d57a44;">View All</a>
+  </div>
+
+<div class="filter-jobs-container d-flex gap-3 overflow-auto pb-3">
+
+   <div class="category-item">
+    <input type="radio" id="filter-env" class="btn-check">
+    <label for="filter-env" class="category-card shadow-sm border-0">
+      <div class="p-4 d-flex flex-column justify-content-between h-100">
+        <h6 class="fw-bold mb-0 text-dark">Environment</h6>
+        <div class="text-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-tree" viewBox="0 0 16 16">
+        <path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777zM6.437 4.758A.5.5 0 0 0 6 4.5h-.066L8 1.401 10.066 4.5H10a.5.5 0 0 0-.424.765L11.598 8.5H11.5a.5.5 0 0 0-.447.724L12.69 12.5H3.309l1.638-3.276A.5.5 0 0 0 4.5 8.5h-.098l2.022-3.235a.5.5 0 0 0 .013-.507"/>
+      </svg>
+        </div>
+      </div>
+      <div class="filter-bar bg-blue"></div>
+    </label>
+  </div>
+  
+  <div class="category-item">
+    <input type="radio" id="filter-social" class="btn-check">
+    <label for="filter-social" class="category-card shadow-sm border-0">
+      <div class="p-4 d-flex flex-column justify-content-between h-100">
+        <h6 class="fw-bold card-title">Social & Events</h6>
+        <div class="text-end">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+  <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
+</svg>
+        </div>
+      </div>
+      <div class="filter-bar bg-orange"></div>
+    </label>
+  </div>
+
+<div class="category-item">
+    <input type="radio" id="filter-construction" class="btn-check">
+    <label for="filter-construction" class="category-card shadow-sm border-0">
+      <div class="p-4 d-flex flex-column justify-content-between h-100">
+        <h6 class="fw-bold card-title">Construction</h6>
+        <div class="text-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16">
+  <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9s-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12m-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4s1.2-.036 1.725-.098m4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257z"/>
+</svg>
+        </div>
+      </div>
+      <div class="filter-bar bg-teal"></div>
+    </label>
+  </div>
+
+<div class="category-item">
+    <input type="radio" id="filter-maintenance" class="btn-check">
+    <label for="filter-maintenance" class="category-card shadow-sm border-0">
+      <div class="p-4 d-flex flex-column justify-content-between h-100">
+        <h6 class="fw-bold card-title">General Maintenance</h6>
+        <div class="text-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-tools" viewBox="0 0 16 16">
+  <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+</svg>
+        </div>
+      </div>
+      <div class="filter-bar bg-orange"></div>
+    </label>
+  </div>
+
+  <div class="category-item">
+    <input type="radio" id="filter-safety" class="btn-check">
+    <label for="filter-safety" class="category-card shadow-sm border-0">
+      <div class="p-4 d-flex flex-column justify-content-between h-100">
+        <h6 class="fw-bold card-title">Safety</h6>
+        <div class="text-end">
+       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="16" fill="currentColor" class="bi bi-safe" viewBox="0 0 16 16">
+  <path d="M1 1.5A1.5 1.5 0 0 1 2.5 0h12A1.5 1.5 0 0 1 16 1.5v13a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 1 14.5V13H.5a.5.5 0 0 1 0-1H1V8.5H.5a.5.5 0 0 1 0-1H1V4H.5a.5.5 0 0 1 0-1H1zM2.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 .5.5h12a.5.5 0 0 0 .5-.5v-13a.5.5 0 0 0-.5-.5z"/>
+  <path d="M13.5 6a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5M4.828 4.464a.5.5 0 0 1 .708 0l1.09 1.09a3 3 0 0 1 3.476 0l1.09-1.09a.5.5 0 1 1 .707.708l-1.09 1.09c.74 1.037.74 2.44 0 3.476l1.09 1.09a.5.5 0 1 1-.707.708l-1.09-1.09a3 3 0 0 1-3.476 0l-1.09 1.09a.5.5 0 1 1-.708-.708l1.09-1.09a3 3 0 0 1 0-3.476l-1.09-1.09a.5.5 0 0 1 0-.708M6.95 6.586a2 2 0 1 0 2.828 2.828A2 2 0 0 0 6.95 6.586"/>
+</svg>
+        </div>
+      </div>
+      <div class="filter-bar bg-blue"></div>
+    </label>
+  </div>
+</div>
 </div>
 
-<div class="container py-5">
+
+<!-- <div class="community-group-container">
+  <div class="container">
+    <h1 class="display-5 fw-bold" style="color: #3d6978">
+      Find your Community
+    </h1>
+    <p class="lead text-muted mb-5">
+      Join a local community and help with projects in your area.
+    </p>
+
+    <div class="search-container mb-4" style="color: #3d6978">
+      <div class="input-group shadow-sm rounded-pill overflow-hidden">
+        <span class="input-group-text bg-white border-0 ps-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+            />
+          </svg>
+        </span>
+        <input
+          type="text"
+          class="form-control search-input border-start-0 rounded-pill-end"
+          placeholder="Search"
+        />
+      </div>
+    </div> -->
+  <!-- </div>
+</div>    -->
+
+
+<div class="container py-5 mt-4">
   <div class="d-flex justify-content-between align-items-center mb-5">
     <h3 class="fw-bold mb-3" style="color: #3d6978">
       Communities looking for help
@@ -117,7 +278,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 
   <!-- old layout -->
   <!-- <div class="d-flex justify-content-center mt-3">
