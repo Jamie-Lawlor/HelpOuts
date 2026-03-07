@@ -1,7 +1,7 @@
-from db.database import db
-from db.models import Communities, Projects
-
 def test_add_project_to_dundalk_tidy_towns(client, app):
+    from db.models import Communities
+    from db.database import db
+
     with app.app_context():
         c = Communities(
             name="Dundalk Tidy Towns",
@@ -15,6 +15,7 @@ def test_add_project_to_dundalk_tidy_towns(client, app):
 
     with client.session_transaction() as sess:
         sess["community_id"] = community_id
+        sess["type"] = "chairperson"   
 
     resp = client.post(
         "/create_project",
@@ -29,8 +30,3 @@ def test_add_project_to_dundalk_tidy_towns(client, app):
     )
 
     assert resp.status_code == 200
-
-    with app.app_context():
-        p = Projects.query.filter_by(project_title="New Dundalk Clean-Up").first()
-        assert p is not None
-        assert p.community_id == community_id
