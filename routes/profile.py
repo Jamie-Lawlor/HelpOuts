@@ -39,10 +39,9 @@ def community_profile_page(community_name):
     )
 
 
-@profile_blueprint.route("/helper_profile/<user_name>")
-def helper_profile_page(user_name):
-    revert_format = user_name.replace("_", " ").title()
-    user_data = Users.query.filter_by(name=revert_format).first_or_404()
+@profile_blueprint.route("/helper_profile/<int:user_id>")
+def helper_profile_page(user_id):
+    user_data = Users.query.first_or_404(user_id)
     print(user_data.name)
     if user_data.community_id is not None:
         community_id = user_data.community_id

@@ -124,6 +124,7 @@ def mfa():
             if totp.verify(otp):
                 session.pop("email", None)
                 session["user_id"] = user.id
+                # TODO profile picture comes from S3 now, not the database
                 session["profile_picture"] = user.profile_picture
                 session["type"] = user.type
                 return redirect("/home_page/")

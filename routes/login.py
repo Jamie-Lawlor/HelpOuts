@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 from db.database import db
 from db.models import Users, Communities
 from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 import re
 import boto3
 from dotenv import load_dotenv
@@ -9,7 +10,7 @@ import os
 from PIL import Image
 import requests
 import io
-
+import os
 load_dotenv()
 
 login_blueprint = Blueprint("login", __name__, template_folder="templates")
@@ -134,93 +135,32 @@ def register():
     # key = RSA.generate(2048)
     # private_key = key
     # public_key = key.public_key
-    try:
-        profile_picture.stream.seek(0)
-        print("URL_TEMP: ", os.getenv("AI_CLIPSE_URL_TEMP"))
-        response = requests.post(
-            os.getenv("AI_CLIPSE_URL_TEMP"),
-            headers={"X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")},
-            files={
-                "file": (
-                    profile_picture.filename,
-                    profile_picture.stream,
-                    profile_picture.mimetype,
-                )
-            },
-        )
-        data = response.json()
-        verdict = data["verdict"]
-        accuracy = data["confidence"]
-        print("ACCURACY: ", accuracy)
-        label = data["label"]
-        # if we want to reject an image and do something different
-        # it will go here, for now image is sent to aws and the
-        # link is written to db
-    except Exception as e:
-        print(f"ERROR: {e}")
-    #     return {"error": "Error validating image"}
 
-    # send image to AWS S3
-    try:
-
-        # define image sizes to be created
-        img_sizes = {"s": (60, 60), "m": (150, 150), "l": (500, 500)}
-        resized_images = {}
-        base_img = Image.open(profile_picture)
-        base_img = base_img.convert("RGB")
-
-        # created resized images based on dict above
-        for label, size in img_sizes.items():
-            resized = base_img.copy()
-            resized = resized.resize((size[0], size[1]), Image.LANCZOS)
-            resized_images[label] = resized
-
-        if user_type == "chairperson":
-            user = Users(
-            name=first_name + " " + last_name,
-            email=email,
-            password=hashed_password,
-            type=user_type,
-            work_area=location,
-            rating=0,
-            # private_key = private_key,
-            # public_key = public_key
-            community_id = community.id
-        )
-        else:
-            user = Users(
-            name=first_name + " " + last_name,
-            email=email,
-            password=hashed_password,
-            type=user_type,
-            work_area=location,
-            rating=0,
-            # private_key = private_key,
-            # public_key = public_key
-        )
-
-        # loop resized images and upload to s3 with matching label in the key
-        for label, resized_image in resized_images.items():
-            object_key = f"2/profile-picture/profile-picture-{label}.jpg"
-            # change PIL image to file object for upload
-            resized_image_file = io.BytesIO()
-            resized_image.save(resized_image_file, format="JPEG", quality=90)
-            resized_image_file.seek(0)
-            # s3.upload_fileobj(
-            #     resized_image_file,
-            #     os.getenv("AWS_S3_BUCKET"),
-            #     object_key,
-            #     ExtraArgs={
-            #         "ContentType": "image/jpg"
-            #     },
-            # )
-    except Exception as e:
-        print(f"ERROR: {e}")
-        return {"error": "Error uploading image to S3"}
-
-    db_profile_picture_url = f"{os.getenv('AWS_S3_BASE_URL')}{object_key}"
-    print(db_profile_picture_url)
-    user.profile_picture = db_profile_picture_url
+    if user_type == "chairperson":
+        user = Users(
+        name=first_name + " " + last_name,
+        email=email,
+        password=hashed_password,
+        type=user_type,
+        work_area=location,
+        rating=0,
+        # private_key = private_key,
+        # public_key = public_key
+        community_id = community.id
+    )
+    else:
+        user = Users(
+        name=first_name + " " + last_name,
+        email=email,
+        password=hashed_password,
+        type=user_type,
+        work_area=location,
+        rating=0,
+        # private_key = private_key,
+        # public_key = public_key
+    )
+        
+    
     print(
         user.name,
         user.email,
@@ -228,15 +168,41 @@ def register():
         user.type,
         user.work_area,
         user.rating,
-        user.profile_picture,
     )
     db.session.add(user)
     db.session.commit()
     session["user_id"] = user.id
     session["type"] = user.type
-    session["accuracy"] = accuracy
-    print("ACCURACY IN SESSION: ", session["accuracy"])
-    return redirect("/home_page/")
+
+    print(f"session id -> {session["user_id"]}")
+    profile_picture.stream.seek(0)
+    image_verification_body = {
+        "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
+    }
+    image_verfication_response = requests.post(
+        f"{os.getenv("HELPOUTS_BASE_URL_DEV")}/api/uploadProfile/{user.id}",
+        files=image_verification_body
+    )
+    # Handle AiClipse not working/ S3 issue
+    # 
+    # if image_verfication_response.ok:
+    #     # do db commits/session
+    # else:
+    #     return {"error": "Image verification request failed"}, 500
+
+    response_data = image_verfication_response.json()
+    print(response_data)
+    user = Users.query.get_or_404(session["user_id"])
+    if response_data["verification_status"] == "skipped":
+        user.verfied = False
+        
+    if response_data["verification_status"] == "success":
+        user.verfied = True
+        session["accuracy"] = response_data["accuracy"]
+        print("ACCURACY IN SESSION: ", session["accuracy"])
+
+    db.session.commit()
+    return redirect("/home_page")
 
 
 @login_blueprint.route("/logout")
@@ -245,16 +211,48 @@ def logout():
     return redirect("/")
 
 
+
+@login_blueprint.route("/login_no_mfa", methods=["POST"])
+def login_no_mfa():
+    form_email = request.form.get("email")
+    form_password = request.form.get("password")
+    user = Users.query.filter_by(email=form_email).first()
+
+    # check email is found
+    if user is None:
+        error = "Email or Password Is Incorrect"
+        return render_template("login/login.html", error=error)
+    
+    # compare hash
+    password_check = check_password_hash(user.password, form_password)
+    if password_check == False:
+        error = "Email or Password Is Incorrect"
+        return render_template("login/login.html", error=error)
+    
+    # initalize session
+    session["user_id"] = user.id
+    session["profile_picture"] = f"{os.getenv("AWS_S3_BUCKET")}{user.id}/profile-picture/profile-picture-m.jpg"
+    session["type"] = user.type
+    session["images"] = os.getenv("AWS_S3_BASE_URL")
+    
+    return redirect("/home_page/")
+    
+     
+
+
+
 # Remove when no longer needed as test
 @login_blueprint.route("/test_login_user", methods=["POST"])
 def test_login_user():
     user_id = int(request.json["data"])
     user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
+     # TODO profile picture comes from S3 now, not the database
     session["profile_picture"] = user_data.profile_picture
     session["type"] = "helper"
     if session.get("community_id") is not None:
         session.pop("community_id", None)
+    # TODO profile picture comes from S3 now, not the database
     dataArray = [str(session["user_id"]), session["profile_picture"], session["type"]]
     print("TYPE OF USER: ", session["type"])
     return jsonify(dataArray)
@@ -268,9 +266,12 @@ def test_login_admin():
     session["community_id"] = community_id
     session["type"] = "chairperson"
     print("SESSION: ", session["community_id"])
+
+     # TODO profile picture comes from S3 now, not the database * not for communities yet
     session["profile_picture"] = community_data.profile_picture
     dataArray = [
         str(session["community_id"]),
+         # TODO profile picture comes from S3 now, not the database * not for communities yet
         session["profile_picture"],
         session["type"],
     ]
