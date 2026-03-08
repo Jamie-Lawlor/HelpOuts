@@ -46,7 +46,7 @@ def generate_keys():
     private_key = data["private_key"]
     public_key = data["public_key"]
 
-    # user_id = session["id"]
+    # user_id = session["user_id"]
     sender_id = 3  #
     receiver_id = 2  # Ryan
 

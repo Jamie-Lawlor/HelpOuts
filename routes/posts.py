@@ -210,3 +210,30 @@ def trigger_push_notification(push_subscription, title, body):
                 extra.message
                 )
         return False
+    
+
+
+
+@posts_blueprint.route("/getJobRecommendations", methods=["GET"])
+def get_job_recommendations():
+    # calling storedprocs: https://docs.sqlalchemy.org/en/21/core/connections.html
+
+    if session["user_id"] != None:
+        connection = db.engine.raw_connection()
+        recommendations = []
+        print(session["user_id"])
+        try:
+            cursor_obj = connection.cursor()
+            cursor_obj.callproc("getJobRecommendations", [session["user_id"]])
+            recommendations = list(cursor_obj.fetchall())
+            cursor_obj.close()
+            connection.commit()
+        # except Exception as e:
+            # maybe here if there is an error just return a list of
+            # jobs for the user that arent link to their skills
+        finally:
+            connection.close()
+    else:
+        return {"error": "User not found"}
+    
+    return jsonify(recommendations)
