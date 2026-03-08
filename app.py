@@ -54,7 +54,7 @@ def serve_PWA_service_worker():
 @app.route("/")
 def index():
     # DELETE THIS WHEN DONE
-    session["id"] = 3
+    # session["user_id"] = 3
     return render_template("index.html")
 
 
