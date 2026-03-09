@@ -146,5 +146,9 @@ def mfa():
     
     return render_template("login/mfa.html")
 
+@app.route("/get_type", methods=["GET"])
+def get_type():
+    return session["type"]
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)

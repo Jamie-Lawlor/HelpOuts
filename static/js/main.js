@@ -28,6 +28,43 @@ document.addEventListener('DOMContentLoaded', () =>{
             });
         })  
     }
+    if(window.location.href.includes("/community_profile/")){
+        recommended_jobs_container = document.getElementById("recommended_jobs_list")
+        fetch("/get_type", {method:"GET"})
+        .then(response => response.text())
+        .then(user_type =>{
+            if(user_type =="helper"){
+                fetch("/getJobRecommendations", {method:"GET"})
+                .then(response => response.json())
+                .then(data =>{
+                    data.forEach(recommended =>{
+                        console.log(recommended)
+                        content =`<div id="jobs-section" style=margin-top:10px;>
+                        <div class="row g-3">
+                            <div class="col-12">
+                        <a href="/view_post/${recommended[1]}"
+                                class="text-decoration-none">
+                                <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                        <h6 class="mb-1 fw-bold text-dark">${recommended[1]}</h6>
+                                        </div>
+                                       <span class="badge bg-success rounded-pill px-3">Available</span>
+                                </div>
+                                </div>
+                        </a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>`
+                    recommended_jobs_container.innerHTML += content;
+                    })
+                })
+            }
+
+        })
+        
+    }
 })
 
 $('.datepicker').datepicker({
