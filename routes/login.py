@@ -93,6 +93,7 @@ def register():
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
+            session["user_name"] = community.name
     # check if this users already exists
 
     if_exists = Users.query.filter_by(email=email).first()
@@ -172,6 +173,7 @@ def register():
     db.session.add(user)
     db.session.commit()
     session["user_id"] = user.id
+    session["user_name"] = user.name
     session["type"] = user.type
 
     print(f"session id -> {session["user_id"]}")
@@ -231,6 +233,7 @@ def login_no_mfa():
     
     # initalize session
     session["user_id"] = user.id
+    session["user_name"] = user.name
     session["profile_picture"] = f"{os.getenv("AWS_S3_BUCKET")}{user.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user.type
     session["images"] = os.getenv("AWS_S3_BASE_URL")
@@ -247,9 +250,10 @@ def test_login_user():
     user_id = int(request.json["data"])
     user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
+    session["user_name"] = user_data.name
      # TODO profile picture comes from S3 now, not the database
     session["profile_picture"] = user_data.profile_picture
-    session["type"] = "helper"
+    session["type"] = user_data.type
     if session.get("community_id") is not None:
         session.pop("community_id", None)
     # TODO profile picture comes from S3 now, not the database
@@ -264,6 +268,7 @@ def test_login_admin():
     community_id = int(request.json["data"])
     community_data = Communities.query.get_or_404(community_id)
     session["community_id"] = community_id
+    session["user_name"] = community_data.name
     session["type"] = "chairperson"
     print("SESSION: ", session["community_id"])
 
