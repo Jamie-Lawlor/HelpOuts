@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () =>{
                 fetch("/getJobRecommendations", {method:"GET"})
                 .then(response => response.json())
                 .then(data =>{
-                    data.forEach(recommended =>{
+                    if(data.length!=0){
+                        data.forEach(recommended =>{
                         console.log(recommended)
                         content =`<div id="jobs-section" style=margin-top:10px;>
                         <div class="row g-3">
@@ -59,6 +60,22 @@ document.addEventListener('DOMContentLoaded', () =>{
                     </div>`
                     recommended_jobs_container.innerHTML += content;
                     })
+                    } else{
+                      content =`<div id="jobs-section">
+                        <div class="row g-3">
+                            <div class="col-12">
+                            <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-1 fw-bold text-dark">Looks like there are no recommended jobs available,<br><br> Please enter your skills on your profile to find the right job for you!</h6>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    recommended_jobs_container.innerHTML += content;  
+                    }
+                    
                 })
             }
 
