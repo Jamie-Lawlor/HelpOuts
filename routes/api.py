@@ -22,7 +22,7 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_REGION")
 )
 
-@api_blueprint.route("/uploadProfile/<int:user_id>", methods=["POST"])
+@api_blueprint.route("/uploadProfilePicture/<int:user_id>", methods=["POST"])
 def update_profile_picture(user_id):
 
     user = Users.query.filter_by(id=user_id).first()
@@ -53,12 +53,8 @@ def update_profile_picture(user_id):
     profile_picture.filename = "profile_picture.jpg"
     
     # send image to AiClipse for verification
-    # TEMPORARY: if AiClipse is down, bypass verification and continue to S3
     verdict = ""
-    accuracy = ""
-    verification_label = ""
     verification_status = "skipped"
-
     try:
         profile_picture.stream.seek(0)
         response = requests.post(
@@ -82,7 +78,6 @@ def update_profile_picture(user_id):
                 data = response.json()
                 verdict = data.get("verdict")
                 accuracy = data.get("confidence")
-                verification_label = data.get("label")
                 verification_status = "success"
             except ValueError:
                 print("AiClipse is experiencing issues. Skipping verification.")
@@ -145,12 +140,10 @@ def update_profile_picture(user_id):
         "message": "Image uploaded successfully",
         "filename": profile_picture.filename,
         "user_id": user_id,
-        "S3_KEY": object_key,
         "profile_url": db_profile_picture_url,
         "verification_status": verification_status,
         "verdict": verdict,
         "accuracy": accuracy,
-        "label": verification_label
     }, 200
     
     

@@ -182,7 +182,7 @@ def register():
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
     image_verfication_response = requests.post(
-        f"{os.getenv("HELPOUTS_BASE_URL_DEV")}/api/uploadProfile/{user.id}",
+        f"{os.getenv("HELPOUTS_BASE_URL_DEV")}/api/uploadProfilePicture/{user.id}",
         files=image_verification_body
     )
     # Handle AiClipse not working/ S3 issue
