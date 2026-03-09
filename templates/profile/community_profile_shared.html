@@ -129,7 +129,9 @@
                         {% endif %}
                 </div>
                 </div>
+                {% if session["type"] == "helper" %}
                 <h5 class="fw-bold mt-4">Recommended Jobs based on your skills</h5>
+                {% endif %}
                 <div id="recommended_jobs_list"></div>
                 <h5 class="fw-bold mt-4">Help Needed (Jobs)</h5>
                 <div id="jobs-section">
@@ -202,7 +204,7 @@
                 <div class="col-lg-4">
                         <div class="sticky-top" style="top:20px;">
                                 <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 15px;">
-                                        <button class="btn-block signup-btn ms-auto py-2 fw-bold mb-3 w-100 d-sm-none d-md-block d-none d-sm-block" onclick="join_community('{{ community.id }}')">Join Community</button>
+                                        <button class="btn-block signup-btn ms-auto py-2 fw-bold mb-3 w-100 d-sm-none d-md-block d-none d-sm-block" onclick="join_community('{{ community.id }}','{{ user_data.id }}')">Join Community</button>
                                         <p class="text-muted small text-center mb-0 d-sm-none d-md-block d-none d-sm-block">Become a Helper of {{ community.name }}</p>
                                 </div>
 

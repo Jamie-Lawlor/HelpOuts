@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
 from db.database import db
-from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests, CommunityRequests
+from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests, CommunityRequests, Subscriptions
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 

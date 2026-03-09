@@ -185,6 +185,16 @@ def send_notification():
     print("USERID: ",job_accepted.job_title)
     return ""
 
+@posts_blueprint.route("/send_community_notification", methods = ["POST"])
+def send_community_notification():
+    data = request.json["data"]
+    helper_id = data[0]
+    user_data = Users.query.get_or_404(helper_id) 
+    print("USER DATA: ", user_data.name)          
+    subscriptions = Subscriptions.query.all()
+    results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has requested to join the community!")
+    return ""
+
 def trigger_push_notifications_for_admin(subscriptions, title, body):
     return [trigger_push_notification(subscription, title, body)
             for subscription in subscriptions]

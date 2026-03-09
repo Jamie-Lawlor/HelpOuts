@@ -61,7 +61,8 @@ def index():
 @app.route("/home_page/")
 def home_page():
     if 'type' in session: 
-        return render_template("home_page.html")         
+        vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
+        return render_template("home_page.html", vapid_key = vapid_key)         
     else:
         return redirect("/")
 
@@ -74,7 +75,7 @@ def get_jobs():
             for jobs in job_data:
                 dataArray.append(jobs.to_dict())
             return jsonify(dataArray)
-           
+        return jsonify("SKIP")   
 
 
 @app.route("/settings/")

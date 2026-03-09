@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () =>{
         .then(response => response.json())
         .then(responseJson => {
             dataArray = responseJson
-            dataArray.forEach(job => {
+            if(dataArray != "SKIP"){
+                dataArray.forEach(job => {
             content = `<div id="jobs-section">
                 <div class="row g-3">
                         <div class="col-12">
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () =>{
                 </div>`    
                 job_container.innerHTML += content;
             });
+            }
         })  
     }
     if(window.location.href.includes("/community_profile/")){
@@ -298,8 +300,9 @@ function filter_jobs(value){
     }
 }
 
-function join_community(community_id){
+function join_community(community_id, user_id){
         fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
+        fetch("/send_community_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_id }) })
 
 }
 
@@ -328,7 +331,7 @@ function test_login_admin(){
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
                 sessionStorage.setItem("profile_picture", data[1])
-                window.location.replace(`/community_profile/Mens_Shed_Dundalk`)
+                window.location.replace(`/home_page/`)
             })
 }
 
@@ -341,7 +344,6 @@ function openSideBar(){
     document.getElementById("sideBar").classList.remove("closed");
     document.getElementById("openSideBarBtn").style.display = "none";
 }
-
 
 // function showSection(mobileSection){
 //     let projects = document.getElementById("projects-section")

@@ -428,3 +428,13 @@
 </div>
     </div> -->
 </div>
+
+{% if session["type"] == "chairperson" %}
+<script type="text/javascript">
+  registerServiceWorker(
+    "/static/js/service_worker.js",
+    `{{ vapid_key }}`,
+    "/api/push-subscriptions",
+  );
+</script>
+{% endif %}
