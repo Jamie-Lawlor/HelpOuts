@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () =>{
         .then(response => response.json())
         .then(responseJson => {
             dataArray = responseJson
-            dataArray.forEach(job => {
+            if(dataArray != "SKIP"){
+                dataArray.forEach(job => {
             content = `<div id="jobs-section">
                 <div class="row g-3">
                         <div class="col-12">
@@ -26,7 +27,62 @@ document.addEventListener('DOMContentLoaded', () =>{
                 </div>`    
                 job_container.innerHTML += content;
             });
+            }
         })  
+    }
+    if(window.location.href.includes("/community_profile/")){
+        recommended_jobs_container = document.getElementById("recommended_jobs_list")
+        fetch("/get_type", {method:"GET"})
+        .then(response => response.text())
+        .then(user_type =>{
+            if(user_type =="helper"){
+                fetch("/getJobRecommendations", {method:"GET"})
+                .then(response => response.json())
+                .then(data =>{
+                    if(data.length!=0){
+                        data.forEach(recommended =>{
+                        console.log(recommended)
+                        content =`<div id="jobs-section" style=margin-top:10px;>
+                        <div class="row g-3">
+                            <div class="col-12">
+                        <a href="/view_post/${recommended[1]}"
+                                class="text-decoration-none">
+                                <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                        <h6 class="mb-1 fw-bold text-dark">${recommended[1]}</h6>
+                                        </div>
+                                       <span class="badge bg-success rounded-pill px-3">Available</span>
+                                </div>
+                                </div>
+                        </a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>`
+                    recommended_jobs_container.innerHTML += content;
+                    })
+                    } else{
+                      content =`<div id="jobs-section">
+                        <div class="row g-3">
+                            <div class="col-12">
+                            <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-1 fw-bold text-dark">Looks like there are no recommended jobs available,<br><br> Please enter your skills on your profile to find the right job for you!</h6>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    recommended_jobs_container.innerHTML += content;  
+                    }
+                    
+                })
+            }
+
+        })
+        
     }
 })
 
@@ -183,6 +239,10 @@ function delete_post_data() {
         .then(window.location.replace(`/home_page/`))
 
 }
+function accept_helper_job_request(job_list_id){
+    fetch("/accept_helper_job_request", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_list_id }) })
+        .then(window.location.reload())
+}
 
 function filter_jobs(value){
     if(value !== "view_all"){
@@ -238,6 +298,18 @@ function filter_jobs(value){
                 job_container.innerHTML += content;
             });
     }
+}
+
+function join_community(community_id, user_id){
+        fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
+        fetch("/send_community_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_id }) })
+
+}
+
+function join_community_request(helper_id, button_selected){
+    dataArray=[helper_id, button_selected]
+    fetch("/accept_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    .then(window.location.reload())
 }
 
 function searchJobs(){
@@ -299,7 +371,7 @@ function test_login_admin(){
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
                 sessionStorage.setItem("profile_picture", data[1])
-                window.location.replace(`/community_profile/Mens_Shed_Dundalk`)
+                window.location.replace(`/home_page/`)
             })
 }
 
@@ -312,7 +384,6 @@ function openSideBar(){
     document.getElementById("sideBar").classList.remove("closed");
     document.getElementById("openSideBarBtn").style.display = "none";
 }
-
 
 
 

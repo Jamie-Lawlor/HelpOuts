@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests
 import os
 import json
 from pywebpush import webpush, WebPushException
@@ -163,11 +163,12 @@ def job_accepted():
     data = request.json["data"]
     job_id = data[0]
     helper_id = data[1]
-    accepted_job = UserJobs(
+    pending_job = JobRequests(
         user_id= helper_id,
-        job_id = job_id  
+        job_id = job_id,
+        created_date = db.func.current_timestamp(),  
     )
-    db.session.add(accepted_job)
+    db.session.add(pending_job)
     db.session.commit()
     return ""
 
@@ -182,6 +183,16 @@ def send_notification():
     subscriptions = Subscriptions.query.all()
     results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has accepted job: \"{job_accepted.job_title}\"")
     print("USERID: ",job_accepted.job_title)
+    return ""
+
+@posts_blueprint.route("/send_community_notification", methods = ["POST"])
+def send_community_notification():
+    data = request.json["data"]
+    helper_id = data[0]
+    user_data = Users.query.get_or_404(helper_id) 
+    print("USER DATA: ", user_data.name)          
+    subscriptions = Subscriptions.query.all()
+    results = trigger_push_notifications_for_admin(subscriptions, "HelpOuts", f"{user_data.name} has requested to join the community!")
     return ""
 
 def trigger_push_notifications_for_admin(subscriptions, title, body):
@@ -209,3 +220,30 @@ def trigger_push_notification(push_subscription, title, body):
                 extra.message
                 )
         return False
+    
+
+
+
+@posts_blueprint.route("/getJobRecommendations", methods=["GET"])
+def get_job_recommendations():
+    # calling storedprocs: https://docs.sqlalchemy.org/en/21/core/connections.html
+
+    if session["user_id"] != None:
+        connection = db.engine.raw_connection()
+        recommendations = []
+        print(session["user_id"])
+        try:
+            cursor_obj = connection.cursor()
+            cursor_obj.callproc("getJobRecommendations", [session["user_id"]])
+            recommendations = list(cursor_obj.fetchall())
+            cursor_obj.close()
+            connection.commit()
+        # except Exception as e:
+            # maybe here if there is an error just return a list of
+            # jobs for the user that arent link to their skills
+        finally:
+            connection.close()
+    else:
+        return {"error": "User not found"}
+    
+    return jsonify(recommendations)

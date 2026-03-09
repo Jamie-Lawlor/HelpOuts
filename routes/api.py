@@ -22,9 +22,10 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_REGION")
 )
 
-@api_blueprint.route("/updateProfilePicture", methods=["POST"])
-def update_profile_picture():
-    user = Users.query.filter_by(id=session.get("id")).first()
+@api_blueprint.route("/uploadProfilePicture/<int:user_id>", methods=["POST"])
+def update_profile_picture(user_id):
+
+    user = Users.query.filter_by(id=user_id).first()
     if not user:
         return {"error": "User not found"}, 404
 
@@ -52,9 +53,9 @@ def update_profile_picture():
     profile_picture.filename = "profile_picture.jpg"
     
     # send image to AiClipse for verification
-    # TODO handle what happens if an image comes back as fake, traffic light setup
-    # green 70%-100% | orange 50%-70% | red 0%-50% 
-    try: 
+    verdict = ""
+    verification_status = "skipped"
+    try:
         profile_picture.stream.seek(0)
         response = requests.post(
             os.getenv("AI_CLIPSE_URL_TEMP"),
@@ -67,18 +68,24 @@ def update_profile_picture():
                     profile_picture.stream,
                     profile_picture.mimetype
                 )
-            }
+            },
         )
-        data = response.json()
-        verdict = data["verdict"]
-        accuracy = data["confidence"]
-        label = data["label"]
-        # if we want to reject an image and do something different
-        # it will go here, for now image is sent to aws and the 
-        # link is written to db
+
+        # print("HERE" + response.status_code)
+        # print("HERE" + response.text)
+        if response.ok:
+            try:
+                data = response.json()
+                verdict = data.get("verdict")
+                accuracy = data.get("confidence")
+                verification_status = "success"
+            except ValueError:
+                print("AiClipse is experiencing issues. Skipping verification.")
+        else:
+            print("AiClipse request failed. Skipping verification.")
+
     except Exception as e:
-        print(f"ERROR: {e}")
-    #     return {"error": "Error validating image"}
+        print(f"AiClipse is experiencing issues. Skipping verification: {e}")
     
     
     # send image to AWS S3
@@ -95,15 +102,15 @@ def update_profile_picture():
         base_img = base_img.convert("RGB")
 
         # created resized images based on dict above
-        for label, size in img_sizes.items():
+        for size_label, size in img_sizes.items():
             resized = base_img.copy()
             resized = resized.resize((size[0], size[1]), Image.LANCZOS)
-            resized_images[label] = resized
+            resized_images[size_label] = resized
 
         # loop resized images and upload to s3 with matching label in the key
-        for label, resized_image in resized_images.items():
+        for size_label, resized_image in resized_images.items():
             object_key = (
-                f"{session.get('id')}/profile-picture/profile-picture-{label}.jpg"
+                f"{user_id}/profile-picture/profile-picture-{size_label}.jpg"
             )
             # change PIL image to file object for upload
             resized_image_file = io.BytesIO()
@@ -132,12 +139,11 @@ def update_profile_picture():
     return {
         "message": "Image uploaded successfully",
         "filename": profile_picture.filename,
-        "user_id": session.get("id"),
-        "S3_KEY": object_key,
+        "user_id": user_id,
         "profile_url": db_profile_picture_url,
+        "verification_status": verification_status,
         "verdict": verdict,
         "accuracy": accuracy,
-        "label": label
     }, 200
     
     
@@ -145,5 +151,5 @@ def update_profile_picture():
 def test_upload():
     test_user_id = uuid.uuid4()
     test_valid_user_id = 1
-    session["id"] = test_valid_user_id
+    session["user_id"] = test_valid_user_id
     return render_template("test_space/image_upload.html")
