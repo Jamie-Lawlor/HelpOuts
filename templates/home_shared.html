@@ -45,23 +45,13 @@
     <div class="search-container mb-4">
       <div class="input-group shadow-lg rounded-pill border-0 px-3 py-2 bg-light">
         <span class="input-group-text bg-transparent border-0 ps-3">
-          <!-- <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-search"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
-            />
-          </svg> -->
         </span>
         <input
+          id="job-search-input"
           type="text"
           class="form-control bg-transparent border-0 shadow-none"
           placeholder="Search for jobs..."
+          oninput="searchJobs()"
         />
         <button class="btn btn-teal rounded-pill px-4 ms-2 fw-bold text-white" style="background-color: #3d6978;">Search</button>
       </div>
@@ -81,7 +71,7 @@
 <div class="filter-jobs-container d-flex gap-3 overflow-auto pb-3">
   
    <div class="category-item">
-    <input type="radio" id="filter-env" class="btn-check" onclick="filter_jobs('environment')"> 
+    <input type="checkbox" id="filter-env" class="btn-check" onclick="filter_jobs('environment')"> 
     <label for="filter-env" class="category-card shadow-sm border-0">
       <div class="p-4 d-flex flex-column justify-content-between h-100">
         <h6 class="fw-bold mb-0 text-dark">Environment</h6>
@@ -96,7 +86,7 @@
   </div>
   
   <div class="category-item">
-    <input type="radio" id="filter-social" class="btn-check" onclick="filter_jobs('social_and_events')">
+    <input type="checkbox" id="filter-social" class="btn-check" onclick="filter_jobs('social_and_events')">
     <label for="filter-social" class="category-card shadow-sm border-0">
       <div class="p-4 d-flex flex-column justify-content-between h-100">
         <h6 class="fw-bold card-title">Social & Events</h6>
@@ -111,7 +101,7 @@
   </div>
 
 <div class="category-item">
-    <input type="radio" id="filter-construction" class="btn-check" onclick="filter_jobs('construction')">
+    <input type="checkbox" id="filter-construction" class="btn-check" onclick="filter_jobs('construction')">
     <label for="filter-construction" class="category-card shadow-sm border-0">
       <div class="p-4 d-flex flex-column justify-content-between h-100">
         <h6 class="fw-bold card-title">Construction</h6>
@@ -126,7 +116,7 @@
   </div>
 
 <div class="category-item">
-    <input type="radio" id="filter-maintenance" class="btn-check" onclick="filter_jobs('general_maintenance')">
+    <input type="checkbox" id="filter-maintenance" class="btn-check" onclick="filter_jobs('general_maintenance')">
     <label for="filter-maintenance" class="category-card shadow-sm border-0">
       <div class="p-4 d-flex flex-column justify-content-between h-100">
         <h6 class="fw-bold card-title">General Maintenance</h6>
@@ -141,7 +131,7 @@
   </div>
 
   <div class="category-item">
-    <input type="radio" id="filter-safety" class="btn-check" onclick="filter_jobs('safety')">
+    <input type="checkbox" id="filter-safety" class="btn-check" onclick="filter_jobs('safety')">
     <label for="filter-safety" class="category-card shadow-sm border-0">
       <div class="p-4 d-flex flex-column justify-content-between h-100">
         <h6 class="fw-bold card-title">Safety</h6>
@@ -156,7 +146,7 @@
     </label>
   </div>
 </div>
-<div id="jobs-container"></div>  
+<div id="jobs-container" class="row g-3"></div>  
 </div>
 
 

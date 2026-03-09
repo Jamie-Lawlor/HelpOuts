@@ -240,6 +240,47 @@ function filter_jobs(value){
     }
 }
 
+function searchJobs(){
+    let userInput = document.getElementById("job-search-input").value.toLowerCase()
+    let job_container = document.getElementById("jobs-container")
+
+    job_container.innerHTML = ""
+
+    dataArray.forEach(job =>{
+
+      if(job.job_title.toLowerCase().includes(userInput) || job.short_type.toLowerCase().includes(userInput) || job.area.toLowerCase().includes(userInput)){
+
+        content = `
+                        <div class="col-lg-4 col-md-6 mb-4">
+                        <a href="/view_post/${job.job_title}"
+                                class="text-decoration-none text-dark">
+                                <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                                <div class="p-3 pb-0">
+                                    <img src="/static/images/park.png" class="rounded-4 w-100" style="height:100px; object-fit:cover;">
+                                </div>
+                                <div class="card-body pt-2">
+                                    <h6 class="fw-bold mb-2">${job.job_title}</h6>
+
+                                    <div class="d-flex align-items-center">
+                                    <img src="/static/images/location_icon.svg" class="rounded-4 w-100" style="width:14px; height:14px; margin-right:6px;">
+                                    <p class="text-muted mb-0">
+                                    ${ job.area }
+                                    </p>
+                                    </div>
+                                </div>                        
+                                </div>
+                        </a>
+                </div>`    
+                job_container.innerHTML += content;
+        }
+    })
+   
+
+    if(job_container.innerHTML === ""){
+        job_container.innerHTML = `<p class="text-center mt-4 text-muted">No jobs found called"${userInput}"</p>`
+    }
+}
+
 //Remove when no longer needed as test
 
 function test_login_helper(){
@@ -273,20 +314,5 @@ function openSideBar(){
 }
 
 
-// function showSection(mobileSection){
-//     let projects = document.getElementById("projects-section")
-//     let jobs =  document.getElementById("jobs-section")
-//     let placeholder = document.getElementById("mobile-placeholder-profile")
-
-//     if (placeholder) placeholder.style.display = "none" // hide once jobs or projects button clicked
-
-//     if(mobileSection === "projects"){
-//         document.getElementById("projects-section").classList.style.display = "flex"
-//         document.getElementById("jobs-section").className.style.display = "none"
-//     }else{
-//         document.getElementById("projects-section").classList.style.display = "none"
-//         document.getElementById("jobs-section").className.style.display = "flex"
-//     }
-// }
 
 
