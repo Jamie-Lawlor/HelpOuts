@@ -54,14 +54,15 @@ def serve_PWA_service_worker():
 @app.route("/")
 def index():
     # DELETE THIS WHEN DONE
-    session["id"] = 3
+    # session["user_id"] = 3
     return render_template("index.html")
 
 
 @app.route("/home_page/")
 def home_page():
     if 'type' in session: 
-        return render_template("home_page.html")         
+        vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
+        return render_template("home_page.html", vapid_key = vapid_key)         
     else:
         return redirect("/")
 
@@ -74,7 +75,7 @@ def get_jobs():
             for jobs in job_data:
                 dataArray.append(jobs.to_dict())
             return jsonify(dataArray)
-           
+        return jsonify("SKIP")   
 
 
 @app.route("/settings/")
@@ -124,6 +125,7 @@ def mfa():
             if totp.verify(otp):
                 session.pop("email", None)
                 session["user_id"] = user.id
+                # TODO profile picture comes from S3 now, not the database
                 session["profile_picture"] = user.profile_picture
                 session["type"] = user.type
                 return redirect("/home_page/")
@@ -144,6 +146,10 @@ def mfa():
         mail.send(message)
     
     return render_template("login/mfa.html")
+
+@app.route("/get_type", methods=["GET"])
+def get_type():
+    return session["type"]
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

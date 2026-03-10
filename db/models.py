@@ -8,17 +8,17 @@ class Users(db.Model):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    type = db.Column( db.String(6), nullable=False, default="guest")  # can be 'helpee' or 'helper'
+    type = db.Column( db.String(12), nullable=False, default="guest")  # can be 'chairperson' or 'helper'
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
-    skills = db.Column(db.String(200), nullable=True)
     rating = db.Column(db.Integer, nullable=True)
     private_key = db.Column(db.LargeBinary, nullable = True)
     public_key = db.Column(db.LargeBinary, nullable = True)
-    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
     profile_picture = db.Column(db.String(1000), nullable = True)
-    verified = db.Column(db.Boolean, nullable=False, default=False)
+    verified = db.Column(db.Boolean, nullable=True)
     verification_accuracy = db.Column(db.Numeric(5,2), nullable=True)
+    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
+
 
     @validates('email')
     def validate_email(self, key, email):
@@ -42,7 +42,7 @@ class Users(db.Model):
     def validate_type(self, key, type):
         if not type:
             raise ValueError("Type cannot be empty")
-        if type not in ['chairperson', 'helper']:
+        if type not in ['chairperson', 'helper', 'guest']:
             raise ValueError("Type must be either 'chairperson' or 'helper'")
         return type
     
@@ -61,6 +61,23 @@ class UserPermissions(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
+class UserSkills(db.Model):
+    __tablename__ = "user_skills"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), nullable=False)
+
+
+class JobSkills(db.Model):
+    __tablename__ = "job_skills"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), nullable=False)
+
+class Skills(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    skill = db.Column(db.String(100))
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -155,21 +172,16 @@ class Jobs(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class UserJobs(db.Model):
-    __tablename__ = 'user_jobs'
+
+class JobRequests(db.Model):
+    __tablename__ = 'job_requests'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
+    status = db.Column(db.String(1), nullable=False, default="P")  # P = pending, A = accepted, R = rejected
+    created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    confirmed_date = db.Column(db.DateTime, nullable=True)
     
-    def to_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-class MapIcon(db.Model):
-    __tablename__ = 'map_icons'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    icon_url = db.Column(db.String(200), nullable=False)
-    description = db.Column(db.String(100), nullable=False)
-
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -181,8 +193,28 @@ class JobLocation(db.Model):
     icon_id = db.Column(db.Integer, db.ForeignKey("map_icons.id"), nullable=False)
     lat = db.Column(db.Float, nullable=False)
     lng = db.Column(db.Float, nullable=False)
+
+
+class UserJobs(db.Model):
+    __tablename__ = 'user_jobs'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     
-    
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class MapIcon(db.Model):
+    __tablename__ = 'map_icons'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    icon_url = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(100), nullable=False)
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 class Communities(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
@@ -192,7 +224,20 @@ class Communities(db.Model):
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class CommunityRequests(db.Model):
+    __tablename__ = 'community_requests'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=False)
+    status = db.Column(db.String(1), nullable=False, default="P")  # P = pending, A = accepted, R = rejected
+    created_date = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    confirmed_date = db.Column(db.DateTime, nullable=True)
     
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+ 
     
 class Projects(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -1,3 +1,13 @@
 # Use this when a change toﬁ the database has been commited and your local database tables are our of sync with main branch
 
 ### flask db upgrade
+
+### if you are getting an error saying
+- Target database is not up to date
+- Cannot find version
+
+### do the following -
+1. Open phpmyadmin in localhost
+2. Open helpoutsdevdb01 > Structure
+3. Drop all tables. Ensure you untick the Forigen Key Check for each one
+4. flask db upgrade
