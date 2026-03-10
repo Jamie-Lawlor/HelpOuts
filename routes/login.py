@@ -176,13 +176,13 @@ def register():
     session["user_name"] = user.name
     session["type"] = user.type
 
-    print(f"session id -> {session["user_id"]}")
+    print(f"session id -> {session['user_id']}")
     profile_picture.stream.seek(0)
     image_verification_body = {
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
     image_verfication_response = requests.post(
-        f"{os.getenv("HELPOUTS_BASE_URL_DEV")}/api/uploadProfilePicture/{user.id}",
+        f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/uploadProfilePicture/{user.id}",
         files=image_verification_body
     )
     # Handle AiClipse not working/ S3 issue
@@ -234,9 +234,9 @@ def login_no_mfa():
     # initalize session
     session["user_id"] = user.id
     session["user_name"] = user.name
-    session["profile_picture"] = f"{os.getenv("AWS_S3_BUCKET")}{user.id}/profile-picture/profile-picture-m.jpg"
+    session["profile_picture"] = f"{os.getenv('AWS_S3_BUCKET')}{user.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user.type
-    session["images"] = os.getenv("AWS_S3_BASE_URL")
+    session["images"] = os.getenv('AWS_S3_BASE_URL')
     
     return redirect("/home_page/")
     
