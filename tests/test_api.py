@@ -15,19 +15,18 @@ def make_test_image_file():
 
 
 def test_update_profile_picture_user_not_found(client, app):
-    with client.session_transaction() as sess:
-        sess["id" ] = 9999
-
     img_file = make_test_image_file()
 
     resp = client.post(
-        "/api/updateProfilePicture",
+        "/api/uploadProfilePicture/9999",
         data={"image": (img_file, "pic.jpg")},
         content_type="multipart/form-data",
     )
 
     assert resp.status_code == 404
-    assert resp.get_json()["error"] == "User not found"
+    data = resp.get_json()
+    assert data is not None
+    assert data["error"] == "User not found"
 
 
 def test_update_profile_picture_no_image_uploaded(client, app):
@@ -47,17 +46,16 @@ def test_update_profile_picture_no_image_uploaded(client, app):
         db.session.commit()
         user_id = u.id
 
-    with client.session_transaction() as sess:
-        sess["id"] = user_id
-
     resp = client.post(
-        "/api/updateProfilePicture",
-        data={}, 
+        f"/api/uploadProfilePicture/{user_id}",
+        data={},
         content_type="multipart/form-data",
     )
 
     assert resp.status_code == 400
-    assert resp.get_json()["error"] == "No image uploaded"
+    data = resp.get_json()
+    assert data is not None
+    assert data["error"] == "No image uploaded"
 
 
 def test_update_profile_picture_success_updates_db(client, app, monkeypatch):
@@ -77,15 +75,13 @@ def test_update_profile_picture_success_updates_db(client, app, monkeypatch):
         db.session.commit()
         user_id = u.id
 
-    with client.session_transaction() as sess:
-        sess["id"] = user_id
-
     class FakeResponse:
+        ok = True
+
         def json(self):
             return {
                 "verdict": "real",
                 "confidence": 0.99,
-                "label": "human",
             }
 
     def fake_requests_post(*args, **kwargs):
@@ -102,7 +98,7 @@ def test_update_profile_picture_success_updates_db(client, app, monkeypatch):
     img_file = make_test_image_file()
 
     resp = client.post(
-        "/api/updateProfilePicture",
+        f"/api/uploadProfilePicture/{user_id}",
         data={"image": (img_file, "pic.jpg")},
         content_type="multipart/form-data",
     )
@@ -113,7 +109,7 @@ def test_update_profile_picture_success_updates_db(client, app, monkeypatch):
     assert data["message"] == "Image uploaded successfully"
     assert data["user_id"] == user_id
     assert data["verdict"] == "real"
-    assert data["label"] == "l"
+    assert data["accuracy"] == 0.99
 
     with app.app_context():
         updated = Users.query.get(user_id)

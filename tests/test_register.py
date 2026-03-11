@@ -14,11 +14,15 @@ def make_test_image():
 def test_register_adds_user_to_database(client, app, monkeypatch):
 
     class FakeResponse:
+        ok = True
+
         def json(self):
             return {
+                "verification_status": "success",
                 "verdict": "real",
+                "accuracy": 0.99,
                 "confidence": 0.99,
-                "label": "human"
+                "label": "human",
             }
 
     import routes.login as login_module
@@ -37,7 +41,7 @@ def test_register_adds_user_to_database(client, app, monkeypatch):
             "password": "Test1234567!",
             "confirm_password": "Test1234567!",
             "user_type": "helper",
-            "image": (img, "test.jpg"), 
+            "image": (img, "test.jpg"),
         },
         content_type="multipart/form-data",
         follow_redirects=False,
