@@ -121,7 +121,7 @@ def view_specific_post_page(post_title):
     role = session["type"]
     print("ROLE: ", role)
     print("ROLE TYPE: ",type(role))
-    return render_template("/posts/view_post.html", job_data=job_data, vapid_key = vapid_key, role = role)
+    return render_template("/posts/view_post.html", job_data=job_data, vapid_key=vapid_key, role=role, API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
 
 
 @posts_blueprint.route("/edit_post", methods=["POST"])

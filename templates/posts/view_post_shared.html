@@ -1,3 +1,13 @@
+<style>
+  gmp-map {
+    height: 100%;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
 
 <input class="hide" id="job_id" value="{{ job_data.id }}" disabled />
 
@@ -95,14 +105,14 @@
                 <strong>Posted:</strong> {{ job_data.created_date }}</p>
             </div>
             </div>
-
-
+          <!-- GOOGLE MAPS API HERE-->
           <div class="tab-pane fade" id="location" role="tabpanel">
             <h4 class="fw-bold mb-3">Area Information</h4>
-                 <div class="rounded-4 overflow-hidden border mb-3" style="height: 300px; border-radius:20px;">
-                <img src="/static/images/maps_sample.png" class="w-100 h-100" style="border-radius:20px; object-fit:cover;">
-              </div>
+            <div class="rounded-4 overflow-hidden border mb-3" style="height: 300px; border-radius:20px;">
+              {% include "includes/job_map.html" %}
             </div>
+          </div>
+            <!-- GOOGLE MAPS API HERE-->
 
             <div class="tab-pane fade" id="photos" role="tabpanel">
               <h4 class="fw-bold mb-3">Photos</h4>

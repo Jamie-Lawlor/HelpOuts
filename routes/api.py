@@ -146,7 +146,19 @@ def update_profile_picture(user_id):
         "accuracy": accuracy,
     }, 200
     
-    
+
+@api_blueprint.route("/getJobMap/<int:job_id>", methods=["GET"])
+def get_job_map():   
+
+    return 200
+
+@api_blueprint.route("/testMap")
+def test_map():
+    # test_user_id = uuid.uuid4()
+    # test_valid_user_id = 1
+    # session["user_id"] = test_valid_user_id
+    return render_template("test_space/testMaps.html")
+
 @api_blueprint.route("/testUpload")
 def test_upload():
     test_user_id = uuid.uuid4()
