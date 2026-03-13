@@ -193,9 +193,9 @@ VALUES
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
-(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$rNmzUqAVnqDabPGO$0583e0b097a262d144e6326f9180e3abce595f1df663473fc2b75b93f6aa6679f95232959889ad8aec92dd45cbbd0a6382dbc110627266b5fc2759c14f3d2aaf', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, NULL, FALSE, 0.0, NULL),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
+(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
@@ -429,3 +429,5 @@ DELIMITER //
             match_score DESC,
             j.id;
 	END//
+
+DELIMITER ;
