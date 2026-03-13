@@ -1,12 +1,35 @@
- <gmp-map
-      center="38.7946,-106.5348"
-      zoom="4"
-      map-id="DEMO_MAP_ID"
-      style="height: 400px"
-    >
-    </gmp-map>
-
-    <!--
+<gmp-map
+  id="job-map"
+  center="38.7946,-106.5348"
+  zoom="4"
+  map-id="DEMO_MAP_ID"
+  style="height: 400px"
+>
+</gmp-map>
+<!--
       The `defer` attribute causes the script to execute after the full HTML
       document has been parsed. -->
-    <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=maps" defer></script>
+<script
+  async
+  src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=maps&loading=async"
+  defer
+></script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    loadJobMap({{ job_data.id }});
+  });
+  console.log("HERE1");
+  async function loadJobMap(jobId) {
+		console.log("job id="+jobId)
+    console.log("HERE2");
+
+    const response = await fetch(`/api/getJobMap/${jobId}`);
+    const data = await response.json();
+    console.log("HERE3");
+		console.log(data)
+
+    let map = document.getElementById("job-map");
+    console.log("HERE4");
+  }
+</script>

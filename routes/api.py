@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, session
+from flask import Blueprint, render_template, request, redirect, session, jsonify
 import requests
 import os
 from db.database import db
-from db.models import Users
+from db.models import Users, JobLocation
 import uuid
 from PIL import Image
 import io
@@ -148,9 +148,18 @@ def update_profile_picture(user_id):
     
 
 @api_blueprint.route("/getJobMap/<int:job_id>", methods=["GET"])
-def get_job_map():   
+def get_job_map(job_id):   
 
-    return 200
+    location = JobLocation.query.filter_by(job_id=job_id).first()
+    if not location:
+        return jsonify({"error": "Location not found"}), 404
+
+    return jsonify({
+        "job_id": job_id,
+        "lat": location.lat,
+        "lng": location.lng,
+        "icon_id": location.icon_id
+    }), 200
 
 @api_blueprint.route("/testMap")
 def test_map():
