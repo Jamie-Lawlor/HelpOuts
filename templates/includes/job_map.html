@@ -1,35 +1,36 @@
-<gmp-map
-  id="job-map"
-  center="38.7946,-106.5348"
-  zoom="4"
-  map-id="DEMO_MAP_ID"
-  style="height: 400px"
->
-</gmp-map>
-<!--
-      The `defer` attribute causes the script to execute after the full HTML
-      document has been parsed. -->
+<div id="job-map" style="height: 400px;"></div>
 <script
   async
-  src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=maps&loading=async"
+  src="https://maps.googleapis.com/maps/api/js?key={{GMAPS_API_KEY}}&loading=async&callback=loadJobMap"
   defer
 ></script>
 
 <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    loadJobMap({{ job_data.id }});
-  });
-  console.log("HERE1");
-  async function loadJobMap(jobId) {
+
+  async function loadJobMap() {
+    const jobId = {{ job_data.id}}
 		console.log("job id="+jobId)
-    console.log("HERE2");
 
     const response = await fetch(`/api/getJobMap/${jobId}`);
-    const data = await response.json();
-    console.log("HERE3");
-		console.log(data)
+    const locationData = await response.json();
+		console.log(locationData)
 
-    let map = document.getElementById("job-map");
-    console.log("HERE4");
+    const { Map } = await google.maps.importLibrary("maps")
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
+
+    // load map
+    const map = new Map(document.getElementById("job-map"), {
+      zoom: 15,
+      center: { lat: locationData.lat, lng: locationData.lng },
+      mapId: "HelpOutsJobMap"
+    });
+
+    // load center marker
+    let marker = new AdvancedMarkerElement({
+      position: { lat: locationData.lat, lng: locationData.lng },
+      map:map
+    })
+    
+
   }
 </script>
