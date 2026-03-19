@@ -8,7 +8,8 @@ from db.models import (
     Users,
     JobRequests,
     CommunityRequests,
-    Subscriptions,
+    Skills,
+    UserSkills
 )
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
@@ -52,7 +53,13 @@ def community_profile_page(community_name):
 def helper_profile_page(user_name):
     revert_format = user_name.replace("_", " ").title()
     user_data = Users.query.filter_by(name=revert_format).first_or_404()
-    print(user_data.name)
+    skills_data = Skills.query.all()
+    user_skills = (
+            Skills.query.join(UserSkills, Skills.id == UserSkills.skill_id)
+            .where(UserSkills.user_id == user_data.id)
+            .all()
+        )
+    # print(skills_data[26].skill)
     role = session["type"]
     print("ROLE: ", role)
     print("ROLE TYPE: ", type(role))
@@ -65,17 +72,21 @@ def helper_profile_page(user_name):
             .all()
         )
         print(all_job_data)
+        print(skills_data)
         return render_template(
             "/profile/helper_profile.html",
             user_data=user_data,
             community_data=joined_community_data,
             user_jobs=all_job_data,
+            skills = skills_data,
+            user_skills = user_skills,
             role=role,
         )
     else:
         return render_template(
             "/profile/helper_profile.html",
             user_data=user_data,
+            skills = skills_data,
             community_data=None,
             user_jobs=None,
         )

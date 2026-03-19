@@ -84,10 +84,11 @@
                                             Weekends
                                         </p>
 
-                                        <textarea
-                                        id="edit_availability" class="form-control border-0 bg-light rounded-4" style="display: none;" rows="2"
-                                        >
-                                    </textarea>
+                                        <select id="edit_availability" style="display: none;" class="btn soft-input w-100 text-start dropdown-toggle">
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="weekdays/weekends">Weekdays/Weekends</option>
+                                        </select>
                                 </div>
                                 </div>
 
@@ -95,22 +96,24 @@
                                 <h6 class="fw-bold text-uppercase text-muted mb-2">
                                        Skills
                                 </h6>
+                                
                                 <div class="card border-0 shadow-sm p-3 rounded-4">
                                         <div class="d-flex flex-wrap gap-2" id="skills_display">
-                                                <span class="badge bg-teal-soft">
-                                                        Maintenance
+                                                {% for i in range(user_skills|length) %}
+                                                 <span class="badge bg-teal-soft">
+                                                        {{ user_skills[i].skill }}
                                                 </span>
-                                                <span class="badge bg-teal-soft">
-                                                        Home Repairs
-                                                </span>
-                                                      <span class="badge bg-teal-soft">
-                                                        Gardening
-                                                </span>
-                                                   <span class="badge bg-teal-soft">
-                                                      Heavy Lifting
-                                                </span>
+                                                {% endfor %}
                                         </div>
-                                        <input type="text" id="edit_skills" class="form-control border-0 bg-light rounded-pill" style="display: none;">
+                                        <!-- <p id="edit_skills" style="display:none;">Hold the "ctrl" button and click or tap on the screen to select multiple</p> -->
+                                        <select class="form-select soft-input" id="edit_skills" style="display:none;" multiple>
+                                                {% for i in range(skills|length) %}
+                                                <option value="{{ skills[i].skill }}">
+                                                {{ skills[i].skill }}
+                                                </option>
+                                                {% endfor %}
+                                        </select>
+
                                 </div>
                                 </div>
 
