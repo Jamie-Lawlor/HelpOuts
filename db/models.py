@@ -1,9 +1,10 @@
 from db.database import db
 from sqlalchemy.orm import validates
 from datetime import datetime
+from flask_login import UserMixin
 import re
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
