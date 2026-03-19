@@ -1,6 +1,15 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
 from db.database import db
-from db.models import Projects, Communities, Jobs, UserJobs, Users, JobRequests, CommunityRequests, Subscriptions
+from db.models import (
+    Projects,
+    Communities,
+    Jobs,
+    UserJobs,
+    Users,
+    JobRequests,
+    CommunityRequests,
+    Subscriptions,
+)
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
@@ -21,22 +30,22 @@ def community_profile_page(community_name):
     if session["type"] != "chairperson":
         user_data = Users.query.get_or_404(session["user_id"])
         return render_template(
-        "/profile/community_profile.html",
-        community=community_data,
-        projects=project_data,
-        jobs=all_job_data,
-        project_names=get_project_names,
-        user_data = user_data
-    )
+            "/profile/community_profile.html",
+            community=community_data,
+            projects=project_data,
+            jobs=all_job_data,
+            project_names=get_project_names,
+            user_data=user_data,
+        )
     else:
         return render_template(
-        "/profile/community_profile.html",
-        community=community_data,
-        projects=project_data,
-        jobs=all_job_data,
-        project_names=get_project_names,
-        user_data = None
-    )
+            "/profile/community_profile.html",
+            community=community_data,
+            projects=project_data,
+            jobs=all_job_data,
+            project_names=get_project_names,
+            user_data=None,
+        )
 
 
 @profile_blueprint.route("/helper_profile/<user_name>")
@@ -44,6 +53,9 @@ def helper_profile_page(user_name):
     revert_format = user_name.replace("_", " ").title()
     user_data = Users.query.filter_by(name=revert_format).first_or_404()
     print(user_data.name)
+    role = session["type"]
+    print("ROLE: ", role)
+    print("ROLE TYPE: ", type(role))
     if user_data.community_id is not None:
         community_id = user_data.community_id
         joined_community_data = Communities.query.get_or_404(community_id)
@@ -58,6 +70,7 @@ def helper_profile_page(user_name):
             user_data=user_data,
             community_data=joined_community_data,
             user_jobs=all_job_data,
+            role=role,
         )
     else:
         return render_template(
@@ -115,10 +128,18 @@ def community_requests_page(community_name):
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
     job_requests = (
-        JobRequests.query.join(Jobs, JobRequests.job_id == Jobs.id).join(Users, JobRequests.user_id == Users.id).where(Users.community_id == community_id, JobRequests.status =='P').all()
+        JobRequests.query.join(Jobs, JobRequests.job_id == Jobs.id)
+        .join(Users, JobRequests.user_id == Users.id)
+        .where(Users.community_id == community_id, JobRequests.status == "P")
+        .all()
     )
     community_requests = (
-        CommunityRequests.query.join(Communities, CommunityRequests.community_id == Communities.id).join(Users, CommunityRequests.user_id == Users.id).where(CommunityRequests.status =='P').all()
+        CommunityRequests.query.join(
+            Communities, CommunityRequests.community_id == Communities.id
+        )
+        .join(Users, CommunityRequests.user_id == Users.id)
+        .where(CommunityRequests.status == "P")
+        .all()
     )
     job_list = []
     user_list = []
@@ -133,26 +154,25 @@ def community_requests_page(community_name):
     return render_template(
         "/requests.html",
         community=community_data,
-        job_list = job_list,
-        user_list = user_list,
-        community_request_list = community_request_list
+        job_list=job_list,
+        user_list=user_list,
+        community_request_list=community_request_list,
     )
 
-@profile_blueprint.route("/accept_helper_job_request", methods =["POST"])
+
+@profile_blueprint.route("/accept_helper_job_request", methods=["POST"])
 def accept_helper_job():
     data = request.json["data"]
     job_id = data[0]
     updated_job_request = JobRequests.query.where(JobRequests.job_id == job_id).first()
-    updated_job_request.status = 'A'
+    updated_job_request.status = "A"
     updated_job_request.confirmed_date = db.func.current_timestamp()
     check_helper = Users.query.where(Users.id == updated_job_request.user_id).first()
-    job_accepted = UserJobs(
-        user_id = check_helper.id,
-        job_id = job_id
-    )
+    job_accepted = UserJobs(user_id=check_helper.id, job_id=job_id)
     db.session.add(job_accepted)
     db.session.commit()
     return ""
+
 
 @profile_blueprint.route("/request_join_community", methods=["POST"])
 def join_community():
@@ -160,25 +180,28 @@ def join_community():
     community_id = data[0]
     helper_id = session["user_id"]
     pending_request = CommunityRequests(
-        user_id= helper_id,
-        community_id = community_id,
-        created_date = db.func.current_timestamp(),  
+        user_id=helper_id,
+        community_id=community_id,
+        created_date=db.func.current_timestamp(),
     )
     db.session.add(pending_request)
     db.session.commit()
     return ""
 
-@profile_blueprint.route("/accept_join_community", methods =["POST"])
+
+@profile_blueprint.route("/accept_join_community", methods=["POST"])
 def accept_join_community():
     data = request.json["data"]
     helper_id = data[0]
     status = data[1]
 
-    accept_user = CommunityRequests.query.where(CommunityRequests.user_id == helper_id).first()
+    accept_user = CommunityRequests.query.where(
+        CommunityRequests.user_id == helper_id
+    ).first()
     accept_user.status = status
     accept_user.confirmed_date = db.func.current_timestamp()
-    if status == 'A':
+    if status == "A":
         check_helper = Users.query.where(Users.id == accept_user.user_id).first()
         check_helper.community_id = accept_user.community_id
-    db.session.commit() 
+    db.session.commit()
     return ""

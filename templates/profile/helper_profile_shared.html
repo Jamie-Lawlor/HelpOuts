@@ -1,9 +1,3 @@
-{% extends "base.html" %}
-{% block title %}Helper Settings{% endblock %}
-
-               {%  block body_helper %}
-            <h1 class="text-center">Helpers Settings</h1>
-
             <div class="helper-profile-header pb-5 bg-light pb-5">
                         <div class="header-bg d-flex align-items-start p-3">
                         </div>
@@ -18,13 +12,12 @@
                                                  <h3 class="profile-name mb-1 fw-bold">{{ user_data.name }}</h3>
                                                  <span class="helper-badge rounded-pill bg-light text-dark border px-3 mb-3">Verified Helper</span>
 
-                                                 <div class="d-grid gap-2 d-md-block">
-                                                <a href="/message_chat" class="btn btn-orange rounded-pill px-5 fw-bold shadow-sm">
+                                                 <div class="d-grid gap-2 d-md-block mt-3">
+                                                <a href="/message_chat" class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white">
                                                         Message
                                                 </a>
                                                  </div>
 
-                                               
                                        <div class="row mt-4 py-3 bg-light rounded-4 mx-1">
                                                 <div class="col-4 border-end">
                                                 <small class="text-muted text-uppercase d-block fw-bold"
@@ -47,8 +40,37 @@
                                 </div>
                                 </div>
 
+                                         {% if role == "helper" %}
+                                                <div class="mb-4" id="manage_helper_profile">
+                                                    <button class="btn-teal btn rounded-pill py-2 fw-bold mb-2" onclick="edit_helper_profile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                                        </svg> Edit Profile
+                                                    </button>
+                                                </div>
+
+                                                <div id="edit_helper_profile_actions" style="display: none;" class="mx-auto mt-3">
+                                                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                                     <button
+                                                                class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white"
+                                                                id="helper-profile-save"
+                                                                >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                                                                </svg>
+                                                                Save Changes
+                                                                </button>
+
+                                                                   <button onclick="" class="btn btn-light rounded-pill py-2">
+                                                                    Cancel
+                                                                </button>
+                                                                </div>
+                                                </div>
+
+                                        {% endif %}
+
+
                                 <div class="col-lh-5">
-                                    
+
                                 </div>
 
                                 <div class="mx-auto mt-4" style="max-width: 700px;">
@@ -58,9 +80,14 @@
                                         Availability
                                 </h6>
                                 <div class="card border-0 shadow-sm p-3 rounded-4">
-                                        <p class="mb-0 text-secondary">
-                                                I work Monday-Friday 9-5pm, I am available on evenings and Saturdays.
+                                        <p class="mb-0 text-secondary" id="availability_display">
+                                            Weekends
                                         </p>
+
+                                        <textarea
+                                        id="edit_availability" class="form-control border-0 bg-light rounded-4" style="display: none;" rows="2"
+                                        >
+                                    </textarea>
                                 </div>
                                 </div>
 
@@ -69,7 +96,7 @@
                                        Skills
                                 </h6>
                                 <div class="card border-0 shadow-sm p-3 rounded-4">
-                                        <div class="d-flex flex-wrap gap-2">
+                                        <div class="d-flex flex-wrap gap-2" id="skills_display">
                                                 <span class="badge bg-teal-soft">
                                                         Maintenance
                                                 </span>
@@ -83,6 +110,7 @@
                                                       Heavy Lifting
                                                 </span>
                                         </div>
+                                        <input type="text" id="edit_skills" class="form-control border-0 bg-light rounded-pill" style="display: none;">
                                 </div>
                                 </div>
 
@@ -118,7 +146,7 @@
                                 </h6>
                                 <div class="card border-0 shadow-sm p-3 rounded-4">
                                         <div class="experience-item mb-2 pb-2 border-bottom">
-                                                <small class="text-muted text-primary d-block">
+                                                <small class="text-muted text-primary d-block" id="experience_display">
                                                         Heavy Lifting
                                                 </small>
                                         </div>
@@ -127,13 +155,13 @@
                                                         Worked as a Building Supervisor 
                                                 </small>
                                         </div>
+                                        <textarea
+                                        id="edit_experience"
+                                        class="form-control border-0 bg-light rounded-4"
+                                        style="display: none;"
+                                        rows="2"></textarea>
                                    </div>
                              
                                 </div>
                         </div>
                 </div>                
-
-
-               {% endblock %}
-
-</html>

@@ -385,5 +385,18 @@ function openSideBar(){
     document.getElementById("openSideBarBtn").style.display = "none";
 }
 
+function edit_helper_profile(){
+    document.getElementById("manage_helper_profile").style.display = "none";
+    document.getElementById("edit_helper_profile_actions").style.display = "block";
+
+    document.getElementById("availability_display").style.display = "none";
+    document.getElementById("edit_availability").style.display = "block";
+
+    document.getElementById("skills_display").style.display = "none";
+    document.getElementById("edit_skills").style.display = "block";
+
+    document.getElementById("experience_display").style.display = "none";
+    document.getElementById("edit_experience").style.display = "block";
+}
 
 
