@@ -27,7 +27,10 @@ CREATE TABLE communities (
     name VARCHAR(100) NOT NULL,
     area VARCHAR(100) NOT NULL,
     description VARCHAR(500) NOT NULL,
-    profile_picture VARCHAR(1000)
+    profile_picture VARCHAR(1000),
+    lat DECIMAL(9,6) NULL,
+    lng DECIMAL(9,6) NULL
+
 );
 
 CREATE TABLE users (
@@ -185,11 +188,11 @@ CREATE TABLE subscriptions (
 
 
 
-INSERT INTO communities (id, name, area, description, profile_picture)
+INSERT INTO communities (id, name, area, description, profile_picture, lat, lng)
 VALUES
-(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png'),
-(2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
-(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL);
+(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png', 54.00593713587985, -6.395891788845103),
+(2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL, 53.857960295207874, -6.540589690340175),
+(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL, 54.004786472339056, -6.401217344308929);
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
@@ -380,17 +383,17 @@ VALUES
 INSERT INTO job_location (id, lat, lng, job_id, icon_id)
 VALUES
 (1, 54.0023, -6.4037, 1, 1),  
-(2, 54.0015, -6.4055, 1, 1),  
-(3, 54.0030, -6.4020, 1, 1),  
-(4, 54.0045, -6.3985, 1, 1),
-(5, 54.0065, -6.4100, 1, 1),
-(6, 54.0078, -6.3995, 1, 1),
-(7, 54.0008, -6.4030, 1, 1),
-(8, 53.9985, -6.3950, 1, 1),
-(9, 53.8590, -6.5400, 1, 1),
-(10, 53.8605, -6.5380, 1, 1),
-(11, 53.9970, -6.3900, 1, 1),
-(12, 54.0005, -6.4105, 1, 1); 
+(2, 54.0015, -6.4055, 2, 1),  
+(3, 54.0030, -6.4020, 3, 1),  
+(4, 54.0045, -6.3985, 4, 1),
+(5, 54.0065, -6.4100, 5, 1),
+(6, 54.0078, -6.3995, 6, 1),
+(7, 54.0008, -6.4030, 7, 1),
+(8, 53.9985, -6.3950, 8, 1),
+(9, 53.8590, -6.5400, 9, 1),
+(10, 53.8605, -6.5380, 10, 1),
+(11, 53.9970, -6.3900, 11, 1),
+(12, 54.0005, -6.4105, 12, 1); 
 
 INSERT INTO reviews (id, star_rating, review, created_date, reviewer_id, helper_id, job_id)
 VALUES
