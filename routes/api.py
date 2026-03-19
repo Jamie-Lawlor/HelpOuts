@@ -170,9 +170,10 @@ def get_community_map(community_id):
 
     return jsonify({
         "community": community_id,
+        "name": community.name,
         "lat": community.lat,
         "lng": community.lng,
-        "icon_id": community.profile_picture
+        "icon_url": community.profile_picture
     }), 200
 
 @api_blueprint.route("/testMap")
