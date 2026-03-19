@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, send_file, request, redirect,
 from flask_mail import Mail, Message
 import os
 from db.database import db
-from db.models import Users, Jobs, Projects
+from db.models import Users, Jobs, Projects, Communities
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -153,6 +153,7 @@ def get_type():
 
 @app.route("/communityTestMap")
 def community_test_map():
+    community_id=1
     return render_template("test_space/test_community_map.html", community_id=1, GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
 
 if __name__ == "__main__":

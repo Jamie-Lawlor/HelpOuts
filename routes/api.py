@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation
+from db.models import Users, JobLocation, Communities
 import uuid
 from PIL import Image
 import io
@@ -159,6 +159,20 @@ def get_job_map(job_id):
         "lat": location.lat,
         "lng": location.lng,
         "icon_id": location.icon_id
+    }), 200
+
+@api_blueprint.route("/getCommunityMap/<int:community_id>", methods=["GET"])
+def get_community_map(community_id):   
+
+    community = Communities.query.filter_by(id=community_id).first()
+    if not community:
+        return jsonify({"error": "Location not found"}), 404
+
+    return jsonify({
+        "community": community_id,
+        "lat": community.lat,
+        "lng": community.lng,
+        "icon_id": community.profile_picture
     }), 200
 
 @api_blueprint.route("/testMap")
