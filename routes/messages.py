@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session
+from flask_login import login_required
 from db.database import db
 from db.models import Communities, Users
 
@@ -6,6 +7,7 @@ messages_blueprint = Blueprint("messages", __name__, template_folder="templates"
 
 
 @messages_blueprint.route("/inbox/")
+@login_required
 def inbox_page():
     if session.get("community_id") is not None:
         community_id = int(session["community_id"])
@@ -22,6 +24,7 @@ def inbox_page():
 
 
 @messages_blueprint.route("/message_chat/", methods=["POST"])
+@login_required
 def message_chat():
     id = request.form.get("id")
     if session.get("community_id") is not None:

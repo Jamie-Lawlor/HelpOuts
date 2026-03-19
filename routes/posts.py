@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
+from flask_login import login_required
 from db.database import db
 from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests
 import os
@@ -11,6 +12,7 @@ posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
 
 
 @posts_blueprint.route("/add_project/")
+@login_required
 def project_page():
     if session["type"] != "chairperson":
         return redirect("/home_page/")
@@ -18,6 +20,7 @@ def project_page():
         return render_template("/posts/add_project.html")
 
 @posts_blueprint.route("/add_job/")
+@login_required
 def post_page():
     if session["type"] != "chairperson":
         return redirect("/home_page/")
@@ -30,6 +33,7 @@ def post_page():
 
 
 @posts_blueprint.route("/create_project", methods=["POST"])
+@login_required
 def create_project():
     if session["type"] != "chairperson":
         return ""
@@ -72,6 +76,7 @@ def create_project():
         return jsonify(new_project_data.to_dict())
 
 @posts_blueprint.route("/create_job", methods=["POST"])
+@login_required
 def create_job():
     if session["type"] != "chairperson":
         return ""
@@ -114,6 +119,7 @@ def create_job():
         return jsonify(job_data.to_dict())
 
 @posts_blueprint.route("/view_post/<post_title>")
+@login_required
 def view_specific_post_page(post_title):
     revert_format = post_title.replace("_", " ").title()
     vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
@@ -125,6 +131,7 @@ def view_specific_post_page(post_title):
 
 
 @posts_blueprint.route("/edit_post", methods=["POST"])
+@login_required
 def edit_post():
     if session["type"] != "chairperson":
         return ""
@@ -144,6 +151,7 @@ def edit_post():
 
 
 @posts_blueprint.route("/delete_post", methods=["POST"])
+@login_required
 def delete_post():
     if session["type"] != "chairperson":
         return ""
@@ -159,6 +167,7 @@ def delete_post():
         return ""
 
 @posts_blueprint.route("/job_accepted", methods =["POST"])
+@login_required
 def job_accepted():
     data = request.json["data"]
     job_id = data[0]

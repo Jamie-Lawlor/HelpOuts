@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, session
+from flask_login import login_required
 from db.database import db
 from db.models import (
     Projects,
@@ -16,6 +17,7 @@ profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
 @profile_blueprint.route("/community_profile/<community_name>")
+@login_required
 def community_profile_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
@@ -50,6 +52,7 @@ def community_profile_page(community_name):
 
 
 @profile_blueprint.route("/helper_profile/<user_name>")
+@login_required
 def helper_profile_page(user_name):
     revert_format = user_name.replace("_", " ").title()
     user_data = Users.query.filter_by(name=revert_format).first_or_404()
@@ -93,6 +96,7 @@ def helper_profile_page(user_name):
 
 
 @profile_blueprint.route("/community_settings/<community_name>")
+@login_required
 def settings_page(community_name):
     if session["type"] != "chairperson":
         return redirect("/home_page/")
@@ -120,6 +124,7 @@ def settings_page(community_name):
 
 
 @profile_blueprint.route("/helper_settings/<user_name>")
+@login_required
 def helper_settings_page(user_name):
     if session["type"] != "helper":
         return redirect("/home_page/")
@@ -134,6 +139,7 @@ def helper_settings_page(user_name):
 
 
 @profile_blueprint.route("/requests/<community_name>")
+@login_required
 def community_requests_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
