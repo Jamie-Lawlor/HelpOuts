@@ -151,5 +151,9 @@ def mfa():
 def get_type():
     return session["type"]
 
+@app.route("/communityTestMap")
+def community_test_map():
+    return render_template("test_space/test_community_map.html", community_id=1, GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)

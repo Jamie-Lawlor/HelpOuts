@@ -1,0 +1,26 @@
+<div id="community-map" style="height: 400px;"></div>
+<!--
+      The `defer` attribute causes the script to execute after the full HTML
+      document has been parsed. -->
+<script
+  async
+  src="https://maps.googleapis.com/maps/api/js?key={{GMAPS_API_KEY}}&loading=async&callback=loadCommunityMap"
+  defer
+></script>
+
+<script>
+
+  async function loadCommunityMap() {
+    const communityId = {{ community_id }}
+    console.log("communityId=", communityId)
+
+    const { Map } = await google.maps.importLibrary("maps")
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
+
+    // load map
+    const map = new google.maps.Map(document.getElementById("community-map"), {
+      mapId: "HelpOutsJobMap"
+    });
+    
+  }
+</script>
