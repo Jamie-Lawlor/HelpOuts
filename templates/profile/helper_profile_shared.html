@@ -102,7 +102,9 @@
                                                 {% for i in range(user_skills|length) %}
                                                  <span class="badge bg-teal-soft">
                                                         {{ user_skills[i].skill }}
+                                                        <img src="/static/images/x.svg" class="x-button" width="16" height="16" onclick="remove_skill('{{ user_skills[i].skill }}')"/>              
                                                 </span>
+
                                                 {% endfor %}
                                         </div>
                                         <!-- <p id="edit_skills" style="display:none;">Hold the "ctrl" button and click or tap on the screen to select multiple</p> -->

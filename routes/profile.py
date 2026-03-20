@@ -222,3 +222,13 @@ def accept_join_community():
         check_helper.community_id = accept_user.community_id
     db.session.commit()
     return ""
+
+@profile_blueprint.route("/remove_skill", methods=["POST"])
+def remove_skill():
+    if session["type"] == "helper":
+        skill_data = request.json["data"]
+        skill_to_be_removed= UserSkills.query.join(Users, UserSkills.user_id == Users.id).join(Skills, UserSkills.skill_id == Skills.id).where(UserSkills.user_id == session["user_id"], Skills.skill == skill_data).first_or_404()
+        db.session.delete(skill_to_be_removed)
+        db.session.commit()
+        return ""
+    return ""

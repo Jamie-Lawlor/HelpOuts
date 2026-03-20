@@ -399,4 +399,7 @@ function edit_helper_profile(){
     document.getElementById("edit_experience").style.display = "block";
 }
 
-
+function remove_skill(user_skill){
+   fetch("/remove_skill", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_skill }) })
+           .then(window.location.reload()) 
+}
