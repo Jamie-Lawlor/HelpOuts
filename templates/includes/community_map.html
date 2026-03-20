@@ -1,13 +1,4 @@
 <div id="community-map" style="height: 400px"></div>
-<!--
-      The `defer` attribute causes the script to execute after the full HTML
-      document has been parsed. -->
-<script
-  async
-  src="https://maps.googleapis.com/maps/api/js?key={{GMAPS_API_KEY}}&loading=async&callback=loadCommunityMap"
-  defer
-></script>
-
 <script>
 
     async function loadCommunityMap() {
@@ -40,6 +31,7 @@
         title: locationData.name,
         content: markerIcon
       })
-            
+       
     }
+    loadCommunityMap()   
 </script>

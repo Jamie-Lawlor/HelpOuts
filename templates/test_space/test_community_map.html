@@ -18,12 +18,13 @@
     </div>
     <div id="edit-location">
       <div class="h5">Edit Location</div>
-      <div id="place-marker-map"></div>
+      {% include "includes/community_edit_map.html" %}
     </div>
   </div>
 </div>
 
 <script>
+
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("show-location").style.display = "block";
     document.getElementById("edit-location").style.display = "none";

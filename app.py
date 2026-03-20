@@ -41,6 +41,13 @@ app.register_blueprint(subscriptions_blueprint)
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
 
+# context processor runs before the template is loaded, making api key
+# global so its available in base.html
+# https://flask.palletsprojects.com/en/stable/api/#flask.Flask.context_processor
+@app.context_processor
+def inject_gmaps_key():
+    return dict(GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
+
 @app.route("/manifest.json")
 def serve_manifest():
     return send_file("manifest.json", mimetype="application/manifest.json")
