@@ -25,15 +25,40 @@
     markerIcon.style.width = "80px"
     markerIcon.style.height = "80px"
 
-		let marker = new AdvancedMarkerElement({
-			map: map,
-			position: { lat: locationData.lat, lng: locationData.lng },
-			title: locationData.name,
-			content: markerIcon
-		})
+  let marker = new AdvancedMarkerElement({
+    map: map,
+    position: { lat: locationData.lat, lng: locationData.lng },
+    title: locationData.name,
+    content: markerIcon
+  })
 
-		
+    let firstClick = true
+    let newLocationMarker
+  map.addListener("click", (e) => {
+      if(firstClick) {
+      placeMarkerAndPanTo(e.latLng, map);
+        firstClick = false
+      } else {
+        replaceMarkerAndPanTo(e.latLng, map)
+      }
 
+  });
+
+  function placeMarkerAndPanTo(latLng, map) {
+      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+        position: latLng,
+        map: map,
+      });
+      map.panTo(latLng);
+    }
+    function replaceMarkerAndPanTo(latLng, map) {
+      newLocationMarker.setMap(null)
+      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+        position: latLng,
+        map: map,
+      });
+      map.panTo(latLng);
+    }
   }
-	loadCommunityEditMap()
+  loadCommunityEditMap()
 </script>

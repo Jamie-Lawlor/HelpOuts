@@ -1,10 +1,4 @@
 <div id="job-map" style="height: 400px;"></div>
-<script
-  async
-  src="https://maps.googleapis.com/maps/api/js?key={{GMAPS_API_KEY}}&loading=async&callback=loadJobMap"
-  defer
-></script>
-
 <script>
 
   async function loadJobMap() {
@@ -30,7 +24,6 @@
       position: { lat: locationData.lat, lng: locationData.lng },
       map:map
     })
-    
-
   }
+  loadJobMap()
 </script>
