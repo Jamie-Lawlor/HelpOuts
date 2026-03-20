@@ -62,11 +62,14 @@ def helper_profile_page(user_name):
             .where(UserSkills.user_id == user_data.id)
             .all()
         )
-    # print(skills_data[26].skill)
-    role = session["type"]
-    print("ROLE: ", role)
-    print("ROLE TYPE: ", type(role))
+    if user_data.experience is not None:
+        user_experience = user_data.experience.split(",")
+        print(user_experience)
+    else:
+        user_experience = "No previous experience"
+
     if user_data.community_id is not None:
+        role = session["type"]
         community_id = user_data.community_id
         joined_community_data = Communities.query.get_or_404(community_id)
         all_job_data = (
@@ -74,8 +77,7 @@ def helper_profile_page(user_name):
             .where(UserJobs.user_id == user_data.id)
             .all()
         )
-        print(all_job_data)
-        print(skills_data)
+        
         return render_template(
             "/profile/helper_profile.html",
             user_data=user_data,
@@ -83,6 +85,7 @@ def helper_profile_page(user_name):
             user_jobs=all_job_data,
             skills = skills_data,
             user_skills = user_skills,
+            user_experience = user_experience,
             role=role,
         )
     else:
@@ -92,6 +95,7 @@ def helper_profile_page(user_name):
             skills = skills_data,
             community_data=None,
             user_jobs=None,
+            user_experience = user_experience,
         )
 
 
@@ -236,12 +240,15 @@ def remove_skill():
 
 @profile_blueprint.route("/update_helper_profile", methods=["POST"])
 def update_helper_profile():
-    if session["type"] != "helper":
-        return ""
-    else:
+    # if session["type"] != "helper":
+    #     return ""
+    # else:
         updated_data = request.json["data"]
         updated_availability = updated_data[0]
         updated_skills = updated_data[1]
+        updated_experience = updated_data[2].replace("\n", ",")
+        print(updated_experience)
+ 
         update_user = Users.query.get_or_404(session["user_id"])
         if update_user.availability is not updated_availability:
             update_user.availability = updated_availability
@@ -259,5 +266,13 @@ def update_helper_profile():
                     skill_id = skill_id
                 )
                 db.session.add(add_skills)
-                db.session.commit()
+
+        if update_user.experience is not updated_experience:
+            update_user.experience = updated_experience
+        
+        if updated_availability is None and updated_skills is None and updated_experience is None:
+            return ""
+        else:
+            db.session.commit()
+
         return ""

@@ -407,18 +407,15 @@ function remove_skill(user_skill){
 
 function update_helper_profile(){
     updated_availability = document.getElementById("edit_availability").value
-    console.log(updated_availability)
+
     updated_skills = document.getElementById("edit_skills").selectedOptions
-    console.log(updated_skills)
     skillsArray = []
     for(let i =0; i< updated_skills.length; i++){
        skillsArray.push(updated_skills[i].label) 
     }
-    dataArray = [updated_availability, skillsArray]
-    // updated_title = document.getElementById("edit_title").value
-    // updated_description = document.getElementById("edit_description").value
-    // updated_area = document.getElementById("edit_area").value
-    // dataArray = [id, updated_title, updated_description, updated_area]
+
+    updated_experience = document.getElementById("edit_experience").value
+    dataArray = [updated_availability, skillsArray, updated_experience]
     fetch("/update_helper_profile", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
         .then(window.location.reload())
 }

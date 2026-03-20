@@ -13,6 +13,7 @@ class Users(db.Model, UserMixin):
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
     availability = db.Column(db.String(18), nullable = True)
+    experience = db.Column(db.String(4000), nullable = True)
     rating = db.Column(db.Integer, nullable=True)
     private_key = db.Column(db.LargeBinary, nullable = True)
     public_key = db.Column(db.LargeBinary, nullable = True)

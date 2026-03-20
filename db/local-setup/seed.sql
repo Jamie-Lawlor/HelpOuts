@@ -39,6 +39,7 @@ CREATE TABLE users (
     work_area VARCHAR(100) NULL, 
     specialism VARCHAR(100) NULL,
     availability VARCHAR(18) NULL,
+    experience VARCHAR(4000) NULL,
     rating INT NULL, 
     private_key BLOB NULL,
     public_key BLOB NULL,
