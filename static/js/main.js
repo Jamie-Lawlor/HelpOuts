@@ -153,6 +153,7 @@ function send_project_data() {
         .then(window.location.replace(`/home_page/`))
 }
 
+
 function send_job_data() {
     let data = new FormData()
     // const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
