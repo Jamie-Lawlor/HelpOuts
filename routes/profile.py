@@ -225,10 +225,39 @@ def accept_join_community():
 
 @profile_blueprint.route("/remove_skill", methods=["POST"])
 def remove_skill():
-    if session["type"] == "helper":
+    if session["type"] != "helper":
+        return ""
+    else:
         skill_data = request.json["data"]
         skill_to_be_removed= UserSkills.query.join(Users, UserSkills.user_id == Users.id).join(Skills, UserSkills.skill_id == Skills.id).where(UserSkills.user_id == session["user_id"], Skills.skill == skill_data).first_or_404()
         db.session.delete(skill_to_be_removed)
         db.session.commit()
         return ""
-    return ""
+
+@profile_blueprint.route("/update_helper_profile", methods=["POST"])
+def update_helper_profile():
+    if session["type"] != "helper":
+        return ""
+    else:
+        updated_data = request.json["data"]
+        updated_availability = updated_data[0]
+        updated_skills = updated_data[1]
+        update_user = Users.query.get_or_404(session["user_id"])
+        if update_user.availability is not updated_availability:
+            update_user.availability = updated_availability
+
+        if updated_skills is not None or len(updated_skills) != 0:
+            skills_list = Skills.query.all()
+            skills_id_list=[]
+            for skill in skills_list:
+                if skill.skill in updated_skills:
+                    skills_id_list.append(skill.id)
+
+            for skill_id in skills_id_list:
+                add_skills = UserSkills(
+                    user_id = session["user_id"],
+                    skill_id = skill_id
+                )
+                db.session.add(add_skills)
+                db.session.commit()
+        return ""
