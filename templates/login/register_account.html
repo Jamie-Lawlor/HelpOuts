@@ -82,7 +82,7 @@ navbar %}{% endblock %} {% block body %}
                   type="password"
                   name="password"
                   class="form-control soft-input"
-                  placeholder="Min. 10 characters"
+                  placeholder="Min. 8 characters"
                   aria-label="Password"
                   autocomplete="off"
                   required
@@ -231,18 +231,7 @@ navbar %}{% endblock %} {% block body %}
               </div>
           </div>
 
-          <!-- not sure if using username -->
-          <!-- <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <img src="/static/images/user_icon.svg" width="25" height="25"
-                                class="d-inline-block align-top">
-                        </span>
-                         <input type="text" name="username" class="form-control" placeholder="Username"
-                            aria-label="Username" autocomplete="off" required> -->
-          <!-- </div>  -->
-
-          <!-- <a class="btn btn-primary" href="/helper_register_page" role="button">Become a Helper</a> -->
-          <div class="d-flex mt-4" style="min-height: 50px;">
+          <div class="d-flex mt-4 align-items-center" style="position:relative; z-index:10;">
             <button
               type="button"
               class="btn btn-link"
@@ -250,7 +239,7 @@ navbar %}{% endblock %} {% block body %}
               style="display: none"
               id="register-back-btn"
             >
-              <img src="/static/images/arrow-left.svg" width="40" height="40" />
+              <img src="/static/images/arrow-left.svg" width="40" height="40" style="flex-shrink: 0;" />
             </button>
 
             <button
@@ -263,6 +252,7 @@ navbar %}{% endblock %} {% block body %}
                 src="/static/images/arrow-right.svg"
                 width="40"
                 height="40"
+                style="flex-shrink: 0;"
               />
             </button>
             
