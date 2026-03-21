@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Community Settings{% endblock %}
                {%  block body_community %}
-            
-                <div class="settings-header">
-                        <div class="container d-flex align-items-center justify-content-center h-100">
-                        <div class="profile-circle me-3">
-                                         <img src="/static/images/user_icon.svg" class="rounded-circle border border-4 border-white shadow" width="100px">
-                        </div>
-                        <div class="text-start">
-                        <h4 class="mb-0 titles profile-name">
-                                Dundalk Men's Sheds
-                        </h4>
-                        <a href="/community_profile/dundalk_tidy_towns" class="profile-link">View Profile</a>
-                        </div>
-                </div>
+
+        <div class="profile-page-header pb-5 ">
+        <div class="header-bg d-flex align-items-start p-3" style="height: 160px;">
         </div>
-                <div class="container settings-content">
+        <div class="container" style="margin-top: -80px;">
+                <div class="row">
+                        <div class="col-lg-8">
+                <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius:15px;">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h2 class="fw-bold mb-1">Manage Job Schedule</h2>
+                            <p class="text-muted mb-0">{{ community.name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            
+               
+                <!-- <div class="container settings-content">
                         <div class="list-group list-group-flush mt-5">
                         <a href="#" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-4 list-titles">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
@@ -116,15 +120,145 @@
                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                         </svg>Edit Details</a>
                         </div>
-                </div>
+                </div> -->
+
                    
       <!-- <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius:15px;">
                 <h6 class="fw-bold mb-3">Quick Actions</h6>
                 <a href="/add_project" class="btn rounded-pill mb-2 text-start">Create New Project</a>
                 <a href="/inbox" class="btn rounded-pill mb-2 text-start">Messages</a>
                 </div> -->
-                </main>
-                </div>
+
+<div class="d-flex align-items-start mb-3">
+              <p class="small text-muted mb-0">
+                
+              </p>
+            </div>
+
+<div class="wrapper">
+  <table>
+    <tr>
+      <th>Time</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+    <tr>
+      <td class="text-center align-middle fw-bold"> 9:00</td>
+      <td>
+        <div class="status-card-helper text-center">
+            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19"> Park Benches</div>
+            <div class="small"><img src="/static/images/user_icon.svg" width="19" height="19"> Jemma Simmons</div>
+        </div>
+        </td>
+
+        </td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">10:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+       <td>
+        <div class="status-card-helper text-center">
+            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19">Sort Collected Waste</div>
+            <div class="small"><img src="/static/images/user_icon.svg" width="19" height="19">Leo Fitz</div>
+        </div>
+        </td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">11:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">12:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">13:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td>
+        <div class="status-card-urgent text-center">
+            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19">Collect Litter</div>
+            <div class="small"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                                    <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
+                                    <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                                    </svg>Helper Needed</div>
+        </div>
+        </td>
+    </tr>
+    <tr>
+      <td class="fw-bold">14:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">15:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">16:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">17:00</td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+      <td contenteditable=""></td>
+    </tr>
+  </table>
+</div>
 
                 {% endblock %}
 

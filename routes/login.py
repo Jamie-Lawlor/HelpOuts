@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
+from flask_login import login_user, logout_user, login_required
 from db.database import db
 from db.models import Users, Communities
 from werkzeug.security import generate_password_hash
@@ -175,14 +176,15 @@ def register():
     session["user_id"] = user.id
     session["user_name"] = user.name
     session["type"] = user.type
+    login_user(user)
 
-    print(f"session id -> {session["user_id"]}")
+    print(f"session id -> {session['user_id']}")
     profile_picture.stream.seek(0)
     image_verification_body = {
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
     image_verfication_response = requests.post(
-        f"{os.getenv("HELPOUTS_BASE_URL_DEV")}/api/uploadProfilePicture/{user.id}",
+        f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/uploadProfilePicture/{user.id}",
         files=image_verification_body
     )
     # Handle AiClipse not working/ S3 issue
@@ -193,7 +195,7 @@ def register():
     #     return {"error": "Image verification request failed"}, 500
 
     response_data = image_verfication_response.json()
-    print(response_data)
+    print("THIS IS THE ERROR", response_data)
     user = Users.query.get_or_404(session["user_id"])
     if response_data["verification_status"] == "skipped":
         user.verfied = False
@@ -209,6 +211,7 @@ def register():
 
 @login_blueprint.route("/logout")
 def logout():
+    logout_user()
     session.clear()
     return redirect("/")
 
@@ -234,9 +237,10 @@ def login_no_mfa():
     # initalize session
     session["user_id"] = user.id
     session["user_name"] = user.name
-    session["profile_picture"] = f"{os.getenv("AWS_S3_BUCKET")}{user.id}/profile-picture/profile-picture-m.jpg"
+    session["profile_picture"] = f"{os.getenv('AWS_S3_BUCKET')}{user.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user.type
     session["images"] = os.getenv("AWS_S3_BASE_URL")
+    login_user(user)
     
     return redirect("/home_page/")
     
@@ -258,6 +262,7 @@ def test_login_user():
         session.pop("community_id", None)
     # TODO profile picture comes from S3 now, not the database
     dataArray = [str(session["user_id"]), session["profile_picture"], session["type"]]
+    login_user(user_data)
     print("TYPE OF USER: ", session["type"])
     return jsonify(dataArray)
 
@@ -267,7 +272,10 @@ def test_login_user():
 def test_login_admin():
     community_id = int(request.json["data"])
     community_data = Communities.query.get_or_404(community_id)
+    
+    user = Users.query.filter_by(community_id=community_id, type="chairperson").first()
     session["community_id"] = community_id
+    session["user_id"] = user.id
     session["user_name"] = community_data.name
     session["type"] = "chairperson"
     print("SESSION: ", session["community_id"])
@@ -280,5 +288,6 @@ def test_login_admin():
         session["profile_picture"],
         session["type"],
     ]
+    login_user(user)
     print("TYPE OF USER: ", session["type"])
     return jsonify(dataArray)

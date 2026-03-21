@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, send_file, request, redirect, jsonify
 from flask_mail import Mail, Message
+from flask_login import LoginManager, login_user
 import os
 from db.database import db
 from db.models import Users, Jobs, Projects, Communities
@@ -30,6 +31,8 @@ app.config["MAIL_PASSWORD"] = os.getenv("GMAIL_PASSWORD")
 app.secret_key = os.getenv("SECRET_KEY")
 db.init_app(app)
 socketio.init_app(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'index'
 mail = Mail(app)
 
 migrate = Migrate(app, db)
@@ -40,6 +43,9 @@ app.register_blueprint(posts_blueprint)
 app.register_blueprint(subscriptions_blueprint)
 app.register_blueprint(api_blueprint, url_prefix="/api")
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
 
 # context processor runs before the template is loaded, making api key
 # global so its available in base.html
@@ -130,6 +136,7 @@ def mfa():
         if mfa_session:
             totp = pyotp.TOTP(mfa_session)
             if totp.verify(otp):
+                login_user(user)
                 session.pop("email", None)
                 session["user_id"] = user.id
                 # TODO profile picture comes from S3 now, not the database
