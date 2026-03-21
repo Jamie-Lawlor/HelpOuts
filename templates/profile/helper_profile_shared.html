@@ -1,0 +1,190 @@
+            <div class="helper-profile-header pb-5 bg-light pb-5">
+                        <div class="header-bg d-flex align-items-start p-3">
+                        </div>
+
+                        <div class="container mt-n5">
+                                <div class="card profile-card shadow border-0 mx-auto" style="max-width:700px; border-radius:20px;">
+                                        <div class="card-body text-center pt-0">
+                                                <div class="profile-img-container mb-3" style="margin-top: -75px;">
+                                                        <img src="/static/images/user_image_2.png" class="profile-img" width="150px" height="150" style="object-fit: cover;">
+                                                </div>
+
+                                                 <h3 class="profile-name mb-1 fw-bold">{{ user_data.name }}</h3>
+                                                 <span class="helper-badge rounded-pill bg-light text-dark border px-3 mb-3">Verified Helper</span>
+
+                                                 <div class="d-grid gap-2 d-md-block mt-3">
+                                                <a href="/message_chat" class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white">
+                                                        Message
+                                                </a>
+                                                 </div>
+
+                                       <div class="row mt-4 py-3 bg-light rounded-4 mx-1">
+                                                <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block fw-bold"
+                                                        style="font-size: 10px;">Location</small>
+                                                <span class="fw-bold"> {{ user_data.work_area }}</span>
+                                                </div>
+                                        <div class="col-4 border-end">
+                                                <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 10px;">Community</small>
+                                                {% if community_data is not none %}
+                                                <a href="/community_profile/{{ community_data.name }}" style="color:black !important" class="text-decoration-none">
+                                                <span class="fw-bold"> {{ community_data.name }}</span></a>
+                                                {% endif %}
+                                        </div>
+                                        <div class="col-4">
+                                                <small class="text-muted text-uppercase d-block fw-bold"
+                                                        style="font-size: 10px;">Hours Completed</small>
+                                                <span class="fw-bold"> 10</span>
+                                        </div>
+                                </div>
+                                </div>
+                                </div>
+
+                                         {% if role != "chairperson" %}
+                                                <div class="mb-4" id="manage_helper_profile">
+                                                    <button class="btn-teal btn rounded-pill py-2 fw-bold mb-2" onclick="edit_helper_profile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                                        </svg> Edit Profile
+                                                    </button>
+                                                </div>
+
+                                                <div id="edit_helper_profile_actions" style="display: none;" class="mx-auto mt-3">
+                                                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                                     <button
+                                                                class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white"
+                                                                id="helper-profile-save"
+                                                                onclick="update_helper_profile()"
+                                                                >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                                                                </svg>
+                                                                Save Changes
+                                                                </button>
+
+                                                                   <button onclick="" class="btn btn-light rounded-pill py-2">
+                                                                    Cancel
+                                                                </button>
+                                                                </div>
+                                                </div>
+
+                                        {% endif %}
+
+
+                                <div class="col-lh-5">
+
+                                </div>
+
+                                <div class="mx-auto mt-4" style="max-width: 700px;">
+
+                                <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
+                                        Availability
+                                </h6>
+                                
+                                
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                {% if user_data.availability is not none %}
+                                        <p class="mb-0 text-secondary" id="availability_display">
+                                            {{ user_data.availability }}
+                                        </p>
+                                {% else %}
+                                        <p class="mb-0 text-secondary" id="availability_display">
+                                            Availability not set
+                                        </p>
+                                {% endif %}
+                                        <select id="edit_availability" style="display: none;" class="btn soft-input w-100 text-start dropdown-toggle">
+                                        <option selected disabled>{{ user_data.availability }}</option>
+                                        <option value="Weekdays">Weekdays</option>
+                                        <option value="Weekends">Weekends</option>
+                                        <option value="Weekdays/Weekends">Weekdays/Weekends</option>
+                                        </select>
+                                </div>
+                                </div>
+
+                                <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
+                                       Skills
+                                </h6>
+                                
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                        <div class="d-flex flex-wrap gap-2" id="skills_display">
+                                        {% if user_skills|length !=0 %}
+                                                {% for i in range(user_skills|length) %}
+                                                 <span class="badge bg-teal-soft">
+                                                        {{ user_skills[i].skill }}
+                                                        <img src="/static/images/x.svg" class="x-button" width="16" height="16" onclick="remove_skill('{{ user_skills[i].skill }}')"/>              
+                                                </span>
+
+                                                {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <p class="mb-0 text-secondary" id="skills_display">
+                                            No skills selected
+                                        </p>
+                                        {% endif %}
+                                        <!-- <p style="display:none;">Hold the "ctrl" button and click or tap on the screen to select multiple</p> -->
+                                        <select class="form-select soft-input" id="edit_skills" style="display:none;" multiple>
+                                                {% for i in range(skills|length) %}
+                                                <option value="{{ skills[i].skill }}">
+                                                {{ skills[i].skill }}
+                                                </option>
+                                                {% endfor %}
+                                        </select>
+
+                                </div>
+                                </div>
+
+                                <div class="mx-auto mt-4" style="max-width:700px;">
+                                {% if user_jobs is not none %}
+                                <h6 class="fw-bold text-uppercase text-muted mb-2 ms-1">
+                                       Active Jobs {{ user_jobs|length }}
+                                </h6>
+
+                                <div class="d-flex flex-column" style="gap: 15px;">
+                                {% for i in range(user_jobs|length) %}
+                                        <div>
+                                                <a href="/view_post/{{ user_jobs[i].job_title }}" class="card border-0 shadow-sm p-3 rounded-4 text-decoration-none bg-white mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                <h6 class="fw-bold text-dark">
+                                                        {{ user_jobs[i].job_title }}
+                                                </h6>
+                                                <small class="text-orange fw-bold">
+                                                        {{ user_jobs[i].short_type }}
+                                                </small>
+                                                </div>
+                                                <p class="small text-muted mb-0">
+                                                        {{ user_jobs[i].job_description }}         
+                                                </p>
+                                           </a>
+                                {% endfor %}
+                                </div>
+                        </div>
+                        {% endif %}
+                        <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-muted mb-2">
+                                        Experience
+                                </h6>
+                                <div class="card border-0 shadow-sm p-3 rounded-4">
+                                        {% if user_experience|length !=0 %}
+                                                {% for i in range(user_experience|length) %}
+                                                <div class="experience-item mb-2 pb-2 border-bottom">
+                                                <small class="text-muted text-primary d-block" id="experience_display">
+                                                        {{ user_experience[i] }}
+                                                </small>
+                                                </div>
+                                                {% endfor %}
+                                        {% else %}
+                                        <p class="mb-0 text-secondary" id="experience_display">
+                                            No previous experience
+                                        </p>
+                                {% endif %}
+                                        <textarea
+                                        id="edit_experience"
+                                        class="form-control border-0 bg-light rounded-4"
+                                        style="display: none;"
+                                        rows="3"></textarea>
+                                   </div>
+                             
+                                </div>
+                        </div>
+                </div>                
