@@ -1,190 +1,243 @@
-            <div class="helper-profile-header pb-5 bg-light pb-5">
-                        <div class="header-bg d-flex align-items-start p-3">
-                        </div>
+<div class="container-fluid bg-light min-vh-100 py-4">
+  <div class="container">
+    <div class="row g-4">
 
-                        <div class="container mt-n5">
-                                <div class="card profile-card shadow border-0 mx-auto" style="max-width:700px; border-radius:20px;">
-                                        <div class="card-body text-center pt-0">
-                                                <div class="profile-img-container mb-3" style="margin-top: -75px;">
-                                                        <img src="/static/images/user_image_2.png" class="profile-img" width="150px" height="150" style="object-fit: cover;">
-                                                </div>
+      <div class="col-lg-8">
 
-                                                 <h3 class="profile-name mb-1 fw-bold">{{ user_data.name }}</h3>
-                                                 <span class="helper-badge rounded-pill bg-light text-dark border px-3 mb-3">Verified Helper</span>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+          <div style="height: 160px; background: #3d6978; background: linear-gradient(90deg, rgba(61, 105, 120, 1) 0%, rgba(133, 214, 214, 1) 50%, rgba(61, 105, 120, 1) 100%);"></div>
+          <div class="card-body p-4">
+            <div class="d-flex align-items-end mb-3" style="margin-top: -80px">
+              <img src="/static/images/user_image_2.png" class="profile-img" width="120" height="120" style="object-fit: cover"/>
+              <div class="ms-3 mb-2">
+                <h3 class="fw-bold mb-2" style="color: #3d6978">{{ user_data.name }}</h3>
+                <p class="text-muted small mb-0">
+                  <img src="/static/images/location_icon.svg" width="18" height="18"/>
+                  {{ user_data.work_area }}
+                </p>
+              </div>
+            </div>
 
-                                                 <div class="d-grid gap-2 d-md-block mt-3">
-                                                <a href="/message_chat" class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white">
-                                                        Message
-                                                </a>
-                                                 </div>
+            <div class="d-flex gap-2">
+              {% if role == "chairperson" %}
+              <a href="/message_chat" class="btn btn-save rounded-pill px-4 py-2 fw-bold shadow-sm text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16"><path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"/></svg>Message</a>
+              {% else %}
+              <div id="manage_helper_profile">
+                <button class="btn-teal btn rounded-pill px-4 py-2 fw-bold mb-2 shadow-sm text-white" onclick="edit_helper_profile()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/> 
+                </svg>
+                  Edit Profile
+                </button>
+              </div>
+              <div id="edit_helper_profile_actions">
+                <button class="btn btn-save rounded-pill px-4 py-2 fw-bold shadow-sm text-white" id="helper-profile-save" onclick="update_helper_profile()"><svg   xmlns="http://www.w3.org/2000/svg"   width="16"    height="16"    fill="currentColor"    class="bi bi-bookmark" viewBox="0 0 16 16" ><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/></svg>
+                  Save Changes
+                </button>
+                <button onclick="window.location.reload()" class="btn btn-light rounded-pill px-4 border"> Cancel</button>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
 
-                                       <div class="row mt-4 py-3 bg-light rounded-4 mx-1">
-                                                <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block fw-bold"
-                                                        style="font-size: 10px;">Location</small>
-                                                <span class="fw-bold"> {{ user_data.work_area }}</span>
-                                                </div>
-                                        <div class="col-4 border-end">
-                                                <small class="text-muted text-uppercase d-block fw-bold" style="font-size: 10px;">Community</small>
-                                                {% if community_data is not none %}
-                                                <a href="/community_profile/{{ community_data.name }}" style="color:black !important" class="text-decoration-none">
-                                                <span class="fw-bold"> {{ community_data.name }}</span></a>
-                                                {% endif %}
-                                        </div>
-                                        <div class="col-4">
-                                                <small class="text-muted text-uppercase d-block fw-bold"
-                                                        style="font-size: 10px;">Hours Completed</small>
-                                                <span class="fw-bold"> 10</span>
-                                        </div>
-                                </div>
-                                </div>
-                                </div>
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-start">
+          <h6 class="fw-bold text-uppercase text-muted mb-3"  style="font-size: 12px" >   AVAILABILITY</h6>
+          <div class="card border-0 shadow-sm p-3 rounded-4">
+            {% if user_data.availability is not none %}
+            <p class="mb-0 text-secondary" id="availability_display">
+              {{ user_data.availability }}
+            </p>
+            {% else %}
+            <p class="mb-0 text-secondary" id="availability_display">
+              Availability not set
+            </p>
+            {% endif %}
+            <select
+              id="edit_availability"
+              style="display: none"
+              class="form-select border-0 bg-light rounded-3 mt-2"
+            >
+              <option selected disabled>{{ user_data.availability }}</option>
+              <option value="Weekdays">Weekdays</option>
+              <option value="Weekends">Weekends</option>
+              <option value="Weekdays/Weekends">Weekdays/Weekends</option>
+            </select>
+          </div>
+        </div>
 
-                                         {% if role != "chairperson" %}
-                                                <div class="mb-4" id="manage_helper_profile">
-                                                    <button class="btn-teal btn rounded-pill py-2 fw-bold mb-2" onclick="edit_helper_profile()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                                        </svg> Edit Profile
-                                                    </button>
-                                                </div>
+        <div class="card border-0 shadow-sm p-3 rounded-4 p-4 mb-4 text-start">
+          <h6 class="fw-bold text-muted mb-3" style="font-size: 12px">
+            SKILLS & EXPERTISE
+          </h6>
 
-                                                <div id="edit_helper_profile_actions" style="display: none;" class="mx-auto mt-3">
-                                                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                                     <button
-                                                                class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white"
-                                                                id="helper-profile-save"
-                                                                onclick="update_helper_profile()"
-                                                                >
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                                                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-                                                                </svg>
-                                                                Save Changes
-                                                                </button>
+          <div class="d-flex flex-wrap gap-2" id="skills_display">
+            {% if user_skills|length !=0 %} {% for i in
+            range(user_skills|length) %}
+            <span
+              class="badge bg-teal-soft fw-normal px-3 py-2 rounded-pill d-flex align-items-center"
+            >
+              {{ user_skills[i].skill }}
+              <img
+                src="/static/images/x.svg"
+                class="x-button"
+                width="16"
+                height="16"
+                onclick="remove_skill('{{ user_skills[i].skill }}')"
+                style="cursor: pointer"
+              />
+            </span>
+            {% endfor %}
+          {% else %}
+          <p class="mb-0 text-secondary" id="skills_display">
+            No skills selected
+          </p>
+          {% endif %}
+          </div>
+          <p style="display: none">
+            Hold the "ctrl" button and click or tap on the screen to select
+            multiple
+          </p>
 
-                                                                   <button onclick="" class="btn btn-light rounded-pill py-2">
-                                                                    Cancel
-                                                                </button>
-                                                                </div>
-                                                </div>
+          <select
+            class="form-select soft-input border-0 mt-3"
+            id="edit_skills"
+            style="display: none"
+            multiple
+          >
+            {% for i in range(skills|length) %}
+            <option value="{{ skills[i].skill }}">{{ skills[i].skill }}</option>
+            {% endfor %}
+          </select>
+        </div>
 
-                                        {% endif %}
+        <div class="card border-0 shadow-sm rounded-4 p-4 text-start">
+          <h6
+            class="fw-bold text-uppercase text-muted mb-4"
+            style="font-size: 12px"
+          >
+            Active Jobs
+            <span style="color: #d57a44">({{ user_jobs|length }})</span>
+          </h6>
+          <div class="vstack gap-3">
+            {% if user_jobs is not none %}
 
+              {% for i in range(user_jobs|length) %}
+                <a
+                  href="/view_post/{{ user_jobs[i].job_title }}"
+                  class="card border-0 shadow-sm p-3 rounded-4 text-decoration-none bg-white mb-3"
+                >
+                  <div class="d-flex justify-content-between">
+                    <h6 class="fw-bold text-dark mb-1">
+                      {{ user_jobs[i].job_title }}
+                    </h6>
+                    <span
+                      class="badge bg-orange text-white rounded-pill"
+                      style="font-size: 10px"
+                    >
+                      {{ user_jobs[i].short_type }}
+                    </span>
+                  </div>
+                  <p class="small text-muted mb-0">
+                    {{ user_jobs[i].job_description }}
+                  </p>
+                </a>
+                {% endfor %}
+            {% endif %}
+            </div>
+            </div>
 
-                                <div class="col-lh-5">
+        <div class="card border-0 shadow-sm rounded-4 p-4 text-start mt-4">
+            <h6 class="fw-bold text-uppercase text-muted mb-2">Experience</h6>
+            <div class="card border-0 shadow-sm p-3 rounded-4">
+              {% if user_experience|length !=0 %} {% for i in
+              range(user_experience|length) %}
+              <div class="experience-item mb-2 pb-2 border-bottom">
+                <small
+                  class="text-muted text-primary d-block"
+                  id="experience_display"
+                >
+                  {{ user_experience[i] }}
+                </small>
+              </div>
+              {% endfor %} {% else %}
+              <p class="mb-0 text-secondary" id="experience_display">
+                No previous experience
+              </p>
+              {% endif %}
+              <textarea
+                id="edit_experience"
+                class="form-control border-0 bg-light rounded-4"
+                style="display: none"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+</div>
 
-                                </div>
+          <div class="col-lg-4">
+            <div
+              class="card border-0 shadow-sm rounded-4 p-4 sticky-top"
+              style="top: 20px"
+            >
+              <h6
+                class="fw-bold text-uppercase text-muted mb-4"
+                style="font-size: 12px"
+              >
+                Performance
+              </h6>
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div
+                  class="rounded-circle bg-teal-soft d-flex align-items-center justify-content-center"
+                  style="width: 48px; height: 48px"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-clock"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"
+                    />
+                    <path
+                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p class="fw-bold mb-0">5 Jobs</p>
+                  <p class="text-muted small mb-0">Total Completed</p>
+                </div>
+              </div>
 
-                                <div class="mx-auto mt-4" style="max-width: 700px;">
-
-                                <div class="mb-4">
-                                <h6 class="fw-bold text-uppercase text-muted mb-2">
-                                        Availability
-                                </h6>
-                                
-                                
-                                <div class="card border-0 shadow-sm p-3 rounded-4">
-                                {% if user_data.availability is not none %}
-                                        <p class="mb-0 text-secondary" id="availability_display">
-                                            {{ user_data.availability }}
-                                        </p>
-                                {% else %}
-                                        <p class="mb-0 text-secondary" id="availability_display">
-                                            Availability not set
-                                        </p>
-                                {% endif %}
-                                        <select id="edit_availability" style="display: none;" class="btn soft-input w-100 text-start dropdown-toggle">
-                                        <option selected disabled>{{ user_data.availability }}</option>
-                                        <option value="Weekdays">Weekdays</option>
-                                        <option value="Weekends">Weekends</option>
-                                        <option value="Weekdays/Weekends">Weekdays/Weekends</option>
-                                        </select>
-                                </div>
-                                </div>
-
-                                <div class="mb-4">
-                                <h6 class="fw-bold text-uppercase text-muted mb-2">
-                                       Skills
-                                </h6>
-                                
-                                <div class="card border-0 shadow-sm p-3 rounded-4">
-                                        <div class="d-flex flex-wrap gap-2" id="skills_display">
-                                        {% if user_skills|length !=0 %}
-                                                {% for i in range(user_skills|length) %}
-                                                 <span class="badge bg-teal-soft">
-                                                        {{ user_skills[i].skill }}
-                                                        <img src="/static/images/x.svg" class="x-button" width="16" height="16" onclick="remove_skill('{{ user_skills[i].skill }}')"/>              
-                                                </span>
-
-                                                {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        <p class="mb-0 text-secondary" id="skills_display">
-                                            No skills selected
-                                        </p>
-                                        {% endif %}
-                                        <!-- <p style="display:none;">Hold the "ctrl" button and click or tap on the screen to select multiple</p> -->
-                                        <select class="form-select soft-input" id="edit_skills" style="display:none;" multiple>
-                                                {% for i in range(skills|length) %}
-                                                <option value="{{ skills[i].skill }}">
-                                                {{ skills[i].skill }}
-                                                </option>
-                                                {% endfor %}
-                                        </select>
-
-                                </div>
-                                </div>
-
-                                <div class="mx-auto mt-4" style="max-width:700px;">
-                                {% if user_jobs is not none %}
-                                <h6 class="fw-bold text-uppercase text-muted mb-2 ms-1">
-                                       Active Jobs {{ user_jobs|length }}
-                                </h6>
-
-                                <div class="d-flex flex-column" style="gap: 15px;">
-                                {% for i in range(user_jobs|length) %}
-                                        <div>
-                                                <a href="/view_post/{{ user_jobs[i].job_title }}" class="card border-0 shadow-sm p-3 rounded-4 text-decoration-none bg-white mb-3">
-                                                <div class="d-flex justify-content-between">
-                                                <h6 class="fw-bold text-dark">
-                                                        {{ user_jobs[i].job_title }}
-                                                </h6>
-                                                <small class="text-orange fw-bold">
-                                                        {{ user_jobs[i].short_type }}
-                                                </small>
-                                                </div>
-                                                <p class="small text-muted mb-0">
-                                                        {{ user_jobs[i].job_description }}         
-                                                </p>
-                                           </a>
-                                {% endfor %}
-                                </div>
-                        </div>
-                        {% endif %}
-                        <div class="mb-4">
-                                <h6 class="fw-bold text-uppercase text-muted mb-2">
-                                        Experience
-                                </h6>
-                                <div class="card border-0 shadow-sm p-3 rounded-4">
-                                        {% if user_experience|length !=0 %}
-                                                {% for i in range(user_experience|length) %}
-                                                <div class="experience-item mb-2 pb-2 border-bottom">
-                                                <small class="text-muted text-primary d-block" id="experience_display">
-                                                        {{ user_experience[i] }}
-                                                </small>
-                                                </div>
-                                                {% endfor %}
-                                        {% else %}
-                                        <p class="mb-0 text-secondary" id="experience_display">
-                                            No previous experience
-                                        </p>
-                                {% endif %}
-                                        <textarea
-                                        id="edit_experience"
-                                        class="form-control border-0 bg-light rounded-4"
-                                        style="display: none;"
-                                        rows="3"></textarea>
-                                   </div>
-                             
-                                </div>
-                        </div>
-                </div>                
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div
+                  class="rounded-circle bg-teal d-flex align-items-center justify-content-center border"
+                  style="width: 48px; height: 48px; color: white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-people"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p class="fw-bold mb-0">{{ community_data.name}}</p>
+                  <p class="text-muted small mb-9">Community Group</p>
+            </div>
+          </div>
+          </div>
+          </div>
+       </div>
+       </div>
+       </div>
