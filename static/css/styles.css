@@ -260,6 +260,17 @@ h3, h4, h5{
     margin-bottom: -3rem;
 }
 
+/* Helper profile*/
+.job-hover-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.job-hover-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+    background-color: #fafafa !important;
+}
+
+
 /* view post page */
 .job-image{
     max-height: 400px;
