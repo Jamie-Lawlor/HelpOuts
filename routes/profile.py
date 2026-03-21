@@ -62,11 +62,12 @@ def helper_profile_page(user_name):
             .where(UserSkills.user_id == user_data.id)
             .all()
         )
+    print(user_skills)
     if user_data.experience is not None:
         user_experience = user_data.experience.split(",")
         print(user_experience)
     else:
-        user_experience = "No previous experience"
+        user_experience = ""
 
     if user_data.community_id is not None:
         role = session["type"]
@@ -95,6 +96,7 @@ def helper_profile_page(user_name):
             skills = skills_data,
             community_data=None,
             user_jobs=None,
+            user_skills = user_skills,
             user_experience = user_experience,
         )
 
@@ -267,8 +269,11 @@ def update_helper_profile():
                 )
                 db.session.add(add_skills)
 
-        if update_user.experience is not updated_experience:
+        if update_user.experience is None:
             update_user.experience = updated_experience
+            
+        elif update_user.experience is not updated_experience:
+            update_user.experience = update_user.experience+","+updated_experience
         
         if updated_availability is None and updated_skills is None and updated_experience is None:
             return ""
