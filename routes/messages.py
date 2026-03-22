@@ -42,28 +42,28 @@ def temp_inbox_page():
     return render_template("/messages/temp_inbox.html")
 
 
-@messages_blueprint.route("/generate_keys", methods=["POST"])
-def generate_keys():
-    data = request.get_json()
-    # print(data)
-    private_key = data["private_key"]
-    public_key = data["public_key"]
+# @messages_blueprint.route("/generate_keys", methods=["POST"])
+# def generate_keys():
+#     data = request.get_json()
+#     # print(data)
+#     private_key = data["private_key"]
+#     public_key = data["public_key"]
 
-    # user_id = session["user_id"]
-    sender_id = 3  #
-    receiver_id = 2  # Ryan
+#     # user_id = session["user_id"]
+#     sender_id = 3  #
+#     receiver_id = 2  # Ryan
 
-    sender = Users.query.get_or_404(3)
-    receiver = Users.query.get_or_404(2)
+#     sender = Users.query.get_or_404(3)
+#     receiver = Users.query.get_or_404(2)
 
-    if sender is None:
-        return render_template("/messages/inbox.html")
-    if receiver is None:
-        return render_template("/messages/inbox.html")
+#     if sender is None:
+#         return render_template("/messages/inbox.html")
+#     if receiver is None:
+#         return render_template("/messages/inbox.html")
 
-    sender.public_key = public_key.encode("utf-8")
-    receiver.private_key = private_key.encode("utf-8")
-    db.session.commit()
+#     sender.public_key = public_key.encode("utf-8")
+#     receiver.private_key = private_key.encode("utf-8")
+#     db.session.commit()
 
-    print(public_key)
-    return f"{private_key}, {public_key}"
+#     print(public_key)
+#     return f"{private_key}, {public_key}"
