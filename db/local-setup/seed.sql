@@ -27,7 +27,10 @@ CREATE TABLE communities (
     name VARCHAR(100) NOT NULL,
     area VARCHAR(100) NOT NULL,
     description VARCHAR(500) NOT NULL,
-    profile_picture VARCHAR(1000)
+    profile_picture VARCHAR(1000),
+    lat DECIMAL(9,6) NULL,
+    lng DECIMAL(9,6) NULL
+
 );
 
 CREATE TABLE users (
@@ -187,17 +190,17 @@ CREATE TABLE subscriptions (
 
 
 
-INSERT INTO communities (id, name, area, description, profile_picture)
+INSERT INTO communities (id, name, area, description, profile_picture, lat, lng)
 VALUES
-(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png'),
-(2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL),
-(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL);
+(1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png', 54.00593713587985, -6.395891788845103),
+(2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL, 53.857960295207874, -6.540589690340175),
+(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL, 54.004786472339056, -6.401217344308929);
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$iRcIx60EXd2ZTtdh$5ae8152f4e262d7fa18af26847fe3d34e25c6c733f48751dab25a3dcc97fa1c86f7116ccbc7dacde12a98ae45ff4dd0f947c4c4a3a49627c9f01916d78cac029', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
-(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$rNmzUqAVnqDabPGO$0583e0b097a262d144e6326f9180e3abce595f1df663473fc2b75b93f6aa6679f95232959889ad8aec92dd45cbbd0a6382dbc110627266b5fc2759c14f3d2aaf', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, NULL, FALSE, 0.0, NULL),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
+(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
 
@@ -381,10 +384,18 @@ VALUES
 
 INSERT INTO job_location (id, lat, lng, job_id, icon_id)
 VALUES
-(1, 54.002345, -6.404321, 1, 1),
-(2, 54.002567, -6.405678, 2, 1),
-(3, 54.002789, -6.406789, 3, 1),
-(4, 54.003012, -6.407890, 4, 1);
+(1, 54.0023, -6.4037, 1, 1),  
+(2, 54.0015, -6.4055, 2, 1),  
+(3, 54.0030, -6.4020, 3, 1),  
+(4, 54.0045, -6.3985, 4, 1),
+(5, 54.0065, -6.4100, 5, 1),
+(6, 54.0078, -6.3995, 6, 1),
+(7, 54.0008, -6.4030, 7, 1),
+(8, 53.9985, -6.3950, 8, 1),
+(9, 53.8590, -6.5400, 9, 1),
+(10, 53.8605, -6.5380, 10, 1),
+(11, 53.9970, -6.3900, 11, 1),
+(12, 54.0005, -6.4105, 12, 1); 
 
 INSERT INTO reviews (id, star_rating, review, created_date, reviewer_id, helper_id, job_id)
 VALUES
@@ -431,3 +442,5 @@ DELIMITER //
             match_score DESC,
             j.id;
 	END//
+
+DELIMITER ;

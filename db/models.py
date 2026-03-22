@@ -224,6 +224,8 @@ class Communities(db.Model):
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     profile_picture = db.Column(db.String(1000), nullable =True)
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

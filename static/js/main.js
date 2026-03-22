@@ -165,6 +165,16 @@ function send_job_data() {
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("job_form_file_multiple")
+
+    // TODO Make location required, keep this statement until then
+    if(selectedLat !== null && selectedLng !== null) {
+        data.append("lat", selectedLat)
+        data.append("lng", selectedLng)
+    }
+
+
+
+
     // for (let i = 0; i < fileInput.files.length; i++) {
     //     let validFile = true
     //     const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()

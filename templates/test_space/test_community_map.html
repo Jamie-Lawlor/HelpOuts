@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block body_helper %}
+<div class="container">
+  <div class="h4">Test Map for Viewing Community Location</div>
+
+  <div class="row justify-content-center">
+    <div class="col-2">
+      <button class="btn btn-primary" onclick="showLocation()">Show</button>
+    </div>
+    <div class="col-2">
+      <button class="btn btn-primary" onclick="editLocation()">Edit</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="show-location">
+      <div class="h5">Show Location</div>
+      {% include "includes/community_map.html" %}
+    </div>
+    <div id="edit-location">
+      <div class="h5">Edit Location</div>
+      {% include "includes/community_edit_map.html" %}
+    </div>
+  </div>
+</div>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("show-location").style.display = "block";
+    document.getElementById("edit-location").style.display = "none";
+  });
+
+  function showLocation() {
+    document.getElementById("show-location").style.display = "block";
+    document.getElementById("edit-location").style.display = "none";
+  }
+
+  function editLocation() {
+    document.getElementById("show-location").style.display = "none";
+    document.getElementById("edit-location").style.display = "block";
+  }
+</script>
+{% endblock %}
