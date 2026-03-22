@@ -1,0 +1,63 @@
+<div id="job-map-create" style="height: 400px;"></div>
+<script>
+
+  async function loadJobCreateMap() {
+    const jobId = {{ job_data.id}}
+		console.log("job id="+jobId)
+
+    const response = await fetch(`/api/getJobMap/${jobId}`);
+    const locationData = await response.json();
+		console.log(locationData)
+
+    const { Map } = await google.maps.importLibrary("maps")
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
+
+
+    const map = new google.maps.Map(document.getElementById("job-map-create"), {
+      center: { lat: locationData.lat, lng: locationData.lng },
+      zoom: 15,
+      mapId: "c11f9394d7bb32ce20bc5b13"
+    });
+
+    const markerIcon = document.createElement("img")
+    markerIcon.src = locationData.icon_url
+    markerIcon.style.width = "80px"
+    markerIcon.style.height = "80px"
+
+  let marker = new AdvancedMarkerElement({
+    map: map,
+    position: { lat: locationData.lat, lng: locationData.lng },
+    title: locationData.name,
+    content: markerIcon
+  })
+
+    let firstClick = true
+    let newLocationMarker
+  map.addListener("click", (e) => {
+      if(firstClick) {
+      placeMarkerAndPanTo(e.latLng, map);
+        firstClick = false
+      } else {
+        replaceMarkerAndPanTo(e.latLng, map)
+      }
+
+  });
+
+  function placeMarkerAndPanTo(latLng, map) {
+      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+        position: latLng,
+        map: map,
+      });
+      map.panTo(latLng);
+    }
+    function replaceMarkerAndPanTo(latLng, map) {
+      newLocationMarker.setMap(null)
+      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+        position: latLng,
+        map: map,
+      });
+      map.panTo(latLng);
+    }
+  }
+  loadJobEditMap()
+</script>

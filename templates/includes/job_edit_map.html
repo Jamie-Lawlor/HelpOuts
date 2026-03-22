@@ -1,47 +1,64 @@
-<div id="job-map-edit" style="height: 400px;"></div>
+<div class="map-container">
+  <div id="job-map-edit" style="height: 400px"></div>
+  <div class="list-container">
+    <gmp-place-search selectable>
+      <gmp-place-all-content></gmp-place-all-content>
+      <gmp-place-nearby-search-request
+        max-result-count="5"
+      ></gmp-place-nearby-search-request>
+    </gmp-place-search>
+  </div>
+</div>
+
 <script>
+  let center = null
+  let map = null
+  async function loadJobEditMap() 
+  {
+    const communityId = {{ session["community_id"]}}
+    console.log("community_id="+communityId)
 
-  async function loadJobEditMap() {
-    const jobId = {{ job_data.id}}
-		console.log("job id="+jobId)
-
-    const response = await fetch(`/api/getJobMap/${jobId}`);
+    const response = await fetch(`/api/getCommunityMap/${communityId}`);
     const locationData = await response.json();
-		console.log(locationData)
+    console.log(locationData)
 
     const { Map } = await google.maps.importLibrary("maps")
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
 
 
-    const map = new google.maps.Map(document.getElementById("job-map-edit"), {
+    map = new google.maps.Map(document.getElementById("job-map-edit"), {
       center: { lat: locationData.lat, lng: locationData.lng },
       zoom: 15,
       mapId: "c11f9394d7bb32ce20bc5b13"
     });
+    center = { lat: locationData.lat, lng: locationData.lng }
 
     const markerIcon = document.createElement("img")
     markerIcon.src = locationData.icon_url
     markerIcon.style.width = "80px"
     markerIcon.style.height = "80px"
 
-  let marker = new AdvancedMarkerElement({
-    map: map,
-    position: { lat: locationData.lat, lng: locationData.lng },
-    title: locationData.name,
-    content: markerIcon
-  })
+    let marker = new AdvancedMarkerElement({
+      map: map,
+      position: { lat: locationData.lat, lng: locationData.lng },
+      title: locationData.name,
+      content: markerIcon
+    })
 
+    // map click
     let firstClick = true
     let newLocationMarker
-  map.addListener("click", (e) => {
+    map.addListener("click", (e) => {
+      selectedLat = e.latLng.lat()
+      selectedLng = e.latLng.lng()
+      console.log("LatLng to append to FormData - " + selectedLat, selectedLng)
       if(firstClick) {
       placeMarkerAndPanTo(e.latLng, map);
         firstClick = false
       } else {
         replaceMarkerAndPanTo(e.latLng, map)
       }
-
-  });
+    });
 
   function placeMarkerAndPanTo(latLng, map) {
       newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
@@ -60,4 +77,9 @@
     }
   }
   loadJobEditMap()
+
+
+  function resetLocation() {
+    map.setCenter(center)
+  }
 </script>

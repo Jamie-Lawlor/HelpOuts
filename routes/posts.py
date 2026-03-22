@@ -90,6 +90,8 @@ def create_job():
         type = request.form.get("type")
         start_date = request.form.get("start_date")
         end_date = request.form.get("end_date")
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
         file = request.files.get("images")
             # print("IMAGE_URL: ", image)
 
@@ -111,11 +113,20 @@ def create_job():
             short_type=type,
             created_date = db.func.current_timestamp(),
             start_date = start_date,
-            end_date = end_date
+            end_date = end_date,
         )
+        
         db.session.add(new_job)
         db.session.commit()
         job_data = Jobs.query.get_or_404(new_job.id)
+        job_location = JobLocation (
+            job_id = new_job.id,
+            icon_id = 1, # TODO Add icons to database
+            lat = lat,
+            lng = lng
+        )
+        db.session.add(job_location)
+        db.session.commit()
         return jsonify(job_data.to_dict())
 
 @posts_blueprint.route("/view_post/<post_title>")
