@@ -6,6 +6,7 @@ from db.models import Users, Messages, Communities
 from datetime import datetime
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
+import base64
 
 
 @socketio.on("join_room")
@@ -32,15 +33,14 @@ def message_sent(data):
         sender_data = Users.query.get_or_404(sender_id)
     
     message = data["message"]
-    #DELETE THE BELOW LINE WHEN ENCRYPTION IS FIXED
-    binary_message = message.encode('utf-8')
 
-    # public_key = sender.public_key
+    
+    public_key = sender_data.public_key
+    public_key_bytes = base64.b64decode(public_key)
+    RSA_public_key = RSA.import_key(public_key_bytes)
+    cipher = PKCS1_OAEP.new(RSA_public_key)
+    encrypted_message = cipher.encrypt(message.encode('utf-8'))
 
-    # RSA_public_key = RSA.import_key(public_key)
-    # cipher = PKCS1_OAEP.new(RSA_public_key)
-    # encrypted_message = cipher.encrypt(message.encode('utf-8'))
-#
     messageContent = {
         "user": sender_data.name,
         "message": message,
@@ -50,8 +50,7 @@ def message_sent(data):
     message = Messages(
         sender_id=int(sender_id),
         receiver_id=int(receiver_id),
-        # content=encrypted_message,
-        content=binary_message,
+        content=encrypted_message,
         timestamp = date
     )
     db.session.add(message)

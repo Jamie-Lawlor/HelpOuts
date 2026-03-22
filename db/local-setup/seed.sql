@@ -43,8 +43,7 @@ CREATE TABLE users (
     specialism VARCHAR(100) NULL,
     availability VARCHAR(18) NULL,
     experience VARCHAR(4000) NULL,
-    rating INT NULL, 
-    private_key BLOB NULL,
+    rating INT NULL,
     public_key BLOB NULL,
     profile_picture VARCHAR(1000) NULL,
     verified BOOLEAN NULL,
@@ -196,13 +195,13 @@ VALUES
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL, 53.857960295207874, -6.540589690340175),
 (3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL, 54.004786472339056, -6.401217344308929);
 
-INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
+INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, NULL, FALSE, 0.0, NULL),
-(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
-(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
-(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL, NULL, FALSE, 0.0, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL, NULL, FALSE, 0.0, 2);
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL, FALSE, 0.0, NULL),
+(2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, '/static/images/user_image_2.png', FALSE, 0.0, 1),
+(3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL, FALSE, 0.0, 1),
+(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL, FALSE, 0.0, 1),
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL, FALSE, 0.0, 2);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)

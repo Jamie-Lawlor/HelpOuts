@@ -4,6 +4,7 @@ from db.database import db
 from db.models import Users, Communities
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
+from Crypto.PublicKey import RSA
 import re
 import boto3
 from dotenv import load_dotenv
@@ -137,7 +138,8 @@ def register():
     # key = RSA.generate(2048)
     # private_key = key
     # public_key = key.public_key
-
+    public_key = request.form.get("public_key").encode('utf-8')
+    
     if user_type == "chairperson":
         user = Users(
         name=first_name + " " + last_name,
@@ -147,7 +149,7 @@ def register():
         work_area=location,
         rating=0,
         # private_key = private_key,
-        # public_key = public_key
+        public_key = public_key,
         community_id = community.id
     )
     else:
@@ -159,7 +161,7 @@ def register():
         work_area=location,
         rating=0,
         # private_key = private_key,
-        # public_key = public_key
+        public_key = public_key
     )
         
     
