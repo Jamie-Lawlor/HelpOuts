@@ -3,7 +3,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user
 import os
 from db.database import db
-from db.models import Users, Jobs, Projects
+from db.models import Users, Jobs, Projects, Communities
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -46,6 +46,13 @@ app.register_blueprint(api_blueprint, url_prefix="/api")
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+# context processor runs before the template is loaded, making api key
+# global so its available in base.html
+# https://flask.palletsprojects.com/en/stable/api/#flask.Flask.context_processor
+@app.context_processor
+def inject_gmaps_key():
+    return dict(GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
 
 @app.route("/manifest.json")
 def serve_manifest():
@@ -157,6 +164,11 @@ def mfa():
 @app.route("/get_type", methods=["GET"])
 def get_type():
     return session["type"]
+
+@app.route("/communityTestMap")
+def community_test_map():
+    community_id=1
+    return render_template("test_space/test_community_map.html", community_id=1, GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

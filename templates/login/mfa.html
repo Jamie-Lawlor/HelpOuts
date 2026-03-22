@@ -4,42 +4,39 @@
 <div class="login-page-container">
   <div class="login-container">
     <div class="login-side-image">
-      <img src="/static/images/MFA_icon.png" alt="Helpouts logo" />
-    </div>
-
-    <div class="login-form-card">
-      <div class="login-card-content">
-        <div class="header mb-4">
-          <div class="text-center">
-            <img
+       <img
               src="/static/images/templogo6.png"
               alt="Helpouts logo"
               class="login-logo"
             />
-          </div>
-          <p class="text-muted text-center">
-            Enter OTP Sent To Your Email.
-          </p>
+    </div>
+
+    <div class="login-form-card">
+      <div class="login-card-content">
+        <div class="header text-center mb-5">
+          <h2 style="color: #3d6978; font-weight:bold;">Check Your Email</h2>
+          <p class="text-muted">Enter the 6-digit code we sent to your inbox to continue.</p>
         </div>
 
         <form method="POST">
           <div class="mb-3 mt-3">
             <div class="form-group mb-4">
+              <span class="label-muted">VERIFICATION CODE<span style="color:#d57a44">*</span></span>
               {% if error%}
               <p class="error">{{ error }}</p>
               {% endif %}
               <input type="text"
                 name="otp"
                 class="form-control soft-input"
-                placeholder="OTP"
+                placeholder="000000"
                 aria-label="otp"
                 autocomplete="off"
                 required/>
             </div>
           </div>
 
-          <div class="d-flex gap-2 mt-4 mb-4">
-            <button class="login-btn" type="submit">Verify</button>
+          <div class="text-center mt-5">
+            <button class="login-btn" type="submit" style="width: 90%;">VERIFY & LOGIN</button>
           </div>
         </form>
       </div>

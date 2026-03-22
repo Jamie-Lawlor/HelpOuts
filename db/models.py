@@ -12,6 +12,8 @@ class Users(db.Model, UserMixin):
     type = db.Column( db.String(12), nullable=False, default="guest")  # can be 'chairperson' or 'helper'
     work_area = db.Column(db.String(100), nullable=True)
     specialism = db.Column(db.String(100), nullable=True)
+    availability = db.Column(db.String(18), nullable = True)
+    experience = db.Column(db.String(4000), nullable = True)
     rating = db.Column(db.Integer, nullable=True)
     private_key = db.Column(db.LargeBinary, nullable = True)
     public_key = db.Column(db.LargeBinary, nullable = True)
@@ -222,6 +224,8 @@ class Communities(db.Model):
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     profile_picture = db.Column(db.String(1000), nullable =True)
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

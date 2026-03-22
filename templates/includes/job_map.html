@@ -1,0 +1,29 @@
+<div id="job-map" style="height: 400px;"></div>
+<script>
+
+  async function loadJobMap() {
+    const jobId = {{ job_data.id}}
+		console.log("job id="+jobId)
+
+    const response = await fetch(`/api/getJobMap/${jobId}`);
+    const locationData = await response.json();
+		console.log(locationData)
+
+    const { Map } = await google.maps.importLibrary("maps")
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
+
+    // load map
+    const map = new Map(document.getElementById("job-map"), {
+      zoom: 15,
+      center: { lat: locationData.lat, lng: locationData.lng },
+      mapId: "c11f9394d7bb32cedccd69d4"
+    });
+
+    // load center marker
+    let marker = new AdvancedMarkerElement({
+      position: { lat: locationData.lat, lng: locationData.lng },
+      map:map
+    })
+  }
+  loadJobMap()
+</script>

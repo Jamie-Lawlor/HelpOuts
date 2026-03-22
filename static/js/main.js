@@ -153,6 +153,7 @@ function send_project_data() {
         .then(window.location.replace(`/home_page/`))
 }
 
+
 function send_job_data() {
     let data = new FormData()
     // const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
@@ -164,6 +165,16 @@ function send_job_data() {
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("job_form_file_multiple")
+
+    // TODO Make location required, keep this statement until then
+    if(selectedLat !== null && selectedLng !== null) {
+        data.append("lat", selectedLat)
+        data.append("lng", selectedLng)
+    }
+
+
+
+
     // for (let i = 0; i < fileInput.files.length; i++) {
     //     let validFile = true
     //     const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
@@ -385,5 +396,36 @@ function openSideBar(){
     document.getElementById("openSideBarBtn").style.display = "none";
 }
 
+function edit_helper_profile(){
+    document.getElementById("manage_helper_profile").style.display = "none";
+    document.getElementById("edit_helper_profile_actions").style.display = "block";
 
+    document.getElementById("availability_display").style.display = "none";
+    document.getElementById("edit_availability").style.display = "block";
 
+    document.getElementById("skills_display").style.display = "none";
+    document.getElementById("edit_skills").style.display = "block";
+
+    document.getElementById("experience_display").style.display = "none";
+    document.getElementById("edit_experience").style.display = "block";
+}
+
+function remove_skill(user_skill){
+   fetch("/remove_skill", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_skill }) })
+           .then(window.location.reload()) 
+}
+
+function update_helper_profile(){
+    updated_availability = document.getElementById("edit_availability").value
+
+    updated_skills = document.getElementById("edit_skills").selectedOptions
+    skillsArray = []
+    for(let i =0; i< updated_skills.length; i++){
+       skillsArray.push(updated_skills[i].label) 
+    }
+
+    updated_experience = document.getElementById("edit_experience").value
+    dataArray = [updated_availability, skillsArray, updated_experience]
+    fetch("/update_helper_profile", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+        .then(window.location.reload())
+}
