@@ -337,7 +337,7 @@ h3, h4, h5{
 .upload-section{
     border: 2px dashed #85D6D6;
     border-radius: 15px;
-    padding: 40px;
+    padding: 20px;
     text-align:center;
     background:#fff;
 }
@@ -1418,3 +1418,4 @@ table th {
     padding: 10px !important;
     vertical-align: top;
 }
+
