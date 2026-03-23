@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_user, logout_user, login_required
 from db.database import db
-from db.models import Users, Communities
+from db.models import Users, Communities, Logs
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 import re
@@ -188,12 +188,6 @@ def register():
         files=image_verification_body
     )
     # Handle AiClipse not working/ S3 issue
-    # 
-    # if image_verfication_response.ok:
-    #     # do db commits/session
-    # else:
-    #     return {"error": "Image verification request failed"}, 500
-
     response_data = image_verfication_response.json()
     print("THIS IS THE ERROR", response_data)
     user = Users.query.get_or_404(session["user_id"])
@@ -205,12 +199,31 @@ def register():
         session["accuracy"] = response_data["accuracy"]
         print("ACCURACY IN SESSION: ", session["accuracy"])
 
+    register_log = Logs (
+        user_id = user.id,
+        action = f"Registered as - {user.type}",
+        target = "Registration"
+    )
+    community_log = Logs (
+        user_id = user.id,
+        action = f"Created Community - {community_name}",
+        target = "Registration"
+    )
+    db.session.add(register_log)
+    db.session.add(community_log)
     db.session.commit()
     return redirect("/home_page")
 
 
 @login_blueprint.route("/logout")
 def logout():
+    log = Logs (
+        user_id = session["user_id"],
+        action = "Logged Out",
+        target = "Session"
+    )
+    db.session.add(log)
+    db.session.commit()
     logout_user()
     session.clear()
     return redirect("/")
@@ -241,6 +254,14 @@ def login_no_mfa():
     session["type"] = user.type
     session["images"] = os.getenv("AWS_S3_BASE_URL")
     login_user(user)
+
+    log = Logs (
+        user_id = session["user_id"],
+        action = "Logged In (No-MFA)",
+        target = "Session"
+    )
+    db.session.add(log)
+    db.session.commit()
     
     return redirect("/home_page/")
     
