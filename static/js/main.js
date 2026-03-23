@@ -429,3 +429,5 @@ function update_helper_profile(){
     fetch("/update_helper_profile", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
         .then(window.location.reload())
 }
+
+
