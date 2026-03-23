@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_required
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests, Logs
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests, JobSkills, Logs
 import os
 import json
 from pywebpush import webpush, WebPushException
@@ -193,8 +193,11 @@ def delete_post():
         return ""
     else:
         updated_data = int(request.json["post_id"])
+        # delete all constraints first
         UserJobs.query.filter_by(job_id = updated_data).delete()
         JobLocation.query.filter_by(job_id = updated_data).delete()
+        JobSkills.query.filter_by(job_id = updated_data).delete()
+        JobRequests.query.filter_by(job_id = updated_data).delete()
         Reviews.query.filter_by(job_id = updated_data).delete()
         log = Logs(
             user_id = session["user_id"],
