@@ -288,4 +288,15 @@ class Subscriptions(db.Model):
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
+class Logs(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    action = db.Column(db.String(250), nullable = False) # example - edit
+    target = db.Column(db.String(250), nullable = False) # example - job
+    time_stamp = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
 

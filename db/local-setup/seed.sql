@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP TABLE IF EXISTS logs;
 DROP TABLE IF EXISTS subscriptions;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS job_location;
@@ -185,6 +186,15 @@ CREATE TABLE reviews (
 CREATE TABLE subscriptions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     subscription_json VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE logs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    action VARCHAR(250) NOT NULL,
+    target VARCHAR(250) NOT NULL,
+    time_stamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    user_id INT NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
 

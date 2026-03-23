@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_required
 from db.database import db
-from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests
+from db.models import Projects, Jobs, Users, Subscriptions, UserJobs, JobLocation, Reviews, JobRequests, JobSkills, Logs
 import os
 import json
 from pywebpush import webpush, WebPushException
@@ -71,6 +71,12 @@ def create_project():
             end_date = end_date_selected
         )
         db.session.add(new_project)
+        log = Logs(
+            user_id = session["user_id"],
+            action = f"Create - {title}",
+            target = "Projects"
+        )
+        db.session.add(log)
         db.session.commit()
         new_project_data = Projects.query.get_or_404(new_project.id)
         return jsonify(new_project_data.to_dict())
@@ -125,6 +131,12 @@ def create_job():
             lat = lat,
             lng = lng
         )
+        log = Logs(
+            user_id = session["user_id"],
+            action = f"Create - {title}",
+            target = "Jobs"
+        )
+        db.session.add(log)
         db.session.add(job_location)
         db.session.commit()
         return jsonify(job_data.to_dict())
@@ -136,6 +148,13 @@ def view_specific_post_page(post_title):
     vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
     job_data = Jobs.query.filter_by(job_title=revert_format).first_or_404().to_dict()
     role = session["type"]
+    log = Logs(
+        user_id = session["user_id"],
+        action = f"Viewed - {job_data['id']}",
+        target = "Jobs"
+    )
+    db.session.add(log)
+    db.session.commit()
     print("ROLE: ", role)
     print("ROLE TYPE: ",type(role))
     return render_template("/posts/view_post.html", job_data=job_data, vapid_key=vapid_key, role=role, GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"))
@@ -157,6 +176,12 @@ def edit_post():
         updated_job.job_description = updated_description
         updated_job.area = updated_area
         updated_job.created_date = db.func.current_timestamp()
+        log = Logs(
+            user_id = session["user_id"],
+            action = f"Edit - {updated_data[0]}",
+            target = "Jobs"
+        )
+        db.session.add(log)
         db.session.commit()
         return updated_job.job_title
 
@@ -168,11 +193,18 @@ def delete_post():
         return ""
     else:
         updated_data = int(request.json["post_id"])
+        # delete all constraints first
         UserJobs.query.filter_by(job_id = updated_data).delete()
-        if updated_data > 0 and updated_data <=4:
-            JobLocation.query.filter_by(job_id = updated_data).delete()
-        if updated_data > 0 and updated_data <=3:
-            Reviews.query.filter_by(job_id = updated_data).delete()
+        JobLocation.query.filter_by(job_id = updated_data).delete()
+        JobSkills.query.filter_by(job_id = updated_data).delete()
+        JobRequests.query.filter_by(job_id = updated_data).delete()
+        Reviews.query.filter_by(job_id = updated_data).delete()
+        log = Logs(
+            user_id = session["user_id"],
+            action = f"Deleted - {updated_data}",
+            target = "Jobs"
+        )
+        db.session.add(log)
         db.session.delete(Jobs.query.filter_by(id=updated_data).first())
         db.session.commit()
         return ""
@@ -188,6 +220,12 @@ def job_accepted():
         job_id = job_id,
         created_date = db.func.current_timestamp(),  
     )
+    log = Logs(
+        user_id = session["user_id"],
+        action = f"Accepted - {job_id}",
+        target = "Jobs"
+    )
+    db.session.add(log)
     db.session.add(pending_job)
     db.session.commit()
     return ""

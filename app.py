@@ -3,7 +3,7 @@ from flask_mail import Mail, Message
 from flask_login import LoginManager, login_user
 import os
 from db.database import db
-from db.models import Users, Jobs, Projects, Communities
+from db.models import Users, Jobs, Projects, Communities, Logs
 from flask_migrate import Migrate
 from routes.login import login_blueprint
 from routes.messages import messages_blueprint
@@ -116,6 +116,13 @@ def login():
     if user is not None and password_check:
         session["email"] = email
         session.pop("otp", None)
+        logs = Logs(
+            user_id = session["user_id"],
+            action = "Logged In (MFA)",
+            target = "Session"
+        )
+        db.session.add(logs)
+        db.session.commit()
         return redirect("/mfa")
     else:
         error = "Email or Password Is Incorrect"

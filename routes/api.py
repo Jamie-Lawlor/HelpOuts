@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation, Communities
+from db.models import Users, JobLocation, Communities, Logs
 import uuid
 from PIL import Image
 import io
@@ -133,8 +133,15 @@ def update_profile_picture(user_id):
     
     # update users profile picure url in the db
     user.profile_picture = db_profile_picture_url
-    db.session.commit()
 
+    # LOGS
+    log = Logs (
+        user_id = user_id,
+        action = "Updated Profile Picture",
+        target = "Profile"
+    )
+    db.session.add(log)
+    db.session.commit()
     
     return {
         "message": "Image uploaded successfully",

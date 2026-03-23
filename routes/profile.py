@@ -10,7 +10,8 @@ from db.models import (
     JobRequests,
     CommunityRequests,
     Skills,
-    UserSkills
+    UserSkills,
+    Logs
 )
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
@@ -30,6 +31,13 @@ def community_profile_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
+    logs = Logs(
+        user_id = session["user_id"],
+        action = f"Viewed - {community_name}",
+        target = "Communities"
+    )
+    db.session.add(logs)
+    db.session.commit()
     if session["type"] != "chairperson":
         user_data = Users.query.get_or_404(session["user_id"])
         return render_template(
@@ -68,6 +76,14 @@ def helper_profile_page(user_name):
         print(user_experience)
     else:
         user_experience = ""
+
+    logs = Logs(
+        user_id = session["user_id"],
+        action = f"Viewed - {user_name}",
+        target = "Profile"
+    )
+    db.session.add(logs)
+    db.session.commit()
 
     if user_data.community_id is not None:
         role = session["type"]
@@ -192,6 +208,12 @@ def accept_helper_job():
     updated_job_request.confirmed_date = db.func.current_timestamp()
     check_helper = Users.query.where(Users.id == updated_job_request.user_id).first()
     job_accepted = UserJobs(user_id=check_helper.id, job_id=job_id)
+    logs = Logs(
+        user_id = session["user_id"],
+        action = f"Accepted - {job_id}",
+        target = "Jobs"
+    )
+    db.session.add(logs)
     db.session.add(job_accepted)
     db.session.commit()
     return ""
@@ -207,6 +229,12 @@ def join_community():
         community_id=community_id,
         created_date=db.func.current_timestamp(),
     )
+    logs = Logs(
+        user_id = session["user_id"],
+        action = f"Join Request - {community_id}",
+        target = "Communities"
+    )
+    db.session.add(logs)
     db.session.add(pending_request)
     db.session.commit()
     return ""
@@ -226,6 +254,13 @@ def accept_join_community():
     if status == "A":
         check_helper = Users.query.where(Users.id == accept_user.user_id).first()
         check_helper.community_id = accept_user.community_id
+
+    logs = Logs(
+        user_id = session["user_id"],
+        action = f"Accepted Request - {helper_id}",
+        target = "Communities"
+    )
+    db.session.add(logs)
     db.session.commit()
     return ""
 
@@ -278,6 +313,12 @@ def update_helper_profile():
         if updated_availability is None and updated_skills is None and updated_experience is None:
             return ""
         else:
+            logs = Logs (
+                user_id = session["user_id"],
+                action = f"Update Profile",
+                target = "Profile"
+            )
+            db.session.add(logs)
             db.session.commit()
 
         return ""
