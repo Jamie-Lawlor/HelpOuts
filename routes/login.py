@@ -91,7 +91,7 @@ def register():
                 description="",
                 profile_picture="",
             )
-
+            
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
@@ -142,29 +142,34 @@ def register():
     
     if user_type == "chairperson":
         user = Users(
-        name=first_name + " " + last_name,
-        email=email,
-        password=hashed_password,
-        type=user_type,
-        work_area=location,
-        rating=0,
-        # private_key = private_key,
-        public_key = public_key,
-        community_id = community.id
-    )
+            name=first_name + " " + last_name,
+            email=email,
+            password=hashed_password,
+            type=user_type,
+            work_area=location,
+            rating=0,
+            # private_key = private_key,
+            public_key = public_key,
+            community_id = community.id
+        )
+        # community_log = Logs (
+        #     user_id = user.id,
+        #     action = f"Created Community - {community_name}",
+        #     target = "Registration"
+        # )
+        # db.session.add(community_log)
     else:
         user = Users(
-        name=first_name + " " + last_name,
-        email=email,
-        password=hashed_password,
-        type=user_type,
-        work_area=location,
-        rating=0,
-        # private_key = private_key,
-        public_key = public_key
-    )
+            name=first_name + " " + last_name,
+            email=email,
+            password=hashed_password,
+            type=user_type,
+            work_area=location,
+            rating=0,
+            # private_key = private_key,
+            public_key = public_key
+        )
         
-    
     print(
         user.name,
         user.email,
@@ -206,13 +211,8 @@ def register():
         action = f"Registered as - {user.type}",
         target = "Registration"
     )
-    community_log = Logs (
-        user_id = user.id,
-        action = f"Created Community - {community_name}",
-        target = "Registration"
-    )
+        
     db.session.add(register_log)
-    db.session.add(community_log)
     db.session.commit()
     return redirect("/home_page")
 

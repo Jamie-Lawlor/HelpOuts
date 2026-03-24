@@ -116,12 +116,7 @@ def login():
     if user is not None and password_check:
         session["email"] = email
         session.pop("otp", None)
-        logs = Logs(
-            user_id = session["user_id"],
-            action = "Logged In (MFA)",
-            target = "Session"
-        )
-        db.session.add(logs)
+        
         db.session.commit()
         return redirect("/mfa")
     else:
@@ -149,6 +144,12 @@ def mfa():
                 # TODO profile picture comes from S3 now, not the database
                 session["profile_picture"] = user.profile_picture
                 session["type"] = user.type
+                logs = Logs(
+                    user_id = session["user_id"],
+                    action = "Logged In (MFA)",
+                    target = "Session"
+                )
+                db.session.add(logs)
                 return redirect("/home_page/")
         else:
             error = "Incorrect One Time Password, Please Try Again."

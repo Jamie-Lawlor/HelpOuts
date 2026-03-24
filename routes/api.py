@@ -55,6 +55,7 @@ def update_profile_picture(user_id):
     # send image to AiClipse for verification
     verdict = ""
     verification_status = "skipped"
+    accuracy = ""
     try:
         profile_picture.stream.seek(0)
         response = requests.post(
@@ -150,7 +151,7 @@ def update_profile_picture(user_id):
         "profile_url": db_profile_picture_url,
         "verification_status": verification_status,
         "verdict": verdict,
-        "accuracy": accuracy,
+        "accuracy": accuracy
     }, 200
     
 
