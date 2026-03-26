@@ -655,6 +655,22 @@ h6{
     opacity: 1;
 }
 
+.dark-teal-btn{
+    background-color: #3D6978;
+    color: white;
+    font-weight: 800;
+    padding: 14px 40px;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(48, 87, 146, 0.3);
+    width: 85%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+    letter-spacing: 1px;
+}
+
 .bg-teal{
     background-color: #3D6978;
 }
@@ -1419,3 +1435,21 @@ table th {
     vertical-align: top;
 }
 
+.project-card {
+    transition: all 0.2s ease;
+    border: 2px solid transparent !important;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    background-color: #f0fdfa !important; 
+}
+
+.project-card.active-project {
+    border-color: #20c997 !important;
+    background-color: #f0fdfa !important;
+}
+
+.overflow-auto::-webkit-scrollbar {
+    display: none;
+}
