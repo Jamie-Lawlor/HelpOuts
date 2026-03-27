@@ -36,14 +36,21 @@ def message_sent(data):
 
     
     public_key = sender_data.public_key
-    public_key_bytes = base64.b64decode(public_key)
-    RSA_public_key = RSA.import_key(public_key_bytes)
+    private_key = sender_data.private_key
+    
+    # public_key_bytes = base64.b64decode(public_key)
+    RSA_public_key = RSA.import_key(public_key)
     cipher = PKCS1_OAEP.new(RSA_public_key)
     encrypted_message = cipher.encrypt(message.encode('utf-8'))
 
+    # private_key_bytes = base64.b64decode(private_key)
+    RSA_private_key = RSA.import_key(private_key)
+    decipher = PKCS1_OAEP.new(RSA_private_key)
+    decrypted_message = decipher.decrypt(encrypted_message).decode('utf-8')
+
     messageContent = {
         "user": sender_data.name,
-        "message": message,
+        "message": decrypted_message,
         "sent": date.strftime("%H:%M"),
         "profile_picture":sender_data.profile_picture
     }

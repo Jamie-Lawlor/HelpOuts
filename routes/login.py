@@ -78,6 +78,13 @@ def register():
         user_type,
         images,
     )
+
+    key = RSA.generate(4096)
+    private_key = key.export_key()
+    public_key = key.public_key().export_key()
+    print(private_key)
+    print(public_key)
+
     if user_type == "chairperson":
         community_name = request.form.get("community_name")
         if_exists = Communities.query.filter_by(name=community_name).first()
@@ -90,6 +97,8 @@ def register():
                 area=location,
                 description="",
                 profile_picture="",
+                private_key = private_key,
+                public_key = public_key,
             )
             
             db.session.add(community)
@@ -135,10 +144,8 @@ def register():
 
     hashed_password = generate_password_hash(password)
 
-    # key = RSA.generate(2048)
-    # private_key = key
-    # public_key = key.public_key
-    public_key = request.form.get("public_key").encode('utf-8')
+    # public_key = request.form.get("public_key").encode('utf-8')
+    # private_key = request.form.get("private_key").encode('utf-8')
     
     if user_type == "chairperson":
         user = Users(
@@ -148,7 +155,7 @@ def register():
             type=user_type,
             work_area=location,
             rating=0,
-            # private_key = private_key,
+            private_key = private_key,
             public_key = public_key,
             community_id = community.id
         )
@@ -166,7 +173,7 @@ def register():
             type=user_type,
             work_area=location,
             rating=0,
-            # private_key = private_key,
+            private_key = private_key,
             public_key = public_key
         )
         

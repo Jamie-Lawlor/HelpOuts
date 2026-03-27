@@ -225,7 +225,8 @@ navbar %}{% endblock %} {% block body %}
              <p>HelpOuts reserves the right to edit, modify and change these terms and conditions at anytime, so they should be reviewed frequently. Any changes made will take effect immediately, and we will notify you of any changes made.
             </p>
             </div>
-            <input type="hidden" name="public_key" id="key_generation">
+            <!-- <input type="hidden" name="public_key" id="key_generation">
+            <input type="hidden" name="private_key" id="private_key_generation"> -->
             <div class="form-group mb-3 d-flex align-items-center gap-2">
               <input class="form-check-input mt-0" type="checkbox" id="terms" required>
               <label for="terms" class="form-check-label small text-muted">I agree to the HelpOuts Terms and Conditions</label>
@@ -325,7 +326,5 @@ function showCommunityNameInput(isCommunitySelected){
   }
 }
 </script>
-
-<script src="/static/js/encryption_keys.js"></script>
 
 {% endblock %}
