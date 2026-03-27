@@ -12,7 +12,7 @@
 }
 
 .btn-teal:hover{
-    background-color: #5a92a5 !important;
+    background-color: #3D6978 !important;
 }
 
 .info-badge{
@@ -293,6 +293,7 @@ h3, h4, h5, h6{
     border: none;
     border-bottom: 3px solid transparent;
     font-weight: 600;
+    padding: 10px 20px;
 }
 
 .job-tabs .nav-link.active{
@@ -1486,4 +1487,27 @@ button{
     background-color: #2D4F5A !important; 
     transform: translateY(-1px); 
     box-shadow: 0 4px 12px rgba(61, 105, 120, 0.2);
+}
+
+.btn.btn-offer-orange {
+    background-color: #D57A44 !important; /* Force the orange to show */
+    color: white !important; 
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(213, 122, 68, 0.3);
+    display: flex; /* Ensures alignment works */
+    align-items: center;
+    justify-content: center;
+}
+
+/* This handles the hover state */
+.btn.btn-offer-orange:hover {
+    background-color: #b86435 !important; 
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(213, 122, 68, 0.4);
 }
