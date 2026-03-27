@@ -31,6 +31,8 @@ def community_profile_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
+    usersList = Users.query.where(Users.community_id == Communities.id).all()
+    print(usersList)
     logs = Logs(
         user_id = session["user_id"],
         action = f"Viewed - {community_name}",
@@ -47,6 +49,7 @@ def community_profile_page(community_name):
             jobs=all_job_data,
             project_names=get_project_names,
             user_data=user_data,
+            usersList = usersList
         )
     else:
         return render_template(
