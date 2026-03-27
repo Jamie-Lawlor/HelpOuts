@@ -11,7 +11,7 @@ from db.models import (
     CommunityRequests,
     Skills,
     UserSkills,
-    Logs
+    Logs,
 )
 
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
@@ -31,12 +31,14 @@ def community_profile_page(community_name):
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
     get_project_names = Projects.query.join(Jobs, Projects.id == Jobs.project_id).all()
-    usersList = Users.query.where(Users.community_id == Communities.id).all()
+    usersList = Users.query.where(
+        Users.community_id == community_id, Users.type == "helper"
+    ).all()
     print(usersList)
     logs = Logs(
-        user_id = session["user_id"],
-        action = f"Viewed - {community_name}",
-        target = "Communities"
+        user_id=session["user_id"],
+        action=f"Viewed - {community_name}",
+        target="Communities",
     )
     db.session.add(logs)
     db.session.commit()
@@ -48,8 +50,8 @@ def community_profile_page(community_name):
             projects=project_data,
             jobs=all_job_data,
             project_names=get_project_names,
+            usersList=usersList,
             user_data=user_data,
-            usersList = usersList
         )
     else:
         return render_template(
@@ -58,6 +60,7 @@ def community_profile_page(community_name):
             projects=project_data,
             jobs=all_job_data,
             project_names=get_project_names,
+            usersList=usersList,
             user_data=None,
         )
 
@@ -69,10 +72,10 @@ def helper_profile_page(user_name):
     user_data = Users.query.filter_by(name=revert_format).first_or_404()
     skills_data = Skills.query.all()
     user_skills = (
-            Skills.query.join(UserSkills, Skills.id == UserSkills.skill_id)
-            .where(UserSkills.user_id == user_data.id)
-            .all()
-        )
+        Skills.query.join(UserSkills, Skills.id == UserSkills.skill_id)
+        .where(UserSkills.user_id == user_data.id)
+        .all()
+    )
     print(user_skills)
     if user_data.experience is not None:
         user_experience = user_data.experience.split(",")
@@ -81,9 +84,7 @@ def helper_profile_page(user_name):
         user_experience = ""
 
     logs = Logs(
-        user_id = session["user_id"],
-        action = f"Viewed - {user_name}",
-        target = "Profile"
+        user_id=session["user_id"], action=f"Viewed - {user_name}", target="Profile"
     )
     db.session.add(logs)
     db.session.commit()
@@ -97,26 +98,26 @@ def helper_profile_page(user_name):
             .where(UserJobs.user_id == user_data.id)
             .all()
         )
-        
+
         return render_template(
             "/profile/helper_profile.html",
             user_data=user_data,
             community_data=joined_community_data,
             user_jobs=all_job_data,
-            skills = skills_data,
-            user_skills = user_skills,
-            user_experience = user_experience,
+            skills=skills_data,
+            user_skills=user_skills,
+            user_experience=user_experience,
             role=role,
         )
     else:
         return render_template(
             "/profile/helper_profile.html",
             user_data=user_data,
-            skills = skills_data,
+            skills=skills_data,
             community_data=None,
             user_jobs=None,
-            user_skills = user_skills,
-            user_experience = user_experience,
+            user_skills=user_skills,
+            user_experience=user_experience,
         )
 
 
@@ -212,9 +213,7 @@ def accept_helper_job():
     check_helper = Users.query.where(Users.id == updated_job_request.user_id).first()
     job_accepted = UserJobs(user_id=check_helper.id, job_id=job_id)
     logs = Logs(
-        user_id = session["user_id"],
-        action = f"Accepted - {job_id}",
-        target = "Jobs"
+        user_id=session["user_id"], action=f"Accepted - {job_id}", target="Jobs"
     )
     db.session.add(logs)
     db.session.add(job_accepted)
@@ -233,9 +232,9 @@ def join_community():
         created_date=db.func.current_timestamp(),
     )
     logs = Logs(
-        user_id = session["user_id"],
-        action = f"Join Request - {community_id}",
-        target = "Communities"
+        user_id=session["user_id"],
+        action=f"Join Request - {community_id}",
+        target="Communities",
     )
     db.session.add(logs)
     db.session.add(pending_request)
@@ -259,13 +258,14 @@ def accept_join_community():
         check_helper.community_id = accept_user.community_id
 
     logs = Logs(
-        user_id = session["user_id"],
-        action = f"Accepted Request - {helper_id}",
-        target = "Communities"
+        user_id=session["user_id"],
+        action=f"Accepted Request - {helper_id}",
+        target="Communities",
     )
     db.session.add(logs)
     db.session.commit()
     return ""
+
 
 @profile_blueprint.route("/remove_skill", methods=["POST"])
 def remove_skill():
@@ -273,55 +273,60 @@ def remove_skill():
         return ""
     else:
         skill_data = request.json["data"]
-        skill_to_be_removed= UserSkills.query.join(Users, UserSkills.user_id == Users.id).join(Skills, UserSkills.skill_id == Skills.id).where(UserSkills.user_id == session["user_id"], Skills.skill == skill_data).first_or_404()
+        skill_to_be_removed = (
+            UserSkills.query.join(Users, UserSkills.user_id == Users.id)
+            .join(Skills, UserSkills.skill_id == Skills.id)
+            .where(UserSkills.user_id == session["user_id"], Skills.skill == skill_data)
+            .first_or_404()
+        )
         db.session.delete(skill_to_be_removed)
         db.session.commit()
         return ""
+
 
 @profile_blueprint.route("/update_helper_profile", methods=["POST"])
 def update_helper_profile():
     # if session["type"] != "helper":
     #     return ""
     # else:
-        updated_data = request.json["data"]
-        updated_availability = updated_data[0]
-        updated_skills = updated_data[1]
-        updated_experience = updated_data[2].replace("\n", ",")
-        print(updated_experience)
- 
-        update_user = Users.query.get_or_404(session["user_id"])
-        if update_user.availability is not updated_availability:
-            update_user.availability = updated_availability
+    updated_data = request.json["data"]
+    updated_availability = updated_data[0]
+    updated_skills = updated_data[1]
+    updated_experience = updated_data[2].replace("\n", ",")
+    print(updated_experience)
 
-        if updated_skills is not None or len(updated_skills) != 0:
-            skills_list = Skills.query.all()
-            skills_id_list=[]
-            for skill in skills_list:
-                if skill.skill in updated_skills:
-                    skills_id_list.append(skill.id)
+    update_user = Users.query.get_or_404(session["user_id"])
+    if update_user.availability is not updated_availability:
+        update_user.availability = updated_availability
 
-            for skill_id in skills_id_list:
-                add_skills = UserSkills(
-                    user_id = session["user_id"],
-                    skill_id = skill_id
-                )
-                db.session.add(add_skills)
+    if updated_skills is not None or len(updated_skills) != 0:
+        skills_list = Skills.query.all()
+        skills_id_list = []
+        for skill in skills_list:
+            if skill.skill in updated_skills:
+                skills_id_list.append(skill.id)
 
-        if update_user.experience is None:
-            update_user.experience = updated_experience
-            
-        elif update_user.experience is not updated_experience:
-            update_user.experience = update_user.experience+","+updated_experience
-        
-        if updated_availability is None and updated_skills is None and updated_experience is None:
-            return ""
-        else:
-            logs = Logs (
-                user_id = session["user_id"],
-                action = f"Update Profile",
-                target = "Profile"
-            )
-            db.session.add(logs)
-            db.session.commit()
+        for skill_id in skills_id_list:
+            add_skills = UserSkills(user_id=session["user_id"], skill_id=skill_id)
+            db.session.add(add_skills)
 
+    if update_user.experience is None:
+        update_user.experience = updated_experience
+
+    elif update_user.experience is not updated_experience:
+        update_user.experience = update_user.experience + "," + updated_experience
+
+    if (
+        updated_availability is None
+        and updated_skills is None
+        and updated_experience is None
+    ):
         return ""
+    else:
+        logs = Logs(
+            user_id=session["user_id"], action=f"Update Profile", target="Profile"
+        )
+        db.session.add(logs)
+        db.session.commit()
+
+    return ""
