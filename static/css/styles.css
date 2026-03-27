@@ -1,3 +1,4 @@
+
 /* COMMUNITY PROFILE */
 .hide{
     display: none;
@@ -192,7 +193,7 @@ div.card.helper-cards{
 } 
 
 body{
-    font-family: "Inter", system-ui, sans-serif !important;
+    /* font-family: "Inter", sans-serif; */
     /* font-size: 16px;
     line-height: 1.5;
     color: #1f2d33; */
@@ -211,14 +212,24 @@ body{
     /* margin-bottom: -60px; */
 }
 
-h1, h2{
+h1{
     font-family: 'Source Serif 4', serif;
     font-weight: 700;
+    color: #3D6978;
+    font-size: 32px;
 }
 
-h3, h4, h5{
+h2{
     font-family: 'Source Serif 4', serif;
     font-weight: 600;
+    color: #3D6978;
+    font-size: 24px;
+}
+
+h3, h4, h5, h6{
+    font-family: 'Public Sans', sans-serif !important;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 
@@ -1446,10 +1457,33 @@ table th {
 }
 
 .project-card.active-project {
-    border-color: #20c997 !important;
+    border-color: #85D6D6 !important;
     background-color: #f0fdfa !important;
 }
 
 .overflow-auto::-webkit-scrollbar {
     display: none;
+}
+
+h6{
+    font-family: "Inter", sans-serif !important;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 22px ;
+}
+
+button{
+    font-family: 'Public Sans', sans-serif !important;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 10px 24px;
+    transition: all 0.2s ease;
+    border-radius: 50px;
+}
+
+.btn-teal:hover{
+    background-color: #2D4F5A !important; 
+    transform: translateY(-1px); 
+    box-shadow: 0 4px 12px rgba(61, 105, 120, 0.2);
 }
