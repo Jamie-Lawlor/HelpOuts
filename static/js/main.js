@@ -200,7 +200,7 @@ function send_job_data() {
         .then(response => response.text())
         .then(jsonData => {
             data = JSON.parse(jsonData)
-            window.location.replace(`/view_post/${data.job_title}`)
+            // window.location.replace(`/view_post/${data.job_title}`)
         })
 }
 
@@ -377,7 +377,7 @@ function test_login_helper(){
 }
 function test_login_admin(){
     
-        fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 1 }) })
+        fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 4 }) })
            .then(response => response.json())
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
