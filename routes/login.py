@@ -261,6 +261,9 @@ def login_no_mfa():
     session["user_name"] = user.name
     session["profile_picture"] = f"{os.getenv('AWS_S3_BUCKET')}{user.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user.type
+    if user.community_id is not None:
+        community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id).first()
+        session['community_name'] = community.name
     session["images"] = os.getenv("AWS_S3_BASE_URL")
     login_user(user)
 
@@ -288,6 +291,10 @@ def test_login_user():
      # TODO profile picture comes from S3 now, not the database
     session["profile_picture"] = user_data.profile_picture
     session["type"] = user_data.type
+    if user_data.community_id is not None:
+        community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user_data.community_id).first()
+        session['community_name'] = community.name
+
     if session.get("community_id") is not None:
         session.pop("community_id", None)
     # TODO profile picture comes from S3 now, not the database

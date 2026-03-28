@@ -145,6 +145,13 @@ def mfa():
                 login_user(user)
                 session.pop("email", None)
                 session["user_id"] = user.id
+                session["user_name"] = user.name
+                print(user.community_id)
+                if user.community_id is not None:
+                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id).first()
+                    session['community_name'] = community.name
+                else:
+                    session['community_name'] = None
                 # TODO profile picture comes from S3 now, not the database
                 session["profile_picture"] = user.profile_picture
                 session["type"] = user.type
@@ -155,7 +162,7 @@ def mfa():
                 )
                 db.session.add(logs)
                 if session["type"] == "chairperson":
-                    community = Communities.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
                     print(community.name)
                     return redirect("/community_profile/{{ community.name }}")
                 else:
