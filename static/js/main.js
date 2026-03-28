@@ -200,7 +200,7 @@ function send_job_data() {
         .then(response => response.text())
         .then(jsonData => {
             data = JSON.parse(jsonData)
-            // window.location.replace(`/view_post/${data.job_title}`)
+            window.location.replace(`/view_post/${data.job_title}`)
         })
 }
 
