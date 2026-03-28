@@ -1490,7 +1490,7 @@ button{
 }
 
 .btn.btn-offer-orange {
-    background-color: #D57A44 !important; /* Force the orange to show */
+    background-color: #D57A44 !important; 
     color: white !important; 
     font-weight: 800;
     font-size: 14px;
@@ -1499,15 +1499,94 @@ button{
     border: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(213, 122, 68, 0.3);
-    display: flex; /* Ensures alignment works */
+    display: flex; 
     align-items: center;
     justify-content: center;
 }
 
-/* This handles the hover state */
+
 .btn.btn-offer-orange:hover {
     background-color: #b86435 !important; 
     color: white !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(213, 122, 68, 0.4);
 }
+
+
+/* Timetable */
+.calendar-wrapper {
+    background: #ffffff;
+    border-color: #dee2e6 !important;
+}
+
+.group-calendar-table {
+    border-collapse: collapse;
+}
+
+.group-calendar-table thead th {
+    font-weight: 700;
+    color: #495057;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #f8f9fa;
+}
+
+.group-calendar-table tbody td {
+    height: 90px; 
+    vertical-align: top;
+    padding: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.group-calendar-table tbody td:hover:not(.time-column) {
+    background-color: #fcfdfe; 
+    cursor: pointer;
+}
+
+.group-calendar-table td.time-column {
+    font-size: 0.9rem;
+    color: #3D6978 !important; 
+    background-color: #fcfdfe;
+    border-right: 2px solid #3D6978;
+    width: 80px;
+}
+
+.calendar-event {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.calendar-event.assigned {
+    background-color: #ffffff;
+    border-color: #e9ecef;
+}
+
+.calendar-event.assigned:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.calendar-event.urgent {
+    background-color: #fffaf5; 
+    border: 1px solid rgba(213, 122, 68, 0.3);
+}
+
+.calendar-cell.urgent-cell {
+    background-color: #fffcf8;
+    border: 2px dashed rgba(213, 122, 68, 0.4);
+}
+
+.category-strip {
+    width: 4px;
+    height: 35px; 
+    background-color: #ccc;
+}
+
+.cat-purple .category-strip { background-color: #85D6D6; } 
+.cat-blue .category-strip { background-color: #3d7878; }  
+.cat-orange .category-strip { background-color: #D57A44; } 
+
+.tiny { font-size: 0.7rem; }
+.text-teal { color: #3D6978; }
+.text-orange { color: #D57A44; }

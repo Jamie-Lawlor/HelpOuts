@@ -58,130 +58,110 @@
                                 <div class="card shadow-sm border-0 p-4" style="border-radius: 15px;">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <h5 class="fw-bold mb-0"> Group Calendar</h5>
+                                                <h6 class="">For Week beginning 30th March 2026</h6>
                                         </div>
                                         <div class="wrapper">
-  <table>
-    <tr>
-      <th>Time</th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>Saturday</th>
-      <th>Sunday</th>
-    </tr>
-    <tr>
-      <td class="text-center align-middle fw-bold"> 9:00</td>
-      <td>
-        <div class="status-card-helper text-center">
-            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19"> Park Benches</div>
-            <div class="small"><img src="/static/images/user_icon.svg" width="19" height="19"> Jemma Simmons</div>
-        </div>
-        </td>
-
-        </td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">10:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-       <td>
-        <div class="status-card-helper text-center">
-            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19">Sort Collected Waste</div>
-            <div class="small"><img src="/static/images/user_icon.svg" width="19" height="19">Leo Fitz</div>
-        </div>
-        </td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">11:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">12:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">13:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td>
-        <div class="status-card-urgent text-center">
-            <div class="fw-bold"><img src="/static/images/tools_icon.svg" width="19" height="19">Collect Litter</div>
-            <div class="small"> <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
-                                    <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
-                                    <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-                                    </svg>Helper Needed</div>
-        </div>
-        </td>
-    </tr>
-    <tr>
-      <td class="fw-bold">14:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">15:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">16:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-    <tr>
-      <td class="fw-bold">17:00</td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-      <td contenteditable=""></td>
-    </tr>
-  </table>
+<div class="calendar-wrapper shadow-sm rounded-4 border overflow-hidden">
+    <table class="group-calendar-table m-0 w-100">
+        <thead class="bg-light border-bottom">
+            <tr>
+                <th class="p-3 text-center align-middle">Time</th>
+                <th class="p-3">Monday</th>
+                <th class="p-3">Tuesday</th>
+                <th class="p-3">Wednesday</th>
+                <th class="p-3">Thursday</th>
+                <th class="p-3">Friday</th>
+                <th class="p-3">Saturday</th>
+                <th class="p-3">Sunday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="time-column text-center align-middle fw-bold text-teal">09:00</td>
+                <td class="calendar-cell">
+                    <div class="calendar-event assigned cat-purple d-flex align-items-center rounded-3 p-2">
+                        <div class="category-strip rounded-pill me-2"></div>
+                        <div>
+                            <div class="event-title fw-bold text-dark small mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#3D6978" class="bi bi-tag" viewBox="0 0 16 16">
+                                <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0"/>
+                                <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1m0 5.586 7 7L13.586 9l-7-7H2z"/>
+                                </svg> Posting T-Shirts
+                            </div>
+                            <div class="event-assignee text-muted tiny">
+                                <img src="/static/images/user_icon.svg" width="18px" height="18px"><p class="fw-bold" style="color: #3d7878;">Sarah O'Brien</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+            </tr>
+            <tr>
+                <td class="time-column text-center align-middle fw-bold text-teal">10:00</td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell">
+                    <div class="calendar-event assigned cat-purple d-flex align-items-center rounded-3 p-2">
+                        <div class="category-strip rounded-pill me-2"></div>
+                        <div>
+                            <div class="event-title fw-bold text-dark small mb-1">
+                                 <img src="/static/images/tools_icon.svg" width="18px" height="18"> Setup Banners
+                            </div>
+                                <div class="event-assignee text-muted tiny">
+                                <img src="/static/images/user_icon.svg" width="18px" height="18px"><p class="fw-bold" style="color: #3d7878;">Ellen Walsh</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+            </tr>
+            <tr>
+                <td class="time-column text-center align-middle fw-bold text-teal">13:00</td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell">
+                    <div class="calendar-event assigned cat-blue d-flex align-items-center rounded-3 p-2">
+                        <div class="category-strip rounded-pill me-2"></div>
+                        <div>
+                            <div class="event-title fw-bold text-dark small mb-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#3d7878" class="bi bi-cup-straw" viewBox="0 0 16 16">
+                            <path d="M13.902.334a.5.5 0 0 1-.28.65l-2.254.902-.4 1.927c.376.095.715.215.972.367.228.135.56.396.56.82q0 .069-.011.132l-.962 9.068a1.28 1.28 0 0 1-.524.93c-.488.34-1.494.87-3.01.87s-2.522-.53-3.01-.87a1.28 1.28 0 0 1-.524-.93L3.51 5.132A1 1 0 0 1 3.5 5c0-.424.332-.685.56-.82.262-.154.607-.276.99-.372C5.824 3.614 6.867 3.5 8 3.5c.712 0 1.389.045 1.985.127l.464-2.215a.5.5 0 0 1 .303-.356l2.5-1a.5.5 0 0 1 .65.278M9.768 4.607A14 14 0 0 0 8 4.5c-1.076 0-2.033.11-2.707.278A3.3 3.3 0 0 0 4.645 5c.146.073.362.15.648.222C5.967 5.39 6.924 5.5 8 5.5c.571 0 1.109-.03 1.588-.085zm.292 1.756C9.445 6.45 8.742 6.5 8 6.5c-1.133 0-2.176-.114-2.95-.308a6 6 0 0 1-.435-.127l.838 8.03c.013.121.06.186.102.215.357.249 1.168.69 2.438.69s2.081-.441 2.438-.69c.042-.029.09-.094.102-.215l.852-8.03a6 6 0 0 1-.435.127 9 9 0 0 1-.89.17zM4.467 4.884s.003.002.005.006zm7.066 0-.005.006zM11.354 5a3 3 0 0 0-.604-.21l-.099.445.055-.013c.286-.072.502-.149.648-.222"/>
+                            </svg> Tea & Coffee Stand
+                            </div>
+                              <div class="event-assignee text-muted tiny">
+                                <img src="/static/images/user_icon.svg" width="18px" height="18px"><p class="fw-bold" style="color: #3d7878;">Mark Ryan</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="calendar-cell"></td>
+                <td class="calendar-cell urgent-cell">
+                    <div class="calendar-event urgent cat-orange d-flex align-items-center rounded-3 p-2 shadow-sm">
+                        <div class="category-strip rounded-pill me-2"></div>
+                        <div class="w-100">
+                            <div class="event-title fw-bold text-dark small mb-1 d-flex justify-content-between">
+                                Stewards <i class="bi bi-exclamation-triangle-fill text-orange"></i>
+                            </div>
+                            <div class="event-status text-orange fw-bold tiny">
+                                <i class="bi bi-person-plus-fill me-1"></i>5 Helpers Needed
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </div> 
 </div>
 </div>
@@ -250,17 +230,18 @@
             <div class="card border-0 shadow-sm p-4" style="border-radius: 15px; background-color: #ffffff;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="fw-bold mb-0 text-teal">{{ project.project_title }}</h5>
-                    <a href="" class="btn btn-sm btn-light border rounded-pill px-3">Edit Project</a>
+                    <!-- <a href="" class="btn btn-sm btn-light border rounded-pill px-3">Edit Project</a> -->
                 </div>
                 
                 <div class="list-group list-group-flush">
-                    {% for job in project.jobs %}
+                   {% set project_has_jobs = false %}
+                   {% for job in jobs %}
+                        {% if job.project_id == project.id %}
+                            {% set project_has_jobs = true %}
                     <div class="list-group-item px-0 d-flex justify-content-between align-items-center border-0 py-3">
                         <div class="d-flex align-items-center">
                             <div class="p-2 bg-light rounded-3 me-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
-                                    <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C4.859 1.415 2.82 2.544 1.141 4.636a1.13 1.13 0 0 0-.159 1.302l.831 1.24V14.9a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V13.5l3.99-4.001 2.11 2.112a.5.5 0 0 0 .708 0l2.699-2.699a.5.5 0 0 0 0-.708l-4.492-4.492ZM11.5 8.101 9 5.602l.808-.808 2.502 2.503zm1.108-1.11L10.106 4.49l1.143-1.142 2.503 2.503z"/>
-                                </svg>
+                                <img src="/static/images/tools_icon.svg" width="18px" height="18">
                             </div>
                             <div>
                                 <h6 class="mb-0 fw-bold">{{ job.job_title }}</h6>
@@ -271,17 +252,22 @@
                             <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                                 <li><a class="dropdown-item small" href="#">Mark Complete</a></li>
+                                <li><a class="dropdown-item small" href="/view_post/{{ job.job_title }}">View Job</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item small text-danger" href="#">Delete Job</a></li>
                             </ul>
                         </div>
                     </div>
-                    {% else %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if not project_has_jobs %}
                     <div class="text-center py-4">
-                        <p class="text-muted small">No jobs linked to this project yet.</p>
-                        <a href="/add_job" class="btn btn-sm btn-teal rounded-pill">Add One Now</a>
+                        <h6 class="text-muted small">No jobs created yet</h6>
+                        <p class="text-muted fw-bold">Start by adding a task for helpers to complete.</p>
+                        <a href="/add_job" class="btn btn-sm btn-teal rounded-pill">Add a Job Now</a>
                     </div>
-                    {% endfor %}
+                    {% endif %}                 
                 </div>
             </div>
         </div>
