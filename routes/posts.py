@@ -37,8 +37,7 @@ def post_page():
     if session["type"] != "chairperson":
         return redirect("/home_page/")
     else:
-        # ASSUMING WE ARE DUNDALK TIDY TOWNS COMMUNITY ADMIN
-        project_data = Projects.query.where(Projects.community_id == 1).all()
+        project_data = Projects.query.where(Projects.community_id == session["community_id"]).all()
 
         return render_template("/posts/add_job.html", projects=project_data)
 
@@ -108,6 +107,8 @@ def create_job():
         lat = request.form.get("lat")
         lng = request.form.get("lng")
         file = request.files.get("images")
+        print("FLAG 1")
+
         # print("IMAGE_URL: ", image)
 
         # # Security & Validation
@@ -130,9 +131,10 @@ def create_job():
             start_date=start_date,
             end_date=end_date,
         )
-
+        print("FLAG 2")
         db.session.add(new_job)
         db.session.commit()
+        print("FLAG 3")
         job_data = Jobs.query.get_or_404(new_job.id)
         job_location = JobLocation(
             job_id=new_job.id, icon_id=1, lat=lat, lng=lng  # TODO Add icons to database
@@ -140,6 +142,7 @@ def create_job():
         log = Logs(
             user_id=session["user_id"], action=f"Create - {title}", target="Jobs"
         )
+        print("FLAG 4")
         db.session.add(log)
         db.session.add(job_location)
         db.session.commit()

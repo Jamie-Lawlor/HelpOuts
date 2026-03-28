@@ -206,7 +206,8 @@ INSERT INTO communities (id, name, area, description, profile_picture, lat, lng,
 VALUES
 (1, 'Mens Shed Dundalk', 'Dundalk, Co.Louth', 'Mens Shed Dundalk provides a supportive environment for men to connect, share skills, and work on projects that benefit the local community.', '/static/images/community_image.png', 54.00593713587985, -6.395891788845103, NULL, NULL),
 (2, 'Ardee Tidy Towns', 'Ardee, Co.Louth', 'Ardee Tidy Towns is dedicated to enhancing the beauty and cleanliness of Ardee through community involvement and sustainable practices.', NULL, 53.857960295207874, -6.540589690340175, NULL, NULL),
-(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL, 54.004786472339056, -6.401217344308929, NULL, NULL);
+(3, 'Dundalk Tidy Towns', 'Dundalk, Co.Louth', 'Dundalk Tidy Towns is committed to creating a cleaner and greener environment for the people of Dundalk. Working with the local community and businesses alike to improve the aesthetic appearance of the town.', NULL, 54.004786472339056, -6.401217344308929, NULL, NULL),
+(4, 'Pieta', 'Monaghan Town', 'Since then we have seen and helped over 70,000 people in suicidal distress or engaging in self-harm. We now operate 20 locations across Ireland. Pieta now employs over 300 therapists and support staff, and the demand for our service is increasing.', '/static/images/pieta.png', 54.287256, -6.975038, NULL, NULL);
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
@@ -214,7 +215,8 @@ VALUES
 (2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL,  '/static/images/user_image_2.png', FALSE, 0.0, 1),
 (3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL,  NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL,  NULL, FALSE, 0.0, 1),
-(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL,  NULL, FALSE, 0.0, 2);
+(5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL,  NULL, FALSE, 0.0, 2),
+(6, 'Mary McLoughlin', 'marymcloughin@gmail.com', 'scrypt:32768:8:1$gSU0C2rBPZCrVFNA$f914edd2af23371c58eb48cf2c37b72cb9852e36a194c2bc262bfc74b4f5025201302e720d3fba0edba3b7ab7a1dc83f4fc7b33d5860e28dc1f40abc76aafbd3', 'chairperson', 'Monaghan', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 4);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)
@@ -239,7 +241,8 @@ VALUES
 (5, 'Community Garden Restoration', 'Restore unused land into a community vegetable and flower garden.', 'environment', 6, '2026-03-01', '2026-06-01', 3),
 (6, 'Repair Community Hall Roof', 'Repair damaged roof panels on the local community hall.', 'construction', 4, '2026-03-10', '2026-03-20', 1),
 (7, 'Town Clean Up Initiative', 'Organised town clean up including litter collection and recycling.', 'environment', 10, '2026-04-05', '2026-04-06', 2),
-(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction', 5, '2026-04-15', '2026-05-20', 1);
+(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction', 5, '2026-04-15', '2026-05-20', 1),
+(9, 'Darkness into light Monaghan', 'Darkness Into Light 2026, is Pieta’s biggest fundraiser, the 5km walk will take place at 4:15 a.m. on Saturday, 9th of May, 2026. The funds raised through Darkness Into Light supports Pieta’s lifesaving free services to people in your community that have been affected by suicide or self-harm. This inspiring event also symbolises hope, as communities come together to support mental health, suicide and self-harm prevention.', 'social_and_events', 10, '2026-04-16', '2026-05-09', 4);
 
 INSERT INTO jobs (id, job_title, job_description, short_title, short_type, status, area, created_date, start_date, end_date, project_id)
 VALUES
@@ -254,7 +257,11 @@ VALUES
 (9, 'Collect litter and recycling', 'Walk through assigned streets collecting litter and recyclables.', 'Town clean up', 'environment', 'A', 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 09:00:00', '2026-04-05 13:00:00', 7),
 (10, 'Sort collected waste', 'Help organise waste into recycling and disposal categories.', 'Waste sorting', 'environment', 'A', 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 13:30:00', '2026-04-05 16:00:00', 7),
 (11, 'Build wooden seating benches', 'Construct wooden benches for the outdoor seating area.', 'Bench build', 'construction', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-04-20 09:00:00', '2026-04-20 15:00:00', 8),
-(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-04-21 10:00:00', '2026-04-21 14:00:00', 8);
+(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-04-21 10:00:00', '2026-04-21 14:00:00', 8),
+(13, 'Posting t-shirts','Organise the posting of t-shirts for people in Monaghan who have registered for the event','Posting t-shirts','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
+(14, 'Setup banners','Setting up banners for the event','Setup banners','environment', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-05-09', '2026-05-09', 9),
+(15,'Tea and coffee stand','Organise tea and coffee stand after the walk is finished','Tea & Coffee','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
+(16, 'Stewards','Give people directions to the correct path so no one gets lost along the walk','Stewards','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9);
 
 INSERT INTO skills (id, skill)
 VALUES
@@ -407,7 +414,11 @@ VALUES
 (9, 53.8590, -6.5400, 9, 1),
 (10, 53.8605, -6.5380, 10, 1),
 (11, 53.9970, -6.3900, 11, 1),
-(12, 54.0005, -6.4105, 12, 1); 
+(12, 54.0005, -6.4105, 12, 1),
+(13, 54.287261, -6.975044, 13, 1),
+(14, 54.287261, -6.975044, 14, 1),
+(15, 54.287261, -6.975044, 15, 1),
+(16, 54.287261, -6.975044, 16, 1); 
 
 INSERT INTO reviews (id, star_rating, review, created_date, reviewer_id, helper_id, job_id)
 VALUES

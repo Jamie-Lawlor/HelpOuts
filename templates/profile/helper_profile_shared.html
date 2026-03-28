@@ -112,16 +112,15 @@
         </div>
 
         <div class="card border-0 shadow-sm rounded-4 p-4 text-start">
-          <h6
+          <div class="vstack gap-3">
+            {% if user_jobs is not none %}
+            <h6
             class="fw-bold text-uppercase text-muted mb-4"
             style="font-size: 12px"
           >
             Active Jobs
             <span style="color: #d57a44">({{ user_jobs|length }})</span>
           </h6>
-          <div class="vstack gap-3">
-            {% if user_jobs is not none %}
-
               {% for i in range(user_jobs|length) %}
                 <a
                   href="/view_post/{{ user_jobs[i].job_title }}"
@@ -232,8 +231,10 @@
                   </svg>
                 </div>
                 <div>
+                  <a href="/community_profile/mens_shed_dundalk" class="text-decoration-none text-dark">
                   <p class="fw-bold mb-0">{{ community_data.name}}</p>
                   <p class="text-muted small mb-9">Community Group</p>
+                  </a>
             </div>
           </div>
           </div>

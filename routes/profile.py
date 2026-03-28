@@ -181,7 +181,7 @@ def community_requests_page(community_name):
             Communities, CommunityRequests.community_id == Communities.id
         )
         .join(Users, CommunityRequests.user_id == Users.id)
-        .where(CommunityRequests.status == "P")
+        .where(CommunityRequests.status == "P", CommunityRequests.community_id == community_id)
         .all()
     )
     job_list = []

@@ -13,7 +13,7 @@
 
   <nav class="admin-sidebar d-flex flex-column flex-shrink-0 p-3 border-end " style="width:280px; min-height:100vh; transition: 0.3s; overflow-x:hidden;" id="sideBar">
     <div class="d-flex align-items-center justify-content-between mb-1 no-scrollbar">
-      <a class="d-flex align-items-center link-dark text-decoration-none" href="/home_page">
+      <a class="d-flex align-items-center link-dark text-decoration-none" href="/community_profile/{{session['community_name']}}">
         <img src="/static/images/templogo6.png" width="80" height="80" />
         <span class="fs-4 fw-bold" style="color: #3D6978;">Community</span>
       </a>
@@ -44,7 +44,7 @@
       <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">VIEW</small>
         <ul class="nav nav-pills flex-column mb-2 gap-1">
           <li class="nav">
-            <a class="nav-link" href="/community_profile/{{session['user_name']}}">
+            <a class="nav-link" href="/community_profile/{{session['community_name']}}">
               <img src="/static/images/user_icon.svg" width="24" height="24" class="me-2">
               Public Profile</a>
           </li>
@@ -66,18 +66,17 @@
         <small class="text-muted fw-bold mb-2" style="font-size: 12px; letter-spacing:1px;">SETTINGS</small>
           <ul class="nav nav-pills flex-column mb-2 gap-1">
           <li class="nav">
-            <a class="nav-link" href="/requests/mens_shed_dundalk">
+            <a class="nav-link" href="/requests/{{session['community_name']}}">
               <img
                 src="/static/images/handshake.svg"
                 width="24"
                 height="24"
                 class="me-2"
               />
-              Requests</a
-            >
+              Requests</a>
           </li>
           <li class="nav">
-            <a class="nav-link" href="/community_settings/mens_shed_dundalk">
+            <a class="nav-link" href="/community_settings/{{session['community_name']}}">
               <img
                 src="/static/images/settings_icon.svg"
                 width="24"
@@ -110,7 +109,7 @@
               aria-labelledby="profileMenu"
             >
               <li>
-                  <a class="dropdown-item rounded mb-1" href="/community_profile/mens_shed_dundalk">View Profile</a>
+                  <a class="dropdown-item rounded mb-1" href="/community_profile/{{session['community_name']}}">View Profile</a>
               </li>
               <li><hr class="dropdown-divider"></li>
               <li>
@@ -134,7 +133,7 @@
   </nav>
   
       <div class="mobile-bottom-nav d-lg-none">
-         <a class="nav-item" href="/community_settings/mens_shed_dundalk">
+         <a class="nav-item" href="/community_settings/{{session['community_name']}}">
               <img
                 src="/static/images/handshake.svg"
                 width="24"
@@ -167,10 +166,10 @@
                 </a
             >
                         
-             <a class="nav-item" href="/community_profile/mens_shed_dundalk">
+             <a class="nav-item" href="/community_profile/{{session['community_name']}}">
               <img src="/static/images/user_icon.svg" width="24" height="24" class="me-2">
               <span>Profile</span></a>
-             <a class="nav-item" href="/community_settings/mens_shed_dundalk">
+             <a class="nav-item" href="/community_settings/{{session['community_name']}}">
               <img
                 src="/static/images/settings_icon.svg"
                 width="24"

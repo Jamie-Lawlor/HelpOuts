@@ -75,7 +75,11 @@ def index():
 def home_page():
     if 'type' in session: 
         vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
-        return render_template("home_page.html", vapid_key = vapid_key)         
+        if session['type'] == "helper":
+            helper_data = Users.query.get_or_404(session["user_id"])
+            return render_template("home_page.html", vapid_key = vapid_key, helper_data = helper_data)    
+        else:
+            return render_template("home_page.html", vapid_key = vapid_key)    
     else:
         return redirect("/")
 
@@ -141,6 +145,13 @@ def mfa():
                 login_user(user)
                 session.pop("email", None)
                 session["user_id"] = user.id
+                session["user_name"] = user.name
+                print(user.community_id)
+                if user.community_id is not None:
+                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id).first()
+                    session['community_name'] = community.name
+                else:
+                    session['community_name'] = None
                 # TODO profile picture comes from S3 now, not the database
                 session["profile_picture"] = user.profile_picture
                 session["type"] = user.type
@@ -150,7 +161,12 @@ def mfa():
                     target = "Session"
                 )
                 db.session.add(logs)
-                return redirect("/home_page/")
+                if session["type"] == "chairperson":
+                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+                    print(community.name)
+                    return redirect("/community_profile/{{ community.name }}")
+                else:
+                    return redirect("/home_page/")
         else:
             error = "Incorrect One Time Password, Please Try Again."
             return render_template("login/mfa.html", error = error)
