@@ -90,7 +90,6 @@ def create_project():
 
 
 @posts_blueprint.route("/create_job", methods=["POST"])
-@login_required
 def create_job():
     if session["type"] != "chairperson":
         return ""
