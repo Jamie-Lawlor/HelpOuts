@@ -216,7 +216,7 @@ VALUES
 (3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Chairperson', 0, NULL, NULL,  NULL, FALSE, 0.0, 1),
 (4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL,  NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL,  NULL, FALSE, 0.0, 2),
-(6, 'Mary McLoughlin', 'marymcloughin@gmail.com', 'scrypt:32768:8:1$gSU0C2rBPZCrVFNA$f914edd2af23371c58eb48cf2c37b72cb9852e36a194c2bc262bfc74b4f5025201302e720d3fba0edba3b7ab7a1dc83f4fc7b33d5860e28dc1f40abc76aafbd3', 'chairperson', 'Monaghan', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 4);
+(6, 'Kerrie McLoughlin', 'kerriemcloughin@gmail.com', 'scrypt:32768:8:1$gSU0C2rBPZCrVFNA$f914edd2af23371c58eb48cf2c37b72cb9852e36a194c2bc262bfc74b4f5025201302e720d3fba0edba3b7ab7a1dc83f4fc7b33d5860e28dc1f40abc76aafbd3', 'chairperson', 'Monaghan', 'Chairperson', 0, NULL, NULL, NULL, FALSE, 0.0, 4);
 
 
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)
