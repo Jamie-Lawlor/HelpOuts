@@ -75,7 +75,11 @@ def index():
 def home_page():
     if 'type' in session: 
         vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
-        return render_template("home_page.html", vapid_key = vapid_key)         
+        if session['type'] == "helper":
+            helper_data = Users.query.get_or_404(session["user_id"])
+            return render_template("home_page.html", vapid_key = vapid_key, helper_data = helper_data)    
+        else:
+            return render_template("home_page.html", vapid_key = vapid_key)    
     else:
         return redirect("/")
 
