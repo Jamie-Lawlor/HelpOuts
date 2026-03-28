@@ -154,7 +154,12 @@ def mfa():
                     target = "Session"
                 )
                 db.session.add(logs)
-                return redirect("/home_page/")
+                if session["type"] == "chairperson":
+                    community = Communities.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+                    print(community.name)
+                    return redirect("/community_profile/{{ community.name }}")
+                else:
+                    return redirect("/home_page/")
         else:
             error = "Incorrect One Time Password, Please Try Again."
             return render_template("login/mfa.html", error = error)

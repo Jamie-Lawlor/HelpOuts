@@ -104,7 +104,7 @@ def register():
             db.session.add(community)
             db.session.commit()
             session["community_id"] = community.id
-            session["user_name"] = community.name
+            session["community_name"] = community.name
     # check if this users already exists
 
     if_exists = Users.query.filter_by(email=email).first()
@@ -306,9 +306,8 @@ def test_login_admin():
     user = Users.query.filter_by(community_id=community_id, type="chairperson").first()
     session["community_id"] = community_id
     session["user_id"] = user.id
-    session["user_name"] = community_data.name
+    session["community_name"] = community_data.name
     session["type"] = "chairperson"
-    print("SESSION: ", session["community_id"])
 
      # TODO profile picture comes from S3 now, not the database * not for communities yet
     session["profile_picture"] = community_data.profile_picture
@@ -316,8 +315,8 @@ def test_login_admin():
         str(session["community_id"]),
          # TODO profile picture comes from S3 now, not the database * not for communities yet
         session["profile_picture"],
-        session["type"],
+        session["community_name"],
     ]
     login_user(user)
-    print("TYPE OF USER: ", session["type"])
+    print("NAME OF COMMUNITY: ", session["community_name"])
     return jsonify(dataArray)
