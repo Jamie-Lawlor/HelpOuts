@@ -40,7 +40,7 @@
                                     <button class="btn btn-success btn-sm rounded-pill" onclick="join_community_request('{{ community_request_list[i].id }}', 'A')">Accept</button>
                                     <button class="btn btn-danger btn-sm rounded-pill px-3" onclick="join_community_request('{{ community_request_list[i].id }}', 'R')">Remove</button>
                                 </div>
-                                {% if community_request_list[i].verification_accuracy != 0  %}
+                                {% if community_request_list[i].verification_accuracy != None  %}
                                     {% if community_request_list[i].verification_accuracy < 80 %}
                                     <p class="text-danger small fw-bold mb-3 pt-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
