@@ -2,7 +2,7 @@
 <script>
 
     async function loadCommunityMap() {
-      const communityId = {{ community_id }}
+      const communityId = {{ session["community_id"] }}
       console.log("communityId=", communityId)
 
       const response = await fetch(`/api/getCommunityMap/${communityId}`);
