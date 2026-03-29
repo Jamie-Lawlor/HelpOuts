@@ -198,13 +198,12 @@ def register():
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
     image_verfication_response = requests.post(
-            f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifedUpload/{user.id}",
+            f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifiedUpload/{user.id}",
             files=image_verification_body
         )
-
+    # print(image_verfication_response)
     # Handle AiClipse not working/ S3 issue
     response_data = image_verfication_response.json()
-    print("THIS IS THE ERROR", response_data)
     user = Users.query.get_or_404(session["user_id"])
     if response_data["verification_status"] == "skipped":
         user.verfied = False

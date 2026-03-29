@@ -3,11 +3,11 @@
 
   async function loadCommunityEditMap() {
     const communityId = {{ community_id }}
-    console.log("communityId=", communityId)
+    // console.log("communityId=", communityId)
 
     const response = await fetch(`/api/getCommunityMap/${communityId}`);
     const locationData = await response.json()
-    console.log(locationData)
+    // console.log(locationData)
 
 
     const { Map } = await google.maps.importLibrary("maps")

@@ -16,11 +16,11 @@
   async function loadJobEditMap() 
   {
     const communityId = {{ session["community_id"]}}
-    console.log("community_id="+communityId)
+    // console.log("community_id="+communityId)
 
     const response = await fetch(`/api/getCommunityMap/${communityId}`);
     const locationData = await response.json();
-    console.log(locationData)
+    // console.log(locationData)
 
     const { Map } = await google.maps.importLibrary("maps")
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")

@@ -151,7 +151,7 @@ def verified_upload(user_id):
     try:
         profile_picture.stream.seek(0)
         response = requests.post(
-            os.getenv("AI_CLIPSE_URL_TEMP"),
+            os.getenv("AI_CLIPSE_URL"),
             headers={
                 "X-API-KEY": os.getenv("AI_CLIPSE_API_KEY")
             },

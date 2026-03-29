@@ -3,11 +3,11 @@
 
   async function loadJobCreateMap() {
     const jobId = {{ job_data.id}}
-		console.log("job id="+jobId)
+		// console.log("job id="+jobId)
 
     const response = await fetch(`/api/getJobMap/${jobId}`);
     const locationData = await response.json();
-		console.log(locationData)
+		// console.log(locationData)
 
     const { Map } = await google.maps.importLibrary("maps")
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
