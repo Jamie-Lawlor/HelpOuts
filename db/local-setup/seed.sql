@@ -331,7 +331,14 @@ VALUES
 (22, 5, 32),
 (23, 5, 31),
 (24, 5, 34),
-(25, 5, 23);
+(25, 5, 23),
+-- Steve Rodgers
+(26, 7, 20),
+(27, 7, 24),
+(28, 7, 25),
+(29, 7, 18),
+(30, 7, 17);
+
 
 INSERT INTO job_skills (job_id, skill_id)
 VALUES
@@ -378,6 +385,18 @@ VALUES
 (12, 2),
 (12, 3),
 (12, 8),
+(13, 24), 
+(13, 33), 
+(13, 18),
+(14, 22), 
+(14, 3),  
+(14, 18),
+(15, 20),
+(15, 21),
+(15, 24),
+(16, 23), 
+(16, 33),
+(16, 32),
 (12, 18);
 
 INSERT INTO user_jobs (id, user_id, job_id)
@@ -443,11 +462,13 @@ DELIMITER //
             u.name,
             COUNT(DISTINCT js.skill_id) AS match_score
         FROM jobs AS j
+            INNER JOIN projects AS p ON j.project_id = p.id
             INNER JOIN job_skills AS js ON j.id = js.job_id
             INNER JOIN user_skills AS us ON js.skill_id = us.skill_id
             INNER JOIN users AS u ON us.user_id = u.id
         WHERE
             u.id = userId
+            AND p.community_id = u.community_id
         GROUP BY
             j.id,
             j.job_title,
