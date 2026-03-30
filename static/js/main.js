@@ -367,7 +367,7 @@ function searchJobs(){
 //Remove when no longer needed as test
 
 function test_login_helper(){
-        fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 2 }) })
+        fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 7 }) })
             .then(response => response.json())
             .then(data =>{
                 sessionStorage.setItem("id", data[0])
