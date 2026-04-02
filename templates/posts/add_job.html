@@ -177,8 +177,12 @@ body_community %}
             </h3>
 
             <div class="row mb-4">
-                              <p class="text-muted small">If your job lasts one day, input the same start and end date.</p>
-
+<div class="col-12 mb-2">
+          <div class="info-box">
+            <i class="bi bi-info-circle"></i>
+            If your job lasts only one day, simply select the same date for both start and end.</i>
+            </div>
+    </div>
               <div class="col-md-6 mb-3">
                 <span class="label-muted">START DATE</span>
                 <input
@@ -213,15 +217,18 @@ body_community %}
               />
             </div>
 
-                          <p class="text-muted small">Please add the location on our Maps feature.</p>
+            <p class="text-muted small">
+            <img src="/static/images/location_icon.svg" width="20" height="20">
+            Please pin the specific location on the map below. 
+            </p>
             <div class="d-flex justify-content-end mb-2">
               <button
-                class="btn btn-primary float-end text-decoration-none rounded-pill border-white"
-                style="background-color: #85d6d6;"
+                class="btn btn-primary float-end text-decoration-none rounded-pill border-white fw-normal"
+                style="background-color: #85d6d6; color:#3d6978;"
                 onclick="resetLocation()"
                 type="button"
               >
-                Reset Map
+                <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Pin
               </button>
             </div>
 
@@ -278,7 +285,7 @@ body_community %}
               id="add-job-btn"
               style="display: none;"
             >
-              <svg
+              <!-- <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -292,7 +299,8 @@ body_community %}
                 <path
                   d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"
                 />
-              </svg>
+              </svg> -->
+              <i class="bi bi-check-circle-fill me-2"></i>
               ADD JOB
             </button>
 

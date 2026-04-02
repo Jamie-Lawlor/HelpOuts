@@ -315,6 +315,7 @@ function join_community(community_id, user_id){
         fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
         fetch("/send_community_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_id }) })
 
+        openJoinModal()
 }
 
 function join_community_request(helper_id, button_selected){
@@ -431,3 +432,10 @@ function update_helper_profile(){
 }
 
 
+function openJoinModal(){
+    document.getElementById("joinModal").style.display = "block"
+}
+
+function closeJoinModal(){
+    document.getElementById("joinModal").style.display = "none"
+}
