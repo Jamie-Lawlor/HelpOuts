@@ -23,6 +23,7 @@ def community_profile_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
+    role = session["type"]
     project_data = Projects.query.where(Projects.community_id == community_id).all()
     all_job_data = (
         Jobs.query.join(Projects, Jobs.project_id == Projects.id)
@@ -181,7 +182,10 @@ def community_requests_page(community_name):
             Communities, CommunityRequests.community_id == Communities.id
         )
         .join(Users, CommunityRequests.user_id == Users.id)
-        .where(CommunityRequests.status == "P", CommunityRequests.community_id == community_id)
+        .where(
+            CommunityRequests.status == "P",
+            CommunityRequests.community_id == community_id,
+        )
         .all()
     )
     job_list = []

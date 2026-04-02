@@ -1148,15 +1148,20 @@ h6{
     border-radius: 10px;
 }
 
-.mfa-note{
+.info-box{
     background-color: #f8f9fa;
-    border-radius: 12px;
-    padding: 12px 15px;
+    border-radius: 8px;
+    padding: 1rem;
     font-size: 0.85rem;
-    color: #5a92a5;
-    margin-bottom: 25px;
+    color: #6c757d;
     border-left: 4px solid #85D6D6;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-box i.bi{
+    color: #3D6978 !important;
 }
 
 /* MOBILE DESIGN COMMUNITY NAVBAR */
@@ -1590,3 +1595,22 @@ button{
 .tiny { font-size: 0.7rem; }
 .text-teal { color: #3D6978; }
 .text-orange { color: #D57A44; }
+
+/* Modals */
+#joinModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+}
+
+
+
