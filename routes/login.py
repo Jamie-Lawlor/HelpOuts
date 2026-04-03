@@ -197,10 +197,17 @@ def register():
     image_verification_body = {
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
-    image_verfication_response = requests.post(
-            f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifiedUpload/{user.id}",
-            files=image_verification_body
-        )
+    if os.getenv("ENVIRONMENT") == "development":
+
+        image_verfication_response = requests.post(
+                f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifiedUpload/{user.id}",
+                files=image_verification_body
+            )
+    else:
+         image_verfication_response = requests.post(
+                f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}/api/verifiedUpload/{user.id}",
+                files=image_verification_body
+            )
     # print(image_verfication_response)
     # Handle AiClipse not working/ S3 issue
     response_data = image_verfication_response.json()

@@ -333,12 +333,13 @@ VALUES
 (24, 5, 34),
 (25, 5, 23),
 -- Steve Rodgers
-(26, 7, 20),
-(27, 7, 24),
-(28, 7, 25),
-(29, 7, 18),
-(30, 7, 17);
-
+(26, 7, 1),
+(27, 7, 8),
+(28, 7, 12),
+(29, 7, 17),
+(30, 7, 18),
+(31, 7, 19),
+(32, 7, 23);
 
 INSERT INTO job_skills (job_id, skill_id)
 VALUES
@@ -452,9 +453,7 @@ VALUES
 
 
 DELIMITER //
-	CREATE PROCEDURE getJobRecommendations (
-		IN userId INT
-    )
+	CREATE PROCEDURE getJobRecommendations ( IN userId INT)
        BEGIN
         SELECT
             j.*,
