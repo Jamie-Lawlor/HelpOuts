@@ -1598,6 +1598,7 @@ button{
 .text-orange { color: #D57A44; }
 
 /* Modals */
+/* Community Profile Page */
 #joinModal {
     display: none;
     position: fixed;
@@ -1606,12 +1607,70 @@ button{
     transform: translate(-50%, -50%);
     z-index: 1050;
     background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 450px;
 }
 
+.btn-cancel{
+    color: #3D6978;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
 
+.btn-cancel:hover{
+    background-color: #f8f9fa;
+    color: #2a4a55;
+}
 
+.info-icon-container{
+    margin-bottom: 15px;
+    display: inline-block;
+    padding: 10px;
+    background: rgba(61, 105, 120, 0.05);
+    border-radius: 50%;
+}
+
+/* Requests Page */
+#actionModal {
+   display: none; 
+   position: fixed; 
+   top: 50%; 
+   left: 50%; 
+   transform: translate(-50%, -50%); 
+   z-index: 1100; 
+   background: white; 
+   padding: 30px; 
+   border-radius: 20px; 
+   box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+   width: 90%; 
+   max-width: 400px;
+}
+
+.actionModalContainer{
+    background: rgba(133, 214, 214, 0.2); 
+    width: 60px;
+    height: 60px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.modalContainer{
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.3); 
+    z-index: 1090; 
+    backdrop-filter: blur(2px);
+}
