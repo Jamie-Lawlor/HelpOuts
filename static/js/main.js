@@ -228,6 +228,7 @@ function accept_job() {
     dataArray = [job_id, helper_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    openPostModal()
     // .then(window.location.replace(`/home_page`))
 }
 
@@ -475,3 +476,11 @@ function closeActionModal(){
     document.getElementById("modalContainer").style.display = "none"
 }
 
+/* View Post Modal*/
+function openPostModal(){
+    document.getElementById("postModal").style.display = "block"
+}
+
+function closePostModal(){
+    document.getElementById("postModal").style.display = "none"
+}
