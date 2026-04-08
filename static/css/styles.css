@@ -1762,3 +1762,19 @@ button{
         padding: 10px !important;
     }
 }
+
+/* MOBILE helper profile */
+@media (max-width: 991px){
+    .container-fluid{
+        padding-bottom: 90px;
+    }
+
+    .card-body{
+        padding: 1.5rem;
+    }
+
+    .sticky-top{
+        position: relative;
+        top: 0;
+    }
+}
