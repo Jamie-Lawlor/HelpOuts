@@ -54,7 +54,7 @@
            My Profile</a
           >
         </li>
-        {% if session["community_name"] is not none %}
+        {% if session["community_name"]%}
          <li class="nav-item">
           <a class="nav-link nav-title" href="/community_profile/{{session['community_name']}}">
             <img
@@ -126,7 +126,8 @@
             />
           Profile</a
           >
-     <a class="nav-item" href="/community_profile/Pieta">
+      {% if session["community_name"]%}
+     <a class="nav-item" href="/community_profile/{{session['community_name']}}">
             <img
               src="/static/images/handshake.svg"
               width="24"
@@ -135,6 +136,7 @@
             />
            My Group</a
           >
+      {% endif %}
       </div>
 </body>
 
