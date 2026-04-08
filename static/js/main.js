@@ -228,6 +228,7 @@ function accept_job() {
     dataArray = [job_id, helper_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+    openPostModal()
     // .then(window.location.replace(`/home_page`))
 }
 
@@ -250,10 +251,12 @@ function delete_post_data() {
         .then(window.location.replace(`/home_page/`))
 
 }
+
 function accept_helper_job_request(job_list_id){
-    fetch("/accept_helper_job_request", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_list_id }) })
+     fetch("/accept_helper_job_request", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_list_id }) })
         .then(window.location.reload())
 }
+
 
 function filter_jobs(value){
     if(value !== "view_all"){
@@ -318,10 +321,14 @@ function join_community(community_id, user_id){
         openJoinModal()
 }
 
-function join_community_request(helper_id, button_selected){
+function join_community_request(helper_id, button_selected, icon, message, helperName){
     dataArray=[helper_id, button_selected]
     fetch("/accept_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
-    .then(window.location.reload())
+    .then(response => {
+        if(response.ok){
+            openActionModal(message, icon)
+        }
+    })
 }
 
 function searchJobs(){
@@ -438,4 +445,42 @@ function openJoinModal(){
 
 function closeJoinModal(){
     document.getElementById("joinModal").style.display = "none"
+}
+
+function openActionModal(message, iconType){
+    const iconContainer = document.querySelector("#actionModal .bi");
+    const iconCircle = iconContainer.parentElement
+
+    const icons = {
+        'accept': `<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>`,
+        'reject': `<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>`
+    };
+
+    iconContainer.innerHTML = icons[iconType] || icons['accept']; 
+
+    if (iconType === 'reject'){
+        iconCircle.style.backgroundColor = "#FFCFCF"
+        iconContainer.setAttribute('fill', '#F76363')
+    }else{
+        iconCircle.style.backgroundColor = "#D8F2E1"
+        iconContainer.setAttribute('fill', '#4CED83')
+    }
+
+    document.getElementById("actionModalMessage").innerHTML = message;    
+    document.getElementById("actionModal").style.display = "block";
+    document.getElementById("modalContainer").style.display = "block";
+}
+
+function closeActionModal(){
+    document.getElementById("actionModal").style.display = "none"
+    document.getElementById("modalContainer").style.display = "none"
+}
+
+/* View Post Modal*/
+function openPostModal(){
+    document.getElementById("postModal").style.display = "block"
+}
+
+function closePostModal(){
+    document.getElementById("postModal").style.display = "none"
 }
