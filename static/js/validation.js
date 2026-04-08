@@ -2,6 +2,7 @@
 const name_regex = /^[a-zA-Z\s\-\']{2,}$/
 const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const location_regex = /^(?=.*[a-zA-Z\s])[a-zA-Z\s,.]+$/
 const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
 const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
 
@@ -44,12 +45,27 @@ const validateStep1 = () => {
 const validateStep2 = () => {
 
   const locationInput = document.getElementsByName("location")[0]
+  const communityNameInput = document.getElementsByName("community_name")[0]
+  const isCommunitySelected = document.getElementById("register-step-community")
   const locationError = document.getElementById("location_error")
+  const communityNameError = document.getElementById("community_name_error")
   const uploadedImage = document.getElementById("project-upload-images")
   const imageError = document.getElementById("image_error")
 
-  const locationValid = name_regex.test(locationInput.value)
+  const locationValid = location_regex.test(locationInput.value)
   locationError.style.visibility = locationValid ? "hidden" : "visible"
+
+  let communityNameValid = true
+  const isVisible = isCommunitySelected.style.display !== "none"
+
+  if(isVisible){
+    communityNameValid = communityNameInput.value.length > 0
+    communityNameError.style.visibility = communityNameValid ? "hidden" : "visible"
+  }else{
+    communityNameValid = true
+    communityNameError.style.visibility = "hidden"
+  }
+
   let imageValid = false
 
   for (let i = 0; i < uploadedImage.files.length; i++) {
@@ -69,6 +85,7 @@ const validateStep2 = () => {
 
   return(
     locationValid &&
+    communityNameValid &&
     imageValid
   )
 }
