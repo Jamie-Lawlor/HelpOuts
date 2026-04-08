@@ -224,7 +224,7 @@ def delete_post():
 def job_accepted():
     data = request.json["data"]
     job_id = data[0]
-    helper_id = data[1]
+    helper_id = session["user_id"]
     pending_job = JobRequests(
         user_id=helper_id,
         job_id=job_id,
@@ -241,10 +241,12 @@ def job_accepted():
 def send_notification():
     data = request.json["data"]
     job_id = data[0]
-    helper_id = data[1]
+    helper_id = session["user_id"]
+    print(job_id)
+    print(helper_id)
     user_data = (
-        Users.query.join(UserJobs, Users.id == UserJobs.user_id)
-        .where(UserJobs.user_id == helper_id)
+        Users.query.join(JobRequests, Users.id == JobRequests.user_id)
+        .where(JobRequests.user_id == helper_id)
         .first()
     )
     print("USER DATA: ", user_data.name)

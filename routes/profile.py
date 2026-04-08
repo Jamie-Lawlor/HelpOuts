@@ -251,7 +251,8 @@ def accept_join_community():
     data = request.json["data"]
     helper_id = data[0]
     status = data[1]
-
+    print("HELPER ID: ", id)
+    print("STATUS: ", status)
     accept_user = CommunityRequests.query.where(
         CommunityRequests.user_id == helper_id
     ).first()

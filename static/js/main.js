@@ -224,8 +224,7 @@ function accept_job() {
     // let user_id = document.getElementById("job_accepted").value
     job_id = document.getElementById("job_id").value
     // HARDCODED
-    let helper_id = sessionStorage.getItem("id")
-    dataArray = [job_id, helper_id]
+    dataArray = [job_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     openPostModal()
@@ -472,6 +471,7 @@ function openActionModal(message, iconType){
 function closeActionModal(){
     document.getElementById("actionModal").style.display = "none"
     document.getElementById("modalContainer").style.display = "none"
+    window.location.reload()
 }
 
 /* View Post Modal*/
