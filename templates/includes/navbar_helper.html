@@ -72,7 +72,7 @@
    
    <div class="dropdown ms-auto">
     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
-    <div id="profile_picture"></div>
+    <img style="width:32px; height:32px;" class="rounded-circle border" src="{{ session['profile_picture'] }}" alt=""/>
     <strong class="ms-2">My Profile</strong>
     </a>
         <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" aria-labelledby="profileMenu">
@@ -87,11 +87,6 @@
       </li>
     </ul>
    </div>
-      <script>
-        profile_picture = document.getElementById("profile_picture")
-        let image = `<img style="border: 2px solid white; width:45px; height:45px; margin-right:20px;" class="profile-img" src=${sessionStorage.getItem("profile_picture")} alt=""/>`
-        profile_picture.innerHTML+=image
-      </script>
     </div>
   </nav>
 

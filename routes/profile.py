@@ -209,8 +209,7 @@ def community_requests_page(community_name):
 
 @profile_blueprint.route("/accept_helper_job_request", methods=["POST"])
 def accept_helper_job():
-    data = request.json["data"]
-    job_id = data[0]
+    job_id = request.json["data"]
     updated_job_request = JobRequests.query.where(JobRequests.job_id == job_id).first()
     updated_job_request.status = "A"
     updated_job_request.confirmed_date = db.func.current_timestamp()
@@ -251,7 +250,8 @@ def accept_join_community():
     data = request.json["data"]
     helper_id = data[0]
     status = data[1]
-
+    print("HELPER ID: ", id)
+    print("STATUS: ", status)
     accept_user = CommunityRequests.query.where(
         CommunityRequests.user_id == helper_id
     ).first()
