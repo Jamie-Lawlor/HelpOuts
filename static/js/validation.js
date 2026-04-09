@@ -1,7 +1,7 @@
 // Regex Patterns
 const name_regex = /^[a-zA-Z\s\-\']{2,}$/
 const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&~#])[A-Za-z\d@$!%*?&~#]{8,}$/
 const location_regex = /^(?=.*[a-zA-Z\s])[a-zA-Z\s,.]+$/
 const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
 const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
