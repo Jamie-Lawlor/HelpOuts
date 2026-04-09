@@ -141,7 +141,7 @@ def mfa():
         
         if mfa_session:
             totp = pyotp.TOTP(mfa_session)
-            if totp.verify(otp):
+            if totp.verify(otp, valid_window = 2):
                 login_user(user)
                 session.pop("email", None)
                 session["user_id"] = user.id
@@ -164,7 +164,7 @@ def mfa():
                 if session["type"] == "chairperson":
                     community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
                     print(community.name)
-                    return redirect("/community_profile/{{ community.name }}")
+                    return redirect(f"/community_profile/{ community.name }")
                 else:
                     return redirect("/home_page/")
         else:
