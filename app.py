@@ -132,13 +132,13 @@ def login():
 def mfa():
     if "email" not in session:
         return redirect("/login")
-    
+
     user = Users.query.filter_by(email=session["email"]).first()
-    
+
     if request.method == "POST":
         otp = request.form["otp"]
         mfa_session = session.get("otp")
-        
+
         if mfa_session:
             totp = pyotp.TOTP(mfa_session)
             if totp.verify(otp, valid_window = 2):
@@ -170,7 +170,7 @@ def mfa():
         else:
             error = "Incorrect One Time Password, Please Try Again."
             return render_template("login/mfa.html", error = error)
-    
+
 
     if "otp" not in session:
         pyotp_secret = pyotp.random_base32()
@@ -180,9 +180,43 @@ def mfa():
         otp_code = totp.now()
 
         message = Message("HelpOuts Verification", sender=sender, recipients=[user.email])
-        message.body = f"Your One Time Passcode is: {otp_code}"
+        message.body = f"Your HelpOuts One Time Passcode is: {otp_code}"
+        message.html = f"""
+            <html>
+                <body>
+                <table style="width: 100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="width: 60px;">
+                            <img
+                                src="cid:helpouts_logo"
+                                alt="Helpouts logo"
+                                style="width: 200%;"
+                            />
+                        </td>
+                        <td style="padding-left: 40px;">
+                            <h2 style="color: #3d6978; font-weight: bold; font-family: 'Source Serif 4', serif;">HelpOuts Verification Code</h2>
+                        </td>
+                    </tr>
+                </table>
+                    <p>Please use the code below to complete your login. </p><p style="font-weight: bold;">It will expire in 2 minutes:</p>
+                    <div style="background-color: #f8f9fa; padding: 20px; text-align: center; font-weight: bold; font-size: 28px">{otp_code}</div>
+                    <div style="border-top: 2px solid #8a8c8f; margin-bottom: 10px;">
+                    <p style="color: #6c757d">If you did not login in, please disregard this email</p>
+                    </div>
+                </body>
+            </html>
+        """
+        filename = "static/images/templogo6.png" 
+        with open(filename, "rb") as fp:
+            message.attach(
+                filename="templogo6.png",
+                content_type= "image/png",
+                data=fp.read(),
+                disposition="inline",
+                headers={"Content-ID": "<helpouts_logo>"}
+            )
         mail.send(message)
-    
+
     return render_template("login/mfa.html")
 
 @app.route("/get_type", methods=["GET"])
