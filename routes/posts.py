@@ -37,7 +37,9 @@ def post_page():
     if session["type"] != "chairperson":
         return redirect("/home_page/")
     else:
-        project_data = Projects.query.where(Projects.community_id == session["community_id"]).all()
+        project_data = Projects.query.where(
+            Projects.community_id == session["community_id"]
+        ).all()
 
         return render_template("/posts/add_job.html", projects=project_data)
 

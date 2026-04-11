@@ -334,3 +334,13 @@ def update_helper_profile():
         db.session.commit()
 
     return ""
+
+
+@profile_blueprint.route("/home_page/", methods=["GET"])
+@login_required
+def home_page():
+    groups = Communities.query.all()
+    user_data = Users.query.get(session["user_id"])
+    return render_template(
+        "home_page.html", community_groups=groups, helper_data=user_data
+    )
