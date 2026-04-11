@@ -153,9 +153,10 @@ function send_project_data() {
         .then(window.location.replace(`/home_page/`))
 }
 
-
+var jobPostPage = ""
 function send_job_data() {
     let data = new FormData()
+    const jobTitle = document.getElementById("job_title").value
     // const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
     // const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
     data.append("title", document.getElementById("job_title").value)
@@ -200,6 +201,9 @@ function send_job_data() {
         .then(response => response.text())
         .then(jsonData => {
             data = JSON.parse(jsonData)
+            // jobPostPage = `/view_post/${data.job_title}`
+            // document.getElementById('display-job-name').innerText = jobTitle
+            // document.getElementById("jobModal").style.display = 'block'
             window.location.replace(`/view_post/${data.job_title}`)
         })
 }
@@ -486,4 +490,10 @@ function openPostModal(){
 
 function closePostModal(){
     document.getElementById("postModal").style.display = "none"
+}
+
+/* Add job modal */
+function closeJobModal(){
+    // document.getElementById("jobModal").style.display = "none"
+    window.location.replace(jobPostPage)
 }
