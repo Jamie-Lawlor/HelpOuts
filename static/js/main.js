@@ -497,3 +497,5 @@ function closeJobModal(){
     // document.getElementById("jobModal").style.display = "none"
     window.location.replace(jobPostPage)
 }
+
+
