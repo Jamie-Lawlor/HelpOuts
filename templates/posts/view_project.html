@@ -19,46 +19,68 @@
 </div>
 
         <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
-      <ul class="nav nav-tabs job-tabs mb-4" id="projectTab" role="tabList">
-        <li class="nav-item">
-          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about" type="button">About</button>
-        </li>
-      </ul>
-        
       <div class="tab-content" id="projectTabContent">
         <div class="tab-pane fade show active" id="about" role="tabpanel">
           <div class="mb-4">
-            <h4 class="fw-bold mb-3">Project Details</h4>
-            <p class="lh-base text-secondary" id="desc-display">{{ project_data.project_description }}</p>
-            <textarea id="edit_description" class="form-control mt-2" rows="3" style="display: none">{{ project_data.project_description }}</textarea>
+ <div class="d-flex align-items-center mb-4">
+        <div class="icon-box rounded-circle me-3"> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#3D6978" class="bi bi-card-checklist" viewBox="0 0 16 16">
+            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
+            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
+            </svg>
+       </div> 
+          <h5 class="fw-bold mb-0">Details</h2>
+      </div>            
+      <div class="mb-3" id="edit-labels">
+            <label for="edit_description" class="form-label fw-bold">Description</label>
+            <textarea id="edit_description" class="form-control mt-2" rows="3">{{ project_data.project_description }}</textarea>
           </div>
 
+        <label for="edit_helpers" class="form-label fw-bold">Number of Helpers</label>
           <input type="number" id="edit_helpers" class="form-control mb-2" value="{{ project_data.number_of_helpers }}" placeholder="Number of Helpers"/>
 
           <div class="row">
             <div class="col-6">
-                <input type="date" id="edit_project_start" class="form-control" value="{{ project_data.start_date }}"/>
+                <label for="edit_project_start" class="form-label fw-bold">Start Date</label>
+                <input type="date" id="edit_project_start" class="form-control" value="{{ project_data.start_date.strftime('%Y-%m-%d') }}"/>
             </div>
             <div class="col-6">
-                <input type="date" id="edit_project_end" class="form-control" value="{{ project_data.end_date }}"/>
+                <label for="edit_project_end" class="form-label fw-bold">End Date</label>
+                <input type="date" id="edit_project_end" class="form-control" value="{{ project_data.end_date.strftime('%Y-%m-%d') }}"/>
             </div>
+          </div>
           </div>
         </div>  
       </div>
     </div>
 
-      <div class="card p-4 shadow-sm border-0 mt-4">
-        <h5 class="fw-bold mb-3">Project Jobs</h5>
+      <div class="card p-4 shadow-sm border-0 mt-4" style="border-radius: 15px;">
+        <div class="d-flex align-items-center mb-4">
+        <div class="icon-box rounded-circle me-3"> 
+          <img src="/static/images/tools_icon.svg" height="20" width="20" />
+       </div> 
+          <h5 class="fw-bold mb-0">Project Jobs</h2>
+      </div>
+            
+        {% if jobs %}
+        <div class="list-group list-group-flush">
         {% for job in jobs %}
-        <div class="d-flex justify-content-between py-2 border-bottom">
-            <span>{{ job.job_title }}</span>
-            <a href="/view_post/{{ job.job_title }}" class="text-decoration-none">
-                </a>
+        <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-0 border-bottom">
+        <div>
+            <h6 class="fw-bold mb-1">{{ job.job_title }}</h6>
+            <small class="text-muted">{{ job.area}} • {{ job.start_date }}</small>
         </div>
-
+        <a href="/view_post/{{ job.job_title }}" class="text-decoration-none" style="color: #D57A44;">
+            View Job
+        </a>
+        </div>
         {% endfor %}
       </div>
+      {% else %}
+      <p class="text-muted text-center py-3">No jobs posted for this project yet.</p>
+      {% endif %}
     </div>
+</div>
 
     <div class="col-lg-5">
       <div class="sticky-top" style="top:20px;">
