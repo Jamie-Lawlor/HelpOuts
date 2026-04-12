@@ -57,63 +57,66 @@
                 {% endif %}
                 <div id="recommended_jobs_list"></div>
 
-                <div id="projects-list" class="mt-4">
-                        {% for project in projects %}
-                                <div class="card border-0 shadow-sm mb-3" style="border-radius: 15px; overflow:hidden;">
+              <div id="projects-list" class="mt-4">
+    {% for project in projects %}
+    <div class="card border-0 shadow-sm mb-3" style="border-radius: 15px; overflow:hidden;">
+        
+        <div class="card-header bg-white border-0 p-0" id="project{{ project.id }}">
+    <div class="d-flex align-items-center justify-content-between p-3">
+        <div class="d-flex align-items-center flex-grow-1" data-bs-toggle="collapse" data-bs-target="#collapse{{ project.id }}" style="cursor: pointer;">
+            <img src="/static/images/default_image.jpg" class="rounded" style="width:60px; height:60px; object-fit:cover;">
+            <div class="ms-3">
+                <h6 class="fw-bold mb-0">{{ project.project_title }}</h6>
+            </div>
+        </div>
 
-                                        <div class="card-header bg-white border-0 p-0" id="project{{ project.id }}">
-                                                <button class="btn w-100 text-start p-3 d-flex align-items-center justify-content-between" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ project.id }}" aria-expanded="false" style="box-shadow: none;">
-                                                       <div class="d-flex align-items-center">
-                                                        <img src="/static/images/default_image.jpg" class="rounded" style="width:60px; height:60px; object-fit:cover;">
-                                                        <div class="ms-3">
-                                                                <h6 class="fw-bold mb-0">{{ project.project_title }}</h6>
-                                                                <small class="text-muted">{{ jobs|length }} Jobs</small>
-                                                        </div>
-                                                       </div>
+        <div class="d-flex gap-2">
+            <a href="/view_project/{{ project.project_title }}" 
+               class="btn btn-sm btn-outline-secondary rounded-pill">
+                View Project
+            </a>
+            
+            <button class="btn btn-sm text-white rounded-pill" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#collapse{{ project.id }}" 
+                    aria-expanded="false" 
+                    style="background-color: #3D6978;">
+                View Jobs
+            </button>
+        </div>
+    </div>
+</div>
 
-                                                       <span class="badge rounded-pill" style="background-color: #3D6978; color:white;">
-                                                        View Jobs <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
-                                                        </svg>
-                                                       </span>
-                                                </button>
-                                        </div>
-
-                                        <div id="collapse{{ project.id }}" class="collapse" data-bs-parent="#projects-list">
-                                                <div class="card-body bg-light border-top p-3">
-                                                        <div class="row g-2">
-                                                                {% for job in jobs %}
-                                                                {%  if job.project_id == project.id %}
-                                                                <div class="col-12">
-                                                                <div class="card border-0 shadow-sm bg-white p-3" style="border-radius: 10px; border-left:5px solid #85D6D6 !important;">
-                                                                        <a href="/view_post/{{ job.job_title }}" class="text-decoration-none">
-                                                                                        <div class="d-flex justify-content-between align-items-center">
-                                                                                                <div style="max-width: 70%;">
-                                                                                                <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.9rem;">
-                                                                                                        {{ job.job_title }}
-                                                                                                </h6>
-                                                                                                </div>
-                                                                                        <span class="badge bg-success rounded-pill px-3" style="font-size: 10px;">
-                                                                                                Offer to Help
-                                                                                        </span>
-                                                                                </div>
-                                                                        </div>
-                                                                     </div>
-                                                                        </a>
-                                                                {% else %}
-                                                        <div class="text-center py-3 no-jobs-msg" style="display: none;">
-                                                                        <small class="text-muted">
-                                                                                There are no active jobs for this project yet. 
-                                                                        </small>
-                                                        </div>
-                                                                {% endif %}
-                                                                {% endfor %}
-                                                </div>
-                                        </div>
+        <div id="collapse{{ project.id }}" class="collapse" data-bs-parent="#projects-list">
+            <div class="card-body bg-light border-top p-3">
+                <div class="row g-2">
+                    {% set project_has_jobs = namespace(found = false) %}
+                    
+                    {% for job in jobs %}
+                        {% if job.project_id == project.id %}
+                            {% set project_has_jobs.found = true %}
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm bg-white p-3" style="border-radius: 10px; border-left:5px solid #85D6D6 !important;">
+                                    <a href="/view_post/{{ job.job_title }}" class="text-decoration-none">
+                                        <h6 class="mb-0 fw-bold text-dark">{{ job.job_title }}</h6>
+                                    </a>
                                 </div>
-                                </div>
-                        {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if not project_has_jobs.found %}
+                        <div class="text-center py-2">
+                            <small class="text-muted">There are no active jobs for this project yet.</small>
+                        </div>
+                    {% endif %}
                 </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>               
                 </div>
 
 

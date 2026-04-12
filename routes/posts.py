@@ -12,6 +12,7 @@ from db.models import (
     JobRequests,
     JobSkills,
     Logs,
+    Communities,
 )
 import os
 import json
@@ -37,7 +38,9 @@ def post_page():
     if session["type"] != "chairperson":
         return redirect("/home_page/")
     else:
-        project_data = Projects.query.where(Projects.community_id == session["community_id"]).all()
+        project_data = Projects.query.where(
+            Projects.community_id == session["community_id"]
+        ).all()
 
         return render_template("/posts/add_job.html", projects=project_data)
 
@@ -328,3 +331,72 @@ def get_job_recommendations():
         return {"error": "User not found"}
 
     return jsonify(recommendations)
+
+
+@posts_blueprint.route("/view_project/<project_title>")
+@login_required
+def view_specific_project_page(project_title):
+    project = Projects.query.filter_by(project_title=project_title).first_or_404()
+    project_jobs = Jobs.query.filter_by(project_id=project.id).all()
+    community = Communities.query.get(project.community_id)
+    # project_data = project.to_dict()
+    role = session["type"]
+    db.session.commit()
+    print("Role", role)
+
+    return render_template(
+        "/posts/view_project.html",
+        project_data=project,
+        jobs=project_jobs,
+        community=community,
+        role=role,
+    )
+
+
+@posts_blueprint.route("/edit_project", methods=["POST"])
+@login_required
+def edit_project():
+    if session["type"] != "chairperson":
+        return ""
+
+    else:
+        updated_data = request.json["edit_data"]
+        project_id, title, desc, helpers, start, end = updated_data
+
+        updated_project = Projects.query.filter_by(id=project_id).first()
+
+        updated_project.project_title = title
+        updated_project.project_description = desc
+        updated_project.number_of_helpers = helpers
+        updated_project.start_date = start
+        updated_project.end_date = end
+
+        db.session.commit()
+        return updated_project.project_title
+
+
+@posts_blueprint.route("/delete_project", methods=["POST"])
+@login_required
+def delete_project():
+    if session["type"] != "chairperson":
+        return ""
+
+    data = request.get_json()
+    project_id = int(data["project_id"])
+
+    # delete jobs for the project
+    project_jobs = Jobs.query.filter_by(project_id=project_id).all()
+    for job in project_jobs:
+        UserJobs.query.filter_by(job_id=job.id).delete()
+        JobLocation.query.filter_by(job_id=job.id).delete()
+        JobSkills.query.filter_by(job_id=job.id).delete()
+        JobRequests.query.filter_by(job_id=job.id).delete()
+        Reviews.query.filter_by(job_id=job.id).delete()
+        db.session.delete(job)
+
+    project = Projects.query.filter_by(id=project_id).first()
+    if project:
+        db.session.delete(project)
+
+    db.session.commit()
+    return ""

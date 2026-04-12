@@ -150,12 +150,18 @@ function send_project_data() {
     }
     
     fetch("/create_project", { method: "POST", body: data })
-        .then(window.location.replace(`/home_page/`))
+        .then(response =>{
+            if(response.ok){
+                window.location.href = "/home_page/"
+            }
+        })
+        // .then(window.location.replace(`/home_page/`))
 }
 
-
+var jobPostPage = ""
 function send_job_data() {
     let data = new FormData()
+    const jobTitle = document.getElementById("job_title").value
     // const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
     // const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
     data.append("title", document.getElementById("job_title").value)
@@ -200,6 +206,9 @@ function send_job_data() {
         .then(response => response.text())
         .then(jsonData => {
             data = JSON.parse(jsonData)
+            // jobPostPage = `/view_post/${data.job_title}`
+            // document.getElementById('display-job-name').innerText = jobTitle
+            // document.getElementById("jobModal").style.display = 'block'
             window.location.replace(`/view_post/${data.job_title}`)
         })
 }
@@ -486,4 +495,43 @@ function openPostModal(){
 
 function closePostModal(){
     document.getElementById("postModal").style.display = "none"
+}
+
+/* Add job modal */
+function closeJobModal(){
+    // document.getElementById("jobModal").style.display = "none"
+    window.location.replace(jobPostPage)
+}
+
+
+
+function open_edit_project() {
+    document.getElementById("edit_title").style.display = "block"
+    document.getElementById("project_title_display").style.display = "none"
+    document.getElementById("manage-project").style.display = "none"
+    document.getElementById("edit-project-details").style.display = "block"
+    document.getElementById("desc-display").style.display = "none"
+    document.getElementById("edit-labels").style.display = "none"
+}
+
+function send_updated_project_data() {
+    id = document.getElementById("project_id").value
+    updated_title = document.getElementById("edit_title").value
+    updated_description = document.getElementById("edit_description").value
+    updated_helpers = document.getElementById("edit_helpers").value
+    updated_start = document.getElementById("edit_project_start").value
+    updated_end = document.getElementById("edit_project_end").value
+    dataArray = [id, updated_title, updated_description, updated_helpers, updated_start, updated_end]
+    fetch("/edit_project", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ edit_data: dataArray }) })
+        .then(response => response.text())
+        .then(responseText => {
+            window.location.replace(`/view_project/${responseText}`)
+        })
+}
+
+function delete_project_data() {
+    id = document.getElementById("project_id").value
+    fetch("/delete_project", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ project_id: id }) })
+        .then(window.location.replace(`/home_page/`))
+
 }

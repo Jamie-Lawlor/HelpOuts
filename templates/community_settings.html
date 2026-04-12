@@ -234,10 +234,10 @@
                 </div>
                 
                 <div class="list-group list-group-flush">
-                   {% set project_has_jobs = false %}
+                   {% set project_has_jobs = namespace(found = false) %}
                    {% for job in jobs %}
                         {% if job.project_id == project.id %}
-                            {% set project_has_jobs = true %}
+                            {% set project_has_jobs.found = true %}
                     <div class="list-group-item px-0 d-flex justify-content-between align-items-center border-0 py-3">
                         <div class="d-flex align-items-center">
                             <div class="p-2 bg-light rounded-3 me-3">
@@ -261,7 +261,7 @@
                     {% endif %}
                 {% endfor %}
 
-                {% if not project_has_jobs %}
+                {% if not project_has_jobs.found %}
                     <div class="text-center py-4">
                         <h6 class="text-muted small">No jobs created yet</h6>
                         <p class="text-muted fw-bold">Start by adding a task for helpers to complete.</p>
