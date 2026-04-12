@@ -114,3 +114,11 @@
   </div>
 </div>
 {% endblock %}
+
+<script type="text/javascript">
+  registerServiceWorker(
+    "/static/js/service_worker.js",
+    `{{ vapid_key }}`,
+    "/api/push-subscriptions",
+  );
+</script>

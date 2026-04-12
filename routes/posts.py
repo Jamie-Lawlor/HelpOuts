@@ -381,7 +381,8 @@ def delete_project():
     if session["type"] != "chairperson":
         return ""
 
-    project_id = int(request.json["project_id"])
+    data = request.get_json()
+    project_id = int(data["project_id"])
 
     # delete jobs for the project
     project_jobs = Jobs.query.filter_by(project_id=project_id).all()
@@ -395,7 +396,7 @@ def delete_project():
 
     project = Projects.query.filter_by(id=project_id).first()
     if project:
-        db.session.commit(project)
+        db.session.delete(project)
 
     db.session.commit()
     return ""
