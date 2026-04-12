@@ -12,6 +12,7 @@ from db.models import (
     JobRequests,
     JobSkills,
     Logs,
+    Communities,
 )
 import os
 import json
@@ -330,3 +331,50 @@ def get_job_recommendations():
         return {"error": "User not found"}
 
     return jsonify(recommendations)
+
+
+@posts_blueprint.route("/view_project/<project_title>")
+@login_required
+def view_specific_project_page(project_title):
+    revert_format = project_title.replace("_", " ").title()
+    project = Projects.query.filter_by(project_title=revert_format).first_or_404()
+    project_jobs = Jobs.query.filter_by(project_id=id).all()
+    community = Communities.query.get(project.community_id)
+    project_data = project.to_dict()
+    role = session["type"]
+    db.session.commit()
+    print("Role", role)
+
+    return render_template(
+        "/posts/view_project.html",
+        project_data=project_data,
+        jobs=project_jobs,
+        community=community,
+        role=role,
+    )
+
+
+@posts_blueprint.route("/edit_job", methods=["POST"])
+@login_required
+def edit_job():
+    if session["type"] != "chairperson":
+        return ""
+    else:
+        updated_data = request.json["edit_data"]
+        updated_title = updated_data[1]
+        updated_description = updated_data[2]
+        updated_area = updated_data[3]
+
+        updated_job = Jobs.query.filter_by(id=updated_data[0]).first()
+        updated_job.job_title = updated_title
+        updated_job.job_description = updated_description
+        updated_job.area = updated_area
+        updated_job.created_date = db.func.current_timestamp()
+        log = Logs(
+            user_id=session["user_id"],
+            action=f"Edit - {updated_data[0]}",
+            target="Jobs",
+        )
+        db.session.add(log)
+        db.session.commit()
+        return updated_job.job_title

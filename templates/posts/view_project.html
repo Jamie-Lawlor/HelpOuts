@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}View Project{% endblock %}
+{% block body_community %}
+
+<input class="hide" id="project_id" value="{{ project_data.id }}" disabled />
+
+<div class="container py-5 py-lg-5 mb-5">
+  <div class="row g-5">
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
+      <div class="d-flex align-items-start mb-4">
+        <img src="/static/images/community_image.png" width="80" height="80" class="rounded-circle me-3 border" />
+        <div class="w-100">
+          <h1 class="fw-bold h2 mb-1" id="project_title_display">{{ project_data.project_title }}</h1>
+          <input type="text" id="edit_title" class="form-control ms-2" value="{{ project_data.project_title }}" style="display: none" />
+          <p class="text-muted mb-2">Hosted by <strong>{{ community.name }}</strong></p>
+        </div>
+      </div>
+</div>
+
+        <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
+      <ul class="nav nav-tabs job-tabs mb-4" id="projectTab" role="tabList">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about" type="button">About</button>
+        </li>
+      </ul>
+        
+      <div class="tab-content" id="projectTabContent">
+        <div class="tab-pane fade show active" id="about" role="tabpanel">
+          <div class="mb-4">
+            <h4 class="fw-bold mb-3">Project Details</h4>
+            <p class="lh-base text-secondary" id="desc-display">{{ project_data.project_description }}</p>
+            <textarea id="edit_description" class="form-control mt-2" rows="3" style="display: none">{{ project_data.project_description }}</textarea>
+          </div>
+
+          <input type="number" id="edit_helpers" class="form-control mb-2" value="{{ project_data.number_of_helpers }}" placeholder="Number of Helpers"/>
+
+          <div class="row">
+            <div class="col-6">
+                <input type="date" id="edit_project_start" class="form-control" value="{{ project_data.start_date }}"/>
+            </div>
+            <div class="col-6">
+                <input type="date" id="edit_project_end" class="form-control" value="{{ project_data.end_date }}"/>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+      <div class="card p-4 shadow-sm border-0 mt-4">
+        <h5 class="fw-bold mb-3">Project Jobs</h5>
+        {% for job in jobs %}
+        <div class="d-flex justify-content-between py-2 border-bottom">
+            <span>{{ job.job_title }}</span>
+            <a href="/view_post/{{ job.job_title }}" class="text-decoration-none">
+                </a>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="sticky-top" style="top:20px;">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+          <div class="card-header-job py-3 px-4">
+            <h6 class="mb-0 fw-bold text-white text-center">PROJECT MANAGEMENT</h6>
+          </div>
+          <div class="card-body p-4">
+            <div id="manage-project">
+              <div class="d-grid gap-3">
+                <button onclick="open_edit_project()" class="btn btn-teal rounded-pill py-2 fw-bold shadow-sm">
+                  <i class="bi bi-pencil-square me-2"></i> Edit Project
+                </button>
+                <button class="btn btn-danger rounded-pill fw-bold text-white" onclick="delete_project_data()">
+                  <i class="bi bi-archive me-2"></i> Delete Project
+                </button>
+              </div>
+            </div>
+
+            <div id="edit-project-details" style="display: none">
+              <div class="d-grid gap-3 mt-3">
+                <button class="btn btn-save rounded-pill py-2 fw-bold shadow-sm text-white" onclick="send_updated_project_data()">
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
