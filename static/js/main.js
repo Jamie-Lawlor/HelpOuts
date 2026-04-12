@@ -150,7 +150,12 @@ function send_project_data() {
     }
     
     fetch("/create_project", { method: "POST", body: data })
-        .then(window.location.replace(`/home_page/`))
+        .then(response =>{
+            if(response.ok){
+                window.location.href = "/home_page/"
+            }
+        })
+        // .then(window.location.replace(`/home_page/`))
 }
 
 var jobPostPage = ""
