@@ -154,7 +154,7 @@ def settings_page(community_name):
 @login_required
 def helper_settings_page(user_name):
     if session["type"] != "helper":
-        return redirect("/home_page/")
+        return redirect(f"/community_profile/{ session['community_name'] }")
     else:
         revert_format = user_name.replace("_", " ").title()
         helper_data = Users.query.filter_by(name=revert_format).first_or_404()

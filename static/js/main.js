@@ -147,7 +147,10 @@ function send_project_data() {
     }
     
     fetch("/create_project", { method: "POST", body: data })
-        .then(window.location.replace(`/home_page/`))
+        .then(response => response.text())
+        .then(responseText => {
+            window.location.replace(`/community_profile/${responseText}`)
+        })
         
 }
 
@@ -250,7 +253,10 @@ function send_updated_data() {
 function delete_post_data() {
     id = document.getElementById("job_id").value
     fetch("/delete_post", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ post_id: id }) })
-        .then(window.location.replace(`/home_page/`))
+        .then(response => response.text())
+        .then(responseText => {
+            window.location.replace(`/community_profile/${responseText}`)
+        })
 
 }
 
@@ -526,6 +532,8 @@ function send_updated_project_data() {
 function delete_project_data() {
     id = document.getElementById("project_id").value
     fetch("/delete_project", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ project_id: id }) })
-        .then(window.location.replace(`/home_page/`))
-
+        .then(response => response.text())
+        .then(responseText => {
+            window.location.replace(`/community_profile/${responseText}`)
+        })
 }

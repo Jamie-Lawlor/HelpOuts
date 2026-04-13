@@ -82,8 +82,8 @@ def register():
     key = RSA.generate(4096)
     private_key = key.export_key()
     public_key = key.public_key().export_key()
-    print(private_key)
-    print(public_key)
+    # print(private_key)
+    # print(public_key)
 
     if user_type == "chairperson":
         community_name = request.form.get("community_name")
@@ -177,14 +177,14 @@ def register():
             public_key = public_key
         )
         
-    print(
-        user.name,
-        user.email,
-        user.password,
-        user.type,
-        user.work_area,
-        user.rating,
-    )
+    # print(
+    #     user.name,
+    #     user.email,
+    #     user.password,
+    #     user.type,
+    #     user.work_area,
+    #     user.rating,
+    # )
     db.session.add(user)
     db.session.commit()
     session["user_id"] = user.id
@@ -218,7 +218,7 @@ def register():
     if response_data["verification_status"] == "success":
         user.verfied = True
         session["accuracy"] = response_data["accuracy"]
-        print("ACCURACY IN SESSION: ", session["accuracy"])
+        # print("ACCURACY IN SESSION: ", session["accuracy"])
 
     register_log = Logs (
         user_id = user.id,
@@ -228,6 +228,7 @@ def register():
         
     db.session.add(register_log)
     db.session.commit()
+    
     return redirect("/home_page")
 
 
@@ -282,7 +283,11 @@ def login_no_mfa():
     db.session.add(log)
     db.session.commit()
     
-    return redirect("/home_page/")
+    if session["type"] == "chairperson":
+       community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+       return redirect(f"/community_profile/{ community.name }")
+    else:
+        return redirect("/home_page/")
     
      
 

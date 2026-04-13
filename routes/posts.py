@@ -80,7 +80,7 @@ def create_project():
         )
         db.session.add(log)
         db.session.commit()
-        return ""
+        return session["community_name"]
 
 
 @posts_blueprint.route("/create_job", methods=["POST"])
@@ -212,7 +212,7 @@ def delete_post():
         db.session.add(log)
         db.session.delete(Jobs.query.filter_by(id=updated_data).first())
         db.session.commit()
-        return ""
+        return session["community_name"]
 
 
 @posts_blueprint.route("/job_accepted", methods=["POST"])
@@ -392,4 +392,4 @@ def delete_project():
         db.session.delete(project)
 
     db.session.commit()
-    return ""
+    return session["community_name"]
