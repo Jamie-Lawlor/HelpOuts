@@ -73,7 +73,7 @@ def upload_profile_picture(user_id):
         # loop resized images and upload to s3 with matching label in the key
         for size_label, resized_image in resized_images.items():
             object_key = (
-                f"{user_id}/profile-picture/profile-picture-{size_label}.jpg"
+                f"users/{user_id}/profile-picture/profile-picture-{size_label}.jpg"
             )
             # change PIL image to file object for upload
             resized_image_file = io.BytesIO()
@@ -113,13 +113,16 @@ def upload_profile_picture(user_id):
         "profile_url": db_profile_picture_url
     }, 200
 
-
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
 def verified_upload(user_id):
 
     user = Users.query.filter_by(id=user_id).first()
     if not user:
         return {"error": "User not found"}, 404
+    
+    is_community = request.form.get("isCommunity")
+    print(f"IS COMMUNITY: {is_community}")
+
 
     # getlist returns a list of files but we only want one, 
     # the below checks ensure there are only 1 image
@@ -202,9 +205,13 @@ def verified_upload(user_id):
 
         # loop resized images and upload to s3 with matching label in the key
         for size_label, resized_image in resized_images.items():
-            object_key = (
-                f"{user_id}/profile-picture/profile-picture-{size_label}.jpg"
-            )
+            key = ""
+            if is_community == "True": 
+                key = f"communities/{user_id}/profile-picture/profile-picture-{size_label}.jpg"
+            else: 
+                key = f"users/{user_id}/profile-picture/profile-picture-{size_label}.jpg"
+            object_key = (key)
+            
             # change PIL image to file object for upload
             resized_image_file = io.BytesIO()
             resized_image.save(resized_image_file, format="JPEG", quality=90)

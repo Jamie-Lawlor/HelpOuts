@@ -85,7 +85,9 @@ def register():
     # print(private_key)
     # print(public_key)
 
+    is_community = False
     if user_type == "chairperson":
+        is_community = True
         community_name = request.form.get("community_name")
         if_exists = Communities.query.filter_by(name=community_name).first()
         if if_exists:
@@ -196,15 +198,16 @@ def register():
         "image": (profile_picture.filename, profile_picture.stream, profile_picture.mimetype)
     }
     if os.getenv("ENVIRONMENT") == "development":
-
         image_verfication_response = requests.post(
                 f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifiedUpload/{user.id}",
-                files=image_verification_body
+                files=image_verification_body,
+                data={"isCommunity": isCommunity}
             )
     else:
          image_verfication_response = requests.post(
                 f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}/api/verifiedUpload/{user.id}",
-                files=image_verification_body
+                files=image_verification_body,
+                data={"isCommunity": is_community}
             )
     # print(image_verfication_response)
     # Handle AiClipse not working/ S3 issue
