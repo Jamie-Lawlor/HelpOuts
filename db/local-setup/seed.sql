@@ -92,7 +92,6 @@ CREATE TABLE projects (
     project_description VARCHAR(1000) NOT NULL,
     project_type VARCHAR(20) NOT NULL,
     status VARCHAR(3) NOT NULL DEFAULT 'D',
-    number_of_helpers INT NOT NULL,
     start_date DATETIME,
     end_date DATETIME,
     community_id INT NOT NULL,
@@ -106,6 +105,7 @@ CREATE TABLE jobs (
     short_title VARCHAR(50),
     short_type VARCHAR(20),
     status VARCHAR(3) NOT NULL DEFAULT 'D',
+    number_of_helpers INT NOT NULL,
     area VARCHAR(100) NOT NULL,
     created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     start_date DATETIME,
@@ -232,36 +232,36 @@ VALUES
 (1, 'Hi, I would love to work with Tidy Towns. What projects are available?', CURRENT_TIMESTAMP, 2, 1),
 (2,'That''s great Ryan. We have lots of projects waiting to kick off, is there anything in particular you would be interested in?', CURRENT_TIMESTAMP, 1, 2);
 
-INSERT INTO projects (id, project_title, project_description, project_type, number_of_helpers, start_date, end_date, community_id)
+INSERT INTO projects (id, project_title, project_description, project_type, start_date, end_date, community_id)
 VALUES
-(1, 'Build new community park', 'Building a new park for the community of Dundalk', 'Environment', 5, '2026-01-08', '2026-07-21', 1),
-(2, 'Build new Social club', 'Building a social space for the local community of Dundalk', 'social_and_events', 6, '2026-07-01', '2026-12-19', 1),
-(3, 'Food drive', 'Help distributing food to those in need in Dundalk', 'Environment', 9, '2026-01-25', '2027-01-25', 1),
-(4, 'Build community play park', 'Building a new play park for the community of Monaghan', 'Environment', 5, '2026-01-08', '2026-07-21', 2),
-(5, 'Community Garden Restoration', 'Restore unused land into a community vegetable and flower garden.', 'environment', 6, '2026-03-01', '2026-06-01', 3),
-(6, 'Repair Community Hall Roof', 'Repair damaged roof panels on the local community hall.', 'construction', 4, '2026-03-10', '2026-03-20', 1),
-(7, 'Town Clean Up Initiative', 'Organised town clean up including litter collection and recycling.', 'environment', 10, '2026-04-05', '2026-04-06', 2),
-(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction', 5, '2026-04-15', '2026-05-20', 1),
-(9, 'Darkness into light Monaghan', 'Darkness Into Light 2026, is Pieta’s biggest fundraiser, the 5km walk will take place at 4:15 a.m. on Saturday, 9th of May, 2026. The funds raised through Darkness Into Light supports Pieta’s lifesaving free services to people in your community that have been affected by suicide or self-harm. This inspiring event also symbolises hope, as communities come together to support mental health, suicide and self-harm prevention.', 'social_and_events', 10, '2026-04-16', '2026-05-09', 4);
+(1, 'Build new community park', 'Building a new park for the community of Dundalk', 'Environment', '2026-01-08', '2026-07-21', 1),
+(2, 'Build new Social club', 'Building a social space for the local community of Dundalk', 'social_and_events', '2026-07-01', '2026-12-19', 1),
+(3, 'Food drive', 'Help distributing food to those in need in Dundalk', 'Environment',  '2026-01-25', '2027-01-25', 1),
+(4, 'Build community play park', 'Building a new play park for the community of Monaghan', 'Environment',  '2026-01-08', '2026-07-21', 2),
+(5, 'Community Garden Restoration', 'Restore unused land into a community vegetable and flower garden.', 'environment', '2026-03-01', '2026-06-01', 3),
+(6, 'Repair Community Hall Roof', 'Repair damaged roof panels on the local community hall.', 'construction', '2026-03-10', '2026-03-20', 1),
+(7, 'Town Clean Up Initiative', 'Organised town clean up including litter collection and recycling.', 'environment',  '2026-04-05', '2026-04-06', 2),
+(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction',  '2026-04-15', '2026-05-20', 1),
+(9, 'Darkness into light Monaghan', 'Darkness Into Light 2026, is Pieta’s biggest fundraiser, the 5km walk will take place at 4:15 a.m. on Saturday, 9th of May, 2026. The funds raised through Darkness Into Light supports Pieta’s lifesaving free services to people in your community that have been affected by suicide or self-harm. This inspiring event also symbolises hope, as communities come together to support mental health, suicide and self-harm prevention.', 'social_and_events', '2026-04-16', '2026-05-09', 4);
 
-INSERT INTO jobs (id, job_title, job_description, short_title, short_type, status, area, created_date, start_date, end_date, project_id)
+INSERT INTO jobs (id, job_title, job_description, short_title, short_type, status, number_of_helpers, area, created_date, start_date, end_date, project_id)
 VALUES
-(1, 'Install park benches and picnic tables','Help assemble and install benches/tables in the new park. Basic tools helpful. Outdoor work.','Benches install', 'environment', 'A', 'Dundalk', '2026-01-10 10:00:00', '2026-02-01 09:00:00', '2026-02-01 13:00:00',1),
-(2, 'Repair and paint perimeter fencing','Sand, repair and repaint park fencing to improve safety and appearance. PPE recommended.','Fence paint', 'general_maintenance', 'A','Dundalk', '2026-01-11 14:00:00', '2026-02-05 10:00:00', '2026-02-05 16:00:00',1),
-(3, 'Outdoor lighting check and minor fixes','Check existing lighting points around the park area and complete minor electrical fixes where safe.', 'Lighting', 'safety', 'D', 'Dundalk', '2026-01-12 09:30:00', '2026-02-10 10:00:00', '2026-02-10 12:30:00',1),
-(4, 'Build a small raised planter bed','Construct a raised wooden planter bed for flowers near the entrance. Carpentry help needed.','Planter bed', 'construction', 'A','Dundalk', '2026-01-13 12:00:00', '2026-02-12 09:00:00', '2026-02-12 14:00:00',1),
-(5, 'Assemble raised garden beds', 'Help construct and install wooden raised beds for the new community garden.', 'Garden beds', 'construction', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-03-10 09:00:00', '2026-03-10 14:00:00', 5),
-(6, 'Plant flowers and vegetables', 'Assist with planting vegetables and flowers in the restored garden.', 'Planting', 'environment', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-03-15 10:00:00', '2026-03-15 13:00:00', 5),
-(7, 'Repair roof panels', 'Replace damaged roof panels and secure new fittings on the community hall.', 'Roof repair', 'construction', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-03-12 09:00:00', '2026-03-12 16:00:00', 6),
-(8, 'Electrical lighting inspection', 'Inspect and repair outdoor lighting around the hall entrance.', 'Lighting check', 'safety', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-03-13 10:00:00', '2026-03-13 12:00:00', 6),
-(9, 'Collect litter and recycling', 'Walk through assigned streets collecting litter and recyclables.', 'Town clean up', 'environment', 'A', 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 09:00:00', '2026-04-05 13:00:00', 7),
-(10, 'Sort collected waste', 'Help organise waste into recycling and disposal categories.', 'Waste sorting', 'environment', 'A', 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 13:30:00', '2026-04-05 16:00:00', 7),
-(11, 'Build wooden seating benches', 'Construct wooden benches for the outdoor seating area.', 'Bench build', 'construction', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-04-20 09:00:00', '2026-04-20 15:00:00', 8),
-(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 'Dundalk', CURRENT_TIMESTAMP, '2026-04-21 10:00:00', '2026-04-21 14:00:00', 8),
-(13, 'Posting t-shirts','Organise the posting of t-shirts for people in Monaghan who have registered for the event','Posting t-shirts','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
-(14, 'Setup banners','Setting up banners for the event','Setup banners','environment', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-05-09', '2026-05-09', 9),
-(15,'Tea and coffee stand','Organise tea and coffee stand after the walk is finished','Tea & Coffee','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
-(16, 'Stewards','Give people directions to the correct path so no one gets lost along the walk','Stewards','social_and_events', 'NA', 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9);
+(1, 'Install park benches and picnic tables','Help assemble and install benches/tables in the new park. Basic tools helpful. Outdoor work.','Benches install', 'environment', 'A', 5, 'Dundalk', '2026-01-10 10:00:00', '2026-02-01 09:00:00', '2026-02-01 13:00:00',1),
+(2, 'Repair and paint perimeter fencing','Sand, repair and repaint park fencing to improve safety and appearance. PPE recommended.','Fence paint', 'general_maintenance', 'A', 6, 'Dundalk', '2026-01-11 14:00:00', '2026-02-05 10:00:00', '2026-02-05 16:00:00',1),
+(3, 'Outdoor lighting check and minor fixes','Check existing lighting points around the park area and complete minor electrical fixes where safe.', 'Lighting', 'safety', 'D', 9, 'Dundalk', '2026-01-12 09:30:00', '2026-02-10 10:00:00', '2026-02-10 12:30:00',1),
+(4, 'Build a small raised planter bed','Construct a raised wooden planter bed for flowers near the entrance. Carpentry help needed.','Planter bed', 'construction', 'A', 5, 'Dundalk', '2026-01-13 12:00:00', '2026-02-12 09:00:00', '2026-02-12 14:00:00',1),
+(5, 'Assemble raised garden beds', 'Help construct and install wooden raised beds for the new community garden.', 'Garden beds', 'construction', 'A', 6, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-10 09:00:00', '2026-03-10 14:00:00', 5),
+(6, 'Plant flowers and vegetables', 'Assist with planting vegetables and flowers in the restored garden.', 'Planting', 'environment', 'A', 4, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-15 10:00:00', '2026-03-15 13:00:00', 5),
+(7, 'Repair roof panels', 'Replace damaged roof panels and secure new fittings on the community hall.', 'Roof repair', 'construction', 'A', 10, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-12 09:00:00', '2026-03-12 16:00:00', 6),
+(8, 'Electrical lighting inspection', 'Inspect and repair outdoor lighting around the hall entrance.', 'Lighting check', 'safety', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-13 10:00:00', '2026-03-13 12:00:00', 6),
+(9, 'Collect litter and recycling', 'Walk through assigned streets collecting litter and recyclables.', 'Town clean up', 'environment', 'A', 10, 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 09:00:00', '2026-04-05 13:00:00', 7),
+(10, 'Sort collected waste', 'Help organise waste into recycling and disposal categories.', 'Waste sorting', 'environment', 'A', 1, 'Ardee', CURRENT_TIMESTAMP, '2026-04-05 13:30:00', '2026-04-05 16:00:00', 7),
+(11, 'Build wooden seating benches', 'Construct wooden benches for the outdoor seating area.', 'Bench build', 'construction', 'A', 9, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-20 09:00:00', '2026-04-20 15:00:00', 8),
+(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 3, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-21 10:00:00', '2026-04-21 14:00:00', 8),
+(13, 'Posting t-shirts','Organise the posting of t-shirts for people in Monaghan who have registered for the event','Posting t-shirts','social_and_events', 'NA', 4, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
+(14, 'Setup banners','Setting up banners for the event','Setup banners','environment', 'NA', 5, 'Monaghan', CURRENT_TIMESTAMP, '2026-05-09', '2026-05-09', 9),
+(15,'Tea and coffee stand','Organise tea and coffee stand after the walk is finished','Tea & Coffee','social_and_events', 'NA', 6, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
+(16, 'Stewards','Give people directions to the correct path so no one gets lost along the walk','Stewards','social_and_events', 'NA', 7, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9);
 
 INSERT INTO skills (id, skill)
 VALUES

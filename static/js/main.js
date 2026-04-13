@@ -119,12 +119,9 @@ function send_project_data() {
     let data = new FormData()
     const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg']
     const allowedFileExtensions = ['.jpeg', '.jpg', '.png']
-
-
     data.append("title", document.getElementById("helpout_title").value)
     data.append("description", document.getElementById("helpout_description").value)
     data.append("type", project_type)
-    data.append("helpers", document.getElementById("helpers_amount").innerHTML)
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
     fileInput = document.getElementById("project-upload-images")
@@ -150,12 +147,8 @@ function send_project_data() {
     }
     
     fetch("/create_project", { method: "POST", body: data })
-        .then(response =>{
-            if(response.ok){
-                window.location.href = "/home_page/"
-            }
-        })
-        // .then(window.location.replace(`/home_page/`))
+        .then(window.location.replace(`/home_page/`))
+        
 }
 
 var jobPostPage = ""
@@ -167,6 +160,7 @@ function send_job_data() {
     data.append("title", document.getElementById("job_title").value)
     data.append("description", document.getElementById("job_description").value)
     data.append("area", document.getElementById("job_area").value)
+    data.append("helpers", document.getElementById("helpers_amount").innerHTML)
     data.append("type", job_type.toLowerCase())
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)

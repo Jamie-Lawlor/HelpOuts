@@ -120,6 +120,30 @@ body_community %}
                   </ul>
                 </div>
               </div>
+              <div class="mb-4">
+              <span class="label-muted"
+                >HELPERS NEEDED:
+                <span id="helpers_amount" class="text-dark fw-bold"
+                  >1</span
+                ></span
+              >
+            <p class="text-muted small">
+            Please give an estimated guess.
+            </p>
+              <input
+                type="range"
+                class="form-range custom-range"
+                min="1"
+                max="10"
+                id="helpers_range"
+                value="1"
+                onchange="
+                  update_helpers_amount(
+                    document.getElementById('helpers_range').value,
+                  )
+                "
+              />
+            </div>
             </div>
           </div>
 
