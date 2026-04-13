@@ -24,11 +24,11 @@ def message_sent(data):
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]
     sender_of_message = data["sender"]
-
-    # sender = Users.query.get_or_404(2)
-    # receiver = Users.query.get_or_404(2)
+    # print(sender_id)
+    # print(receiver_id)
+    # print(sender_of_message)
     if sender_of_message == "community":
-        sender_data = Communities.query.get_or_404(sender_id)
+        sender_data = Users.query.join(Communities, Users.community_id == Communities.id).where(Users.type == "chairperson", Communities.id == session["community_id"]).first()
     else:
         sender_data = Users.query.get_or_404(sender_id)
     

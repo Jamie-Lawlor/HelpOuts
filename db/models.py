@@ -227,8 +227,6 @@ class Communities(db.Model):
     profile_picture = db.Column(db.String(1000), nullable =True)
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
-    private_key = db.Column(db.LargeBinary, nullable = True)
-    public_key = db.Column(db.LargeBinary, nullable = True)
 
 
     def to_dict(self):

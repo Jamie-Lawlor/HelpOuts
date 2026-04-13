@@ -97,8 +97,6 @@ def register():
                 area=location,
                 description="",
                 profile_picture="",
-                private_key = private_key,
-                public_key = public_key,
             )
             
             db.session.add(community)
