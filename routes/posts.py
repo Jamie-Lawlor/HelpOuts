@@ -52,17 +52,10 @@ def create_project():
         return ""
     else:
         title = request.form.get("title")
-        print("TITLE: ", title)
         description = request.form.get("description")
-        print("DESCRIPTION: ", description)
         project_type_selected = request.form.get("type")
-        print("TYPE: ", project_type_selected)
-        helpers = request.form.get("helpers")
-        print("HELPERS: ", helpers)
         start_date_selected = request.form.get("start_date")
-        print("START DATE: ", start_date_selected)
         end_date_selected = request.form.get("end_date")
-        print("END DATE: ", end_date_selected)
         file = request.files.get("images")
         # print("IMAGE_URL: ", image)
 
@@ -78,7 +71,6 @@ def create_project():
             project_title=title,  # Not Accepted as default
             project_description=description,
             project_type=project_type_selected,
-            number_of_helpers=helpers,
             start_date=start_date_selected,
             end_date=end_date_selected,
         )
@@ -88,8 +80,7 @@ def create_project():
         )
         db.session.add(log)
         db.session.commit()
-        new_project_data = Projects.query.get_or_404(new_project.id)
-        return jsonify(new_project_data.to_dict())
+        return session["community_name"]
 
 
 @posts_blueprint.route("/create_job", methods=["POST"])
@@ -104,6 +95,7 @@ def create_job():
         print("DESCRIPTION: ", description)
         area = request.form.get("area")
         type = request.form.get("type")
+        helpers = request.form.get("helpers")
         start_date = request.form.get("start_date")
         end_date = request.form.get("end_date")
         lat = request.form.get("lat")
@@ -127,6 +119,7 @@ def create_job():
             job_description=description,
             short_title="",
             short_type=type,
+            number_of_helpers = helpers,
             created_date=db.func.current_timestamp(),
             start_date=start_date,
             end_date=end_date,
@@ -219,7 +212,7 @@ def delete_post():
         db.session.add(log)
         db.session.delete(Jobs.query.filter_by(id=updated_data).first())
         db.session.commit()
-        return ""
+        return session["community_name"]
 
 
 @posts_blueprint.route("/job_accepted", methods=["POST"])
@@ -399,4 +392,4 @@ def delete_project():
         db.session.delete(project)
 
     db.session.commit()
-    return ""
+    return session["community_name"]

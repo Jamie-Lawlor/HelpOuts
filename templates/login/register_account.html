@@ -201,7 +201,9 @@ navbar %}{% endblock %} {% block body %}
                   d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
                 />
               </svg>
-              <p class="mb-2 fw-bold">Upload Profile Picture</p>
+
+              <p id="helper-upload" class="mb-2 fw-bold">Upload Profile Picture</p>
+              <p id="community-upload" class="mb-2 fw-bold" style="display:none">Upload Community Logo</p>
               <label
                 for="project-upload-images"
                 class="btn btn-outline-secondary btn-sm px-4 rounded-pill"
@@ -325,10 +327,13 @@ function prevRegisterStep(){
 function showCommunityNameInput(isCommunitySelected){
   if (isCommunitySelected){
        document.getElementById("register-step-community").style.display = "block"
+       document.getElementById("helper-upload"). style.display = "none"
+       document.getElementById("community-upload"). style.display = "block"
   }
   else{
        document.getElementById("register-step-community").style.display = "none"
-
+       document.getElementById("helper-upload"). style.display = "block"
+       document.getElementById("community-upload"). style.display = "none"
   }
 }
 </script>
