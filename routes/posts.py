@@ -236,7 +236,7 @@ def job_accepted():
 @posts_blueprint.route("/send_job_accepted_notification", methods=["POST"])
 def send_notification():
     data = request.json["data"]
-    job_id = data[0]
+    job_id = data
     helper_id = session["user_id"]
     print(job_id)
     print(helper_id)
