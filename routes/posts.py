@@ -221,15 +221,20 @@ def job_accepted():
     data = request.json["data"]
     job_id = data[0]
     helper_id = session["user_id"]
-    pending_job = JobRequests(
-        user_id=helper_id,
-        job_id=job_id,
-        created_date=db.func.current_timestamp(),
-    )
-    log = Logs(user_id=session["user_id"], action=f"Accepted - {job_id}", target="Jobs")
-    db.session.add(log)
-    db.session.add(pending_job)
-    db.session.commit()
+    max_number_of_helpers = Jobs.query.get_or_404(job_id).number_of_helpers
+    check_pending_requests_for_job = JobRequests.query.where(JobRequests.job_id == job_id).all()
+    if len(check_pending_requests_for_job) == max_number_of_helpers:
+        return "Alert triggered"
+    else:
+        pending_job = JobRequests(
+            user_id=helper_id,
+            job_id=job_id,
+            created_date=db.func.current_timestamp(),
+        )
+        log = Logs(user_id=session["user_id"], action=f"Accepted - {job_id}", target="Jobs")
+        db.session.add(log)
+        db.session.add(pending_job)
+        db.session.commit()
     return ""
 
 

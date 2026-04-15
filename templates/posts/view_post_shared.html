@@ -269,7 +269,7 @@
         Message Group
     </a>
 
-    <button type="button" id="job_accepted" onclick="accept_job()" 
+    <button type="button" id="job_accepted" onclick="accept_job('Your request to help has been sent.', 'accept')" 
         class="btn btn-offer-orange shadow-sm" 
         style="font-size: 14px; padding: 10px 24px; color:white;">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-hand-thumbs-up me-2" viewBox="0 0 16 16">
@@ -285,7 +285,22 @@
 </div>
 </div>
 
+<div id="actionModal">
+    <div class="text-center">
+        <div class="actionModalContainer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#3D6978" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
+                <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+            </svg>
+        </div>
+        <h4 id="requestResponse" class="fw-bold" style="color: #3D6978;">Request sent!</h4>
+        <p class="text-muted" id="actionModalMessage">The request has been updated successfully.</p>
 
+        <div class="text-end mt-4">
+            <button id="closeJobModalResponse" type="button" class="btn fw-bold" style="color: #D57A44;" onclick="closeActionModal()">Great!</button>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript">

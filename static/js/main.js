@@ -226,15 +226,25 @@ function open_edit() {
     // document.getElementById("public-actions").style.display = "none"
 }
 
-function accept_job() {
+function accept_job(message, icon) {
     // let user_id = document.getElementById("job_accepted").value
     job_id = document.getElementById("job_id").value
     // HARDCODED
     dataArray = [job_id]
     fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
-    fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
-    openPostModal()
-    // .then(window.location.replace(`/home_page`))
+    .then(response => response.text())
+    .then(trigger =>{
+        if(trigger == "Alert triggered"){
+            message = "Maximum number of requests have been submitted for this job.<br/><br/> Please contact the community chairperson about your interest to volunteer, or volunteer for another job on the list!"
+            icon = "reject"
+            document.getElementById("requestResponse").innerHTML = "Request failed!"
+            document.getElementById("closeJobModalResponse").innerHTML = "Ok"
+            openActionModal(message,icon)
+        }else{
+            fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
+            openActionModal(message,icon)
+        }
+    })
 }
 
 function send_updated_data() {
