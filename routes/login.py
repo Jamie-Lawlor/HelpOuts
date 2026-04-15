@@ -201,7 +201,7 @@ def register():
         image_verfication_response = requests.post(
                 f"{os.getenv('HELPOUTS_BASE_URL_DEV')}/api/verifiedUpload/{user.id}",
                 files=image_verification_body,
-                data={"isCommunity": isCommunity}
+                data={"isCommunity": is_community}
             )
     else:
          image_verfication_response = requests.post(
