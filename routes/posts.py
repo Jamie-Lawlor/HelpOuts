@@ -264,10 +264,8 @@ def send_notification():
 
 @posts_blueprint.route("/send_community_notification", methods=["POST"])
 def send_community_notification():
-    data = request.json["data"]
-    helper_id = data[0]
+    helper_id = request.json["data"]
     user_data = Users.query.get_or_404(helper_id)
-    print("USER DATA: ", user_data.name)
     subscriptions = Subscriptions.query.all()
     results = trigger_push_notifications_for_admin(
         subscriptions,

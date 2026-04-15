@@ -13,7 +13,7 @@ from db.models import (
     UserSkills,
     Logs,
 )
-
+from datetime import datetime, timedelta
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
@@ -27,7 +27,7 @@ def community_profile_page(community_name):
     project_data = Projects.query.where(Projects.community_id == community_id).all()
     all_job_data = (
         Jobs.query.join(Projects, Jobs.project_id == Projects.id)
-        .where(Projects.community_id == community_id)
+        .where(Projects.community_id == community_id, Jobs.start_date >= datetime.now())
         .all()
     )
     # specific_job_data = Jobs.query.join(Projects, Jobs.project_id == Projects.id).where(Projects.community_id == community_id).all()
