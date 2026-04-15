@@ -234,15 +234,15 @@ VALUES
 
 INSERT INTO projects (id, project_title, project_description, project_type, start_date, end_date, community_id)
 VALUES
-(1, 'Build new community park', 'Building a new park for the community of Dundalk', 'Environment', 5, '2026-01-08', '2026-07-21', 1),
-(2, 'Build new Social club', 'Building a social space for the local community of Dundalk', 'social_and_events', 6, '2026-07-01', '2026-12-19', 1),
-(3, 'Food drive', 'Help distributing food to those in need in Dundalk', 'Environment', 9, '2026-01-25', '2027-01-25', 1),
-(4, 'Build community play park', 'Building a new play park for the community of Monaghan', 'Environment', 5, '2026-01-08', '2026-07-21', 2),
-(5, 'Community Garden Restoration', 'Restore unused land into a community vegetable and flower garden.', 'environment', 6, '2026-03-01', '2026-06-01', 3),
-(6, 'Repair Community Hall Roof', 'Repair damaged roof panels on the local community hall.', 'construction', 4, '2026-03-10', '2026-03-20', 1),
-(7, 'Town Clean Up Initiative', 'Organised town clean up including litter collection and recycling.', 'environment', 10, '2026-04-05', '2026-04-06', 2),
-(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction', 5, '2026-04-15', '2026-05-20', 1),
-(9, 'Darkness into light Monaghan', 'Darkness Into Light 2026, is Pieta’s biggest fundraiser, the 5km walk will take place at 4:15 a.m. on Saturday, 9th of May, 2026. The funds raised through Darkness Into Light supports Pieta’s lifesaving free services to people in your community that have been affected by suicide or self-harm. This inspiring event also symbolises hope, as communities come together to support mental health, suicide and self-harm prevention.', 'social_and_events', 10, '2026-04-16', '2026-05-09', 4);
+(1, 'Build new community park', 'Building a new park for the community of Dundalk', 'Environment', '2026-01-08', '2026-07-21', 1),
+(2, 'Build new Social club', 'Building a social space for the local community of Dundalk', 'social_and_events', '2026-07-01', '2026-12-19', 1),
+(3, 'Food drive', 'Help distributing food to those in need in Dundalk', 'Environment', '2026-01-25', '2027-01-25', 1),
+(4, 'Build community play park', 'Building a new play park for the community of Monaghan', 'Environment', '2026-01-08', '2026-07-21', 2),
+(5, 'Community Garden Restoration', 'Restore unused land into a community vegetable and flower garden.', 'environment', '2026-03-01', '2026-06-01', 3),
+(6, 'Repair Community Hall Roof', 'Repair damaged roof panels on the local community hall.', 'construction', '2026-03-10', '2026-03-20', 1),
+(7, 'Town Clean Up Initiative', 'Organised town clean up including litter collection and recycling.', 'environment', '2026-04-05', '2026-04-06', 2),
+(8, 'Build Outdoor Seating Area', 'Construct a wooden seating and social area for local residents.', 'construction', '2026-04-15', '2026-05-20', 1),
+(9, 'Darkness into light Monaghan', 'Darkness Into Light 2026, is Pieta’s biggest fundraiser, the 5km walk will take place at 4:15 a.m. on Saturday, 9th of May, 2026. The funds raised through Darkness Into Light supports Pieta’s lifesaving free services to people in your community that have been affected by suicide or self-harm. This inspiring event also symbolises hope, as communities come together to support mental health, suicide and self-harm prevention.', 'social_and_events', '2026-04-16', '2026-05-09', 4);
 
 INSERT INTO jobs (id, job_title, job_description, short_title, short_type, status, number_of_helpers, area, created_date, start_date, end_date, project_id)
 VALUES
