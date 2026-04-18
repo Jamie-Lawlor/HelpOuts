@@ -221,6 +221,10 @@ def register():
         session["accuracy"] = response_data["accuracy"]
         # print("ACCURACY IN SESSION: ", session["accuracy"])
 
+    if user.type == "chairperson":
+        session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}communities/{user.id}/profile-picture/profile-picture-m.jpg"
+    else: 
+        session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}users/{user.id}/profile-picture/profile-picture-m.jpg"
     register_log = Logs (
         user_id = user.id,
         action = f"Registered as - {user.type}",
@@ -251,14 +255,18 @@ def logout():
 @login_blueprint.route("/login_no_mfa", methods=["POST"])
 def login_no_mfa():
     form_email = request.form.get("email")
+    print(f"EMAIL ENTERED: {form_email}")
     form_password = request.form.get("password")
-    user = Users.query.filter_by(email=form_email).first()
+    print(f"PASSWORD ENTERED: {form_password}")
 
+    user = Users.query.filter_by(email=form_email).first()
+    print(user)
+    print("HERE")
     # check email is found
     if user is None:
         error = "Email or Password Is Incorrect"
         return render_template("login/login.html", error=error)
-    
+    print(f"USER FOUND: {user}")
     # compare hash
     password_check = check_password_hash(user.password, form_password)
     if password_check == False:
@@ -268,12 +276,17 @@ def login_no_mfa():
     # initalize session
     session["user_id"] = user.id
     session["user_name"] = user.name
-    session["profile_picture"] = f"{os.getenv('AWS_S3_BUCKET')}{user.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user.type
+    if user.type == "chairperson":
+        session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}communities/{user.id}/profile-picture/profile-picture-m.jpg"
+    else: 
+        session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}users/{user.id}/profile-picture/profile-picture-m.jpg"
+    
     if user.community_id is not None:
         community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id).first()
-        session['community_name'] = community.name
-    session["images"] = os.getenv("AWS_S3_BASE_URL")
+        session["community_name"] = community.name
+        session["community_id"] = community.id
+
     login_user(user)
 
     log = Logs (
