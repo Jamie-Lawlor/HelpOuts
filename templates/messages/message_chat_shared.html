@@ -8,7 +8,7 @@
     {% if session["community_id"] %}
     <div class="d-flex align-items-center">
     <img
-            src="{{ user[0].profile_picture }}"
+            src="{{ AWS_BUCKET }}users/{{ user[0].id }}/profile-picture/profile-picture-s.jpg"
             width="40"
             height="40"
             class="header-profile-img rounded-circle me-2"
@@ -20,7 +20,7 @@
         {% else %}
         <div class="d-flex align-items-center">
           <img
-            src="{{ community[0].profile_picture }}"
+            src="{{ AWS_BUCKET }}communities/{{ community[0].id }}/profile-picture/profile-picture-s.jpg"
             width="40"
             height="40"
             class="header-profile-img rounded-circle me-2"
