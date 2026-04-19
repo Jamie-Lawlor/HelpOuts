@@ -27,7 +27,7 @@
         >
         <div class="d-flex w-100 justify-content-between">
             <div class="d-flex align-items-center">
-              <img src="{{ all_users[i].profile_picture }}" width="60" height="60" class="rounded-circle me-3">
+              <img src="{{ AWS_BUCKET }}users/{{ all_users[i].id }}/profile-picture/profile-picture-s.jpg" width="60" height="60" class="rounded-circle me-3">
               <div>
                 <input type="number" name="id" style="display:none" value="{{ all_users[i].id }}">
                 <h6 name="helper_name" class="mb-0 fw-bold">{{ all_users[i].name }}</h6>
@@ -54,7 +54,7 @@
         <div class="d-flex w-100 justify-content-between">
             <div class="d-flex w-100 justify-content-between">
             <div class="d-flex align-items-center">
-              <img src="{{ users_community[i].profile_picture }}" width="60" height="60" class="rounded-circle me-3">
+              <img src="{{ AWS_BUCKET }}communities/{{ users_community[i].id }}/profile-picture/profile-picture-s.jpg" width="60" height="60" class="rounded-circle me-3">
               <div>
               <input type="number" name="id" style="display:none" value="{{ users_community[i].id }}">
                 <h6 class="mb-0 fw-bold">{{ users_community[i].name }}</h6>
