@@ -343,7 +343,7 @@ def test_login_admin():
     session["type"] = "chairperson"
 
      # TODO profile picture comes from S3 now, not the database * not for communities yet
-    session["profile_picture"] = community_data.profile_picture
+    session["profile_picture"] = os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     dataArray = [
         str(session["community_id"]),
          # TODO profile picture comes from S3 now, not the database * not for communities yet

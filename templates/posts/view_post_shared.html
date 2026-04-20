@@ -92,6 +92,35 @@
             </div>
         </div>
 
+
+          <div class="col-sm-6">
+            <div class="d-flex align-items-center p-3 border rounded-4 bg-white shadow-sm">
+                <div class="rounded-circle bg-light p-2 me-3">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#3D6978" class="bi bi-clock" viewBox="0 0 16 16">
+              <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+            </svg>
+                </div>
+                <div>
+                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 10px;">Duration</small>
+                    <span class="text-dark">{{ job_data.start_date }}</span> <strong> Until </strong>
+                    <span class="text-dark">{{ job_data.end_date }}</span>
+                </div>
+            </div>
+        </div>
+
+           <div class="col-sm-6">
+            <div class="d-flex align-items-center p-3 border rounded-4 bg-white shadow-sm">
+                <div class="rounded-circle bg-light p-2 me-3">
+                    <img src="/static/images/user_icon.svg" width="20" height="20">
+                </div>
+                <div>
+                    <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 10px;">Helpers Required</small>
+                    <span class="fw-bold text-dark">{{ job_data.number_of_helpers }}</span>
+                </div>
+            </div>
+        </div>
+
         <div class="col-12">
             <div class="p-3 border-start border-4 rounded-3 shadow-sm bg-light" style="border-color: #3D6978 !important;">
                 <small class="text-muted d-block text-uppercase fw-bold mb-1" style="font-size: 10px;"> Part of Project</small>
@@ -171,21 +200,24 @@
 
   <div id="jobCarousel" class="carousel slide shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#jobCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#jobCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#jobCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      {% if hasImages %}
+        {% for img in images %}
+          <button 
+            type="button" 
+            data-bs-target="#jobCarousel" 
+            data-bs-slide-to="{{ loop.index0 }}" 
+            class="{% if loop.first %}active{% endif %}">
+          </button>
+        {% endfor %}
+      {% endif %}
     </div>
 
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="/static/images/test_images/tshirt.png" class="d-block w-100" alt="First slide" style="height: 400px; object-fit: cover;">
-      </div>
-      <div class="carousel-item">
-        <img src="/static/images/test_images/walk.png" class="d-block w-100" alt="Second slide" style="height: 400px; object-fit: cover;">
-      </div>
-      <div class="carousel-item">
-        <img src="/static/images/test_images/poster.png" class="d-block w-100" alt="Third slide" style="height: 400px; object-fit: cover;">
-      </div>
+      {% for img_url in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <img src="{{ img_url }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+        </div>
+      {% endfor %}
     </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#jobCarousel" data-bs-slide="prev">
