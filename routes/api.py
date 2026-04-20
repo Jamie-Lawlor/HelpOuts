@@ -9,7 +9,7 @@ import io
 import boto3
 from dotenv import load_dotenv
 import os
-import PIL
+
 load_dotenv()
 
 
@@ -22,6 +22,10 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_REGION")
 )
 
+
+# --------------------
+# Profile Picture Routes
+# --------------------
 @api_blueprint.route("/uploadProfilePicture/<int:user_id>", methods=["POST"])
 def upload_profile_picture(user_id):
     user = Users.query.filter_by(id=user_id).first()
@@ -255,6 +259,9 @@ def verified_upload(user_id):
     }, 200
     
 
+# --------------------
+# Job Routes
+# --------------------
 @api_blueprint.route("/uploadJobImage/<int:job_id>", methods=["POST"])
 def upload_job_image(job_id):
     print("UPLOAD JOB IMAGE API CALLED")
@@ -286,9 +293,9 @@ def upload_job_image(job_id):
             img = img.convert("RGB")
             
             try:
-                
+                # escpaing file names to fix uploaded key issue - https://ssojet.com/escaping/url-escaping-in-python#pythons-urllibparse-module
                 image.filename = f"{index}.jpg"
-                object_key = f"jobs/{jobExists.job_title}/{image.filename}"
+                object_key = f"jobs/{jobExists.id}/{image.filename}"
                 
                 image_file = io.BytesIO()
                 img.save(image_file, format="JPEG", quality=90)
@@ -307,8 +314,41 @@ def upload_job_image(job_id):
                 print(f"ERROR: {e}")
                 return {"error": f"Error uploading image {image.filename} to S3"}, 400
         return jsonify({"message": "Uploading multiple job images", "success": True}), 200
-    
 
+
+@api_blueprint.route("/getJobImages/<int:job_id>", methods=["GET"])
+def get_job_images(job_id):
+    job = Jobs.query.filter_by(id=job_id).first()
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+    
+    # Requesting images from S3 https://stackoverflow.com/questions/60355683/how-to-access-aws-s3-data-using-boto3
+    # response = s3.get_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=f"jobs/{job.job_title}/")
+    # https://docs.aws.amazon.com/boto3/latest/reference/services/s3/client/list_objects.html
+
+    response = s3.list_objects(
+        Bucket=os.getenv("AWS_S3_BUCKET"),
+        Prefix=f"jobs/{job_id}/"
+    )
+    image_urls = []
+    
+    # Check if any files were actually found
+    if 'Contents' in response:
+        for obj in response['Contents']:
+            key = obj['Key']
+            if key != response['Prefix']:
+                # Construct the public URL
+                url = f"https://{os.getenv("AWS_S3_BUCKET")}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                image_urls.append(url)
+    else:
+        return jsonify({"error": "No images found for this job", "success": False}), 404
+    
+    
+    return jsonify({"images": image_urls, "success": True}), 200
+
+# --------------------
+# Map Routes
+# --------------------
 @api_blueprint.route("/getJobMap/<int:job_id>", methods=["GET"])
 def get_job_map(job_id):   
 
@@ -322,6 +362,7 @@ def get_job_map(job_id):
         "lng": location.lng,
         "icon_id": location.icon_id
     }), 200
+
 
 @api_blueprint.route("/getCommunityMap/<int:community_id>", methods=["GET"])
 def get_community_map(community_id):   
@@ -338,6 +379,10 @@ def get_community_map(community_id):
         "icon_url": os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     }), 200
 
+
+# --------------------
+# Test Routes
+# --------------------
 @api_blueprint.route("/testMap")
 def test_map():
     # test_user_id = uuid.uuid4()

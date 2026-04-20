@@ -175,11 +175,30 @@ def view_specific_post_page(post_title):
     db.session.commit()
     print("ROLE: ", role)
     print("ROLE TYPE: ", type(role))
+    print("GETTING IMAGESS")
+    hasImages = False
+    if os.getenv("ENVIRONMENT") == "development":
+        image_response = requests.get(f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/getJobImages/{job_data['id']}")
+    else:
+        image_response = requests.get(f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/getJobImages/{job_data['id']}")
+    
+    response_data = image_response.json()
+    if response_data["success"] == False:
+        images = [f"{os.getenv('AWS_S3_BASE_URL')}jobs/default.jpg"]
+    else:
+        images = response_data["images"]
+        hasImages = True
+
+    print("IMAGES: ", images)
+
+
     return render_template(
         "/posts/view_post.html",
         job_data=job_data,
         project_data=project,
         vapid_key=vapid_key,
+        hasImages=hasImages,
+        images=images,
         role=role,
         GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"),
     )
