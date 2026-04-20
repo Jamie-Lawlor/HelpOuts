@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_required
+import requests
 from db.database import db
 from db.models import (
     Projects,
@@ -56,14 +57,8 @@ def create_project():
         project_type_selected = request.form.get("type")
         start_date_selected = request.form.get("start_date")
         end_date_selected = request.form.get("end_date")
-        file = request.files.get("images")
-        # print("IMAGE_URL: ", image)
-
-        # # Security & Validation
-        # if not image_validation(file):
-        #     print("Invalid File")
-        # elif image_validation(file):
-        #     print("Valid File")
+        images = request.files.getlist("images")
+       
 
         new_project = Projects(
             # HARDCODED
@@ -75,6 +70,26 @@ def create_project():
             end_date=end_date_selected,
         )
         db.session.add(new_project)
+        db.session.commit()
+
+        image_body = []
+        image = images[0]
+        image_body.append(("images", (image.filename, image.stream, image.mimetype)))
+       
+        # Upload images to s3
+        if os.getenv("ENVIRONMENT") == "development":
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/uploadProjectImage/{new_project.id}",
+                    files=image_body
+                )
+        else:
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/uploadProjectImage/{new_project.id}",
+                    files=image_body
+                )
+      
+        response_data = image_upload_response.json()
+        print("IMAGE UPLOAD RESPONSE: ", response_data)
         log = Logs(
             user_id=session["user_id"], action=f"Create - {title}", target="Projects"
         )
@@ -100,20 +115,17 @@ def create_job():
         end_date = request.form.get("end_date")
         lat = request.form.get("lat")
         lng = request.form.get("lng")
-        file = request.files.get("images")
-        # print("IMAGE_URL: ", image)
+        images = request.files.getlist("images")
 
-        # # Security & Validation
-        # if not image_validation(file):
-        #     print("Invalid File")
-        # elif image_validation(file):
-        #     print("Valid File")
+
+        
+        
 
         # We get the id from the session which is set when the user logs in
         new_job = Jobs(
             # HARDCODED
             project_id=project_id,
-            status="NA",  # Not Accepted as default
+            status="NA",  # Not Accepted as default. This is to be updated if a job is completed
             area=area,
             job_title=title,
             job_description=description,
@@ -130,6 +142,28 @@ def create_job():
         job_location = JobLocation(
             job_id=new_job.id, icon_id=1, lat=lat, lng=lng  # TODO Add icons to database
         )
+
+        image_body = []
+        for image in images:
+            image_body.append(("images", (image.filename, image.stream, image.mimetype)))
+       
+        # Upload images to s3
+        if os.getenv("ENVIRONMENT") == "development":
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/uploadJobImage/{str(new_job.id)}",
+                    files=image_body
+                )
+        else:
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/uploadJobImage/{new_job.id}",
+                    files=image_body
+                )
+        response_data = image_upload_response.json()
+        if response_data["success"] == False:
+            print(response_data["error"])
+        else:
+            print(response_data["message"])
+
         log = Logs(
             user_id=session["user_id"], action=f"Create - {title}", target="Jobs"
         )
@@ -155,11 +189,30 @@ def view_specific_post_page(post_title):
     db.session.commit()
     print("ROLE: ", role)
     print("ROLE TYPE: ", type(role))
+    print("GETTING IMAGESS")
+    hasImages = False
+    if os.getenv("ENVIRONMENT") == "development":
+        image_response = requests.get(f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/getJobImages/{job_data['id']}")
+    else:
+        image_response = requests.get(f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/getJobImages/{job_data['id']}")
+    
+    response_data = image_response.json()
+    if response_data["success"] == False:
+        images = [f"{os.getenv('AWS_S3_BASE_URL')}jobs/default.jpg"]
+    else:
+        images = response_data["images"]
+        hasImages = True
+
+    print("IMAGES: ", images)
+
+
     return render_template(
         "/posts/view_post.html",
         job_data=job_data,
         project_data=project,
         vapid_key=vapid_key,
+        hasImages=hasImages,
+        images=images,
         role=role,
         GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"),
     )
@@ -197,6 +250,11 @@ def delete_post():
     if session["type"] != "chairperson":
         return ""
     else:
+        # delete images from s3
+        if os.getenv("ENVIRONMENT") == "development":
+            requests.delete(f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/deleteJobImages/{request.json['post_id']}")
+        else:
+            requests.delete(f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/deleteJobImages/{request.json['post_id']}")
         updated_data = int(request.json["post_id"])
         # delete all constraints first
         UserJobs.query.filter_by(job_id=updated_data).delete()

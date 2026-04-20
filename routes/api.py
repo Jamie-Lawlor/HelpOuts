@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation, Communities, Logs
+from db.models import Users, JobLocation, Communities, Logs, Jobs, Projects
 import uuid
 from PIL import Image
 import io
 import boto3
 from dotenv import load_dotenv
 import os
-import PIL
+
 load_dotenv()
 
 
@@ -22,6 +22,10 @@ s3 = boto3.client(
     region_name=os.getenv("AWS_REGION")
 )
 
+
+# --------------------
+# Profile Picture Routes
+# --------------------
 @api_blueprint.route("/uploadProfilePicture/<int:user_id>", methods=["POST"])
 def upload_profile_picture(user_id):
     user = Users.query.filter_by(id=user_id).first()
@@ -112,6 +116,9 @@ def upload_profile_picture(user_id):
         "user_id": user_id,
         "profile_url": db_profile_picture_url
     }, 200
+
+
+
 
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
 def verified_upload(user_id):
@@ -252,8 +259,185 @@ def verified_upload(user_id):
         "verdict": verdict,
         "accuracy": accuracy
     }, 200
-    
 
+
+# --------------------
+# Project Routes
+# --------------------
+@api_blueprint.route("/uploadProjectImage/<int:project_id>", methods=["POST"])
+def upload_project_image(project_id):
+    # Check project exists
+    projectExists = Projects.query.filter_by(id=project_id)
+    if not projectExists:
+        return jsonify({"error": "Project not found", "success": False}), 404
+    
+    image = request.files.getlist("images")
+    # Validate image file
+    if not image: 
+        return jsonify({"error": "No image uploaded", "success": False}), 400
+    
+    image = image[0]
+    try:
+        img = Image.open(image)
+        img.load() 
+        img = Image.open(image)
+    except Exception as e:
+        return jsonify({"error": f"Uploaded file {image.filename} is not a valid image", "success": False}), 400
+    img.seek(0)
+    img = img.convert("RGB")
+        
+    try:
+        # escpaing file names to fix uploaded key issue - https://ssojet.com/escaping/url-escaping-in-python#pythons-urllibparse-module
+        image.filename = f"project-thumbnail.jpg"
+        object_key = f"projects/{project_id}/{image.filename}"
+        
+        image_file = io.BytesIO()
+        img.save(image_file, format="JPEG", quality=90)
+        image_file.seek(0)
+
+        s3.upload_fileobj(
+            image_file,
+            os.getenv("AWS_S3_BUCKET"),
+            object_key,
+            ExtraArgs={
+                "ContentType": "image/jpg",
+            },
+        )
+        
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"error": f"Error uploading image {image.filename} to S3", "success": False}), 400
+       
+            
+    return jsonify({"message": "Uploading project thumbnail", "success": True}), 200
+
+
+@api_blueprint.route("/deleteProjectImages/<int:project_id>", methods=["DELETE"])
+def delete_project_images(project_id):
+
+
+    image_url = f"{os.getenv('AWS_S3_BASE_URL')}projects/{project_id}/project-thumbnail.jpg"
+    object_key = image_url.split(f"{os.getenv('AWS_S3_BASE_URL')}")[-1]
+    try:
+        s3.delete_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=object_key)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"error": f"Error deleting image at {image_url}"}), 400
+        
+    return jsonify({"message": "Images deleted successfully"}), 200
+
+
+# --------------------
+# Job Routes
+# --------------------
+@api_blueprint.route("/uploadJobImage/<int:job_id>", methods=["POST"])
+def upload_job_image(job_id):
+    print("UPLOAD JOB IMAGE API CALLED")
+    # Check job exists
+    jobExists = Jobs.query.filter_by(id=job_id).first()
+    if not jobExists:
+        return jsonify({"error": "Job not found", "success": False}), 404
+    
+    images = request.files.getlist("images")
+    print("2")
+    # Validate image file
+    if not images or images[0].filename == "": 
+        return jsonify({"error": "No image uploaded", "success": False}), 400
+    
+    print("3")
+    
+    if len(images) == 0:
+        return jsonify({"error": "No images uploaded", "success": False}), 400
+    else: 
+        for index, image in enumerate(images):
+       
+            try:
+                img = Image.open(image)
+                img.load() 
+                img = Image.open(image)
+            except Exception as e:
+                return jsonify({"error": f"Uploaded file {image.filename} is not a valid image"}), 400
+            img.seek(0)
+            img = img.convert("RGB")
+            
+            try:
+                # escpaing file names to fix uploaded key issue - https://ssojet.com/escaping/url-escaping-in-python#pythons-urllibparse-module
+                image.filename = f"{index}.jpg"
+                object_key = f"jobs/{jobExists.id}/{image.filename}"
+                
+                image_file = io.BytesIO()
+                img.save(image_file, format="JPEG", quality=90)
+                image_file.seek(0)
+
+                s3.upload_fileobj(
+                    image_file,
+                    os.getenv("AWS_S3_BUCKET"),
+                    object_key,
+                    ExtraArgs={
+                        "ContentType": "image/jpg",
+                    },
+                )
+                
+            except Exception as e:
+                print(f"ERROR: {e}")
+                return {"error": f"Error uploading image {image.filename} to S3"}, 400
+        return jsonify({"message": "Uploading multiple job images", "success": True}), 200
+
+
+@api_blueprint.route("/getJobImages/<int:job_id>", methods=["GET"])
+def get_job_images(job_id):
+    job = Jobs.query.filter_by(id=job_id).first()
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+    
+    # Requesting images from S3 https://stackoverflow.com/questions/60355683/how-to-access-aws-s3-data-using-boto3
+    # response = s3.get_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=f"jobs/{job.job_title}/")
+    # https://docs.aws.amazon.com/boto3/latest/reference/services/s3/client/list_objects.html
+
+    response = s3.list_objects(
+        Bucket=os.getenv("AWS_S3_BUCKET"),
+        Prefix=f"jobs/{job_id}/"
+    )
+    image_urls = []
+    
+    # Check if any files were actually found
+    if 'Contents' in response:
+        for obj in response['Contents']:
+            key = obj['Key']
+            if key != response['Prefix']:
+                # Construct the public URL
+                url = f"https://{os.getenv("AWS_S3_BUCKET")}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                image_urls.append(url)
+    else:
+        return jsonify({"error": "No images found for this job", "success": False}), 404
+    
+    
+    return jsonify({"images": image_urls, "success": True}), 200
+
+
+@api_blueprint.route("/deleteJobImages/<int:job_id>", methods=["DELETE"])
+def delete_job_images(job_id):
+
+    images, _ = get_job_images(job_id)
+
+    if _ != 200:
+        return jsonify({"error": "No images found for this job", "success": False}), 404
+    
+    image_urls = images.get_json().get("images", [])
+    for url in image_urls: 
+        object_key = url.split(f"{os.getenv('AWS_S3_BASE_URL')}")[-1]
+        try:
+            s3.delete_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=object_key)
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return jsonify({"error": f"Error deleting image at {url}"}), 400
+        
+    return jsonify({"message": "Images deleted successfully"}), 200
+
+
+# --------------------
+# Map Routes
+# --------------------
 @api_blueprint.route("/getJobMap/<int:job_id>", methods=["GET"])
 def get_job_map(job_id):   
 
@@ -268,6 +452,7 @@ def get_job_map(job_id):
         "icon_id": location.icon_id
     }), 200
 
+
 @api_blueprint.route("/getCommunityMap/<int:community_id>", methods=["GET"])
 def get_community_map(community_id):   
 
@@ -280,9 +465,13 @@ def get_community_map(community_id):
         "name": community.name,
         "lat": community.lat,
         "lng": community.lng,
-        "icon_url": community.profile_picture
+        "icon_url": os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     }), 200
 
+
+# --------------------
+# Test Routes
+# --------------------
 @api_blueprint.route("/testMap")
 def test_map():
     # test_user_id = uuid.uuid4()
