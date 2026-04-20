@@ -57,14 +57,8 @@ def create_project():
         project_type_selected = request.form.get("type")
         start_date_selected = request.form.get("start_date")
         end_date_selected = request.form.get("end_date")
-        file = request.files.get("images")
-        # print("IMAGE_URL: ", image)
-
-        # # Security & Validation
-        # if not image_validation(file):
-        #     print("Invalid File")
-        # elif image_validation(file):
-        #     print("Valid File")
+        images = request.files.getlist("images")
+       
 
         new_project = Projects(
             # HARDCODED
@@ -76,6 +70,26 @@ def create_project():
             end_date=end_date_selected,
         )
         db.session.add(new_project)
+        db.session.commit()
+
+        image_body = []
+        image = images[0]
+        image_body.append(("images", (image.filename, image.stream, image.mimetype)))
+       
+        # Upload images to s3
+        if os.getenv("ENVIRONMENT") == "development":
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/uploadProjectImage/{new_project.id}",
+                    files=image_body
+                )
+        else:
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/uploadProjectImage/{new_project.id}",
+                    files=image_body
+                )
+      
+        response_data = image_upload_response.json()
+        print("IMAGE UPLOAD RESPONSE: ", response_data)
         log = Logs(
             user_id=session["user_id"], action=f"Create - {title}", target="Projects"
         )

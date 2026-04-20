@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation, Communities, Logs, Jobs
+from db.models import Users, JobLocation, Communities, Logs, Jobs, Projects
 import uuid
 from PIL import Image
 import io
@@ -116,6 +116,8 @@ def upload_profile_picture(user_id):
         "user_id": user_id,
         "profile_url": db_profile_picture_url
     }, 200
+
+
 
 
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
@@ -257,7 +259,73 @@ def verified_upload(user_id):
         "verdict": verdict,
         "accuracy": accuracy
     }, 200
+
+
+# --------------------
+# Project Routes
+# --------------------
+@api_blueprint.route("/uploadProjectImage/<int:project_id>", methods=["POST"])
+def upload_project_image(project_id):
+    # Check project exists
+    projectExists = Projects.query.filter_by(id=project_id)
+    if not projectExists:
+        return jsonify({"error": "Project not found", "success": False}), 404
     
+    image = request.files.getlist("images")
+    # Validate image file
+    if not image: 
+        return jsonify({"error": "No image uploaded", "success": False}), 400
+    
+    image = image[0]
+    try:
+        img = Image.open(image)
+        img.load() 
+        img = Image.open(image)
+    except Exception as e:
+        return jsonify({"error": f"Uploaded file {image.filename} is not a valid image", "success": False}), 400
+    img.seek(0)
+    img = img.convert("RGB")
+        
+    try:
+        # escpaing file names to fix uploaded key issue - https://ssojet.com/escaping/url-escaping-in-python#pythons-urllibparse-module
+        image.filename = f"project-thumbnail.jpg"
+        object_key = f"projects/{project_id}/{image.filename}"
+        
+        image_file = io.BytesIO()
+        img.save(image_file, format="JPEG", quality=90)
+        image_file.seek(0)
+
+        s3.upload_fileobj(
+            image_file,
+            os.getenv("AWS_S3_BUCKET"),
+            object_key,
+            ExtraArgs={
+                "ContentType": "image/jpg",
+            },
+        )
+        
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"error": f"Error uploading image {image.filename} to S3", "success": False}), 400
+       
+            
+    return jsonify({"message": "Uploading project thumbnail", "success": True}), 200
+
+
+@api_blueprint.route("/deleteProjectImages/<int:project_id>", methods=["DELETE"])
+def delete_project_images(project_id):
+
+
+    image_url = f"{os.getenv('AWS_S3_BASE_URL')}projects/{project_id}/project-thumbnail.jpg"
+    object_key = image_url.split(f"{os.getenv('AWS_S3_BASE_URL')}")[-1]
+    try:
+        s3.delete_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=object_key)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"error": f"Error deleting image at {image_url}"}), 400
+        
+    return jsonify({"message": "Images deleted successfully"}), 200
+
 
 # --------------------
 # Job Routes
@@ -365,6 +433,8 @@ def delete_job_images(job_id):
             return jsonify({"error": f"Error deleting image at {url}"}), 400
         
     return jsonify({"message": "Images deleted successfully"}), 200
+
+
 # --------------------
 # Map Routes
 # --------------------

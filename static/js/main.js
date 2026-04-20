@@ -124,27 +124,30 @@ function send_project_data() {
     data.append("type", project_type)
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
-    fileInput = document.getElementById("project-upload-images")
-    
-    for (let i = 0; i < fileInput.files.length; i++) {
-        let validFile = true
-        const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
-        const mimeType = fileInput.files[i].type
-
-        if(!allowedFileExtensions.includes(fileExtension)){
-            alert("File Extension is Invalid, Cannot Use:\n" + fileExtension + "\nMust Use .jpg, .jpeg pr .png")
-            validFile = false
-        }
-
-        if(!allowedFileTypes.includes(mimeType)){
-            alert("File MIME Type is Invalid, Cannot Use:\n" + mimeType + "\nMust Use image/png, image/jpeg or image/jpg")
-            validFile = false
-        }
-
-        if(validFile){
-            data.append("images", fileInput.files[i])
-        }
+    fileInput = document.getElementById("project-upload-images").files
+    for(let i = 0; i < fileInput.length; i++) {
+        data.append("images", fileInput[i])
     }
+    
+    // for (let i = 0; i < fileInput.files.length; i++) {
+    //     let validFile = true
+    //     const fileExtension = fileInput.files[i].name.slice(fileInput.files[i].name.lastIndexOf('.')).toLowerCase()
+    //     const mimeType = fileInput.files[i].type
+
+    //     if(!allowedFileExtensions.includes(fileExtension)){
+    //         alert("File Extension is Invalid, Cannot Use:\n" + fileExtension + "\nMust Use .jpg, .jpeg pr .png")
+    //         validFile = false
+    //     }
+
+    //     if(!allowedFileTypes.includes(mimeType)){
+    //         alert("File MIME Type is Invalid, Cannot Use:\n" + mimeType + "\nMust Use image/png, image/jpeg or image/jpg")
+    //         validFile = false
+    //     }
+
+    //     if(validFile){
+    //         data.append("images", fileInput.files[i])
+    //     }
+    // }
     
     fetch("/create_project", { method: "POST", body: data })
         .then(response => response.text())
