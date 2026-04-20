@@ -221,9 +221,12 @@ def job_accepted():
     job_id = request.json["data"]
     helper_id = session["user_id"]
     max_number_of_helpers = Jobs.query.get_or_404(job_id).number_of_helpers
+    check_if_request_exists = JobRequests.query.where(JobRequests.job_id == job_id, JobRequests.user_id == helper_id).first()
     check_pending_requests_for_job = JobRequests.query.where(JobRequests.job_id == job_id).all()
     if len(check_pending_requests_for_job) == max_number_of_helpers:
         return "Alert triggered"
+    elif check_if_request_exists is not None:
+        return "Request exists"
     else:
         pending_job = JobRequests(
             user_id=helper_id,
