@@ -218,8 +218,7 @@ def delete_post():
 @posts_blueprint.route("/job_accepted", methods=["POST"])
 @login_required
 def job_accepted():
-    data = request.json["data"]
-    job_id = data[0]
+    job_id = request.json["data"]
     helper_id = session["user_id"]
     max_number_of_helpers = Jobs.query.get_or_404(job_id).number_of_helpers
     check_pending_requests_for_job = JobRequests.query.where(JobRequests.job_id == job_id).all()
@@ -240,8 +239,7 @@ def job_accepted():
 
 @posts_blueprint.route("/send_job_accepted_notification", methods=["POST"])
 def send_notification():
-    data = request.json["data"]
-    job_id = data
+    job_id = request.json["data"]
     helper_id = session["user_id"]
     print(job_id)
     print(helper_id)
