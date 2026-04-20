@@ -167,7 +167,12 @@ function send_job_data() {
     data.append("type", job_type.toLowerCase())
     data.append("start_date", document.getElementById("start_date").value)
     data.append("end_date", document.getElementById("end_date").value)
-    fileInput = document.getElementById("job_form_file_multiple")
+    
+    fileInput = document.getElementById("job_form_file_multiple").files
+    for(let i = 0; i < fileInput.length; i++) {
+        data.append("images", fileInput[i])
+    }
+
 
     // TODO Make location required, keep this statement until then
     if(selectedLat !== null && selectedLng !== null) {
@@ -199,6 +204,7 @@ function send_job_data() {
         
     // }
     data.append("project_id", document.getElementById("project_id").value)
+    console.log(data)
     fetch("/create_job", { method: "POST", body: data })
         .then(response => response.text())
         .then(jsonData => {
@@ -426,7 +432,7 @@ function test_login_helper(){
 }
 function test_login_admin(){
     
-        fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 4 }) })
+        fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 5 }) })
            .then(response => response.json())
             .then(data =>{
                 window.location.replace(`/community_profile/${data[2]}`)

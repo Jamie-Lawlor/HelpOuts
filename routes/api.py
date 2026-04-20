@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation, Communities, Logs
+from db.models import Users, JobLocation, Communities, Logs, Jobs
 import uuid
 from PIL import Image
 import io
@@ -112,6 +112,7 @@ def upload_profile_picture(user_id):
         "user_id": user_id,
         "profile_url": db_profile_picture_url
     }, 200
+
 
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
 def verified_upload(user_id):
@@ -254,6 +255,60 @@ def verified_upload(user_id):
     }, 200
     
 
+@api_blueprint.route("/uploadJobImage/<int:job_id>", methods=["POST"])
+def upload_job_image(job_id):
+    print("UPLOAD JOB IMAGE API CALLED")
+    # Check job exists
+    jobExists = Jobs.query.filter_by(id=job_id).first()
+    if not jobExists:
+        return jsonify({"error": "Job not found", "success": False}), 404
+    
+    images = request.files.getlist("images")
+    print("2")
+    # Validate image file
+    if not images or images[0].filename == "": 
+        return jsonify({"error": "No image uploaded", "success": False}), 400
+    
+    print("3")
+    
+    if len(images) == 0:
+        return jsonify({"error": "No images uploaded", "success": False}), 400
+    else: 
+        for index, image in enumerate(images):
+       
+            try:
+                img = Image.open(image)
+                img.load() 
+                img = Image.open(image)
+            except Exception as e:
+                return jsonify({"error": f"Uploaded file {image.filename} is not a valid image"}), 400
+            img.seek(0)
+            img = img.convert("RGB")
+            
+            try:
+                
+                image.filename = f"{index}.jpg"
+                object_key = f"jobs/{jobExists.job_title}/{image.filename}"
+                
+                image_file = io.BytesIO()
+                img.save(image_file, format="JPEG", quality=90)
+                image_file.seek(0)
+
+                s3.upload_fileobj(
+                    image_file,
+                    os.getenv("AWS_S3_BUCKET"),
+                    object_key,
+                    ExtraArgs={
+                        "ContentType": "image/jpg",
+                    },
+                )
+                
+            except Exception as e:
+                print(f"ERROR: {e}")
+                return {"error": f"Error uploading image {image.filename} to S3"}, 400
+        return jsonify({"message": "Uploading multiple job images", "success": True}), 200
+    
+
 @api_blueprint.route("/getJobMap/<int:job_id>", methods=["GET"])
 def get_job_map(job_id):   
 
@@ -280,7 +335,7 @@ def get_community_map(community_id):
         "name": community.name,
         "lat": community.lat,
         "lng": community.lng,
-        "icon_url": community.profile_picture
+        "icon_url": os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     }), 200
 
 @api_blueprint.route("/testMap")

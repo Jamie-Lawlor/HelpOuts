@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_required
+import requests
 from db.database import db
 from db.models import (
     Projects,
@@ -100,20 +101,17 @@ def create_job():
         end_date = request.form.get("end_date")
         lat = request.form.get("lat")
         lng = request.form.get("lng")
-        file = request.files.get("images")
-        # print("IMAGE_URL: ", image)
+        images = request.files.getlist("images")
 
-        # # Security & Validation
-        # if not image_validation(file):
-        #     print("Invalid File")
-        # elif image_validation(file):
-        #     print("Valid File")
+
+        
+        
 
         # We get the id from the session which is set when the user logs in
         new_job = Jobs(
             # HARDCODED
             project_id=project_id,
-            status="NA",  # Not Accepted as default
+            status="NA",  # Not Accepted as default. This is to be updated if a job is completed
             area=area,
             job_title=title,
             job_description=description,
@@ -130,6 +128,28 @@ def create_job():
         job_location = JobLocation(
             job_id=new_job.id, icon_id=1, lat=lat, lng=lng  # TODO Add icons to database
         )
+
+        image_body = []
+        for image in images:
+            image_body.append(("images", (image.filename, image.stream, image.mimetype)))
+       
+        # Upload images to s3
+        if os.getenv("ENVIRONMENT") == "development":
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/uploadJobImage/{str(new_job.id)}",
+                    files=image_body
+                )
+        else:
+            image_upload_response = requests.post(
+                    f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/uploadJobImage/{new_job.id}",
+                    files=image_body
+                )
+        response_data = image_upload_response.json()
+        if response_data["success"] == False:
+            print(response_data["error"])
+        else:
+            print(response_data["message"])
+
         log = Logs(
             user_id=session["user_id"], action=f"Create - {title}", target="Jobs"
         )
