@@ -229,25 +229,19 @@ function open_edit() {
 function accept_job(message, icon) {
     // let user_id = document.getElementById("job_accepted").value
     job_id = document.getElementById("job_id").value
-    fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_id }) })
+    // HARDCODED
+    dataArray = [job_id]
+    fetch("/job_accepted", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
     .then(response => response.text())
     .then(trigger =>{
         if(trigger == "Alert triggered"){
-            message = "Maximum number of requests have been submitted for this job.<br/><br/> Please contact the community about your interest to help out, or help with another job on the list!"
+            message = "Maximum number of requests have been submitted for this job.<br/><br/> Please contact the community chairperson about your interest to volunteer, or volunteer for another job on the list!"
             icon = "reject"
             document.getElementById("requestResponse").innerHTML = "Request failed!"
             document.getElementById("closeJobModalResponse").innerHTML = "Ok"
             openActionModal(message,icon)
-        }
-        else if(trigger == "Request exists"){
-                 message = "You already submitted a request for this job!"
-            icon = "reject"
-            document.getElementById("requestResponse").innerHTML = "Request failed!"
-            document.getElementById("closeJobModalResponse").innerHTML = "Ok"
-            openActionModal(message,icon)
-        }        
-        else{
-            fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_id }) })
+        }else{
+            fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: dataArray }) })
             openActionModal(message,icon)
         }
     })
@@ -345,23 +339,9 @@ function filter_jobs(value){
 
 function join_community(community_id, user_id){
         fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
-        .then(response => response.text())
-    .then(trigger =>{
-        if(trigger == "Alert triggered"){
-            message = "You already submitted a request to join this community!"
-            icon = "reject"
-            document.getElementById("requestResponse").innerHTML = "Request failed!"
-            document.getElementById("closeJobModalResponse").innerHTML = "Ok"
-            openActionModal(message,icon)
-        }
-      
-        else{
         fetch("/send_community_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_id }) })
-            openJoinModal()
-        }
-    })
 
-        
+        openJoinModal()
 }
 
 function join_community_request(helper_id, button_selected, icon, message, helperName){
@@ -421,6 +401,7 @@ function test_login_helper(){
         fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 7 }) })
             .then(response => response.json())
             .then(data =>{
+                sessionStorage.setItem("id", data[0])
                 window.location.replace(`/home_page/`)
             })
 }
@@ -429,6 +410,7 @@ function test_login_admin(){
         fetch("/test_login_admin", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 4 }) })
            .then(response => response.json())
             .then(data =>{
+                sessionStorage.setItem("id", data[0])
                 window.location.replace(`/community_profile/${data[2]}`)
             })
 }
@@ -446,7 +428,6 @@ function openSideBar(){
 function edit_helper_profile(){
     document.getElementById("manage_helper_profile").style.display = "none";
     document.getElementById("edit_helper_profile_actions").style.display = "block";
-    document.getElementById("cancel_helper_profile_actions").style.display = "block";
 
     document.getElementById("availability_display").style.display = "none";
     document.getElementById("edit_availability").style.display = "block";
