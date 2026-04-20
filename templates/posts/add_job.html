@@ -50,9 +50,9 @@ body_community %}
                   required
                 />
               </div>
-              <div class="col-md-4 mb-4">
+              <div class="col-md-4 mb-4" style="position: relative; z-index:10;">
                 <span class="label-muted">JOB TYPE</span>
-                <div class="dropdown">
+                <div class="dropdown dropup">
                   <button
                     class="btn soft-input w-100 text-start d-flex justify-content-between align-items-center dropdown-toggle"
                     type="button"
@@ -63,11 +63,11 @@ body_community %}
                     Choose Type
                   </button>
 
-                  <ul class="dropdown-menu dropdown-menu-end">
+                  <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3">
                     <li>
                       <button
                         type="button"
-                        class="dropdown-item"
+                        class="dropdown-item py-2"
                         onclick="storeJobValue('Environment', 'Environment')"
                       >
                         Environment
@@ -76,7 +76,7 @@ body_community %}
                     <li>
                       <button
                         type="button"
-                        class="dropdown-item"
+                        class="dropdown-item py-2"
                         onclick="
                           storeJobValue('social_and_events', 'Social & Events')
                         "
@@ -87,7 +87,7 @@ body_community %}
                     <li>
                       <button
                         type="button"
-                        class="dropdown-item"
+                        class="dropdown-item py-2"
                         onclick="storeJobValue('construction', 'Construction')"
                       >
                         Construction
@@ -96,7 +96,7 @@ body_community %}
                     <li>
                       <button
                         type="button"
-                        class="dropdown-item"
+                        class="dropdown-item py-2"
                         onclick="
                           storeJobValue(
                             'general_maintenance',
@@ -110,7 +110,7 @@ body_community %}
                     <li>
                       <button
                         type="button"
-                        class="dropdown-item"
+                        class="dropdown-item py-2"
                         onclick="storeJobValue('safety', 'Safety')"
                       >
                         Safety
