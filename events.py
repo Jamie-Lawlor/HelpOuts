@@ -16,6 +16,14 @@ def handle_connect():
     join_room(room)
 
 
+def decrypt_message(private_key, encrypted_message):
+      # private_key_bytes = base64.b64decode(private_key)
+    print(len(bytes(private_key)))
+    RSA_private_key = RSA.import_key(private_key)
+    decipher = PKCS1_OAEP.new(RSA_private_key)
+    decrypted_message = decipher.decrypt(encrypted_message).decode('utf-8')
+    return decrypted_message
+
 
 @socketio.on("message_sent")
 def message_sent(data):
@@ -42,11 +50,7 @@ def message_sent(data):
     RSA_public_key = RSA.import_key(public_key)
     cipher = PKCS1_OAEP.new(RSA_public_key)
     encrypted_message = cipher.encrypt(message.encode('utf-8'))
-
-    # private_key_bytes = base64.b64decode(private_key)
-    RSA_private_key = RSA.import_key(private_key)
-    decipher = PKCS1_OAEP.new(RSA_private_key)
-    decrypted_message = decipher.decrypt(encrypted_message).decode('utf-8')
+    decrypted_message = decrypt_message(private_key, encrypted_message)
 
     messageContent = {
         "user": sender_data.name,

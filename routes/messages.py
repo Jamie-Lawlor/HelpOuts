@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, jsonify, session
 from flask_login import login_required
 from db.database import db
-from db.models import Communities, Users
-
+from db.models import Communities, Users, Messages
+from events import decrypt_message
 messages_blueprint = Blueprint("messages", __name__, template_folder="templates")
 
 
@@ -30,11 +30,22 @@ def message_chat():
     if session.get("community_id") is not None:
         user = Users.query.get_or_404(id)
         userArray = [user, session["community_id"]]
-        return render_template("/messages/message_chat.html", user=userArray)
+        message_history = Messages.query.join(Communities, Messages.sender_id == session["community_id"]).where(Messages.sender_id == session["community_id"], Messages.receiver_id == user.id).all()
+        sender_user = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.community_id == session["community_id"], Users.type == "chairperson").first()
+        print("A: ",message_history)
+        print(sender_user)
+        return render_template("/messages/message_chat.html", user=userArray, message_history = message_history, sender_user = sender_user)
     else:
         community = Communities.query.get_or_404(id)
+        message_history = Messages.query.join(Users, Messages.sender_id ==session["user_id"]).where(Messages.sender_id == session["user_id"], Messages.receiver_id == community.id).all()
+        sender_user = Users.query.get(int(session["user_id"]))
+        decrypted_messages=[]
+        for message in message_history:
+            decrypted_messages.append(decrypt_message(sender_user.private_key, message.content))
         communityArray = [community, session["user_id"]]
-    return render_template("/messages/message_chat.html", community=communityArray)
+        print("B: ",message_history)
+        
+    return render_template("/messages/message_chat.html", community=communityArray, message_history = decrypted_messages, sender_user = sender_user)
 
 
 @messages_blueprint.route("/temp_inbox/")
