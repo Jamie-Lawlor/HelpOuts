@@ -749,13 +749,16 @@ h6{
 .job-card-search{
     border-radius: 25px;
     overflow: hidden;
-    transition: transform 0.2s ease;   
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  
 }
 
 
 .job-card-search:hover{
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
+
+
 
 #jobs-container{
     display: flex;
@@ -783,6 +786,8 @@ h6{
     color: #6c757d;
     font-size: 0.9rem;
 }
+
+
 
 /* Message bubble styling */
 .bubble{
