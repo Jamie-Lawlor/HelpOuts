@@ -177,10 +177,11 @@
                -->
 
                <div class="experience-list">
+                <div id="experience_display">
                 {% if user_experience|length != 0 %}
                   {% for item in user_experience %}
                   <div class="experience-item border-bottom">
-                    <span class="text-secondary d-block py-2" id="experience_display">
+                    <span class="text-secondary d-block py-2">
                       {{ item }}
                     </span>
                   </div>
@@ -188,6 +189,7 @@
                 {% else %}
                   <p class="mb-0 text-secondary">No previous experience</p>
                 {% endif %}
+                </div>
               <textarea
                 id="edit_experience"
                 class="form-control border-0 bg-light rounded-4 mt-2"
@@ -195,7 +197,6 @@
                 rows="3"
               ></textarea>
             </div>
-            <!-- </div> -->
           </div>
 </div>
 
