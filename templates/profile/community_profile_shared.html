@@ -9,7 +9,8 @@
           style="border-radius: 15px"
         >
           <div class="text-center">
-            <img src="{{ session['community_profile_picture'] }}"
+            <img
+              src="{{ session['community_profile_picture'] }}"
               class="rounded-3 border border-4 border-white shadow-sm"
               style="height: 120px; object-fit: cover; margin-top: -60px"
             />
@@ -33,10 +34,8 @@
               >
                 Join Community
               </button>
-            {% endif %}
-
-            {% if user_data.community_id is not none %}
-            <form action="/message_chat", method="POST">
+      
+              <form action="/message_chat", method="POST">
               <input type="number" name="id" style="display:none" value="{{ community.id }}">
               <button type="submit" class="btn btn-teal btn-sm w-100 py-2 rounded-pill">Message</button>
             </form>
@@ -259,12 +258,12 @@
               />
               <span class="small ml-4"> janedoe@email.com</span>
             </div>
-         {% if session["type"] == "helper"  and user_data.community_id is not none%}
-          <form action="/message_chat/", method="POST">
-          <input type="number" name="id" style="display:none" value="{{ community.id }}">
-          <button type="submit" class="btn btn-teal btn-sm w-100 mt-2 d-sm-none d-md-block d-none d-sm-block">Message</button>
-          </form>
-          {% endif %}
+            {% if session["type"] == "helper" %}
+            <form action="/message_chat/", method="POST">
+              <input type="number" name="id" style="display:none" value="{{ community.id }}">
+              <button type="submit" class="btn btn-teal btn-sm w-100 mt-2 d-sm-none d-md-block d-none d-sm-block">Message</button>
+            </form>
+            {% endif %}
           </div>
         </div>
       </div>
