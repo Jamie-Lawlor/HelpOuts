@@ -23,6 +23,7 @@ def community_profile_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
+    session["community_profile_picture"] = community_data.profile_picture
     role = session["type"]
     project_data = Projects.query.where(Projects.community_id == community_id).all()
     all_job_data = (
@@ -226,8 +227,7 @@ def accept_helper_job():
 
 @profile_blueprint.route("/request_join_community", methods=["POST"])
 def join_community():
-    data = request.json["data"]
-    community_id = data[0]
+    community_id = request.json["data"]
     helper_id = session["user_id"]
     pending_request = CommunityRequests(
         user_id=helper_id,
