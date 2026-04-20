@@ -678,16 +678,17 @@ h6{
 
 .category-card {
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 130px;
+    height: 130px;
     background: white;
-    border-radius: 30px;
+    border-radius: 15px;
     cursor: pointer;
     transition: transform 0.3s ease;
     overflow: hidden;
     position: relative;
     border: 1px solid #f0f0f0 transparent ;
 }
+
 
 .category-card .bi{
     color: #3D6978;
@@ -749,13 +750,15 @@ h6{
 .job-card-search{
     border-radius: 25px;
     overflow: hidden;
-    transition: transform 0.2s ease;   
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  
 }
 
 
 .job-card-search:hover{
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
+
 
 #jobs-container{
     display: flex;
@@ -783,6 +786,8 @@ h6{
     color: #6c757d;
     font-size: 0.9rem;
 }
+
+
 
 /* Message bubble styling */
 .bubble{
@@ -1718,9 +1723,16 @@ button{
 }
 
 .category-strip {
-    width: 4px;
+    /* width: 4px;
     height: 35px; 
-    background-color: #ccc;
+    background-color: #ccc; */
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 3px;
+    border-radius: 10px 10px 0 0;
+    opacity: 0.5;
 }
 
 .cat-purple .category-strip { background-color: #85D6D6; } 

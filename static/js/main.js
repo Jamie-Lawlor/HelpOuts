@@ -7,24 +7,56 @@ document.addEventListener('DOMContentLoaded', () =>{
         .then(responseJson => {
             dataArray = responseJson
             if(dataArray != "SKIP"){
-                dataArray.forEach(job => {
-            content = `<div id="jobs-section">
-                <div class="row g-3">
-                        <div class="col-12">
-                        <a href="/view_post/${job.job_title}"
-                                class="text-decoration-none">
-                                <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
-                                <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                        <h6 class="mb-1 fw-bold text-dark">${job.job_title}</h6>
-                                        </div>
-                                       <span class="badge bg-success rounded-pill px-3">Available</span>
-                                </div>
-                                </div>
-                        </a>
-                        </div>
+               dataArray.forEach(job => {
+    const formattedDate = new Date(job.start_date).toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+
+    let content = `
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="/view_post/${job.job_title}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden" 
+                 style="transition: transform 0.3s ease; cursor: pointer;" 
+                >
+                
+                <div class="position-relative">
+                    <img src="/static/images/park.png" class="w-100" style="height:130px; object-fit:cover;">
+                    <span class="badge position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1 fw-bold" 
+                          style="background-color: rgba(255, 255, 255, 0.9); color: #3d6978; font-size: 0.65rem; backdrop-filter: blur(4px);">
+                        Available
+                    </span>
                 </div>
-                </div>`    
+
+                <div class="card-body p-3 d-flex flex-column">
+                    <h6 class="fw-bold mb-2" style="color: #212529; letter-spacing: -0.2px; line-height: 1.2;">
+                        ${job.job_title}
+                    </h6>
+
+               <div class="d-flex align-items-center gap-3 mb-3">
+    <div class="text-muted d-flex align-items-center" style="font-size: 0.75rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#3d6978" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+        </svg>
+        <span>${job.area}</span>
+    </div>
+
+    <div class="text-muted fw-bold d-flex align-items-center" style="font-size: 0.75rem; color: #3d6978 !important;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+        <span>${formattedDate}</span>
+    </div>
+</div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                        <span class="fw-bold" style="color: #d57a44; font-size: 0.75rem;">View Post</span>
+                                            </div>
+                </div>
+            </div>
+        </a>
+    </div>`;
                 job_container.innerHTML += content;
             });
             }
@@ -306,22 +338,53 @@ function filter_jobs(value){
         }
             if(job.short_type === value){
             typeArray.push(value)
-        content = `<div id="jobs-section">
-                <div class="row g-3">
-                        <div class="col-12">
-                        <a href="/view_post/${job.job_title}"
-                                class="text-decoration-none">
-                                <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
-                                <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                        <h6 class="mb-1 fw-bold text-dark">${job.job_title}</h6>
-                                        </div>
-                                       <span class="badge bg-success rounded-pill px-3">Available</span>
+
+    const formattedDate = new Date(job.start_date).toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+
+        content = `<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <a href="/view_post/${job.job_title}" class="text-decoration-none">
+                        <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden" 
+                             style="transition: transform 0.3s ease; cursor: pointer;" 
+                            >
+                            
+                            <div class="position-relative">
+                                <img src="/static/images/park.png" class="w-100" style="height:130px; object-fit:cover;">
+                                <span class="badge position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1 fw-bold" 
+                                      style="background-color: rgba(255, 255, 255, 0.9); color: #3d6978; font-size: 0.65rem; backdrop-filter: blur(4px);">
+                                    Available
+                                </span>
+                            </div>
+
+                            <div class="card-body p-3 d-flex flex-column">
+                                <h6 class="fw-bold mb-2 text-dark" style="letter-spacing: -0.2px; line-height: 1.2;">
+                                    ${job.job_title}
+                                </h6>
+
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="text-muted d-flex align-items-center" style="font-size: 0.75rem;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#3d6978" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16">
+                                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                                        </svg>
+                                        <span>${job.area}</span>
+                                    </div>
+                                    <div class="text-muted fw-bold d-flex align-items-center" style="font-size: 0.75rem; color: #3d6978 !important;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16">
+                                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                                        </svg>
+                                        <span>${formattedDate}</span>
+                                    </div>
                                 </div>
+
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                                    <span class="fw-bold" style="color: #d57a44; font-size: 0.75rem;">View Post</span>
                                 </div>
-                        </a>
+                            </div>
                         </div>
-                </div>
+                    </a>
                 </div>`    
                 job_container.innerHTML += content;
         }
@@ -330,23 +393,45 @@ function filter_jobs(value){
     }else{
         job_container.innerHTML ="";
         dataArray.forEach(job => {
-            content = `<div id="jobs-section">
-                <div class="row g-3">
-                        <div class="col-12">
-                        <a href="/view_post/${job.job_title}"
-                                class="text-decoration-none">
-                                <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px; border-left: 4px solid #85D6D6 !important;">
-                                <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                        <h6 class="mb-1 fw-bold text-dark">${job.job_title}</h6>
-                                        </div>
-                                       <span class="badge bg-success rounded-pill px-3">Available</span>
-                                </div>
-                                </div>
-                        </a>
+             const formattedDate = new Date(job.start_date).toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+
+            content = `<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <a href="/view_post/${job.job_title}" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden" 
+                         style="transition: transform 0.3s ease; cursor: pointer;" >
+                        
+                        <div class="position-relative">
+                            <img src="/static/images/park.png" class="w-100" style="height:130px; object-fit:cover;">
+                            <span class="badge position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1 fw-bold" 
+                                  style="background-color: rgba(255, 255, 255, 0.9); color: #3d6978; font-size: 0.65rem; backdrop-filter: blur(4px);">
+                                Available
+                            </span>
                         </div>
-                </div>
-                </div>`    
+
+                        <div class="card-body p-3 d-flex flex-column">
+                            <h6 class="fw-bold mb-2 text-dark">${job.job_title}</h6>
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="text-muted d-flex align-items-center" style="font-size: 0.75rem;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#3d6978" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/></svg>
+                                    <span>${job.area}</span>
+                                </div>
+                                <div class="text-muted fw-bold d-flex align-items-center" style="font-size: 0.75rem; color: #3d6978 !important;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16"><path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/></svg>
+                                    <span>${formattedDate}</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                                <span class="fw-bold" style="color: #d57a44; font-size: 0.75rem;">View Post</span>
+                                <div class="btn btn-sm rounded-pill px-3 py-1 fw-bold text-white" style="background-color: #3d6978; font-size: 0.7rem;">Apply</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>`    
                 job_container.innerHTML += content;
             });
     }
@@ -391,29 +476,58 @@ function searchJobs(){
 
     dataArray.forEach(job =>{
 
+        const formattedDate = new Date(job.start_date).toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        month: 'short', 
+        day: 'numeric' 
+    });
+
+
       if(job.job_title.toLowerCase().includes(userInput) || job.short_type.toLowerCase().includes(userInput) || job.area.toLowerCase().includes(userInput)){
 
         content = `
-                        <div class="col-lg-4 col-md-6 mb-4">
-                        <a href="/view_post/${job.job_title}"
-                                class="text-decoration-none text-dark">
-                                <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                                <div class="p-3 pb-0">
-                                    <img src="/static/images/park.png" class="rounded-4 w-100" style="height:100px; object-fit:cover;">
-                                </div>
-                                <div class="card-body pt-2">
-                                    <h6 class="fw-bold mb-2">${job.job_title}</h6>
+                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="/view_post/${job.job_title}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden" 
+                 style="transition: transform 0.3s ease; cursor: pointer;" 
+                >
+                
+                <div class="position-relative">
+                    <img src="/static/images/park.png" class="w-100" style="height:130px; object-fit:cover;">
+                    <span class="badge position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1 fw-bold" 
+                          style="background-color: rgba(255, 255, 255, 0.9); color: #3d6978; font-size: 0.65rem; backdrop-filter: blur(4px);">
+                        Available
+                    </span>
+                </div>
 
-                                    <div class="d-flex align-items-center">
-                                    <img src="/static/images/location_icon.svg" class="rounded-4 w-100" style="width:14px; height:14px; margin-right:6px;">
-                                    <p class="text-muted mb-0">
-                                    ${ job.area }
-                                    </p>
-                                    </div>
-                                </div>                        
-                                </div>
-                        </a>
-                </div>`    
+                <div class="card-body p-3 d-flex flex-column">
+                    <h6 class="fw-bold mb-2" style="color: #212529; letter-spacing: -0.2px; line-height: 1.2;">
+                        ${job.job_title}
+                    </h6>
+
+               <div class="d-flex align-items-center gap-3 mb-3">
+    <div class="text-muted d-flex align-items-center" style="font-size: 0.75rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#3d6978" class="bi bi-geo-alt-fill me-1" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+        </svg>
+        <span>${job.area}</span>
+    </div>
+
+    <div class="text-muted fw-bold d-flex align-items-center" style="font-size: 0.75rem; color: #3d6978 !important;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar3 me-1" viewBox="0 0 16 16">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+        <span>${formattedDate}</span>
+    </div>
+</div>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                        <span class="fw-bold" style="color: #d57a44; font-size: 0.75rem;">View Post</span>
+                                            </div>
+                </div>
+            </div>
+        </a>
+    </div>`    
                 job_container.innerHTML += content;
         }
     })
