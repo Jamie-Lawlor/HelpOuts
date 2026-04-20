@@ -238,7 +238,15 @@ function accept_job(message, icon) {
             document.getElementById("requestResponse").innerHTML = "Request failed!"
             document.getElementById("closeJobModalResponse").innerHTML = "Ok"
             openActionModal(message,icon)
-        }else{
+        }
+        else if(trigger == "Request exists"){
+                 message = "You already submitted a request for this job!"
+            icon = "reject"
+            document.getElementById("requestResponse").innerHTML = "Request failed!"
+            document.getElementById("closeJobModalResponse").innerHTML = "Ok"
+            openActionModal(message,icon)
+        }        
+        else{
             fetch("/send_job_accepted_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: job_id }) })
             openActionModal(message,icon)
         }
@@ -337,9 +345,23 @@ function filter_jobs(value){
 
 function join_community(community_id, user_id){
         fetch("/request_join_community", {method:"POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: community_id }) })
+        .then(response => response.text())
+    .then(trigger =>{
+        if(trigger == "Alert triggered"){
+            message = "You already submitted a request to join this community!"
+            icon = "reject"
+            document.getElementById("requestResponse").innerHTML = "Request failed!"
+            document.getElementById("closeJobModalResponse").innerHTML = "Ok"
+            openActionModal(message,icon)
+        }
+      
+        else{
         fetch("/send_community_notification", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: user_id }) })
+            openJoinModal()
+        }
+    })
 
-        openJoinModal()
+        
 }
 
 function join_community_request(helper_id, button_selected, icon, message, helperName){

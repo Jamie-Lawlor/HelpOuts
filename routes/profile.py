@@ -229,19 +229,24 @@ def accept_helper_job():
 def join_community():
     community_id = request.json["data"]
     helper_id = session["user_id"]
-    pending_request = CommunityRequests(
+    check_if_request_exists = CommunityRequests.query.where(CommunityRequests.community_id == community_id, CommunityRequests.user_id == helper_id).first()
+    if check_if_request_exists is not None:
+        return "Alert triggered"
+    else:
+        pending_request = CommunityRequests(
         user_id=helper_id,
         community_id=community_id,
         created_date=db.func.current_timestamp(),
     )
-    logs = Logs(
-        user_id=session["user_id"],
-        action=f"Join Request - {community_id}",
-        target="Communities",
-    )
-    db.session.add(logs)
-    db.session.add(pending_request)
-    db.session.commit()
+        logs = Logs(
+            user_id=session["user_id"],
+            action=f"Join Request - {community_id}",
+            target="Communities",
+        )
+        db.session.add(logs)
+        db.session.add(pending_request)
+        db.session.commit()
+    
     return ""
 
 
