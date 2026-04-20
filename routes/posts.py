@@ -236,6 +236,11 @@ def delete_post():
     if session["type"] != "chairperson":
         return ""
     else:
+        # delete images from s3
+        if os.getenv("ENVIRONMENT") == "development":
+            requests.delete(f"{os.getenv('HELPOUTS_BASE_URL_DEV')}api/deleteJobImages/{request.json['post_id']}")
+        else:
+            requests.delete(f"{os.getenv('HELPOUTS_BASE_URL_LIVE')}api/deleteJobImages/{request.json['post_id']}")
         updated_data = int(request.json["post_id"])
         # delete all constraints first
         UserJobs.query.filter_by(job_id=updated_data).delete()

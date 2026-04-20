@@ -346,6 +346,25 @@ def get_job_images(job_id):
     
     return jsonify({"images": image_urls, "success": True}), 200
 
+
+@api_blueprint.route("/deleteJobImages/<int:job_id>", methods=["DELETE"])
+def delete_job_images(job_id):
+
+    images, _ = get_job_images(job_id)
+
+    if _ != 200:
+        return jsonify({"error": "No images found for this job", "success": False}), 404
+    
+    image_urls = images.get_json().get("images", [])
+    for url in image_urls: 
+        object_key = url.split(f"{os.getenv('AWS_S3_BASE_URL')}")[-1]
+        try:
+            s3.delete_object(Bucket=os.getenv("AWS_S3_BUCKET"), Key=object_key)
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return jsonify({"error": f"Error deleting image at {url}"}), 400
+        
+    return jsonify({"message": "Images deleted successfully"}), 200
 # --------------------
 # Map Routes
 # --------------------
