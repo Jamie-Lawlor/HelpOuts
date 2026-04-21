@@ -214,7 +214,7 @@ def verified_upload(user_id):
         for size_label, resized_image in resized_images.items():
             key = ""
             if is_community == "True": 
-                key = f"communities/{user_id}/profile-picture/profile-picture-{size_label}.jpg"
+                key = f"communities/{user.community_id}/profile-picture/profile-picture-{size_label}.jpg"
             else: 
                 key = f"users/{user_id}/profile-picture/profile-picture-{size_label}.jpg"
             object_key = (key)

@@ -212,13 +212,19 @@ VALUES
 
 INSERT INTO users (id, name, email, password, type, work_area, specialism, rating, private_key, public_key, profile_picture, verified, verification_accuracy, community_id)
 VALUES 
-(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Electrician', 4, NULL, NULL,  NULL, FALSE, 0.0, 5),
+(1, 'Leo Fitz', 'leofitz@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'chairperson', 'Dundalk', 'Electrician', 4, NULL, NULL,  NULL, FALSE, 0.0, 1),
 (2, 'Ryan O''Hare', 'ryanohare@gmail.com', 'scrypt:32768:8:1$r4B4HXZrEubRg0Xz$8bf72baa69d4e34b39d4b267085d8773c898b07d20469fcdde5f0a85b0bdc5a5fa636deccfd6f755b236e924f3b71d46eb098c7a3ec02d1e397cba3d143f757c', 'helper', 'Crossmaglen', 'Contractor', 3, NULL, NULL,  '/static/images/user_image_2.png', FALSE, 0.0, 5),
 (3, 'John Johnson', 'johnjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Chairperson', 0, NULL, NULL,  NULL, FALSE, 0.0, 5),
-(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL,  NULL, FALSE, 0.0, 5),
+(4, 'Daisy Johnson', 'daisyjohnson@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Dundalk', 'Local Helper', 4, NULL, NULL,  NULL, FALSE, 0.0, 1),
 (5, 'Jemma Simmons', 'jemmasimmons@gmail.com', 'scrypt:32768:8:1$HGyAqImmePvDxpyt$a5f9fba484d19c468001450f5eff5721110daa6d042d0a5930cac070cb7783f34d1c7e0e87396d0a008381f2aba2bd3e09898e77b8e90f279a6a121d8c810fdc', 'helper', 'Ardee', 'Local Helper', 3, NULL, NULL,  NULL, FALSE, 0.0, 5),
-(6, 'Kerrie McLoughlin', 'mullaghbawnchairperson@gmail.com', 'scrypt:32768:8:1$r4B4HXZrEubRg0Xz$8bf72baa69d4e34b39d4b267085d8773c898b07d20469fcdde5f0a85b0bdc5a5fa636deccfd6f755b236e924f3b71d46eb098c7a3ec02d1e397cba3d143f757c', 'chairperson', 'Monaghan', 'Helper', 0, NULL, NULL, NULL, FALSE, 0.0, 5),
-(7, 'Steven Rodgers', 'stevenrodgers@gmail.com', 'scrypt:32768:8:1$r4B4HXZrEubRg0Xz$8bf72baa69d4e34b39d4b267085d8773c898b07d20469fcdde5f0a85b0bdc5a5fa636deccfd6f755b236e924f3b71d46eb098c7a3ec02d1e397cba3d143f757c', 'helper', 'Monaghan', 'Local Helper', 0, NULL, NULL, '/static/images/steven_rodgers.png', FALSE, 0.0, 5);
+(6, 'Kerrie McLoughlin', 'mullaghbawnchairperson@gmail.com', 'scrypt:32768:8:1$lpzYIhx4dW5ewbY0$ea0c81ecc72b7298ed87f99fb535dc46f4777d4232c34da22a5705afc596b55f7aee83ec65bed7d7b6b3792d1b58508813cb15f4a6a388a74276048327c69839', 'chairperson', 'Monaghan', 'Helper', 0, NULL, NULL, NULL, FALSE, 0.0, 5),
+(7, 'Mens Shed Volunteer 1', 'mshedvolunteer1@@gmail.com', 'scrypt:32768:8:1$lpzYIhx4dW5ewbY0$ea0c81ecc72b7298ed87f99fb535dc46f4777d4232c34da22a5705afc596b55f7aee83ec65bed7d7b6b3792d1b58508813cb15f4a6a388a74276048327c69839', 'helper', 'Monaghan', 'Local Helper', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(8, 'Mens Shed Volunteer 2', 'mshedvolunteer2@@gmail.com', 'scrypt:32768:8:1$lpzYIhx4dW5ewbY0$ea0c81ecc72b7298ed87f99fb535dc46f4777d4232c34da22a5705afc596b55f7aee83ec65bed7d7b6b3792d1b58508813cb15f4a6a388a74276048327c69839', 'helper', 'Monaghan', 'Local Helper', 0, NULL, NULL, NULL, FALSE, 0.0, 1),
+(9, 'Mullaghbawn Volunteer', 'mullaghbawnvolunteer@@gmail.com', 'scrypt:32768:8:1$lpzYIhx4dW5ewbY0$ea0c81ecc72b7298ed87f99fb535dc46f4777d4232c34da22a5705afc596b55f7aee83ec65bed7d7b6b3792d1b58508813cb15f4a6a388a74276048327c69839', 'helper', 'Monaghan', 'Local Helper', 0, NULL, NULL, NULL, FALSE, 0.0, NULL);
+
+
+
+
 INSERT INTO user_permissions (id, accepted_terms, accepted_gdpr, accepted_health_safety, user_id)
 VALUES
 (1, FALSE, FALSE, FALSE, 5),
