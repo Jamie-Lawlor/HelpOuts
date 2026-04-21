@@ -13,8 +13,12 @@
 <script>
   let center = null
   let map = null
+  let jobLocationMarker = null
+  
+
   async function loadJobEditMap() 
   {
+    
     const communityId = {{ session["community_id"]}}
     // console.log("community_id="+communityId)
 
@@ -25,7 +29,7 @@
     const { Map } = await google.maps.importLibrary("maps")
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker")
 
-
+    console.log(locationData)
     map = new google.maps.Map(document.getElementById("job-map-edit"), {
       center: { lat: locationData.lat, lng: locationData.lng },
       zoom: 15,
@@ -33,25 +37,24 @@
     });
     center = { lat: locationData.lat, lng: locationData.lng }
 
-    const markerIcon = document.createElement("img")
-    markerIcon.src = locationData.icon_url
-    markerIcon.style.width = "80px"
-    markerIcon.style.height = "80px"
+    const communityMarkerIcon = document.createElement("img")
+    communityMarkerIcon.src = locationData.icon_url
+    communityMarkerIcon.style.width = "60px"
+    communityMarkerIcon.style.height = "60px"
 
-    let marker = new AdvancedMarkerElement({
+    let communityMarker = new AdvancedMarkerElement({
       map: map,
       position: { lat: locationData.lat, lng: locationData.lng },
       title: locationData.name,
-      content: markerIcon
+      content: communityMarkerIcon
     })
 
     // map click
     let firstClick = true
-    let newLocationMarker
     map.addListener("click", (e) => {
       selectedLat = e.latLng.lat()
       selectedLng = e.latLng.lng()
-      console.log("LatLng to append to FormData - " + selectedLat, selectedLng)
+      // console.log("LatLng to append to FormData - " + selectedLat, selectedLng)
       if(firstClick) {
       placeMarkerAndPanTo(e.latLng, map);
         firstClick = false
@@ -60,18 +63,20 @@
       }
     });
 
-  function placeMarkerAndPanTo(latLng, map) {
-      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+    function placeMarkerAndPanTo(latLng, map) {
+      jobLocationMarker = new google.maps.marker.AdvancedMarkerElement({
         position: latLng,
         map: map,
+        content: updateJobMarkerIcon()
       });
       map.panTo(latLng);
     }
     function replaceMarkerAndPanTo(latLng, map) {
-      newLocationMarker.setMap(null)
-      newLocationMarker = new google.maps.marker.AdvancedMarkerElement({
+      jobLocationMarker.setMap(null)
+      jobLocationMarker = new google.maps.marker.AdvancedMarkerElement({
         position: latLng,
         map: map,
+        content: updateJobMarkerIcon()
       });
       map.panTo(latLng);
     }
