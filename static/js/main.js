@@ -151,7 +151,7 @@ function updateJobMarkerIcon() {
         case "construction":
             jobIconSrc = "/static/images/map_icons/construction.svg"
             break
-        case "general_maintenance'":
+        case "general_maintenance":
             jobIconSrc = "/static/images/map_icons/general.svg"
             break
         case "safety":
@@ -237,6 +237,9 @@ function send_job_data() {
     for(let i = 0; i < fileInput.length; i++) {
         data.append("images", fileInput[i])
     }
+
+
+
 
 
     // TODO Make location required, keep this statement until then

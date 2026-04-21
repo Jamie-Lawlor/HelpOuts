@@ -52,7 +52,11 @@ def load_user(user_id):
 # https://flask.palletsprojects.com/en/stable/api/#flask.Flask.context_processor
 @app.context_processor
 def inject_gmaps_key():
-    return dict(GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"), AWS_BUCKET=os.getenv("AWS_S3_BASE_URL"))
+    return dict(
+        GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"), 
+        AWS_BUCKET=os.getenv("AWS_S3_BASE_URL"), 
+        ENVIRONMENT=os.getenv("ENVIRONMENT")
+    )
 
 @app.route("/manifest.json")
 def serve_manifest():
