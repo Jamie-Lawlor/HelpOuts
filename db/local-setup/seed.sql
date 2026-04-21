@@ -419,26 +419,32 @@ VALUES
 
 INSERT INTO map_icons (id, icon_url, description)
 VALUES
-(1, '', '');
+(1, '/static/images/map_icons/construction.svg', 'construction'),
+(2, '/static/images/map_icons/enviornment.svg', 'enviornment'),
+(3, '/static/images/map_icons/general.svg', 'general_maintenance'),
+(4, '/static/images/map_icons/safety.svg', 'safety'),
+(5, '/static/images/map_icons/socialevents.svg', 'social_and_events');
+
+
 
 INSERT INTO job_location (id, lat, lng, job_id, icon_id)
 VALUES
-(1, 54.0023, -6.4037, 1, 1),  
-(2, 54.0015, -6.4055, 2, 1),  
-(3, 54.0030, -6.4020, 3, 1),  
+(1, 54.0023, -6.4037, 1, 2),
+(2, 54.0015, -6.4055, 2, 3),
+(3, 54.0030, -6.4020, 3, 4),
 (4, 54.0045, -6.3985, 4, 1),
 (5, 54.0065, -6.4100, 5, 1),
-(6, 54.0078, -6.3995, 6, 1),
+(6, 54.0078, -6.3995, 6, 2),
 (7, 54.0008, -6.4030, 7, 1),
-(8, 53.9985, -6.3950, 8, 1),
-(9, 53.8590, -6.5400, 9, 1),
-(10, 53.8605, -6.5380, 10, 1),
+(8, 53.9985, -6.3950, 8, 4),
+(9, 53.8590, -6.5400, 9, 2),
+(10, 53.8605, -6.5380, 10, 2),
 (11, 53.9970, -6.3900, 11, 1),
-(12, 54.0005, -6.4105, 12, 1),
-(13, 54.287261, -6.975044, 13, 1),
-(14, 54.287261, -6.975044, 14, 1),
-(15, 54.287261, -6.975044, 15, 1),
-(16, 54.287261, -6.975044, 16, 1); 
+(12, 54.0005, -6.4105, 12, 3),
+(13, 54.287261, -6.975044, 13, 5),
+(14, 54.287261, -6.975044, 14, 2),
+(15, 54.287261, -6.975044, 15, 5),
+(16, 54.287261, -6.975044, 16, 5);
 
 INSERT INTO reviews (id, star_rating, review, created_date, reviewer_id, helper_id, job_id)
 VALUES

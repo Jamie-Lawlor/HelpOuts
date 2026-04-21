@@ -138,6 +138,36 @@ function storeJobValue(selectedButton, label) {
     document.getElementById("jobTypeButton").innerText = label
 }
 
+function updateJobMarkerIcon() {
+    console.log("UPDATING MAP ICON---" + job_type)
+    let jobIconSrc = ""
+    switch(job_type) {
+        case "Environment":
+            jobIconSrc = "/static/images/map_icons/enviornment.svg"
+            break
+        case "social_and_events":
+            jobIconSrc = "/static/images/map_icons/socialevents.svg"
+            break
+        case "construction":
+            jobIconSrc = "/static/images/map_icons/construction.svg"
+            break
+        case "general_maintenance":
+            jobIconSrc = "/static/images/map_icons/general.svg"
+            break
+        case "safety":
+            jobIconSrc = "/static/images/map_icons/safety.svg"
+            break
+        default:
+            jobIconSrc = "/static/images/default_image.jpg"
+    }
+    const img = document.createElement("img")
+    img.src = jobIconSrc
+    img.style.width = "50px"
+    img.style.height = "50px"
+    return img
+}
+
+
 
 function update_helpers_amount(helpers_amount) {
     document.getElementById("helpers_amount").innerHTML = helpers_amount
@@ -207,6 +237,9 @@ function send_job_data() {
     for(let i = 0; i < fileInput.length; i++) {
         data.append("images", fileInput[i])
     }
+
+
+
 
 
     // TODO Make location required, keep this statement until then

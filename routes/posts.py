@@ -117,9 +117,18 @@ def create_job():
         lng = request.form.get("lng")
         images = request.files.getlist("images")
 
-
-        
-        
+        icon_id = 1
+        match type:
+            case "construction":
+                icon_id = 1
+            case "environment":
+                icon_id = 2
+            case "general_maintenance":
+                icon_id = 3
+            case "safety":
+                icon_id = 4
+            case "social_and_events":
+                icon_id = 5
 
         # We get the id from the session which is set when the user logs in
         new_job = Jobs(
@@ -136,11 +145,13 @@ def create_job():
             start_date=start_date,
             end_date=end_date,
         )
+
         db.session.add(new_job)
         db.session.commit()
+
         job_data = Jobs.query.get_or_404(new_job.id)
         job_location = JobLocation(
-            job_id=new_job.id, icon_id=1, lat=lat, lng=lng  # TODO Add icons to database
+            job_id=new_job.id, icon_id=icon_id, lat=lat, lng=lng  
         )
 
         image_body = []
