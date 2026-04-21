@@ -9,7 +9,7 @@
     <div class="col-lg-7">
         <div class="card shadow-sm border-0 p-4 mb-4" style="border-radius: 15px;">
       <div class="d-flex align-items-start mb-4">
-        <img src="/static/images/community_image.png" width="80" height="80" class="rounded-circle me-3 border" />
+        <img src="{{ AWS_BUCKET }}projects/{{ project_data.id }}/project-thumbnail.jpg" width="80" height="80" class="rounded-circle me-3 border" />
         <div class="w-100">
           <h1 class="fw-bold h2 mb-1" id="project_title_display">{{ project_data.project_title }}</h1>
           <input type="text" id="edit_title" class="form-control ms-2" value="{{ project_data.project_title }}" style="display: none" />
@@ -64,11 +64,16 @@
             
         {% if jobs %}
         <div class="list-group list-group-flush">
-        {% for job in jobs %}
+        {% for job in range(jobs|length) %}
         <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-0 border-bottom">
         <div>
-            <h6 class="fw-bold mb-1">{{ job.job_title }}</h6>
-            <small class="text-muted">{{ job.area}} • {{ job.start_date }}</small>
+            <h6 class="fw-bold mb-1">{{ jobs[job].job_title }}</h6>
+            <small class="text-muted">{{ jobs[job].area}} • {{ jobs[job].start_date }}</small><br/>
+            {% if job_accepted %}
+            <small class="text-muted"><b style="color:#85D6D6">{{ job_accepted[job] }}</b> has accepted this job!</small>
+            {% else %}
+            <small class="text-muted"><b>This job is still available!</b></small>
+            {% endif %}
         </div>
         <a href="/view_post/{{ job.job_title }}" class="text-decoration-none" style="color: #D57A44;">
             View Job

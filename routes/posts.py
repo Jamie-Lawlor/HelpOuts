@@ -394,6 +394,11 @@ def view_specific_project_page(project_title):
     project = Projects.query.filter_by(project_title=project_title).first_or_404()
     project_jobs = Jobs.query.filter_by(project_id=project.id).all()
     community = Communities.query.get(project.community_id)
+    names = JobRequests.query.join(Users, JobRequests.user_id == Users.id).where(Users.id == JobRequests.user_id, JobRequests.status == "A").all()
+    jobs_accepted = []
+    for request in names:
+        jobs_accepted.append(Users.query.get_or_404(request.user_id).name)
+    
     # project_data = project.to_dict()
     role = session["type"]
     db.session.commit()
@@ -405,6 +410,7 @@ def view_specific_project_page(project_title):
         jobs=project_jobs,
         community=community,
         role=role,
+        job_accepted = jobs_accepted
     )
 
 
