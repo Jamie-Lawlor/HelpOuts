@@ -52,72 +52,57 @@ body_community %}
                 <p class="small mb-3">
                   <a
                     href="/helper_profile/{{ community_request_list[i].name }}"
-                    class="text-decoration-none text-muted fw-bold"
+                    class="text-decoration-none text-muted" 
                   >
                     View Profile
                   </a>
                 </p>
 
-                <div class="d-flex gap-2 mb-3">
+                <div class="d-flex gap-2 mb-4 pt-3 border-top mt-auto">
                   <button
-                    class="btn btn-success btn-sm rounded-pill px-3 flex-grow-1"
-                    onclick="join_community_request('{{ community_request_list[i].id }}', 'A', 'accept','<strong>{{ community_request_list[i].name }}</strong> is now in your Community!')"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    class="btn btn-danger btn-sm rounded-pill px-3 flex-grow-1"
+                    class="btn btn-sm rounded-pill flex-grow-1 px-4 fw-bold shadow-sm"
                     onclick="join_community_request('{{ community_request_list[i].id }}', 'R', 'reject', '<strong>{{ community_request_list[i].name }}</strong>\'s request was rejected.')"
-                  >
-                    Reject
+                    style="background-color: transparent; border: 1px solid #6C757D; color: #6C757D;"
+                    >
+                    Decline Request
+                  </button>
+                   <button
+                    class="btn btn-sm rounded-pill flex-grow-1 px-4 fw-bold text-white shadow-sm"
+                    onclick="join_community_request('{{ community_request_list[i].id }}', 'A', 'accept','<strong>{{ community_request_list[i].name }}</strong> is now in your Community!')"
+                    style="background-color: #3d6978;"
+                    >
+                    Approve as Helper
                   </button>
                 </div>
 
                 {% if community_request_list[i].verification_accuracy != None %}
                 {% if community_request_list[i].verification_accuracy < 80 %}
-                <div class="mt-3 p-2 rounded-3" style="background-color: #fff5f5; border:1px solid #fee2e2;">
-                <p class="text-danger small fw-bold mb-3 pt-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-exclamation-triangle"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"
-                    />
-                    <path
-                      d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
-                    />
-                  </svg>
-                  Our AI has detected that this person may not be real. Please
-                  do some investigation before accepting this helper into your
-                  community.
-                </p>
+              <div class="mt-3 p-2 rounded-3" style="background-color: #fdf2f2; border: 1px solid #f8d7da;">
+              <div class="d-flex align-items-start">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#991b1b" class="bi bi-shield-x-fill me-2 mt-1" viewBox="0 0 16 16">
+                        <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 2.461-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m-.5 5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1 0-1m0 3h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1 0-1m0 3h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1 0-1"/>
+                    </svg>
+                  <div>
+                    <p class="small fw-bold mb-1" style="color: #991b1b;">Verification Notice</p>
+                    <p class="small text-muted mb-0">
+                      Our AI has detected that this <strong>may not be real </strong> . Please
+                      do some investigation, before approving this helper into your community. 
+                    </p>
+                  </div>
+                  </div>
                 </div>
                 {% endif %} {% else %}
-                <p class="text-danger small fw-bold mb-3 pt-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-exclamation-triangle"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"
-                    />
-                    <path
-                      d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"
-                    />
-                  </svg>
-                  Our AI is unable to verify the accuracy of this profile
-                  picture. Please do some investigation before accepting this
-                  helper into your community.
-                </p>
+               <div class="mb-3 p-3 rounded-3" style="background-color: #fffaf0; border: 1px solid #FFD8BE;">
+            <div class="d-flex align-items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#d57a44" class="bi bi-question-circle-fill me-2 mt-1" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247m2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927"/>
+                </svg>
+                <div>
+                    <p class="small fw-bold mb-1" style="color: #d57a44;">Verification Pending</p>
+                    <p class="small text-muted mb-0">AI was unable to verify the accuracy of the profile picture. Please so some investigation before accepting this helper into your community.</p>
+                </div>
+            </div>
+        </div>
                 {% endif %}
               </div>
           </div>
