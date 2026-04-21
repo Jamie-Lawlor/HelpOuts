@@ -16,6 +16,24 @@ def handle_connect():
     join_room(room)
 
 
+def decrypt_message(private_key, encrypted_message):
+      # private_key_bytes = base64.b64decode(private_key)
+    print(len(bytes(private_key)))
+    RSA_private_key = RSA.import_key(private_key)
+    decipher = PKCS1_OAEP.new(RSA_private_key)
+    encrypted_message = base64.b64decode(encrypted_message)
+    decrypted_message = decipher.decrypt(encrypted_message).decode('utf-8')
+    return decrypted_message
+
+def encrypt_message(public_key, message):
+    # print(len(bytes(private_key)))
+    RSA_public_key = RSA.import_key(public_key)
+    cipher = PKCS1_OAEP.new(RSA_public_key)
+    encrypted_message = cipher.encrypt(message.encode('utf-8'))
+    encrypted_message_final = base64.b64encode(encrypted_message).decode('ascii')
+    # print(encrypted_message_final)
+    return encrypted_message_final
+
 
 @socketio.on("message_sent")
 def message_sent(data):
@@ -39,14 +57,10 @@ def message_sent(data):
     private_key = sender_data.private_key
     
     # public_key_bytes = base64.b64decode(public_key)
-    RSA_public_key = RSA.import_key(public_key)
-    cipher = PKCS1_OAEP.new(RSA_public_key)
-    encrypted_message = cipher.encrypt(message.encode('utf-8'))
-
-    # private_key_bytes = base64.b64decode(private_key)
-    RSA_private_key = RSA.import_key(private_key)
-    decipher = PKCS1_OAEP.new(RSA_private_key)
-    decrypted_message = decipher.decrypt(encrypted_message).decode('utf-8')
+    # RSA_public_key = RSA.import_key(public_key)
+    # cipher = PKCS1_OAEP.new(RSA_public_key)
+    encrypted_message = encrypt_message(public_key, message)
+    decrypted_message = decrypt_message(private_key, encrypted_message)
 
     messageContent = {
         "user": sender_data.name,

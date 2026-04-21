@@ -31,7 +31,24 @@
         </div>
          {% endif %}
          </header>
+  {% if message_history is not none %}
+         {% for message in range(message_history|length) %}
+         <div class="d-flex mb-4 gap-2">
 
+                <img src="{{ session['profile_picture'] }}" width="50" height="50" class="rounded-circle me-3"/>
+
+                <div class="d-flex flex-column">
+                        <div class="d-flex align-items-baseline gap-2 mb-1">
+                            <span class="fw-bold small">{{ sender_user.name}}</span>
+                             <span class="text-muted">{{ message_history[message].timestamp.strftime("%H:%M") }}</span>
+                        </div>
+                        <div class="bubble ${isSender ? 'bubble-message-sent': 'bubble-message-received' }">
+                                  {{ message_history[message].content }}
+                        </div>
+                    </div>
+                </div>
+         {% endfor %}
+         {% endif %}
   <div id="messages" class="messages-container">
   </div>
 
@@ -102,7 +119,7 @@
     messageContent = `
         <div class="d-flex mb-4 gap-2 ${isSender ? 'justify-content-end text-end': 'justify-content-start text-start'}">
 
-                ${!isSender ? `<img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3>`: ''}  
+                ${!isSender ? `<img src="${profile_picture}" width="50" height="50" class="rounded-circle me-3">`: ''}  
 
                 <div class="d-flex flex-column ${isSender ? 'align-items-end' : 'align-items-start'}">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
