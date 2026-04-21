@@ -14,6 +14,7 @@ from db.models import (
     Logs,
 )
 from datetime import datetime, timedelta
+
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
@@ -133,6 +134,10 @@ def settings_page(community_name):
         community_data = Communities.query.filter_by(name=revert_format).first_or_404()
         community_id = community_data.id
         project_data = Projects.query.where(Projects.community_id == community_id).all()
+        usersList = Users.query.where(
+            Users.community_id == community_id, Users.type == "helper"
+        ).all()
+
         all_job_data = (
             Jobs.query.join(Projects, Jobs.project_id == Projects.id)
             .where(Projects.community_id == community_id)
@@ -142,7 +147,13 @@ def settings_page(community_name):
         get_project_names = Projects.query.join(
             Jobs, Projects.id == Jobs.project_id
         ).all()
-        names = JobRequests.query.join(Users, JobRequests.user_id == Users.id).where(Users.id == JobRequests.user_id, JobRequests.status == "A").all()
+
+        names = (
+            JobRequests.query.join(Users, JobRequests.user_id == Users.id)
+            .where(Users.id == JobRequests.user_id, JobRequests.status == "A")
+            .all()
+        )
+
         jobs_accepted = []
         for request in names:
             jobs_accepted.append(Users.query.get_or_404(request.user_id).name)
@@ -152,7 +163,8 @@ def settings_page(community_name):
             projects=project_data,
             jobs=all_job_data,
             project_names=get_project_names,
-            job_accepted = jobs_accepted
+            job_accepted=jobs_accepted,
+            helpers=usersList,
         )
 
 
@@ -234,15 +246,18 @@ def accept_helper_job():
 def join_community():
     community_id = request.json["data"]
     helper_id = session["user_id"]
-    check_if_request_exists = CommunityRequests.query.where(CommunityRequests.community_id == community_id, CommunityRequests.user_id == helper_id).first()
+    check_if_request_exists = CommunityRequests.query.where(
+        CommunityRequests.community_id == community_id,
+        CommunityRequests.user_id == helper_id,
+    ).first()
     if check_if_request_exists is not None:
         return "Alert triggered"
     else:
         pending_request = CommunityRequests(
-        user_id=helper_id,
-        community_id=community_id,
-        created_date=db.func.current_timestamp(),
-    )
+            user_id=helper_id,
+            community_id=community_id,
+            created_date=db.func.current_timestamp(),
+        )
         logs = Logs(
             user_id=session["user_id"],
             action=f"Join Request - {community_id}",
@@ -251,7 +266,7 @@ def join_community():
         db.session.add(logs)
         db.session.add(pending_request)
         db.session.commit()
-    
+
     return ""
 
 
