@@ -142,12 +142,17 @@ def settings_page(community_name):
         get_project_names = Projects.query.join(
             Jobs, Projects.id == Jobs.project_id
         ).all()
+        names = JobRequests.query.join(Users, JobRequests.user_id == Users.id).where(Users.id == JobRequests.user_id, JobRequests.status == "A").all()
+        jobs_accepted = []
+        for request in names:
+            jobs_accepted.append(Users.query.get_or_404(request.user_id).name)
         return render_template(
             "/community_settings.html",
             community=community_data,
             projects=project_data,
             jobs=all_job_data,
             project_names=get_project_names,
+            job_accepted = jobs_accepted
         )
 
 

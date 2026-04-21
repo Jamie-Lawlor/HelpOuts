@@ -64,15 +64,13 @@
             
         {% if jobs %}
         <div class="list-group list-group-flush">
-        {% for job in jobs %}
+        {% for job in range(jobs|length) %}
         <div class="list-group-item d-flex justify-content-between align-items-center py-3 px-0 border-0 border-bottom">
         <div>
-            <h6 class="fw-bold mb-1">{{ job.job_title }}</h6>
-            <small class="text-muted">{{ job.area}} • {{ job.start_date }}</small><br/>
+            <h6 class="fw-bold mb-1">{{ jobs[job].job_title }}</h6>
+            <small class="text-muted">{{ jobs[job].area}} • {{ jobs[job].start_date }}</small><br/>
             {% if job_accepted %}
-            {% for name in job_accepted %}
-            <small class="text-muted"><b style="color:#85D6D6">{{ name }}</b> has accepted this job!</small>
-            {% endfor %}
+            <small class="text-muted"><b style="color:#85D6D6">{{ job_accepted[job] }}</b> has accepted this job!</small>
             {% else %}
             <small class="text-muted"><b>This job is still available!</b></small>
             {% endif %}
