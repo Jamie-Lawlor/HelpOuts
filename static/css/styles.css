@@ -791,28 +791,26 @@ h6{
 
 /* Message bubble styling */
 .bubble{
-    padding: 10px 16px;
-    max-width: 80%;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    position: relative;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+   display: inline-block;
+   padding: 10px 16px;
+   border-radius: 18px;
+   margin-bottom: 5px;
+   word-wrap: break-word;
+   max-width: 75%;
+   width: fit-content;
+   text-align: left;
 }
 
 .bubble-message-sent{
-    background-color: #85D6D6 !important;
+    background-color: #d57a44 !important;
     color: white !important;
-    border-radius: 18px 18px 2px 18px;
-    padding: 10px 15px;
-    align-self: flex-end;
+    border-top-right-radius: 2px;
 }
 
 .bubble-message-received{
-    background-color: #d57a44 !important;
+    background-color: #85D6D6 !important;
     color: white !important;
-    border-radius: 18px 18px 18px 2px;
-    align-self: flex-start;
-    border: 1px solid #e9ecef;
+    border-top-left-radius: 2px;
 }
 
 .fw-bold.small{
