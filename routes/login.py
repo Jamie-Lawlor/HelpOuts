@@ -221,8 +221,11 @@ def register():
         session["accuracy"] = response_data["accuracy"]
         # print("ACCURACY IN SESSION: ", session["accuracy"])
 
+    print("USER TYPE: ",user.type)
     if user.type == "chairperson":
         session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}communities/{user.id}/profile-picture/profile-picture-m.jpg"
+        community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id ==session["community_id"], Users.type == "chairperson").first()
+        return redirect(f"/community_profile/{ community.name }")
     else: 
         session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}users/{user.id}/profile-picture/profile-picture-m.jpg"
     register_log = Logs (
@@ -230,7 +233,7 @@ def register():
         action = f"Registered as - {user.type}",
         target = "Registration"
     )
-        
+
     db.session.add(register_log)
     db.session.commit()
     
@@ -298,7 +301,7 @@ def login_no_mfa():
     db.session.commit()
     
     if session["type"] == "chairperson":
-       community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+       community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id, Users.type == "chairperson").first()
        return redirect(f"/community_profile/{ community.name }")
     else:
         return redirect("/home_page/")
