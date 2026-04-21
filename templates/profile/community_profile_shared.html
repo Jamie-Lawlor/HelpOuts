@@ -10,7 +10,7 @@
         >
           <div class="text-center">
             <img
-              src="{{ session['community_profile_picture'] }}"
+              src="{{ AWS_BUCKET }}communities/{{ community.id }}/profile-picture/profile-picture-l.jpg"
               class="rounded-3 border border-4 border-white shadow-sm"
               style="height: 120px; object-fit: cover; margin-top: -60px"
             />

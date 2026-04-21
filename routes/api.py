@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, session, jsonif
 import requests
 import os
 from db.database import db
-from db.models import Users, JobLocation, Communities, Logs, Jobs, Projects
+from db.models import Users, JobLocation, Communities, Logs, Jobs, Projects, MapIcon
 import uuid
 from PIL import Image
 import io
@@ -444,12 +444,14 @@ def get_job_map(job_id):
     location = JobLocation.query.filter_by(job_id=job_id).first()
     if not location:
         return jsonify({"error": "Location not found"}), 404
-
+    icon_url = MapIcon.query.filter_by(id=location.icon_id).first()
+    print("HERE")
+    print(icon_url.icon_url)
     return jsonify({
         "job_id": job_id,
         "lat": location.lat,
         "lng": location.lng,
-        "icon_id": location.icon_id
+        "icon_url": icon_url.icon_url
     }), 200
 
 
