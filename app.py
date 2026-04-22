@@ -166,7 +166,7 @@ def mfa():
                 )
                 db.session.add(logs)
                 if session["type"] == "chairperson":
-                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.type == "chairperson").first()
+                    community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id, Users.type == "chairperson").first()
                     print(community.name)
                     return redirect(f"/community_profile/{ community.name }")
                 else:
