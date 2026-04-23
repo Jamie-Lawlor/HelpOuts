@@ -317,8 +317,7 @@ def test_login_user():
     user_data = Users.query.get_or_404(user_id)
     session["user_id"] = user_id
     session["user_name"] = user_data.name
-     # TODO profile picture comes from S3 now, not the database
-    session["profile_picture"] = user_data.profile_picture
+    session["profile_picture"] = os.getenv('AWS_S3_BASE_URL') + f"users/{user_data.id}/profile-picture/profile-picture-m.jpg"
     session["type"] = user_data.type
     if user_data.community_id is not None:
         community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user_data.community_id).first()
@@ -326,7 +325,6 @@ def test_login_user():
 
     if session.get("community_id") is not None:
         session.pop("community_id", None)
-    # TODO profile picture comes from S3 now, not the database
     dataArray = [str(session["user_id"]), session["profile_picture"], session["type"]]
     login_user(user_data)
     print("TYPE OF USER: ", session["type"])
@@ -345,11 +343,9 @@ def test_login_admin():
     session["community_name"] = community_data.name
     session["type"] = "chairperson"
 
-     # TODO profile picture comes from S3 now, not the database * not for communities yet
     session["profile_picture"] = os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     dataArray = [
         str(session["community_id"]),
-         # TODO profile picture comes from S3 now, not the database * not for communities yet
         session["profile_picture"],
         session["community_name"],
     ]

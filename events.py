@@ -2,7 +2,7 @@ from extensions import socketio
 from flask import session
 from flask_socketio import join_room, send
 from db.database import db
-from db.models import Users, Messages, Communities
+from db.models import Users, Messages, Communities, UserKeys
 from datetime import datetime
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
@@ -18,7 +18,8 @@ def handle_connect():
 
 def decrypt_message(private_key, encrypted_message):
       # private_key_bytes = base64.b64decode(private_key)
-    print(len(bytes(private_key)))
+    # print(len(bytes(private_key)))
+    print(private_key)
     RSA_private_key = RSA.import_key(private_key)
     decipher = PKCS1_OAEP.new(RSA_private_key)
     encrypted_message = base64.b64decode(encrypted_message)
@@ -26,7 +27,8 @@ def decrypt_message(private_key, encrypted_message):
     return decrypted_message
 
 def encrypt_message(public_key, message):
-    # print(len(bytes(private_key)))
+    print(public_key)
+    # print(len(bytes(public_key)))
     RSA_public_key = RSA.import_key(public_key)
     cipher = PKCS1_OAEP.new(RSA_public_key)
     encrypted_message = cipher.encrypt(message.encode('utf-8'))
@@ -42,13 +44,39 @@ def message_sent(data):
     sender_id = data["sender_id"]
     receiver_id = data["receiver_id"]
     sender_of_message = data["sender"]
-    # print(sender_id)
-    # print(receiver_id)
-    # print(sender_of_message)
+    print(sender_id)
+    print(receiver_id)
+    print(sender_of_message)
+
+    # before user_keys table
+    # if sender_of_message == "community":
+    #     sender_data = Users.query.join(Communities, Users.community_id == Communities.id).where(Users.type == "chairperson", Communities.id == session["community_id"]).first()
+    # else:
+    #     sender_data = Users.query.get_or_404(sender_id)
+
     if sender_of_message == "community":
-        sender_data = Users.query.join(Communities, Users.community_id == Communities.id).where(Users.type == "chairperson", Communities.id == session["community_id"]).first()
+        # get the key from the chairperson of the community by joining community to user to get the chairperson id, then to user keys from the user id
+        # saves storing a seprate key for just the community.
+        # In the future if we wanted to have multiple chairpersons then the community would have its own.
+        sender_data = (Users.query
+            .join(Communities, Users.community_id == Communities.id)
+            .join(UserKeys, Users.id == UserKeys.user_id)
+            .add_columns(UserKeys.private_key, UserKeys.public_key) #
+            .where(
+                Users.type == "chairperson", 
+                Communities.id == session["community_id"]
+            )
+            .first()
+        )
     else:
-        sender_data = Users.query.get_or_404(sender_id)
+        # else join users to user keys on the user id
+        sender_data = (
+            Users.query
+            .join(UserKeys, Users.id == UserKeys.user_id)
+            .add_columns(UserKeys.private_key, UserKeys.public_key)
+            .where(Users.id == sender_id)
+            .first_or_404()
+        )
     
     message = data["message"]
 
@@ -77,4 +105,3 @@ def message_sent(data):
     db.session.add(message)
     db.session.commit()
     send(messageContent, to = room)
-
