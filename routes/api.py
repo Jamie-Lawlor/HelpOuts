@@ -118,8 +118,6 @@ def upload_profile_picture(user_id):
     }, 200
 
 
-
-
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
 def verified_upload(user_id):
 
@@ -406,13 +404,34 @@ def get_job_images(job_id):
             key = obj['Key']
             if key != response['Prefix']:
                 # Construct the public URL
-                url = f"https://{os.getenv("AWS_S3_BUCKET")}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                url = f"https://{os.getenv('AWS_S3_BUCKET')}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
                 image_urls.append(url)
     else:
         return jsonify({"error": "No images found for this job", "success": False}), 404
     
     
     return jsonify({"images": image_urls, "success": True}), 200
+
+@api_blueprint.route("/getJobImage/<int:job_id>", methods=["GET"])
+def get_job_image(job_id):
+    job = Jobs.query.filter_by(id=job_id).first()
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+
+    response = s3.list_objects(
+        Bucket=os.getenv("AWS_S3_BUCKET"),
+        Prefix=f"jobs/{job_id}/"
+    )
+    
+    if 'Contents' in response:
+        for obj in response['Contents']:
+            key = obj['Key']
+            
+            if key != f"jobs/{job_id}/":
+                url = f"https://{os.getenv('AWS_S3_BUCKET')}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                return jsonify({"image": url, "success": True}), 200
+
+    return jsonify({"error": "No images found for this job", "success": False}), 404
 
 
 @api_blueprint.route("/deleteJobImages/<int:job_id>", methods=["DELETE"])
