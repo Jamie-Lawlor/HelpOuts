@@ -147,7 +147,7 @@
   {% for group in community_groups %}
   <div class="col-lg-4 col-md-6 col-sm-12">
     <div class="community-group-card h-100 bg-white">
-        <img src="{{ group.profile_picture or '/static/images/default_image.jpg' }}" class="group-img" alt="{{ group.name }}" />
+        <img src="{{ AWS_BUCKET }}communities/{{ group.id }}/profile-picture/profile-picture-m.jpg" class="group-img" alt="{{ group.name }}" />
       <div class="p-4">
         <h4 class="fw-bold mb-1">{{ group.name }}</h4>
         <p class="text-muted small mb-3">

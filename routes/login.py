@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, jsonify
 from flask_login import login_user, logout_user, login_required
 from db.database import db
-from db.models import Users, Communities, Logs
+from db.models import Users, Communities, Logs, UserKeys
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 from Crypto.PublicKey import RSA
@@ -154,9 +154,6 @@ def register():
             password=hashed_password,
             type=user_type,
             work_area=location,
-            rating=0,
-            private_key = private_key,
-            public_key = public_key,
             community_id = community.id
         )
         # community_log = Logs (
@@ -172,10 +169,9 @@ def register():
             password=hashed_password,
             type=user_type,
             work_area=location,
-            rating=0,
-            private_key = private_key,
-            public_key = public_key
         )
+
+    
         
     # print(
     #     user.name,
@@ -183,13 +179,19 @@ def register():
     #     user.password,
     #     user.type,
     #     user.work_area,
-    #     user.rating,
     # )
     db.session.add(user)
     db.session.commit()
     session["user_id"] = user.id
     session["user_name"] = user.name
     session["type"] = user.type
+
+    keys = UserKeys(
+        user_id = user.id,
+        private_key=private_key,
+        public_key=public_key
+    )
+    db.session.add(keys)
     login_user(user)
 
     print(f"session id -> {session['user_id']}")

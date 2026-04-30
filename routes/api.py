@@ -239,24 +239,44 @@ def verified_upload(user_id):
     # update users profile picure url in the db
     user.profile_picture = db_profile_picture_url
 
-    # LOGS
-    log = Logs (
-        user_id = user_id,
-        action = "Updated Profile Picture",
-        target = "Profile"
-    )
-    db.session.add(log)
-    db.session.commit()
     
-    return {
-        "message": "Image uploaded successfully",
-        "filename": profile_picture.filename,
-        "user_id": user_id,
-        "profile_url": db_profile_picture_url,
-        "verification_status": verification_status,
-        "verdict": verdict,
-        "accuracy": accuracy
-    }, 200
+    if is_community == True: 
+        # LOGS
+        log = Logs (
+            user_id = user_id,
+            action = "Updated Community Profile Picture",
+            target = "Profile"
+        )
+        db.session.add(log)
+        db.session.commit()
+        return {
+            "message": "Image uploaded successfully",
+            "filename": profile_picture.filename,
+            "user_id": user.id,
+            "community_id": user.community_id,
+            "profile_url": db_profile_picture_url,
+            "verification_status": verification_status,
+            "verdict": verdict,
+            "accuracy": accuracy
+        }, 200
+    else: 
+        # LOGS
+        log = Logs (
+            user_id = user_id,
+            action = "Updated Profile Picture",
+            target = "Profile"
+        )
+        db.session.add(log)
+        db.session.commit()
+        return {
+            "message": "Image uploaded successfully",
+            "filename": profile_picture.filename,
+            "user_id": user_id,
+            "profile_url": db_profile_picture_url,
+            "verification_status": verification_status,
+            "verdict": verdict,
+            "accuracy": accuracy
+        }, 200
 
 
 # --------------------
