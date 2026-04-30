@@ -18,7 +18,9 @@ from db.models import (
 import os
 import json
 from pywebpush import webpush, WebPushException
+from dotenv import load_dotenv
 
+load_dotenv()
 Allowed_File_Types = {"image/png", "image/jpeg", "image/jpg"}
 
 posts_blueprint = Blueprint("posts", __name__, template_folder="templates")
@@ -196,6 +198,7 @@ def view_specific_post_page(post_title):
     log = Logs(
         user_id=session["user_id"], action=f"Viewed - {job_data['id']}", target="Jobs"
     )
+    community = Communities.query.get(project.community_id)
     db.session.add(log)
     db.session.commit()
     print("ROLE: ", role)
@@ -216,16 +219,16 @@ def view_specific_post_page(post_title):
 
     print("IMAGES: ", images)
 
-
     return render_template(
         "/posts/view_post.html",
+        community=community,
         job_data=job_data,
         project_data=project,
         vapid_key=vapid_key,
         hasImages=hasImages,
         images=images,
         role=role,
-        GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY"),
+        GMAPS_API_KEY=os.getenv("GOOGLE_MAPS_API_KEY")
     )
 
 

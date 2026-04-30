@@ -14,7 +14,7 @@ from db.models import (
     Logs,
 )
 from datetime import datetime, timedelta
-
+import os
 profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 
 
@@ -24,7 +24,7 @@ def community_profile_page(community_name):
     revert_format = community_name.replace("_", " ").title()
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
-    session["community_profile_picture"] = community_data.profile_picture
+    session["community_profile_picture"] = os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
     role = session["type"]
     project_data = Projects.query.where(Projects.community_id == community_id).all()
     all_job_data = (

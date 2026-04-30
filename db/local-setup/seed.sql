@@ -246,19 +246,19 @@ VALUES
 
 INSERT INTO jobs (id, job_title, job_description, short_title, short_type, status, number_of_helpers, area, created_date, start_date, end_date, project_id)
 VALUES
-(1, 'Install park benches and picnic tables','Help assemble and install benches/tables in the new park. Basic tools helpful. Outdoor work.','Benches install', 'environment', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-02-01', '2026-02-01',1),
-(2, 'Repair and paint perimeter fencing','Sand, repair and repaint park fencing to improve safety and appearance. PPE recommended.','Fence paint', 'general_maintenance', 'A', 6, 'Dundalk', CURRENT_TIMESTAMP, '2026-02-05', '2026-02-05',1),
-(3, 'Outdoor lighting check and minor fixes','Check existing lighting points around the park area and complete minor electrical fixes where safe.', 'Lighting', 'safety', 'D', 9, 'Dundalk', CURRENT_TIMESTAMP, '2026-02-10', '2026-02-10',1),
-(4, 'Build a small raised planter bed','Construct a raised wooden planter bed for flowers near the entrance. Carpentry help needed.','Planter bed', 'construction', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-02-12', '2026-02-12',1),
-(5, 'Assemble raised garden beds', 'Help construct and install wooden raised beds for the new community garden.', 'Garden beds', 'construction', 'A', 6, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-10', '2026-03-10', 5),
-(6, 'Plant flowers and vegetables', 'Assist with planting vegetables and flowers in the restored garden.', 'Planting', 'environment', 'A', 4, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-15', '2026-03-15', 5),
-(7, 'Repair roof panels', 'Replace damaged roof panels and secure new fittings on the community hall.', 'Roof repair', 'construction', 'A', 10, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-12', '2026-03-12', 6),
-(8, 'Electrical lighting inspection', 'Inspect and repair outdoor lighting around the hall entrance.', 'Lighting check', 'safety', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-03-13', '2026-03-13', 6),
-(9, 'Collect litter and recycling', 'Walk through assigned streets collecting litter and recyclables.', 'Town clean up', 'environment', 'A', 10, 'Ardee', CURRENT_TIMESTAMP, '2026-04-05', '2026-04-05', 7),
-(10, 'Sort collected waste', 'Help organise waste into recycling and disposal categories.', 'Waste sorting', 'environment', 'A', 1, 'Ardee', CURRENT_TIMESTAMP, '2026-04-05', '2026-04-05', 7),
-(11, 'Build wooden seating benches', 'Construct wooden benches for the outdoor seating area.', 'Bench build', 'construction', 'A', 9, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-20', '2026-04-20', 8),
-(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 3, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-21', '2026-04-21', 8),
-(13, 'Posting t-shirts','Organise the posting of t-shirts for people in Monaghan who have registered for the event','Posting t-shirts','social_and_events', 'NA', 4, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
+(1, 'Install park benches and picnic tables','Help assemble and install benches/tables in the new park. Basic tools helpful. Outdoor work.','Benches install', 'environment', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23',1),
+(2, 'Repair and paint perimeter fencing','Sand, repair and repaint park fencing to improve safety and appearance. PPE recommended.','Fence paint', 'general_maintenance', 'A', 6, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23',1),
+(3, 'Outdoor lighting check and minor fixes','Check existing lighting points around the park area and complete minor electrical fixes where safe.', 'Lighting', 'safety', 'D', 9, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23',1),
+(4, 'Build a small raised planter bed','Construct a raised wooden planter bed for flowers near the entrance. Carpentry help needed.','Planter bed', 'construction', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23',1),
+(5, 'Assemble raised garden beds', 'Help construct and install wooden raised beds for the new community garden.', 'Garden beds', 'construction', 'A', 6, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-230', '2026-04-23', 5),
+(6, 'Plant flowers and vegetables', 'Assist with planting vegetables and flowers in the restored garden.', 'Planting', 'environment', 'A', 4, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 5),
+(7, 'Repair roof panels', 'Replace damaged roof panels and secure new fittings on the community hall.', 'Roof repair', 'construction', 'A', 10, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-232', '2026-04-23', 6),
+(8, 'Electrical lighting inspection', 'Inspect and repair outdoor lighting around the hall entrance.', 'Lighting check', 'safety', 'A', 5, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 6),
+(9, 'Collect litter and recycling', 'Walk through assigned streets collecting litter and recyclables.', 'Town clean up', 'environment', 'A', 10, 'Ardee', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 7),
+(10, 'Sort collected waste', 'Help organise waste into recycling and disposal categories.', 'Waste sorting', 'environment', 'A', 1, 'Ardee', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 7),
+(11, 'Build wooden seating benches', 'Construct wooden benches for the outdoor seating area.', 'Bench build', 'construction', 'A', 9, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-20', '2026-04-30', 8),
+(12, 'Sand and treat wooden surfaces', 'Sand and weatherproof newly built seating structures.', 'Wood treatment', 'general_maintenance', 'A', 3, 'Dundalk', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 8),
+(13, 'Posting t-shirts','Organise the posting of t-shirts for people in Monaghan who have registered for the event','Posting t-shirts','social_and_events', 'NA', 4, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-23', '2026-04-23', 9),
 (14, 'Setup banners','Setting up banners for the event','Setup banners','environment', 'NA', 5, 'Monaghan', CURRENT_TIMESTAMP, '2026-05-09', '2026-05-09', 9),
 (15,'Tea and coffee stand','Organise tea and coffee stand after the walk is finished','Tea & Coffee','social_and_events', 'NA', 6, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9),
 (16, 'Stewards','Give people directions to the correct path so no one gets lost along the walk','Stewards','social_and_events', 'NA', 7, 'Monaghan', CURRENT_TIMESTAMP, '2026-04-17', '2026-05-09', 9);
@@ -446,12 +446,12 @@ VALUES
 (15, 54.287261, -6.975044, 15, 5),
 (16, 54.287261, -6.975044, 16, 5);
 
+
 INSERT INTO reviews (id, star_rating, review, created_date, reviewer_id, helper_id, job_id)
 VALUES
 (1, 5, 'Ryan was fantastic! He helped me with my home repairs and was very professional.', CURRENT_TIMESTAMP, 3, 1, 1),
 (2, 4, 'Leo did a great job with the electrical work in the park. Highly recommend!', CURRENT_TIMESTAMP, 4, 2, 3),
 (3, 5, 'Bridget was very helpful and friendly while assisting with the park setup.', CURRENT_TIMESTAMP, 5, 3, 2);
-
 
 
 

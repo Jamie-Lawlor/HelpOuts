@@ -118,8 +118,6 @@ def upload_profile_picture(user_id):
     }, 200
 
 
-
-
 @api_blueprint.route("/verifiedUpload/<int:user_id>", methods=["POST"])
 def verified_upload(user_id):
 
@@ -241,24 +239,44 @@ def verified_upload(user_id):
     # update users profile picure url in the db
     user.profile_picture = db_profile_picture_url
 
-    # LOGS
-    log = Logs (
-        user_id = user_id,
-        action = "Updated Profile Picture",
-        target = "Profile"
-    )
-    db.session.add(log)
-    db.session.commit()
     
-    return {
-        "message": "Image uploaded successfully",
-        "filename": profile_picture.filename,
-        "user_id": user_id,
-        "profile_url": db_profile_picture_url,
-        "verification_status": verification_status,
-        "verdict": verdict,
-        "accuracy": accuracy
-    }, 200
+    if is_community == True: 
+        # LOGS
+        log = Logs (
+            user_id = user_id,
+            action = "Updated Community Profile Picture",
+            target = "Profile"
+        )
+        db.session.add(log)
+        db.session.commit()
+        return {
+            "message": "Image uploaded successfully",
+            "filename": profile_picture.filename,
+            "user_id": user.id,
+            "community_id": user.community_id,
+            "profile_url": db_profile_picture_url,
+            "verification_status": verification_status,
+            "verdict": verdict,
+            "accuracy": accuracy
+        }, 200
+    else: 
+        # LOGS
+        log = Logs (
+            user_id = user_id,
+            action = "Updated Profile Picture",
+            target = "Profile"
+        )
+        db.session.add(log)
+        db.session.commit()
+        return {
+            "message": "Image uploaded successfully",
+            "filename": profile_picture.filename,
+            "user_id": user_id,
+            "profile_url": db_profile_picture_url,
+            "verification_status": verification_status,
+            "verdict": verdict,
+            "accuracy": accuracy
+        }, 200
 
 
 # --------------------
@@ -406,13 +424,34 @@ def get_job_images(job_id):
             key = obj['Key']
             if key != response['Prefix']:
                 # Construct the public URL
-                url = f"https://{os.getenv("AWS_S3_BUCKET")}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                url = f"https://{os.getenv('AWS_S3_BUCKET')}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
                 image_urls.append(url)
     else:
         return jsonify({"error": "No images found for this job", "success": False}), 404
     
     
     return jsonify({"images": image_urls, "success": True}), 200
+
+@api_blueprint.route("/getJobImage/<int:job_id>", methods=["GET"])
+def get_job_image(job_id):
+    job = Jobs.query.filter_by(id=job_id).first()
+    if not job:
+        return jsonify({"error": "Job not found"}), 404
+
+    response = s3.list_objects(
+        Bucket=os.getenv("AWS_S3_BUCKET"),
+        Prefix=f"jobs/{job_id}/"
+    )
+    
+    if 'Contents' in response:
+        for obj in response['Contents']:
+            key = obj['Key']
+            
+            if key != f"jobs/{job_id}/":
+                url = f"https://{os.getenv('AWS_S3_BUCKET')}.s3.{os.getenv('AWS_REGION')}.amazonaws.com/{key}"
+                return jsonify({"image": url, "success": True}), 200
+
+    return jsonify({"error": "No images found for this job", "success": False}), 404
 
 
 @api_blueprint.route("/deleteJobImages/<int:job_id>", methods=["DELETE"])

@@ -14,10 +14,6 @@ class Users(db.Model, UserMixin):
     specialism = db.Column(db.String(100), nullable=True)
     availability = db.Column(db.String(18), nullable = True)
     experience = db.Column(db.String(4000), nullable = True)
-    rating = db.Column(db.Integer, nullable=True)
-    private_key = db.Column(db.LargeBinary, nullable = True)
-    public_key = db.Column(db.LargeBinary, nullable = True)
-    profile_picture = db.Column(db.String(1000), nullable = True)
     verified = db.Column(db.Boolean, nullable=True)
     verification_accuracy = db.Column(db.Numeric(5,2), nullable=True)
     community_id = db.Column(db.Integer, db.ForeignKey("communities.id"), nullable=True)
@@ -51,15 +47,13 @@ class Users(db.Model, UserMixin):
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class UserPermissions(db.Model):
-    __tablename__ = 'user_permissions'
+    
+class UserKeys(db.Model):
+    __tablename__ = 'user_keys'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
-    accepted_gdpr = db.Column(db.Boolean, nullable=False, default=False)
-    accepted_health_safety = db.Column(db.Boolean, nullable=False, default=False)
+    private_key = db.Column(db.LargeBinary, nullable=False)
+    public_key = db.Column(db.LargeBinary, nullable=False)
     
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -78,9 +72,11 @@ class JobSkills(db.Model):
     job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"), nullable=False)
     skill_id = db.Column(db.Integer, db.ForeignKey("skills.id"), nullable=False)
 
+
 class Skills(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     skill = db.Column(db.String(100))
+
 
 class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -224,10 +220,8 @@ class Communities(db.Model):
     name = db.Column(db.String(100), nullable=False)
     area = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(500), nullable=False)
-    profile_picture = db.Column(db.String(1000), nullable =True)
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
-
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -302,3 +296,15 @@ class Logs(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 
+
+
+# class UserPermissions(db.Model):
+#     __tablename__ = 'user_permissions'
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+#     accepted_terms = db.Column(db.Boolean, nullable=False, default=False)
+#     accepted_gdpr = db.Column(db.Boolean, nullable=False, default=False)
+#     accepted_health_safety = db.Column(db.Boolean, nullable=False, default=False)
+    
+#     def to_dict(self):
+#         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

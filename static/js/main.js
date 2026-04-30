@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () =>{
         month: 'short', 
         day: 'numeric' 
     });
+    console.log(dataArray)
 
     let content = `
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () =>{
                 >
                 
                 <div class="position-relative">
-                    <img src="/static/images/park.png" class="w-100" style="height:130px; object-fit:cover;">
+                    <img src="https://helpouts-bucket.s3.eu-west-1.amazonaws.com/jobs/${job.id}/0.j" class="w-100" style="height:130px; object-fit:cover;">
                     <span class="badge position-absolute top-0 end-0 m-2 rounded-pill px-2 py-1 fw-bold" 
                           style="background-color: rgba(255, 255, 255, 0.9); color: #3d6978; font-size: 0.65rem; backdrop-filter: blur(4px);">
                         Available
