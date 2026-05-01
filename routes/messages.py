@@ -30,8 +30,10 @@ def message_chat():
     if session.get("community_id") is not None:
         user = Users.query.get_or_404(id)
         userArray = [user, session["community_id"]]
-        message_history = Messages.query.join(Communities, Messages.sender_id == session["community_id"]).where(Messages.sender_id == session["community_id"], Messages.receiver_id == user.id).all()
-        sender_user = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.community_id == session["community_id"], Users.type == "chairperson").first()
+        message_history = Messages.query.join(Communities, Messages.receiver_id == session["community_id"]).where(Messages.receiver_id == session["community_id"], Messages.sender_id == user.id).all()
+        
+        # sender_user = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.community_id == session["community_id"], Users.type == "chairperson").first()
+        sender_user = user
         user_private_key = UserKeys.query.where(UserKeys.user_id == id).first()
         decrypted_messages=[]
         for message in message_history:
@@ -41,16 +43,17 @@ def message_chat():
                 'timestamp': message.timestamp,
                 'sender_id': message.sender_id
             })
-        print("A: ",message_history)
-        print(sender_user)
+
         return render_template("/messages/message_chat.html", user=userArray,  message_history = decrypted_messages, sender_user = sender_user)
     else:
         community = Communities.query.get_or_404(id)
-        message_history = Messages.query.join(Users, Messages.sender_id ==session["user_id"]).where(Messages.sender_id == session["user_id"], Messages.receiver_id == community.id).all()
-        sender_user = Users.query.get(int(session["user_id"]))
+        message_history = Messages.query.join(Users, Messages.receiver_id ==session["user_id"]).where(Messages.receiver_id == session["user_id"], Messages.sender_id == community.id).all()
+        # sender_user = Users.query.get(int(session["user_id"]))
+        sender_user = community
+        user_private_key = UserKeys.query.where(UserKeys.user_id == session["user_id"]).first()
         decrypted_messages=[]
         for message in message_history:
-            content = decrypt_message(sender_user.private_key, message.content)
+            content = decrypt_message(user_private_key.private_key, message.content)
             decrypted_messages.append({
                 'content': content,
                 'timestamp': message.timestamp,
