@@ -34,10 +34,12 @@
   {% if message_history is not none %}
          {% for message in range(message_history|length) %}
          <div class="d-flex mb-4 gap-2 justify-content-start text-start">
-
-                <img src="{{ session['profile_picture'] }}" width="50" height="50" class="rounded-circle me-3"/>
-
-                <div class="d-flex flex-column align-items-start">
+                {% if session["type"] == "chairperson" %}
+                <img src="{{ AWS_BUCKET }}users/{{ user[0].id }}/profile-picture/profile-picture-s.jpg" width="50" height="50" class="rounded-circle me-3"/>
+                {% else %}
+                  <img src="{{ AWS_BUCKET }}communities/{{ community[0].id }}/profile-picture/profile-picture-s.jpg" width="50" height="50" class="rounded-circle me-3"/>
+                {% endif %}
+                  <div class="d-flex flex-column align-items-start">
                         <div class="d-flex align-items-baseline gap-2 mb-1">
                             <span class="fw-bold small">{{ sender_user.name}}</span>
                              <span class="text-muted">{{ message_history[message].timestamp.strftime("%H:%M") }}</span>
