@@ -89,11 +89,21 @@ def message_sent(data):
     encrypted_message = encrypt_message(public_key, message)
     decrypted_message = decrypt_message(private_key, encrypted_message)
 
-    messageContent = {
-    "user": sender_data[0].name,
-    "message": decrypted_message,
-    "sent": date.strftime("%H:%M"),
-    "profile_picture": session["profile_picture"]
+    if sender_data[0].type == "chairperson":
+        community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == sender_data[0].community_id, Users.type == "chairperson").first()
+        messageContent = {
+        "user": community.name,
+        "message": decrypted_message,
+        "sent": date.strftime("%H:%M"),
+        "profile_picture": session["profile_picture"]
+        }
+
+    else:
+        messageContent = {
+        "user": sender_data[0].name,
+        "message": decrypted_message,
+        "sent": date.strftime("%H:%M"),
+        "profile_picture": session["profile_picture"]
     }
 
     

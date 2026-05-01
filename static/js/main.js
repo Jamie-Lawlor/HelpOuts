@@ -575,7 +575,7 @@ function searchJobs(){
 //Remove when no longer needed as test
 
 function test_login_helper(){
-        fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 5 }) })
+        fetch("/test_login_user", { method: "POST", headers: { 'Content-Type': "application/json" }, body: JSON.stringify({ data: 24 }) })
             .then(response => response.json())
             .then(data =>{
                 window.location.replace(`/home_page/`)
