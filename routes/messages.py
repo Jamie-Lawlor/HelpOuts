@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session
 from flask_login import login_required
 from db.database import db
-from db.models import Communities, Users, Messages
+from db.models import Communities, Users, Messages, UserKeys
 from events import decrypt_message
 messages_blueprint = Blueprint("messages", __name__, template_folder="templates")
 
@@ -32,7 +32,7 @@ def message_chat():
         userArray = [user, session["community_id"]]
         message_history = Messages.query.join(Communities, Messages.sender_id == session["community_id"]).where(Messages.sender_id == session["community_id"], Messages.receiver_id == user.id).all()
         sender_user = Communities.query.join(Users, Communities.id == Users.community_id).where(Users.community_id == session["community_id"], Users.type == "chairperson").first()
-        user_private_key = Users.query.where(Users.community_id == session["community_id"], Users.type=="chairperson").first()
+        user_private_key = UserKeys.query.where(UserKeys.user_id == id).first()
         decrypted_messages=[]
         for message in message_history:
             content = decrypt_message(user_private_key.private_key, message.content)
