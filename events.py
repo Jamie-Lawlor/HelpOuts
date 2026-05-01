@@ -32,7 +32,7 @@ def encrypt_message(public_key, message):
     RSA_public_key = RSA.import_key(public_key)
     cipher = PKCS1_OAEP.new(RSA_public_key)
     encrypted_message = cipher.encrypt(message.encode('utf-8'))
-    encrypted_message_final = base64.b64encode(encrypted_message).decode('ascii')
+    encrypted_message_final = base64.b64encode(encrypted_message)
     # print(encrypted_message_final)
     return encrypted_message_final
 
@@ -83,7 +83,6 @@ def message_sent(data):
     
     public_key = sender_data.public_key
     private_key = sender_data.private_key
-    
     # public_key_bytes = base64.b64decode(public_key)
     # RSA_public_key = RSA.import_key(public_key)
     # cipher = PKCS1_OAEP.new(RSA_public_key)
@@ -91,11 +90,13 @@ def message_sent(data):
     decrypted_message = decrypt_message(private_key, encrypted_message)
 
     messageContent = {
-        "user": sender_data.name,
-        "message": decrypted_message,
-        "sent": date.strftime("%H:%M"),
-        "profile_picture":sender_data.profile_picture
+    "user": sender_data[0].name,
+    "message": decrypted_message,
+    "sent": date.strftime("%H:%M"),
+    "profile_picture": session["profile_picture"]
     }
+
+    
     message = Messages(
         sender_id=int(sender_id),
         receiver_id=int(receiver_id),
