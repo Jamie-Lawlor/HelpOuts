@@ -32,7 +32,7 @@ def encrypt_message(public_key, message):
     RSA_public_key = RSA.import_key(public_key)
     cipher = PKCS1_OAEP.new(RSA_public_key)
     encrypted_message = cipher.encrypt(message.encode('utf-8'))
-    encrypted_message_final = base64.b64encode(encrypted_message).decode('ascii')
+    encrypted_message_final = base64.b64encode(encrypted_message)
     # print(encrypted_message_final)
     return encrypted_message_final
 
