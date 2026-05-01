@@ -22,6 +22,7 @@ profile_blueprint = Blueprint("profile", __name__, template_folder="templates")
 @login_required
 def community_profile_page(community_name):
     revert_format = community_name.replace("_", " ").title()
+    vapid_key = os.getenv("VAPID_PUBLIC_KEY_BASE_64")
     community_data = Communities.query.filter_by(name=revert_format).first_or_404()
     community_id = community_data.id
     session["community_profile_picture"] = os.getenv('AWS_S3_BASE_URL') + f"communities/{community_id}/profile-picture/profile-picture-m.jpg"
@@ -65,6 +66,7 @@ def community_profile_page(community_name):
             project_names=get_project_names,
             usersList=usersList,
             user_data=None,
+            vapid_key=vapid_key
         )
 
 
