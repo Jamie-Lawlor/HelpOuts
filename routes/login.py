@@ -287,7 +287,7 @@ def login_no_mfa():
     else: 
         session["profile_picture"] = f"{os.getenv('AWS_S3_BASE_URL')}users/{user.id}/profile-picture/profile-picture-m.jpg"
     
-    if user.community_id is not None:
+    if user.community_id is not None and user.type == "chairperson":
         community = Communities.query.join(Users, Communities.id == Users.community_id).where(Communities.id == user.community_id).first()
         session["community_name"] = community.name
         session["community_id"] = community.id
