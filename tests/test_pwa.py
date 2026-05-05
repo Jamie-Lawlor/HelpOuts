@@ -2,10 +2,7 @@ import os
 import re
 
 def test_page_links_manifest():
-    """
-    Don’t hit a Flask route (your test app may not have /home_page/).
-    Instead, verify base.html contains the manifest link.
-    """
+  
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     base_html_path = os.path.join(project_root, "templates", "base.html")
